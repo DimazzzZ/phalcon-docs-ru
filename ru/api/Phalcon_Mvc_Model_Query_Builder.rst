@@ -99,7 +99,10 @@ Adds a join to the query
 
     <?php
 
+    $builder->join('Robots');
+    $builder->join('Robots', 'r.id = RobotsParts.robots_id');
     $builder->join('Robots', 'r.id = RobotsParts.robots_id', 'r');
+    $builder->join('Robots', 'r.id = RobotsParts.robots_id', 'r', 'LEFT');
 
 
 
@@ -151,7 +154,8 @@ Appends a condition to the current conditions using a AND operator
 
     <?php
 
-    $builder->andWhere('name = :name: AND id > :id:');
+    $builder->andWhere('name = "Peter"');
+    $builder->andWhere('name = :name: AND id > :id:', array('name' => 'Peter', 'id' => 100));
 
 
 
@@ -164,7 +168,8 @@ Appends a condition to the current conditions using a OR operator
 
     <?php
 
-    $builder->orWhere('name = :name: AND id > :id:');
+    $builder->orWhere('name = "Peter"');
+    $builder->orWhere('name = :name: AND id > :id:', array('name' => 'Peter', 'id' => 100));
 
 
 

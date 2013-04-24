@@ -159,18 +159,9 @@ Escapes a value to avoid SQL injections
 
 
 
-public *string*  **bindParams** (*string* $sqlStatement, *array* $params) inherited from Phalcon\\Db\\Adapter\\Pdo
+public  **bindParams** (*unknown* $sqlStatement, *unknown* $params) inherited from Phalcon\\Db\\Adapter\\Pdo
 
-Manually bind params to a SQL statement. This method requires an active connection to a database system 
-
-.. code-block:: php
-
-    <?php
-
-    $sql = $connection->bindParams('SELECT * FROM robots WHERE name = ?0', array('Bender'));
-      echo $sql; // SELECT * FROM robots WHERE name = 'Bender'
-
-
+...
 
 
 public *array*  **convertBoundParams** (*string* $sql, *array* $params) inherited from Phalcon\\Db\\Adapter\\Pdo
@@ -245,43 +236,19 @@ Return internal PDO handler
 
 
 
-public :doc:`Phalcon\\Db\\Index <Phalcon_Db_Index>` [] **describeIndexes** (*string* $table, [*string* $schema]) inherited from Phalcon\\Db\\Adapter\\Pdo
+public  **describeIndexes** (*unknown* $table, [*unknown* $schema]) inherited from Phalcon\\Db\\Adapter\\Pdo
 
-Lists table indexes 
-
-.. code-block:: php
-
-    <?php
-
-     print_r($connection->describeIndexes('robots_parts'));
+...
 
 
+public  **describeReferences** (*unknown* $table, [*unknown* $schema]) inherited from Phalcon\\Db\\Adapter\\Pdo
+
+...
 
 
-public :doc:`Phalcon\\Db\\Reference <Phalcon_Db_Reference>` [] **describeReferences** (*string* $table, [*string* $schema]) inherited from Phalcon\\Db\\Adapter\\Pdo
+public  **tableOptions** (*unknown* $tableName, [*unknown* $schemaName]) inherited from Phalcon\\Db\\Adapter\\Pdo
 
-Lists table references 
-
-.. code-block:: php
-
-    <?php
-
-     print_r($connection->describeReferences('robots_parts'));
-
-
-
-
-public *array*  **tableOptions** (*string* $tableName, [*string* $schemaName]) inherited from Phalcon\\Db\\Adapter\\Pdo
-
-Gets creation options from a table 
-
-.. code-block:: php
-
-    <?php
-
-     print_r($connection->tableOptions('robots'));
-
-
+...
 
 
 public  **setEventsManager** (:doc:`Phalcon\\Events\\ManagerInterface <Phalcon_Events_ManagerInterface>` $eventsManager) inherited from Phalcon\\Db\\Adapter
@@ -323,14 +290,17 @@ Dumps the complete result of a query into an array
 
     <?php
 
-    //Getting all robots
-    $robots = $connection->fetchAll("SELECT * FROM robots");
-    foreach($robots as $robot){
+    //Getting all robots with associative indexes only
+    $robots = $connection->fetchAll("SELECT * FROM robots", Phalcon\Db::FETCH_ASSOC);
+    foreach ($robots as $robot) {
     	print_r($robot);
     }
     
-    //Getting all robots with associative indexes only
-    $robots = $connection->fetchAll("SELECT * FROM robots", Phalcon\Db::FETCH_ASSOC);
+      //Getting all robots that contains word "robot" withing the name
+      $robots = $connection->fetchAll("SELECT * FROM robots WHERE name LIKE :name",
+    	Phalcon\Db::FETCH_ASSOC,
+    	array('name' => '%robot%')
+      );
     foreach($robots as $robot){
     	print_r($robot);
     }

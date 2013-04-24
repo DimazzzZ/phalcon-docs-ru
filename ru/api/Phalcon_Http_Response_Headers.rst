@@ -11,8 +11,7 @@ Methods
 
 public  **__construct** ()
 
-Phalcon\\Http\\Response\\Headers constructor
-
+...
 
 
 public  **set** (*string* $name, *string* $value)

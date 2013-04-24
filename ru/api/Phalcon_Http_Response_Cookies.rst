@@ -11,8 +11,7 @@ Methods
 
 public  **__construct** ()
 
-Phalcon\\Http\\Response\\Cookies constructor
-
+...
 
 
 public  **setDI** (:doc:`Phalcon\\DiInterface <Phalcon_DiInterface>` $dependencyInjector)
@@ -27,9 +26,9 @@ Returns the internal dependency injector
 
 
 
-public  **set** (*string* $name, [*mixed* $value], [*int* $expire], [*string* $path])
+public :doc:`Phalcon\\Http\\Response\\Cookies <Phalcon_Http_Response_Cookies>`  **set** (*string* $name, [*mixed* $value], [*int* $expire], [*string* $path])
 
-Sets a header to be sent at the end of the request
+Sets a cookie to be sent at the end of the request
 
 
 
@@ -39,7 +38,7 @@ Gets a cookie from the bag
 
 
 
-public  **reset** ()
+public :doc:`Phalcon\\Http\\Response\\Cookies <Phalcon_Http_Response_Cookies>`  **reset** ()
 
 Reset set cookies
 

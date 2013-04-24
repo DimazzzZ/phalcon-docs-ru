@@ -50,10 +50,9 @@ Return a URL service from the default DI
 
 
 
-public static :doc:`Phalcon\\Mvc\\DispatcherInterface <Phalcon_Mvc_DispatcherInterface>`  **getDispatcherService** ()
+public static  **getDispatcherService** ()
 
-Returns a Dispatcher service from the default DI
-
+...
 
 
 public static :doc:`Phalcon\\EscaperInterface <Phalcon_EscaperInterface>`  **getEscaperService** ()
@@ -135,6 +134,8 @@ Builds a HTML A tag using framework conventions
     <?php
 
     echo Phalcon\Tag::linkTo('signup/register', 'Register Here!');
+    echo Phalcon\Tag::linkTo(array('signup/register', 'Register Here!'));
+    echo Phalcon\Tag::linkTo(array('signup/register', 'Register Here!', 'class' => 'btn-primary'));
 
 
 
@@ -205,7 +206,7 @@ Builds a HTML input[type="check"] tag
 
     <?php
 
-     echo Phalcon\Tag::checkField(array("name", "size" => 30))
+     echo Phalcon\Tag::checkField(array("name"))
 
 
 
@@ -218,7 +219,15 @@ Builds a HTML input[type="radio"] tag
 
     <?php
 
-     echo Phalcon\Tag::radioField(array("name", "size" => 30))
+     echo Phalcon\Tag::radioField(array("name"))
+
+Volt syntax: 
+
+.. code-block:: php
+
+    <?php
+
+     {{ radio_field('Save') }}
 
 
 
@@ -233,6 +242,14 @@ Builds a HTML input[type="image"] tag
 
      echo Phalcon\Tag::imageInput(array("src" => "/img/button.png"));
 
+Volt syntax: 
+
+.. code-block:: php
+
+    <?php
+
+     {{ image_input('src': '/img/button.png') }}
+
 
 
 
@@ -245,6 +262,14 @@ Builds a HTML input[type="submit"] tag
     <?php
 
      echo Phalcon\Tag::submitButton("Save")
+
+Volt syntax: 
+
+.. code-block:: php
+
+    <?php
+
+     {{ submit_button('Save') }}
 
 
 
@@ -270,11 +295,19 @@ Builds a HTML SELECT tag using a Phalcon\\Mvc\\Model resultset as options
 
     <?php
 
-    echo Phalcon\Tag::selectStatic(array(
+    echo Phalcon\Tag::select(array(
     	"robotId",
     	Robots::find("type = 'mechanical'"),
     	"using" => array("id", "name")
      	));
+
+Volt syntax: 
+
+.. code-block:: php
+
+    <?php
+
+     {{ select("robotId", robots, "using": ["id", "name"]) }}
 
 
 
@@ -288,6 +321,14 @@ Builds a HTML TEXTAREA tag
     <?php
 
      echo Phalcon\Tag::textArea(array("comments", "cols" => 10, "rows" => 4))
+
+Volt syntax: 
+
+.. code-block:: php
+
+    <?php
+
+     {{ text_area("comments", "cols": 10, "rows": 4) }}
 
 
 
@@ -376,6 +417,15 @@ Builds a LINK[rel="stylesheet"] tag
      	echo Phalcon\Tag::stylesheetLink("http://fonts.googleapis.com/css?family=Rosario", false);
      	echo Phalcon\Tag::stylesheetLink("css/style.css");
 
+Volt Syntax: 
+
+.. code-block:: php
+
+    <?php
+
+     	{{ stylesheet_link("http://fonts.googleapis.com/css?family=Rosario", false) }}
+     	{{ stylesheet_link("css/style.css") }}
+
 
 
 
@@ -404,13 +454,37 @@ Volt syntax:
 
 public static *string*  **image** ([*array* $parameters])
 
-Builds HTML IMG tags
+Builds HTML IMG tags 
+
+.. code-block:: php
+
+    <?php
+
+     	echo Phalcon\Tag::image("img/bg.png");
+     	echo Phalcon\Tag::image(array("img/photo.jpg", "alt" => "Some Photo"));
+
+Volt Syntax: 
+
+.. code-block:: php
+
+    <?php
+
+     	{{ image("img/bg.png") }}
+     	{{ image("img/photo.jpg", "alt": "Some Photo") }}
+
 
 
 
 public static *text*  **friendlyTitle** (*string* $text, [*string* $separator], [*boolean* $lowercase])
 
-Converts texts into URL-friendly titles
+Converts texts into URL-friendly titles 
+
+.. code-block:: php
+
+    <?php
+
+     echo Phalcon\Tag::friendlyTitle('Thiese are big important news', '-')
+
 
 
 

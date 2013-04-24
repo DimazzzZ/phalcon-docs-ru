@@ -253,10 +253,9 @@ Escapes a value to avoid SQL injections
 
 
 
-abstract public  **bindParams** (*string* $sqlStatement, *array* $params)
+abstract public  **bindParams** (*unknown* $sqlStatement, *unknown* $params)
 
-Bind params to a SQL statement
-
+...
 
 
 abstract public *array*  **convertBoundParams** (*string* $sqlStatement, *array* $params)

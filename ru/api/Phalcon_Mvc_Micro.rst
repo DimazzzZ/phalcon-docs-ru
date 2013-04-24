@@ -78,7 +78,7 @@ Maps a route to a handler that only matches if the HTTP method is OPTIONS
 
 
 
-public  **notFound** (*callable* $handler)
+public :doc:`Phalcon\\Mvc\\Micro <Phalcon_Mvc_Micro>`  **notFound** (*callable* $handler)
 
 Sets a handler that will be called when the router doesn't match any of the defined routes
 

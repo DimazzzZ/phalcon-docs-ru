@@ -11,7 +11,7 @@ Methods
 
 public *string*  **render** ([*array* $attributes])
 
-Renders the element widget
+Renders the element widget returning html
 
 
 
@@ -65,7 +65,7 @@ Returns the validators registered for the element
 
 public *array*  **prepareAttributes** (*array* $attributes) inherited from Phalcon\\Forms\\Element
 
-Returns an array of attributes for Phalcon\\Tag helpers prepared according to the element's parameters
+Returns an array of attributes for  prepared attributes for Phalcon\\Tag helpers according to the element's parameters
 
 
 

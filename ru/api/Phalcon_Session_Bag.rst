@@ -141,7 +141,7 @@ Removes a property from the internal bag
 
     <?php
 
-     $user->remove('name'));
+     $user->remove('name');
 
 
 

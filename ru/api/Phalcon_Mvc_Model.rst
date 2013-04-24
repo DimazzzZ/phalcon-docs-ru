@@ -447,7 +447,7 @@ Cancel the current operation
 
 
 
-public  **appendMessage** (:doc:`Phalcon\\Mvc\\Model\\MessageInterface <Phalcon_Mvc_Model_MessageInterface>` $message)
+public :doc:`Phalcon\\Mvc\\Model <Phalcon_Mvc_Model>`  **appendMessage** (:doc:`Phalcon\\Mvc\\Model\\MessageInterface <Phalcon_Mvc_Model_MessageInterface>` $message)
 
 Appends a customized message on the validation process 
 
@@ -472,7 +472,7 @@ Appends a customized message on the validation process
 
 
 
-protected  **validate** ()
+protected :doc:`Phalcon\\Mvc\\Model <Phalcon_Mvc_Model>`  **validate** ()
 
 Executes validators on every validation call 
 
