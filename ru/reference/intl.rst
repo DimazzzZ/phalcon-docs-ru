@@ -93,12 +93,12 @@ API класса Locale.
     var_dump($collator->compare("una canción", "una cancion"));
 
     // Результат сравнения будет отрицательный
-    $collator->setStrength(Collator::DEFAULT);
+    $collator->setStrength(Collator::DEFAULT_VALUE);
     var_dump($collator->compare("una canción", "una cancion"));
 
-Transliteration
----------------
-Transliterator_ provides transliteration of strings:
+Транслитерация
+--------------
+Компонент Transliterator_ добавляет возможность транслитерации строк:
 
 .. code-block:: php
 

@@ -70,7 +70,7 @@ Dispatcher будет искать "PostsController" и его действие 
 
     <h3>This is show view!</h3>
 
-    <p>I have received the parameter <?php $postId ?></p>
+    <p>I have received the parameter <?php echo $postId ?></p>
 
 .. code-block:: html+php
 
@@ -275,7 +275,7 @@ Dispatcher будет искать "PostsController" и его действие 
         public function showAction()
         {
             // Передать все посты в представление
-            $this->view->setVar("posts", Posts:find());
+            $this->view->setVar("posts", Posts::find());
         }
 
     }
@@ -437,7 +437,7 @@ Dispatcher будет искать "PostsController" и его действие 
 ------------------------------------
 Иногда при разработке динамических веб-сайтов некоторые их области обновляются не так часто. Поэтому результат выполнения похожих запросов так же совпадает. Для увеличения производительности :doc:`Phalcon\\Mvc\\View <../api/Phalcon_Mvc_View>` предоставляет возможность кэширования части или всего отрисованного вывода.
 
-:doc:`Phalcon\\\Mvc\\View <../api/Phalcon_Mvc_View>` используется совместно с :doc:`Phalcon\\Cache <cache>`, чтобы обеспечить простой способ кеширования фрагментов вывода. Вы можете вручную установить обработчик кэша или глобальный обработчик: 
+:doc:`Phalcon\\\Mvc\\View <../api/Phalcon_Mvc_View>` используется совместно с :doc:`Phalcon\\Cache <cache>`, чтобы обеспечить простой способ кэширования фрагментов вывода. Вы можете вручную установить обработчик кэша или глобальный обработчик: 
 
 .. code-block:: php
 
@@ -655,7 +655,7 @@ Dispatcher будет искать "PostsController" и его действие 
             // Использование нескольких шаблонизаторов
             $this->view->registerEngines(
                 array(
-                    ".my-html" => 'MyTemplateAdapter'
+                    ".my-html" => 'MyTemplateAdapter',
                     ".phtml" => 'Phalcon\Mvc\View\Engine\Php'
                 )
             );
@@ -778,7 +778,7 @@ Dispatcher будет искать "PostsController" и его действие 
         $view->setViewsDir("../app/views/");
 
         // Назначение обработчика событий для компонента представления
-        $view->setEventsManager($eventManagers);
+        $view->setEventsManager($eventsManager);
 
         return $view;
 

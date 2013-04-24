@@ -140,7 +140,7 @@ HTML разметки. Например, при указании любого т
 
 Из кода выше сформируется такой HTML результат:
 
-.. code-block:: html+php
+.. code-block:: html
 
     <form action="/store/products/search/" method="get">
          <label for="q">Search:</label>
@@ -281,7 +281,7 @@ Phalcon предоставляет ряд помощников для созда
         array(
             'productId',
             Products::find("type = 'vegetables'"),
-            'using' => array('id', "name')
+            'using' => array('id', "name"),
             'useEmpty' => true,
             'emptyText' => 'Выберите значение...',
             'emptyValue' => '@'

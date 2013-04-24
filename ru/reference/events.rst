@@ -1,8 +1,8 @@
 Менеджер событий EventsManager
 ==============================
 Цель данного компонента состоит в добавлени возможности перехватывать процесс выполнения большинства компонентов системы путём создания
-специальных "ключевых точек". Это ключевые точки позволяют разработчику получить информацию о состсоянии, манипулировать данными и изменять 
-пройесс работы компонента.
+специальных "ключевых точек". Эти ключевые точки позволяют разработчику получить информацию о состоянии, манипулировать данными и изменять 
+процесс работы компонента.
 
 Пример использования
 --------------------
@@ -43,7 +43,7 @@
     $eventsManager = new \Phalcon\Events\Manager();
 
     // Создание слушателе базы данных
-    $dbListener = new MyDbListener()
+    $dbListener = new MyDbListener();
 
     // Слушать все события базы данных
     $eventsManager->attach('db', $dbListener);
@@ -136,7 +136,7 @@ the event listener contains contextual information about the event that is runni
 
     foreach($dbListener->getProfiler()->getProfiles() as $profile){
         echo "SQL Statement: ", $profile->getSQLStatement(), "\n";
-        echo "Start Time: ", $profile->getInitialTime(), "\n"
+        echo "Start Time: ", $profile->getInitialTime(), "\n";
         echo "Final Time: ", $profile->getFinalTime(), "\n";
         echo "Total Elapsed Time: ", $profile->getTotalElapsedSeconds(), "\n";
     }
@@ -176,7 +176,7 @@ the event listener contains contextual information about the event that is runni
 
         public function getEventsManager()
         {
-            return $this->_eventsManager
+            return $this->_eventsManager;
         }
 
         public function someTask()

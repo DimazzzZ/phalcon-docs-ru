@@ -44,7 +44,7 @@
     $roleGuests = new \Phalcon\Acl\Role("Guests");
 
     // Добавляем "Guests" в список ACL
-    acl->addRole($roleGuests);
+    $acl->addRole($roleGuests);
 
     // Добавляем "Designers" без класса Phalcon\Acl\Role
     $acl->addRole("Designers");
@@ -131,7 +131,7 @@
     // Проверяем существует ли сериализованный файл
     if (!file_exists("app/security/acl.data")) {
 
-        $acl = new \Phalcon\Acl("Memory");
+        $acl = new \Phalcon\Acl\Adapter\Memory();
 
         //... Определяем роли, ресурсы, доступ и т.д.
 

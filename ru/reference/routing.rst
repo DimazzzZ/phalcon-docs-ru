@@ -132,10 +132,6 @@ URL (/admin/users/a/delete/dave/301), маршрутизатор раберёт 
         )
     );
 
-In the above example, the route doesn't define a "controller" or "action" part. These parts are replaced
-with fixed values ("posts" and "show"). The user will not know the controller that is really dispatched
-by the request. Inside the controller, those named parameters can be accessed as follows:
-
 В приведенном выше примере, в маршруте не определены части для "контроллера" или "действия". Эти параметры заменяются
 фиксированными значениями ("posts" и "show"). Пользователь не будет видеть вызванный контроллер.
 Внутри контроллера именованные параметры можно получить следующим образом:
@@ -396,12 +392,8 @@ URL: /admin/users/edit/sonny, будут обработан как:
 
 Соответствие маршрутов
 ----------------------
-A valid URI must be passed to Router in order to let it checks the route that matches that given URI.
-By default, the routing URI is taken from the $_GET['_url'] variable that is created by the rewrite engine
-module. A couple of rewrite rules that work very well with Phalcon are:
-
-Текущий URI должен передаётся маршрутизатору для того, чтобы он сопоставил его маршруту.
-По умолчанию, URI для маршрутизацит берется из переменной $ _GET ['_url']. Для работы с красивыми ссылками часто используется mod_rewrite.
+Текущий URI должен передаётся маршрутизатору для сопоставления его маршруту.
+По умолчанию, URI для обработки берется из переменной $_GET['_url'], полученной с использование mod_rewrite.
 Для Phalcon подходят очень простые правила mod_rewrite:
 
 .. code-block:: apacheconf
@@ -471,13 +463,13 @@ Then, using for example the component :doc:`Phalcon\\Mvc\\Url <../api/Phalcon_Mv
 
 Примеры использования
 ---------------------
-The following are examples of custom routes:
+Ниже приведены примеры пользовательских маршрутов:
 
 .. code-block:: php
 
     <?php
 
-    // matches "/system/admin/a/edit/7001"
+    // пример - "/system/admin/a/edit/7001"
     $router->add(
         "/system/:controller/a/:action/:params",
         array(
@@ -487,7 +479,7 @@ The following are examples of custom routes:
         )
     );
 
-    // matches "/es/news"
+    // пример - "/es/news"
     $router->add(
         "/([a-z]{2})/:controller",
         array(
@@ -497,7 +489,7 @@ The following are examples of custom routes:
         )
     );
 
-    // matches "/es/news"
+    // пример - "/es/news"
     $router->add(
         "/{language:[a-z]{2}}/:controller",
         array(
@@ -506,7 +498,7 @@ The following are examples of custom routes:
         )
     );
 
-    // matches "/admin/posts/edit/100"
+    // пример - "/admin/posts/edit/100"
     $router->add(
         "/admin/:controller/:action/:int",
         array(
@@ -516,7 +508,7 @@ The following are examples of custom routes:
         )
     );
 
-    // matches "/posts/2010/02/some-cool-content"
+    // пример - "/posts/2010/02/some-cool-content"
     $router->add(
         "/posts/([0-9]{4})/([0-9]{2})/([a-z\-]+)",
         array(
@@ -528,7 +520,7 @@ The following are examples of custom routes:
         )
     );
 
-    // matches "/manual/en/translate.adapter.html"
+    // пример - "/manual/en/translate.adapter.html"
     $router->add(
         "/manual/([a-z]{2})/([a-z\.]+)\.html",
         array(
@@ -539,13 +531,13 @@ The following are examples of custom routes:
         )
     );
 
-    // matches /feed/fr/le-robots-hot-news.atom
+    // пример - /feed/fr/le-robots-hot-news.atom
     $router->add(
         "/feed/{lang:[a-z]+}/{blog:[a-z\-]+}\.{type:[a-z\-]+}",
         "Feed::get"
     );
 
-    // matches /api/v1/users/peter.json
+    // пример - /api/v1/users/peter.json
     $router->add('/api/(v1|v2)/{method:[a-z]+}/{param:[a-z]+}\.(json|xml)', array(
         'controller' => 'api',
         'version' => 1,

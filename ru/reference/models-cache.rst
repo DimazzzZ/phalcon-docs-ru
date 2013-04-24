@@ -1,5 +1,5 @@
-Caching in the ORM
-==================
+Кэширование в ORM
+=================
 Every application is different, we could have models whose data change frequently and others that rarely change.
 Accessing database systems is often one of the most common bottlenecks in terms of performance. This is due to
 the complex connection/communication processes that PHP must do in each request to obtain data from the database.
@@ -10,8 +10,8 @@ This chapter explains the possible points where it is possible to implement cach
 The framework gives you the tools to implement the cache where you demand of it according to the architecture
 of your application.
 
-Caching Resultsets
-------------------
+Кэширование набора данных
+-------------------------
 A well established technique to avoid the continuous access to the database is to cache resultsets that don't change
 frequently using a system with faster access (usually memory).
 
@@ -92,8 +92,8 @@ do not change frequently could be cached, but that is a decision that the develo
 available caching mechanism and whether the performance impact to simply retrieve that data in the
 first place is acceptable.
 
-Overriding find/findFirst
--------------------------
+Переопределение find/findFirst
+------------------------------
 As seen above, these methods are available in models that inherit :doc:`Phalcon\\Mvc\\Model <../api/Phalcon_Mvc_Model>`:
 
 .. code-block:: php
@@ -252,8 +252,8 @@ Then use this class as base class for each 'Cacheable' model:
 
 	}
 
-Forcing Cache
--------------
+Принудительное кэширование
+--------------------------
 Earlier we saw how Phalcon\\Mvc\\Model has a built-in integration with the caching component provided by the framework. To make a record/resultset
 cacheable we pass the key 'cache' in the array of parameters:
 
@@ -285,7 +285,7 @@ we can override the find/findFirst method to force every query to be cached:
 		{
 
 			//Convert the parameters to an array
-			if (!is_array($parameters))) {
+			if (!is_array($parameters)) {
 				$parameters = array($parameters);
 			}
 
@@ -308,8 +308,8 @@ we can override the find/findFirst method to force every query to be cached:
 
 	}
 
-Caching PHQL Queries
---------------------
+Кэширование запросов PHQL 
+-------------------------
 All queries in the ORM, no matter how high level syntax we used to create them are handled internally using PHQL.
 This language gives you much more freedom to create all kinds of queries. Of course these queries can be cached:
 
@@ -330,8 +330,8 @@ This language gives you much more freedom to create all kinds of queries. Of cou
 		'name' => 'Audi'
 	));
 
-Reusable Related Records
-------------------------
+Многоразовые связанные записи
+-----------------------------
 Some models may have relationships to other models. This allows us to easily check the records that relate to instances in memory:
 
 .. code-block:: php
@@ -444,8 +444,8 @@ Do not forget to register the custom models manager in the DI:
 		return new CustomModelsManager();
 	});
 
-Caching Related Records
------------------------
+Кэширование связанных записей
+-----------------------------
 When a related record is queried, the ORM internally builds the appropiate condition and gets the required records using find/findFirst
 in the target model according to the following table:
 
@@ -489,8 +489,8 @@ Accordingly, we could replace the findFirst method in the model Invoices and imp
 		}
 	}
 
-Caching Related Records Recursively
------------------------------------
+Рекурсивное кэширование связанных записей
+-----------------------------------------
 In this scenario, we assume that everytime we query a result we also retrieve their associated records.
 If we store the records found together with their related entities perhaps we could reduce a bit the overhead required
 to obtain all entities:
@@ -593,8 +593,8 @@ Note that this process can also be performed with PHQL following an alternative 
 
 	}
 
-Caching based on Conditions
----------------------------
+Кэширование по условиям
+-----------------------
 In this scenario, the cache is implemented conditionally according to current conditions received.
 According to the range where the primary key is located we choose a different cache backend:
 
@@ -815,7 +815,7 @@ Finally, we could replace the find method in the Robots model to use the custom 
 			}
 
 			$builder = new CustomQueryBuilder($parameters);
-			$builder->from(get_called_class())
+			$builder->from(get_called_class());
 
 			if (isset($parameters['bind'])) {
 				return $builder->getQuery()->execute($parameters['bind']);

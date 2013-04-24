@@ -147,24 +147,26 @@ html-атрибуты вторым параметром:
 
 .. code-block:: php
 
-	<?php
+    <?php
 
-	foreach ($form->getMessages(false) as $attribute => $messages) {
-		echo 'Сообщение создано ', $attribute, ':', "\n";
-		foreach ($messages as $message) {
-			echo $message, '<br>;
-		}
-	}
+    foreach ($form->getMessages(false) as $attribute => $messages) {
+        echo 'Сообщение создано ', $attribute, ':', "\n";
+        foreach ($messages as $message) {
+            echo $message, '<br>';
+        }
+    }
+
 
 Так же можно получить сообщения конкретного элемента:
 
 .. code-block:: php
 
-	<?php
+    <?php
 
-	foreach ($form->getMessagesFor('name') as $message) {
-		echo $message, '<br>;
-	}
+    foreach ($form->getMessagesFor('name') as $message) {
+        echo $message, '<br>';
+    }
+
 
 Формы и сущности
 ----------------
