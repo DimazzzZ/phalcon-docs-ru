@@ -347,7 +347,7 @@ Updates data on a table using custom RBDM SQL syntax
      //Updating existing robot
      $success = $connection->update(
          "robots",
-         array("name")
+         array("name"),
          array("New Astro Boy"),
          "id = 101"
      );
@@ -515,7 +515,7 @@ List all tables on a database
 
     <?php
 
-     	print_r($connection->listTables("blog");
+     	print_r($connection->listTables("blog"));
 
 
 

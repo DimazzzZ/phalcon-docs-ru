@@ -154,7 +154,7 @@ Builds a HTML input[type="text"] tag
 
     <?php
 
-    echo Phalcon\Tag::textField(array("name", "size" => 30))
+    echo Phalcon\Tag::textField(array("name", "size" => 30));
 
 
 
@@ -167,7 +167,7 @@ Builds a HTML input[type="password"] tag
 
     <?php
 
-     echo Phalcon\Tag::passwordField(array("name", "size" => 30))
+     echo Phalcon\Tag::passwordField(array("name", "size" => 30));
 
 
 
@@ -180,7 +180,7 @@ Builds a HTML input[type="hidden"] tag
 
     <?php
 
-     echo Phalcon\Tag::hiddenField(array("name", "value" => "mike"))
+     echo Phalcon\Tag::hiddenField(array("name", "value" => "mike"));
 
 
 
@@ -193,7 +193,7 @@ Builds a HTML input[type="file"] tag
 
     <?php
 
-     echo Phalcon\Tag::fileField("file")
+     echo Phalcon\Tag::fileField("file");
 
 
 
@@ -206,7 +206,7 @@ Builds a HTML input[type="check"] tag
 
     <?php
 
-     echo Phalcon\Tag::checkField(array("name"))
+     echo Phalcon\Tag::checkField(array("name"));
 
 
 
@@ -219,7 +219,7 @@ Builds a HTML input[type="radio"] tag
 
     <?php
 
-     echo Phalcon\Tag::radioField(array("name"))
+     echo Phalcon\Tag::radioField(array("name"));
 
 Volt syntax: 
 
@@ -261,7 +261,7 @@ Builds a HTML input[type="submit"] tag
 
     <?php
 
-     echo Phalcon\Tag::submitButton("Save")
+     echo Phalcon\Tag::submitButton("Save");
 
 Volt syntax: 
 
@@ -282,7 +282,7 @@ Builds a HTML SELECT tag using a PHP array for options
 
     <?php
 
-    echo Phalcon\Tag::selectStatic("status", array("A" => "Active", "I" => "Inactive"))
+    echo Phalcon\Tag::selectStatic("status", array("A" => "Active", "I" => "Inactive"));
 
 
 
@@ -320,7 +320,7 @@ Builds a HTML TEXTAREA tag
 
     <?php
 
-     echo Phalcon\Tag::textArea(array("comments", "cols" => 10, "rows" => 4))
+     echo Phalcon\Tag::textArea(array("comments", "cols" => 10, "rows" => 4));
 
 Volt syntax: 
 
@@ -483,7 +483,7 @@ Converts texts into URL-friendly titles
 
     <?php
 
-     echo Phalcon\Tag::friendlyTitle('Thiese are big important news', '-')
+     echo Phalcon\Tag::friendlyTitle('Thiese are big important news', '-');
 
 
 
