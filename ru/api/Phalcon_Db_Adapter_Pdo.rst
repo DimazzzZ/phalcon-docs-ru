@@ -156,11 +156,6 @@ Escapes a value to avoid SQL injections
 
 
 
-public  **bindParams** (*unknown* $sqlStatement, *unknown* $params)
-
-...
-
-
 public *array*  **convertBoundParams** (*string* $sql, *array* $params)
 
 Converts bound parameters such as :name: or ?1 into PDO bind params ? 
@@ -213,6 +208,12 @@ Commits the active transaction in the connection
 
 
 
+public *int*  **getTransactionLevel** ()
+
+Returns the current transaction nesting level
+
+
+
 public *boolean*  **isUnderTransaction** ()
 
 Checks whether the connection is under a transaction 
@@ -231,31 +232,6 @@ public *\PDO*  **getInternalHandler** ()
 
 Return internal PDO handler
 
-
-
-public  **describeIndexes** (*unknown* $table, [*unknown* $schema])
-
-...
-
-
-public  **describeReferences** (*unknown* $table, [*unknown* $schema])
-
-...
-
-
-public  **tableOptions** (*unknown* $tableName, [*unknown* $schemaName])
-
-...
-
-
-public  **getDefaultIdValue** ()
-
-...
-
-
-public  **supportSequences** ()
-
-...
 
 
 public  **setEventsManager** (:doc:`Phalcon\\Events\\ManagerInterface <Phalcon_Events_ManagerInterface>` $eventsManager) inherited from Phalcon\\Db\\Adapter
@@ -517,6 +493,75 @@ List all tables on a database
 
      	print_r($connection->listTables("blog"));
 
+
+
+
+public :doc:`Phalcon\\Db\\Index <Phalcon_Db_Index>` [] **describeIndexes** (*string* $table, [*string* $schema]) inherited from Phalcon\\Db\\Adapter
+
+Lists table indexes 
+
+.. code-block:: php
+
+    <?php
+
+     print_r($connection->describeIndexes('robots_parts'));
+
+
+
+
+public :doc:`Phalcon\\Db\\Reference <Phalcon_Db_Reference>` [] **describeReferences** (*string* $table, [*string* $schema]) inherited from Phalcon\\Db\\Adapter
+
+Lists table references 
+
+.. code-block:: php
+
+    <?php
+
+     print_r($connection->describeReferences('robots_parts'));
+
+
+
+
+public *array*  **tableOptions** (*string* $tableName, [*string* $schemaName]) inherited from Phalcon\\Db\\Adapter
+
+Gets creation options from a table 
+
+.. code-block:: php
+
+    <?php
+
+     print_r($connection->tableOptions('robots'));
+
+
+
+
+public :doc:`Phalcon\\Db\\RawValue <Phalcon_Db_RawValue>`  **getDefaultIdValue** () inherited from Phalcon\\Db\\Adapter
+
+Returns the default identity value to be inserted in an identity column 
+
+.. code-block:: php
+
+    <?php
+
+     //Inserting a new robot with a valid default value for the column 'id'
+     $success = $connection->insert(
+         "robots",
+         array($connection->getDefaultIdValue(), "Astro Boy", 1952),
+         array("id", "name", "year")
+     );
+
+
+
+
+public *boolean*  **supportSequences** () inherited from Phalcon\\Db\\Adapter
+
+Check whether the database system requires a sequence to produce auto-numeric values
+
+
+
+public *boolean*  **useExplicitIdValue** () inherited from Phalcon\\Db\\Adapter
+
+Check whether the database system requires an explicit value for identity columns
 
 
 

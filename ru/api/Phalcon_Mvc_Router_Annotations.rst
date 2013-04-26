@@ -100,9 +100,10 @@ Returns the internal dependency injector
 
 
 
-protected  **_getRewriteUri** () inherited from Phalcon\\Mvc\\Router
+public *string*  **getRewriteUri** () inherited from Phalcon\\Mvc\\Router
 
-...
+Get rewrite info. This info is read from $_GET['_url']. This returns '/' if the rewrite information cannot be read
+
 
 
 public :doc:`Phalcon\\Mvc\\Router <Phalcon_Mvc_Router>`  **setUriSource** (*string* $uriSource) inherited from Phalcon\\Mvc\\Router

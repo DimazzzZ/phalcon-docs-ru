@@ -9,11 +9,6 @@ This class is a bag to manage the cookies
 Methods
 ---------
 
-public  **__construct** ()
-
-...
-
-
 public  **setDI** (:doc:`Phalcon\\DiInterface <Phalcon_DiInterface>` $dependencyInjector)
 
 Sets the dependency injector
@@ -35,6 +30,12 @@ Sets a cookie to be sent at the end of the request
 public :doc:`Phalcon\\Http\\Cookie <Phalcon_Http_Cookie>`  **get** (*string* $name)
 
 Gets a cookie from the bag
+
+
+
+public *boolean*  **send** ()
+
+Sends the cookies to the client
 
 
 

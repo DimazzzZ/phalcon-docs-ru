@@ -53,6 +53,12 @@ Lists table references
 
 
 
+public *boolean*  **useExplicitIdValue** ()
+
+Check whether the database system requires an explicit value for identity columns
+
+
+
 public  **__construct** (*array* $descriptor) inherited from Phalcon\\Db\\Adapter\\Pdo
 
 Constructor for Phalcon\\Db\\Adapter\\Pdo
@@ -163,11 +169,6 @@ Escapes a value to avoid SQL injections
 
 
 
-public  **bindParams** (*unknown* $sqlStatement, *unknown* $params) inherited from Phalcon\\Db\\Adapter\\Pdo
-
-...
-
-
 public *array*  **convertBoundParams** (*string* $sql, *array* $params) inherited from Phalcon\\Db\\Adapter\\Pdo
 
 Converts bound parameters such as :name: or ?1 into PDO bind params ? 
@@ -220,6 +221,12 @@ Commits the active transaction in the connection
 
 
 
+public *int*  **getTransactionLevel** () inherited from Phalcon\\Db\\Adapter\\Pdo
+
+Returns the current transaction nesting level
+
+
+
 public *boolean*  **isUnderTransaction** () inherited from Phalcon\\Db\\Adapter\\Pdo
 
 Checks whether the connection is under a transaction 
@@ -238,21 +245,6 @@ public *\PDO*  **getInternalHandler** () inherited from Phalcon\\Db\\Adapter\\Pd
 
 Return internal PDO handler
 
-
-
-public  **tableOptions** (*unknown* $tableName, [*unknown* $schemaName]) inherited from Phalcon\\Db\\Adapter\\Pdo
-
-...
-
-
-public  **getDefaultIdValue** () inherited from Phalcon\\Db\\Adapter\\Pdo
-
-...
-
-
-public  **supportSequences** () inherited from Phalcon\\Db\\Adapter\\Pdo
-
-...
 
 
 public  **setEventsManager** (:doc:`Phalcon\\Events\\ManagerInterface <Phalcon_Events_ManagerInterface>` $eventsManager) inherited from Phalcon\\Db\\Adapter
@@ -514,6 +506,43 @@ List all tables on a database
 
      	print_r($connection->listTables("blog"));
 
+
+
+
+public *array*  **tableOptions** (*string* $tableName, [*string* $schemaName]) inherited from Phalcon\\Db\\Adapter
+
+Gets creation options from a table 
+
+.. code-block:: php
+
+    <?php
+
+     print_r($connection->tableOptions('robots'));
+
+
+
+
+public :doc:`Phalcon\\Db\\RawValue <Phalcon_Db_RawValue>`  **getDefaultIdValue** () inherited from Phalcon\\Db\\Adapter
+
+Returns the default identity value to be inserted in an identity column 
+
+.. code-block:: php
+
+    <?php
+
+     //Inserting a new robot with a valid default value for the column 'id'
+     $success = $connection->insert(
+         "robots",
+         array($connection->getDefaultIdValue(), "Astro Boy", 1952),
+         array("id", "name", "year")
+     );
+
+
+
+
+public *boolean*  **supportSequences** () inherited from Phalcon\\Db\\Adapter
+
+Check whether the database system requires a sequence to produce auto-numeric values
 
 
 

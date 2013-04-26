@@ -79,6 +79,12 @@ Returns the first annotation that match a name
 
 
 
+public :doc:`Phalcon\\Annotations\\Annotation <Phalcon_Annotations_Annotation>` [] **getAll** (*string* $name)
+
+Returns all the annotations that match a name
+
+
+
 public *boolean*  **has** (*string* $name)
 
 Check if an annotation exists in a collection

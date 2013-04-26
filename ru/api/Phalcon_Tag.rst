@@ -50,11 +50,6 @@ Return a URL service from the default DI
 
 
 
-public static  **getDispatcherService** ()
-
-...
-
-
 public static :doc:`Phalcon\\EscaperInterface <Phalcon_EscaperInterface>`  **getEscaperService** ()
 
 Returns an Escaper service from the default DI
@@ -159,6 +154,32 @@ Builds a HTML input[type="text"] tag
 
 
 
+public static *string*  **numericField** (*array* $parameters)
+
+Builds a HTML input[type="number"] tag 
+
+.. code-block:: php
+
+    <?php
+
+    echo Phalcon\Tag::numericField(array("price", "min" => "1" "max" => "5"));
+
+
+
+
+public static *string*  **dateField** (*array* $parameters)
+
+Builds a HTML input[type="date"] tag 
+
+.. code-block:: php
+
+    <?php
+
+    echo Phalcon\Tag::dateField(array("born", "value" => "14-12-1980"))
+
+
+
+
 public static *string*  **passwordField** (*array* $parameters)
 
 Builds a HTML input[type="password"] tag 
@@ -219,7 +240,7 @@ Builds a HTML input[type="radio"] tag
 
     <?php
 
-     echo Phalcon\Tag::radioField(array("name"));
+     echo Phalcon\Tag::radioField(array("name"))
 
 Volt syntax: 
 
@@ -261,7 +282,7 @@ Builds a HTML input[type="submit"] tag
 
     <?php
 
-     echo Phalcon\Tag::submitButton("Save");
+     echo Phalcon\Tag::submitButton("Save")
 
 Volt syntax: 
 
@@ -282,7 +303,7 @@ Builds a HTML SELECT tag using a PHP array for options
 
     <?php
 
-    echo Phalcon\Tag::selectStatic("status", array("A" => "Active", "I" => "Inactive"));
+    echo Phalcon\Tag::selectStatic("status", array("A" => "Active", "I" => "Inactive"))
 
 
 
@@ -320,7 +341,7 @@ Builds a HTML TEXTAREA tag
 
     <?php
 
-     echo Phalcon\Tag::textArea(array("comments", "cols" => 10, "rows" => 4));
+     echo Phalcon\Tag::textArea(array("comments", "cols" => 10, "rows" => 4))
 
 Volt syntax: 
 
@@ -483,7 +504,7 @@ Converts texts into URL-friendly titles
 
     <?php
 
-     echo Phalcon\Tag::friendlyTitle('Thiese are big important news', '-');
+     echo Phalcon\Tag::friendlyTitle('Thiese are big important news', '-')
 
 
 
@@ -497,6 +518,32 @@ Set the document type of content
 public static *string*  **getDocType** ()
 
 Get the document type declaration of content
+
+
+
+public static *string*  **tagHtml** (*string* $tagName, [*array* $parameters], [*boolean* $selfClose], [*boolean* $onlyStart], [*boolean* $useEol])
+
+Builds a HTML tag 
+
+.. code-block:: php
+
+    <?php
+
+     echo Phalcon\Tag::tagHtml($name, $parameters, $selfClose, $onlyStart, $eol))
+
+
+
+
+public static *string*  **tagHtmlClose** (*string* $tagName, [*boolean* $useEol])
+
+Builds a HTML tag closing tag 
+
+.. code-block:: php
+
+    <?php
+
+     echo Phalcon\Tag::tagHtmlClose($name, $eol))
+
 
 
 

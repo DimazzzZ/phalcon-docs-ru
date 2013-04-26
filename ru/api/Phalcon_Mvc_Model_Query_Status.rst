@@ -17,7 +17,7 @@ This class represents the status returned by a PHQL statement like INSERT, UPDAT
        'year' => 1959
     ));
     
-     //Check if the update was successful
+    \//Check if the update was successful
     if ($status->success() == true) {
        echo 'OK';
     }

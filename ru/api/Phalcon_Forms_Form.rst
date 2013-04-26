@@ -1,7 +1,9 @@
 Class **Phalcon\\Forms\\Form**
 ==============================
 
-*implements* Countable, Iterator, Traversable
+*extends* :doc:`Phalcon\\DI\\Injectable <Phalcon_DI_Injectable>`
+
+*implements* :doc:`Phalcon\\Events\\EventsAwareInterface <Phalcon_Events_EventsAwareInterface>`, :doc:`Phalcon\\DI\\InjectionAwareInterface <Phalcon_DI_InjectionAwareInterface>`, Countable, Iterator, Traversable
 
 This component allows to build forms
 
@@ -9,9 +11,45 @@ This component allows to build forms
 Methods
 ---------
 
-public  **__construct** ([*object* $entity])
+public  **__construct** ([*object* $entity], [*array* $userOptions])
 
 Phalcon\\Forms\\Form constructor
+
+
+
+public :doc:`Phalcon\\Forms\\Form <Phalcon_Forms_Form>`  **setAction** (*string* $action)
+
+Sets the form's action
+
+
+
+public *string*  **getAction** ()
+
+Returns the form's action
+
+
+
+public *Phalcon\\Forms\\ElementInterface*  **setUserOption** (*string* $option, *mixed* $value)
+
+Sets an option for the element
+
+
+
+public *mixed*  **getUserOption** (*string* $option, [*mixed* $defaultValue])
+
+Returns the value of an option if present
+
+
+
+public *Phalcon\\Forms\\ElementInterface*  **setUserOptions** (*array* $options)
+
+Sets options for the element
+
+
+
+public *array*  **getUserOptions** ()
+
+Returns the options for the element
 
 
 
@@ -54,6 +92,12 @@ Returns the messages generated in the validation
 public :doc:`Phalcon\\Validation\\Message\\Group <Phalcon_Validation_Message_Group>` [] **getMessagesFor** (*unknown* $name)
 
 Returns the messages generated for a specific element
+
+
+
+public *boolean*  **hasMessagesFor** (*unknown* $name)
+
+Check if messages were generated for a specific element
 
 
 
@@ -138,6 +182,36 @@ Moves the internal iteration pointer to the next position
 public *boolean*  **valid** ()
 
 Check if the current element in the iterator is valid
+
+
+
+public  **setDI** (:doc:`Phalcon\\DiInterface <Phalcon_DiInterface>` $dependencyInjector) inherited from Phalcon\\DI\\Injectable
+
+Sets the dependency injector
+
+
+
+public :doc:`Phalcon\\DiInterface <Phalcon_DiInterface>`  **getDI** () inherited from Phalcon\\DI\\Injectable
+
+Returns the internal dependency injector
+
+
+
+public  **setEventsManager** (:doc:`Phalcon\\Events\\ManagerInterface <Phalcon_Events_ManagerInterface>` $eventsManager) inherited from Phalcon\\DI\\Injectable
+
+Sets the event manager
+
+
+
+public :doc:`Phalcon\\Events\\ManagerInterface <Phalcon_Events_ManagerInterface>`  **getEventsManager** () inherited from Phalcon\\DI\\Injectable
+
+Returns the internal event manager
+
+
+
+public  **__get** (*string* $propertyName) inherited from Phalcon\\DI\\Injectable
+
+Magic method __get
 
 
 

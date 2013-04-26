@@ -277,6 +277,75 @@ List all tables on a database
 
 
 
+public :doc:`Phalcon\\Db\\Index <Phalcon_Db_Index>` [] **describeIndexes** (*string* $table, [*string* $schema])
+
+Lists table indexes 
+
+.. code-block:: php
+
+    <?php
+
+     print_r($connection->describeIndexes('robots_parts'));
+
+
+
+
+public :doc:`Phalcon\\Db\\Reference <Phalcon_Db_Reference>` [] **describeReferences** (*string* $table, [*string* $schema])
+
+Lists table references 
+
+.. code-block:: php
+
+    <?php
+
+     print_r($connection->describeReferences('robots_parts'));
+
+
+
+
+public *array*  **tableOptions** (*string* $tableName, [*string* $schemaName])
+
+Gets creation options from a table 
+
+.. code-block:: php
+
+    <?php
+
+     print_r($connection->tableOptions('robots'));
+
+
+
+
+public :doc:`Phalcon\\Db\\RawValue <Phalcon_Db_RawValue>`  **getDefaultIdValue** ()
+
+Returns the default identity value to be inserted in an identity column 
+
+.. code-block:: php
+
+    <?php
+
+     //Inserting a new robot with a valid default value for the column 'id'
+     $success = $connection->insert(
+         "robots",
+         array($connection->getDefaultIdValue(), "Astro Boy", 1952),
+         array("id", "name", "year")
+     );
+
+
+
+
+public *boolean*  **supportSequences** ()
+
+Check whether the database system requires a sequence to produce auto-numeric values
+
+
+
+public *boolean*  **useExplicitIdValue** ()
+
+Check whether the database system requires an explicit value for identity columns
+
+
+
 public *array*  **getDescriptor** ()
 
 Return descriptor used to connect to the active database

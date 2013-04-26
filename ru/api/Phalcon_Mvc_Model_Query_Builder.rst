@@ -133,7 +133,7 @@ Adds a RIGHT join to the query
 
 
 
-public :doc:`Phalcon\\Mvc\\Model\\Query\\Builder <Phalcon_Mvc_Model_Query_Builder>`  **where** (*string* $conditions)
+public :doc:`Phalcon\\Mvc\\Model\\Query\\Builder <Phalcon_Mvc_Model_Query_Builder>`  **where** (*string* $conditions, [*array* $bindParams], [*array* $bindTypes])
 
 Sets the query conditions 
 
@@ -146,7 +146,7 @@ Sets the query conditions
 
 
 
-public :doc:`Phalcon\\Mvc\\Model\\Query\\Builder <Phalcon_Mvc_Model_Query_Builder>`  **andWhere** (*string* $conditions)
+public :doc:`Phalcon\\Mvc\\Model\\Query\\Builder <Phalcon_Mvc_Model_Query_Builder>`  **andWhere** (*string* $conditions, [*array* $bindParams], [*array* $bindTypes])
 
 Appends a condition to the current conditions using a AND operator 
 
@@ -160,7 +160,7 @@ Appends a condition to the current conditions using a AND operator
 
 
 
-public :doc:`Phalcon\\Mvc\\Model\\Query\\Builder <Phalcon_Mvc_Model_Query_Builder>`  **orWhere** (*string* $conditions)
+public :doc:`Phalcon\\Mvc\\Model\\Query\\Builder <Phalcon_Mvc_Model_Query_Builder>`  **orWhere** (*string* $conditions, [*array* $bindParams], [*array* $bindTypes])
 
 Appends a condition to the current conditions using a OR operator 
 
@@ -170,6 +170,45 @@ Appends a condition to the current conditions using a OR operator
 
     $builder->orWhere('name = "Peter"');
     $builder->orWhere('name = :name: AND id > :id:', array('name' => 'Peter', 'id' => 100));
+
+
+
+
+public :doc:`Phalcon\\Mvc\\Model\\Query\\Builder <Phalcon_Mvc_Model_Query_Builder>`  **betweenWhere** (*string* $expr, *mixed* $minimum, *mixed* $maximum)
+
+Appends a BETWEEN condition to the current conditions 
+
+.. code-block:: php
+
+    <?php
+
+    $builder->betweenWhere('price', 100.25, 200.50);
+
+
+
+
+public :doc:`Phalcon\\Mvc\\Model\\Query\\Builder <Phalcon_Mvc_Model_Query_Builder>`  **inWhere** (*string* $expr, *array* $values)
+
+Appends an IN condition to the current conditions 
+
+.. code-block:: php
+
+    <?php
+
+    $builder->inWhere('id', [1, 2, 3]);
+
+
+
+
+public :doc:`Phalcon\\Mvc\\Model\\Query\\Builder <Phalcon_Mvc_Model_Query_Builder>`  **notInWhere** (*string* $expr, *array* $values)
+
+Appends a NOT IN condition to the current conditions 
+
+.. code-block:: php
+
+    <?php
+
+    $builder->notInWhere('id', [1, 2, 3]);
 
 
 

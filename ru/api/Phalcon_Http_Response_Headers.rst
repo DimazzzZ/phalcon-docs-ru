@@ -9,11 +9,6 @@ This class is a bag to manage the response headers
 Methods
 ---------
 
-public  **__construct** ()
-
-...
-
-
 public  **set** (*string* $name, *string* $value)
 
 Sets a header to be sent at the end of the request

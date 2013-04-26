@@ -678,7 +678,7 @@ Deletes a model instance. Returning true on success or false otherwise.
     $robot = Robots::findFirst("id=100");
     $robot->delete();
     
-    foreach(Robots::find("type = 'mechanical'") as $robot){
+    foreach (Robots::find("type = 'mechanical'") as $robot) {
        $robot->delete();
     }
 
@@ -888,15 +888,15 @@ Setups a behavior in a model
 
     <?php
 
-    use Phalcon\Mvc\Model\Behavior\Timestampable;
+    use Phalcon\Mvc\Model\Behaviors\Timestampable;
     
     class Robots extends \Phalcon\Mvc\Model
     {
     
        public function initialize()
        {
-    	$this->addBehavior(new Timestampable(
-    		array('onCreate' => array(
+    	$this->addBehavior(new Timestampable(array(
+    		'onCreate' => array(
     			'field' => 'created_at',
     			'format' => 'Y-m-d'
     		)

@@ -26,6 +26,30 @@ protected  **_addMap** ()
 ...
 
 
+public *array*  **getHandlers** ()
+
+Returns the registered handlers
+
+
+
+public  **setHandler** (*mixed* $handler)
+
+Sets the main handler
+
+
+
+public *mixed*  **getHandler** ()
+
+Returns the main handler
+
+
+
+public :doc:`Phalcon\\Mvc\\Router\\RouteInterface <Phalcon_Mvc_Router_RouteInterface>`  **map** (*string* $routePattern, *callable* $handler)
+
+Maps a route to a handler
+
+
+
 public :doc:`Phalcon\\Mvc\\Router\\RouteInterface <Phalcon_Mvc_Router_RouteInterface>`  **get** (*string* $routePattern, *callable* $handler)
 
 Maps a route to a handler that only matches if the HTTP method is GET

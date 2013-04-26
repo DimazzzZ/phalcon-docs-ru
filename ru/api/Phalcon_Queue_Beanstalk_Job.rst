@@ -13,6 +13,18 @@ public  **__construct** (:doc:`Phalcon\\Queue\\Beanstalk <Phalcon_Queue_Beanstal
 
 
 
+public *string*  **getId** ()
+
+Returns the job id
+
+
+
+public *string*  **getBody** ()
+
+Returns the job body
+
+
+
 public *boolean*  **delete** ()
 
 Removes a job from the server entirely
