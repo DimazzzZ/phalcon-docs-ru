@@ -56,9 +56,9 @@
 Теперь модель Robots маппирует (использует) таблицу "the_robots". Метод initialize() помогает в создании модели с пользовательским поведением, т.е. использовании другой таблицы. 
 Метод initialize() вызывает лишь однажды во время запроса.
 
-Models in Namespaces
+Модели в Пространствах Имен
 --------------------
-Namespaces can be used to avoid class name collision. In this case it is necessary to indicate the name of the related table using getSource:
+Пространства имен могут быть использованы во избежание конфликтов, связанных с именами классов. В этих случаях, необходимо указывать имя соответствующей таблицы базы данных используя метод getSource:
 
 .. code-block:: php
 
@@ -76,10 +76,10 @@ Namespaces can be used to avoid class name collision. In this case it is necessa
 
     }
 
-Understanding Records To Objects
+Понимание Записей В Объектах
 --------------------------------
-Every instance of a model represents a row in the table. You can easily access record data by reading object properties. For example,
-for a table "robots" with the records:
+Каждый экземпляр объекта модели представляет собой строку таблицы базы данных. Вы можете легко получить доступ к любой записи, считывая свойство объекта.
+К примеру, для таблицы "robots" с записями:
 
 .. code-block:: bash
 
@@ -91,9 +91,9 @@ for a table "robots" with the records:
     |  2 | Astro Boy  | mechanical | 1952 |
     |  3 | Terminator | cyborg     | 2029 |
     +----+------------+------------+------+
-    3 rows in set (0.00 sec)
+    3 строки в наборе (0,00 сек)
 
-You could find a certain record by its primary key and then print its name:
+Вы можете найти опеределенную запись по ее первичному ключу и напечатать ее имя:
 
 .. code-block:: php
 
@@ -102,10 +102,10 @@ You could find a certain record by its primary key and then print its name:
     // Find record with id = 3
     $robot = Robots::findFirst(3);
 
-    // Prints "Terminator"
+    // Печатать "Terminator"
     echo $robot->name;
 
-Once the record is in memory, you can make modifications to its data and then save changes:
+Как только запись будет зарезервирована в памяти, мы можете производить изменения ее данных, а затем сохранить изменения.
 
 .. code-block:: php
 
@@ -115,8 +115,8 @@ Once the record is in memory, you can make modifications to its data and then sa
     $robot->name = "RoboCop";
     $robot->save();
 
-As you can see, there is no need to use raw SQL statements. :doc:`Phalcon\\Mvc\\Model <../api/Phalcon_Mvc_Model>` provides high database
-abstraction for web applications.
+Как вы можете видеть, нет никакой необходимости в использовании необработанных SQL запросов. :doc:`Phalcon\\Mvc\\Model <../api/Phalcon_Mvc_Model>` 
+предоставляет высший уровень абстракции базы данных для веб-приложений.
 
 Finding Records
 ---------------
