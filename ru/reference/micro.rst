@@ -1,8 +1,8 @@
-Micro Applications
+Микро приложения.
 ==================
-With Phalcon you can create "Micro-Framework like" applications. By doing this, you only need to write a minimal amount of
-code to create a PHP application. Micro applications are suitable to implement small applications, APIs and
-prototypes in a practical way.
+С помощью Phalcon можно создавать приложения по типу "Микро Фреймворк". 
+Для этого, необходимо написать всего лишь несколько строк кода. Микро приложения подходят для реализации 
+небольших приложений, различныx API и прототипов на практике. 
 
 .. code-block:: php
 
@@ -16,9 +16,9 @@ prototypes in a practical way.
 
     $app->handle();
 
-Creating a Micro Application
+Создание микро приложения.
 ----------------------------
-:doc:`Phalcon\\Mvc\\Micro <../api/Phalcon_Mvc_Micro>` is the class responsible for implementing a micro application.
+:doc:`Phalcon\\Mvc\\Micro <../api/Phalcon_Mvc_Micro>` это класс, отвечающий за реализацию микро приложения.
 
 .. code-block:: php
 
@@ -26,12 +26,11 @@ Creating a Micro Application
 
     $app = new Phalcon\Mvc\Micro();
 
-Defining routes
+Создание путей.
 ---------------
-After instantiating the object, you will need to add some routes. :doc:`Phalcon\\Mvc\\Router <../api/Phalcon_Mvc_Router>` manages routing internally.
-Routes must always start with /. A HTTP method constraint is optionally required when defining routes, so as to instruct
-the router to match only if the request also matches the HTTP methods. The following example shows how to define
-a route for the method GET:
+После создания экземпляра класса, необходимо добавить некоторые пути. :doc:`Phalcon\\Mvc\\Router <../api/Phalcon_Mvc_Router>` отвечает за управление путями, которые должны всегда начинаться с  /.
+При создании путей, необходимо указывать какой метод HTTP используется, чтобы запросы путей соответствовали методам HTTP.
+Ниже представлен пример, показывающий как создавать пути, используя метод GET:
 
 .. code-block:: php
 
@@ -41,72 +40,73 @@ a route for the method GET:
         echo "<h1>Hello! $name</h1>";
     });
 
-The "get" method indicates that the associated HTTP method is GET. The route /say/hello/{name} also has a parameter {$name} that is passed
-directly to the route handler (the anonymous function). Handlers are executed when a route is matched. A handler could be
-any callable item in the PHP userland. The following example shows how to define different types of handlers:
+Метод "get" показывает, что используется GET запрос. Путь /say/hello/{name} также имеет параметр {$name}, 
+который напрямую передается обработчику пути (анонимная функция). Обработка пути выполняется, когда путь совпадает. 
+Обработчик может быть любого типа, который возвращает данные в PHP среде. Следующий пример демонстрирует, 
+как создавать различные типы обработчиков пути.
 
 .. code-block:: php
 
     <?php
 
-    // With a function
+    //С помощью функции
     function say_hello($name) {
         echo "<h1>Hello! $name</h1>";
     }
 
     $app->get('/say/hello/{name}', "say_hello");
 
-    // With a static method
+    // С помощью статичного метода
     $app->get('/say/hello/{name}', "SomeClass::someSayMethod");
 
-    // With a method in an object
+    // С помощью метода объекта
     $myController = new MyController();
     $app->get('/say/hello/{name}', array($myController, "someAction"));
 
-    //Anonymous function
+    //Анонимная функция (замыкание)
     $app->get('/say/hello/{name}', function ($name) {
         echo "<h1>Hello! $name</h1>";
     });
 
-:doc:`Phalcon\\Mvc\\Micro <../api/Phalcon_Mvc_Micro>` provides a set of methods to define the HTTP method (or methods)
-which the route is constrained for:
+:doc:`Phalcon\\Mvc\\Micro <../api/Phalcon_Mvc_Micro>` предлагает набор инструментов для создания HTTP метода (или методов), 
+необходимых для создания пути:
 
 .. code-block:: php
 
     <?php
 
-    //Matches if the HTTP method is GET
+    //Совпадет, если HTTP метод - GET
     $app->get('/api/products', "get_products");
 
-    //Matches if the HTTP method is POST
+    //Совпадет, если HTTP метод - POST
     $app->post('/api/products/add', "add_product");
 
-    //Matches if the HTTP method is PUT
+    //Совпадет, если HTTP метод - PUT
     $app->put('/api/products/update/{id}', "update_product");
 
-    //Matches if the HTTP method is DELETE
+    //Совпадет, если HTTP метод - DELETE
     $app->put('/api/products/remove/{id}', "delete_product");
 
-    //Matches if the HTTP method is OPTIONS
+    //Совпадет, если HTTP метод - OPTIONS
     $app->options('/api/products/info/{id}', "info_product");
 
-    //Matches if the HTTP method is PATCH
+    //Совпадет, если HTTP метод - PATCH
     $app->patch('/api/products/update/{id}', "info_product");
 
-    //Matches if the HTTP method is GET or POST
+    //Совпадет, если HTTP метод - GET или POST
     $app->map('/repos/store/refs',"action_product")->via(array('GET', 'POST'));
 
 
-Routes with Parameters
+Пути с параметрами
 ^^^^^^^^^^^^^^^^^^^^^^
-Defining parameters in routes is very easy as demonstrated above. The name of the parameter has to be enclosed in brackets. Parameter
-formatting is also available using regular expressions to ensure consistency of data. This is demonstrated in the example below:
-
+Создание параметров путей - довольно простая задача, как показывает пример выше. 
+Имя параметра должно находиться в скобках. Параметры также можно задавать с помощью регулярных выражений для того, 
+чтобы быть уверенным в наличии данных. Это показано в примере ниже:
 .. code-block:: php
 
     <?php
 
-    //This route have two parameters and each of them have a format
+    //Данный путь имеет два параметра, у каждого из которых задан формат
     $app->get('/posts/{year:[0-9]+}/{title:[a-zA-Z\-]+}', function ($year, $title) {
         echo "<h1>Title: $title</h1>";
         echo "<h2>Year: $year</h2>";
