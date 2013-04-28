@@ -189,10 +189,10 @@ URL (/admin/users/a/delete/dave/301), маршрутизатор раберёт 
         public function showAction()
         {
 
-            // Returns "name" parameter
+            // Возвращает параметр "name"
             $year = $this->dispatcher->getParam("name");
 
-            // Returns "type" parameter
+            // Возвращает параметр "type"
             $year = $this->dispatcher->getParam("type");
 
         }
@@ -389,8 +389,8 @@ URL: /admin/users/edit/sonny, будут обработан как:
 
 Соответствие маршрутов
 ----------------------
-Текущий URI должен передаётся маршрутизатору для сопоставления его маршруту.
-По умолчанию, URI для обработки берется из переменной $_GET['_url'], полученной с использование mod_rewrite.
+Текущий URI должен передаётся маршрутизатору для сопоставления его маршруту. По умолчанию, URI для обработки берется из
+переменной $_GET['_url'], полученной с использование mod_rewrite.
 Для Phalcon подходят очень простые правила mod_rewrite:
 
 .. code-block:: apacheconf
@@ -429,9 +429,9 @@ URL: /admin/users/edit/sonny, будут обработан как:
 
 Именованные маршруты
 --------------------
-Each route that is added to the router is stored internally as an object :doc:`Phalcon\\Mvc\\Router\\Route <../api/Phalcon_Mvc_Router_Route>`.
-That class encapsulates all the details of each route. For instance, we can give a name to a path to identify it uniquely in our application.
-This is especially useful if you want to create URLs from it.
+Каждый маршрут, добавленный в маршрутизатор хранится как объект :doc:`Phalcon\\Mvc\\Router\\Route <../api/Phalcon_Mvc_Router_Route>`.
+Этот класс включает в себя все детали каждого маршрута. Например, мы можем дать ему имя и однозначно идентифицировать в нашем приложении.
+Это особенно полезно, если вы хотите создать ссылки для него.
 
 .. code-block:: php
 
@@ -441,17 +441,17 @@ This is especially useful if you want to create URLs from it.
 
     $route->setName("show-posts");
 
-    //or just
+    // или проще
 
     $router->add("/posts/{year}/{title}", "Posts::show")->setName("show-posts");
 
-Then, using for example the component :doc:`Phalcon\\Mvc\\Url <../api/Phalcon_Mvc_Url>` we can build routes from its name:
+Затем, при помощи компонента :doc:`Phalcon\\Mvc\\Url <../api/Phalcon_Mvc_Url>` и названия маршрута можно создать ссылку:
 
 .. code-block:: php
 
     <?php
 
-    // returns /posts/2012/phalcon-1-0-released
+    // возвратит /posts/2012/phalcon-1-0-released
     echo $url->get(array(
         "for" => "show-posts",
         "year" => "2012", "title" =>
@@ -561,19 +561,18 @@ For example, for a URL like this *http://phalconphp.com/documentation/show/about
 | Parameter  | about.html    |
 +------------+---------------+
 
-If you don't want use this routes as default in your application, you must create the router passing false as parameter:
+Если вы не хотите использовать маршруты по умолчанию в вашем приложении, вы должны указать false в качестве параметра при создании объекта маршрутизатора:
 
 .. code-block:: php
 
     <?php
 
-    // Create the router without default routes
+    // Создания маршрутизатора без поддержки стандартной маршрутизации
     $router = new \Phalcon\Mvc\Router(false);
 
 Указание маршрута по умолчанию
 ------------------------------
-When your application is accessed without any route, the '/' route is used to determine what paths must be used to show the initial page
-in your website/application:
+При обращению к главной странице приложения срабатывает маршрут '/', в нём надо указать что должно срабатывать:
 
 .. code-block:: php
 
@@ -586,13 +585,13 @@ in your website/application:
 
 404 страница
 ------------
-If none of the routes specified in the router are matched, you can define a group of paths to be used in this scenario:
+Если ни один из указанных маршрутов в маршрутизаторе не совпадёт, вы можете определить действие для этого случая:
 
 .. code-block:: php
 
     <?php
 
-    //Set 404 paths
+    // Указание действия для 404 страницы
     $router->notFound(array(
         "controller" => "index",
         "action" => "route404"
@@ -607,13 +606,13 @@ those paths they can be automatically filled by the router:
 
     <?php
 
-    //Individually
+    // Индивидуально
     $router->setDefaultModule("backend");
     $router->setDefaultNamespace('Backend\Controllers');
     $router->setDefaultController("index");
     $router->setDefaultAction("index");
 
-    //Using an array
+    // Используя значения массива
     $router->setDefaults(array(
         "controller" => "index",
         "action" => "index"
@@ -630,10 +629,10 @@ a not-found status in the dispatcher. You can set up the router to automatically
 
     $router = new \Phalcon\Mvc\Router();
 
-    //Remove trailing slashes automatically
+    // Конечные косые черты будут автоматически удалены
     $router->removeExtraSlashes(true);
 
-Or, you can modify specific routes to optionally accept trailing slashes:
+Или, вы можете изменить определенные маршруты в которых необходимо использовать косые черты:
 
 .. code-block:: php
 
@@ -659,7 +658,7 @@ Phalcon, you can also use $_SERVER['REQUEST_URI'] if required:
     $router->setUriSource(Router::URI_SOURCE_GET_URL); // use $_GET['_url'] (default)
     $router->setUriSource(Router::URI_SOURCE_SERVER_REQUEST_URI); // use $_SERVER['REQUEST_URI'] (default)
 
-Or you can manually pass a URI to the 'handle' method:
+Или вы можете самостоятельно передавать URI в метод "handle":
 
 .. code-block:: php
 
@@ -669,13 +668,13 @@ Or you can manually pass a URI to the 'handle' method:
 
 Тестирование маршрутов
 ----------------------
-Since this component has no dependencies, you can create a file as shown below to test your routes:
+Компонент маршрутизации не имеет внутренних зависимостей, вы можете создать файл, как показано ниже, для проверки свои маршрутов:
 
 .. code-block:: php
 
     <?php
 
-    //These routes simulate real URIs
+    // Маршруты для проверки
     $testRoutes = array(
         '/',
         '/index',
@@ -688,23 +687,23 @@ Since this component has no dependencies, you can create a file as shown below t
 
     $router = new Phalcon\Mvc\Router();
 
-    //Add here your custom routes
+    // Тут необходимо установить правила маршрутизации
     //...
 
-    //Testing each route
+    // Цикл проверки маршрутов
     foreach ($testRoutes as $testRoute) {
 
-        //Handle the route
+        // Обработка маршрута
         $router->handle($testRoute);
 
-        echo 'Testing ', $testRoute, '<br>';
+        echo 'Тестирование ', $testRoute, '<br>';
 
-        //Check if some route was matched
+        // Проверка выбранного маршрута
         if ($router->wasMatched()) {
             echo 'Controller: ', $router->getControllerName(), '<br>';
             echo 'Action: ', $router->getActionName(), '<br>';
         } else {
-            echo 'The route wasn\'t matched by any route<br>';
+            echo 'Маршрут не поддерживается<br>';
         }
         echo '<br>';
 
@@ -782,7 +781,7 @@ The annotations can be defined in the following way:
 
     }
 
-Only methods marked with valid annotations are used as routes. List of annotations supported:
+Маршрутизатор поддерживает только строго определённые методы, вот список текущих поддерживаемых аннотации:
 
 +--------------+---------------------------------------------------------------------------------------------------+--------------------------------------------------------------------+
 | Name         | Description                                                                                       | Usage                                                              |
