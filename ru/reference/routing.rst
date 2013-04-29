@@ -332,7 +332,7 @@ URL: /admin/users/edit/sonny, будут обработан как:
 
 Использование преобразований
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^
-Метод convert позволяет трансформировать параметры маршрута до передачи их диспетчеру, следующие пример показывает вариант использования:
+Метод convert позволяет трансформировать параметры маршрута до передачи их диспетчеру, следующий пример показывает вариант использования:
 
 .. code-block:: php
 
@@ -542,16 +542,16 @@ URL: /admin/users/edit/sonny, будут обработан как:
     ));
 
 .. highlights::
-    Beware of characters allowed in regular expression for controllers and namespaces. As these
-    become class names and in turn they're passed through the file system could be used by attackers to
-    read unauthorized files. A safe regular expression is: /([a-zA-Z0-9\_\-]+)
+    Остерегайтесь использования спецсимволов в регулярных выражениях для контроллеров и пространст имён. Эти
+    параметры формируют имена классов и файлов, что в слою очередь взаимодействует с файловой системой, и может 
+    использоваться злоумышленником для чтения несанкционированных файлов. Безопасным является регулярное выражение: /([a-zA-Z0-9\_\-]+)
 
 Поведение по умолчанию
 ----------------------
-:doc:`Phalcon\\Mvc\\Router <../api/Phalcon_Mvc_Router>` has a default behavior providing a very simple routing that
-always expects a URI that matches the following pattern: /:controller/:action/:params
+У компонента :doc:`Phalcon\\Mvc\\Router <../api/Phalcon_Mvc_Router>` есть поведение по умолчанию, при котором все URL
+обрабатываются по простому шаблону: /:controller/:action/:params
 
-For example, for a URL like this *http://phalconphp.com/documentation/show/about.html*, this router will translate it as follows:
+Например, ссылку вида *http://phalconphp.com/documentation/show/about.html* маршрутизатор проанализирует как:
 
 +------------+---------------+
 | Controller | documentation |
@@ -599,14 +599,14 @@ For example, for a URL like this *http://phalconphp.com/documentation/show/about
 
 Установка параметров по умолчанию
 ---------------------------------
-It's possible to define default values for common paths like module, controller or action. When a route is missing any of
-those paths they can be automatically filled by the router:
+Можно определить значения по умолчанию для некоторых частей маршрута, таких как модуль, контроллер или действие. Когда в маршруте отсутствует любая из
+указанных частей, они будут автоматически заполнены маршрутизатором из значений по умолчанию:
 
 .. code-block:: php
 
     <?php
 
-    // Индивидуально
+    // Индивидуальные методы
     $router->setDefaultModule("backend");
     $router->setDefaultNamespace('Backend\Controllers');
     $router->setDefaultController("index");
@@ -620,8 +620,8 @@ those paths they can be automatically filled by the router:
 
 Использование конечного /
 -------------------------
-Sometimes a route could be accessed with extra/trailing slashes and the end of the route, those extra slashes would lead to produce
-a not-found status in the dispatcher. You can set up the router to automatically remove the slashes from the end of handled route:
+Иногда обращение к маршруту может быть с дополнительной косой чертой (слэш) и в конце маршрута, это в отдельных случая может привести
+к несооответсвию маршруту. Вы можете настроить маршрутизатор для автоматического удаления слэша из конца обрабатываемого маршрута:
 
 .. code-block:: php
 
@@ -648,15 +648,15 @@ a not-found status in the dispatcher. You can set up the router to automatically
 
 Источники URI
 -------------
-By default the URI information is obtained from the $_GET['_url'] variable, this is passed by the Rewrite-Engine to 
-Phalcon, you can also use $_SERVER['REQUEST_URI'] if required:
+По умолчанию текущий URI для обработки берётся из переменной $_GET['_url'], так устроено внутри Phalcon и стандартных правилах mod-rewrite,
+очень просто можно указать использование для этих целей переменную $_SERVER['REQUEST_URI']:
 
 .. code-block:: php
 
     <?php
 
-    $router->setUriSource(Router::URI_SOURCE_GET_URL); // use $_GET['_url'] (default)
-    $router->setUriSource(Router::URI_SOURCE_SERVER_REQUEST_URI); // use $_SERVER['REQUEST_URI'] (default)
+    $router->setUriSource(Router::URI_SOURCE_GET_URL); // использование $_GET['_url'] (по умолчанию)
+    $router->setUriSource(Router::URI_SOURCE_SERVER_REQUEST_URI); // использование $_SERVER['REQUEST_URI'] (по умолчанию)
 
 Или вы можете самостоятельно передавать URI в метод "handle":
 
@@ -700,8 +700,8 @@ Phalcon, you can also use $_SERVER['REQUEST_URI'] if required:
 
         // Проверка выбранного маршрута
         if ($router->wasMatched()) {
-            echo 'Controller: ', $router->getControllerName(), '<br>';
-            echo 'Action: ', $router->getActionName(), '<br>';
+            echo 'Контроллер (Controller): ', $router->getControllerName(), '<br>';
+            echo 'Действие (Action): ', $router->getActionName(), '<br>';
         } else {
             echo 'Маршрут не поддерживается<br>';
         }
@@ -711,8 +711,10 @@ Phalcon, you can also use $_SERVER['REQUEST_URI'] if required:
 
 Маршруты на аннотациях
 ----------------------
-This component provides a variant that's integrated with the :doc:`annotations <annotations>` service. Using this strategy
-you can write the routes directly in the controllers instead of adding them in the service registration:
+Компонент :doc:`Phalcon\\Mvc\\Router\\Annotations <../api/Phalcon_Mvc_Router_Annotations>` интегрированн с
+компонентом :doc:`annotations <annotations>`, и позволяет получать информацию о маршрутах из doc-блоков внутри
+кода контроллеров. Используя эту стратегию, вы можете указывать маршруты непосредственно в контроллерах, вместо
+того, чтобы указывать их в отдельных правилах маршрутизации:
 
 .. code-block:: php
 
@@ -720,16 +722,16 @@ you can write the routes directly in the controllers instead of adding them in t
 
     $di['router'] = function() {
 
-        //Use the annotations router
+        // Используем роутер на аннотациях
         $router = new \Phalcon\Mvc\Router\Annotations(false);
 
-        //Read the annotations from ProductsController if the uri starts with /api/products
+        // Чтение аннотаций из контроллера ProductsController для ссылок начинающихся на /api/products
         $router->addResource('Products', '/api/products');
 
         return $router;
     };
 
-The annotations can be defined in the following way:
+Аннотации могут быть определены следующим образом:
 
 .. code-block:: php
 
@@ -783,39 +785,39 @@ The annotations can be defined in the following way:
 
 Маршрутизатор поддерживает только строго определённые методы, вот список текущих поддерживаемых аннотации:
 
-+--------------+---------------------------------------------------------------------------------------------------+--------------------------------------------------------------------+
-| Name         | Description                                                                                       | Usage                                                              |
-+==============+===================================================================================================+====================================================================+
-| RoutePrefix  | A prefix to be prepended to each route uri. This annotation must be placed at the class' docblock | @RoutePrefix("/api/products")                                      |
-+--------------+---------------------------------------------------------------------------------------------------+--------------------------------------------------------------------+
-| Route        | This annotation marks a method as a route. This annotation must be placed in a method docblock    | @Route("/api/products/show")                                       |
-+--------------+---------------------------------------------------------------------------------------------------+--------------------------------------------------------------------+
-| Get          | This annotation marks a method as a route restricting the HTTP method to GET                      | @Get("/api/products/search")                                       |
-+--------------+---------------------------------------------------------------------------------------------------+--------------------------------------------------------------------+
-| Post         | This annotation marks a method as a route restricting the HTTP method to POST                     | @Post("/api/products/save")                                        |
-+--------------+---------------------------------------------------------------------------------------------------+--------------------------------------------------------------------+
-| Put          | This annotation marks a method as a route restricting the HTTP method to PUT                      | @Put("/api/products/save")                                         |
-+--------------+---------------------------------------------------------------------------------------------------+--------------------------------------------------------------------+
-| Delete       | This annotation marks a method as a route restricting the HTTP method to DELETE                   | @Delete("/api/products/delete/{id}")                               |
-+--------------+---------------------------------------------------------------------------------------------------+--------------------------------------------------------------------+
-| Options      | This annotation marks a method as a route restricting the HTTP method to OPTIONS                  | @Option("/api/products/info")                                      |
-+--------------+---------------------------------------------------------------------------------------------------+--------------------------------------------------------------------+
++--------------+--------------------------------------------------------------------------------------------------------+--------------------------------------------------------+
+| Название     | Описание                                                                                               | Использование                                          |
++==============+========================================================================================================+========================================================+
+| RoutePrefix  | Префикс добавляемый к каждому маршруту. Эта аннотация должны быть в комментариях класса (контроллера)  | @RoutePrefix("/api/products")                          |
++--------------+--------------------------------------------------------------------------------------------------------+--------------------------------------------------------+
+| Route        | Эта аннотация создаёт маршрут для метода, она должна быть в комментариях метода                        | @Route("/api/products/show")                           |
++--------------+--------------------------------------------------------------------------------------------------------+--------------------------------------------------------+
+| Get          | Эта аннотация создаёт маршрут для метода, разрешается только HTTP метод GET                            | @Get("/api/products/search")                           |
++--------------+--------------------------------------------------------------------------------------------------------+--------------------------------------------------------+
+| Post         | Эта аннотация создаёт маршрут для метода, разрешается только HTTP метод POST                           | @Post("/api/products/save")                            |
++--------------+--------------------------------------------------------------------------------------------------------+--------------------------------------------------------+
+| Put          | Эта аннотация создаёт маршрут для метода, разрешается только HTTP метод PUT                            | @Put("/api/products/save")                             |
++--------------+--------------------------------------------------------------------------------------------------------+--------------------------------------------------------+
+| Delete       | Эта аннотация создаёт маршрут для метода, разрешается только HTTP метод DELETE                         | @Delete("/api/products/delete/{id}")                   |
++--------------+--------------------------------------------------------------------------------------------------------+--------------------------------------------------------+
+| Options      | Эта аннотация создаёт маршрут для метода, разрешается только HTTP метод OPTIONS                        | @Option("/api/products/info")                          |
++--------------+--------------------------------------------------------------------------------------------------------+--------------------------------------------------------+
 
-For annotations that add routes, the following parameters are supported:
+Для аннотации при добавлении маршрутов поддерживаются следующие параметры:
 
-+--------------+---------------------------------------------------------------------------------------------------+--------------------------------------------------------------------+
-| Name         | Description                                                                                       | Usage                                                              |
-+==============+===================================================================================================+====================================================================+
-| methods      | Define one or more HTTP method that route must meet with                                          | @Route("/api/products", methods={"GET", "POST"})                   |
-+--------------+---------------------------------------------------------------------------------------------------+--------------------------------------------------------------------+
-| name         | Define a name for the route                                                                       | @Route("/api/products", name="get-products")                       |
-+--------------+---------------------------------------------------------------------------------------------------+--------------------------------------------------------------------+
-| paths        | An array of paths like the one passed to Phalcon\\Mvc\\Router::add                                | @Route("/posts/{id}/{slug}", paths={module="backend"})             |
-+--------------+---------------------------------------------------------------------------------------------------+--------------------------------------------------------------------+
-| conversors   | A hash of conversors to be applied to the parameters                                              | @Route("/posts/{id}/{slug}", conversors={id="MyConversor::getId"}) |
-+--------------+---------------------------------------------------------------------------------------------------+--------------------------------------------------------------------+
++--------------+--------------------------------------------------------------------------------------------+--------------------------------------------------------------------+
+| Название     | Описание                                                                                   | Использование                                                      |
++==============+============================================================================================+====================================================================+
+| methods      | Определяет HTTP метод доступа к маршруту                                                   | @Route("/api/products", methods={"GET", "POST"})                   |
++--------------+--------------------------------------------------------------------------------------------+--------------------------------------------------------------------+
+| name         | Определяет название маршрута                                                               | @Route("/api/products", name="get-products")                       |
++--------------+--------------------------------------------------------------------------------------------+--------------------------------------------------------------------+
+| paths        | Массив дополнительных частей пути Phalcon\\Mvc\\Router::add                                | @Route("/posts/{id}/{slug}", paths={module="backend"})             |
++--------------+--------------------------------------------------------------------------------------------+--------------------------------------------------------------------+
+| conversors   | Метод преобразования для применения к параметрам                                           | @Route("/posts/{id}/{slug}", conversors={id="MyConversor::getId"}) |
++--------------+--------------------------------------------------------------------------------------------+--------------------------------------------------------------------+
 
-If routes map to controllers in modules is better use the addModuleResource method:
+Для формирования маршрутов из контроллеров модулей стоит использовать метод addModuleResource:
 
 .. code-block:: php
 
@@ -823,10 +825,10 @@ If routes map to controllers in modules is better use the addModuleResource meth
 
     $di['router'] = function() {
 
-        //Use the annotations router
+        // Используем роутер на аннотациях
         $router = new \Phalcon\Mvc\Router\Annotations(false);
 
-        //Read the annotations from Backend\Controllers\ProductsController if the uri starts with /api/products
+        // Чтение аннотаций из контроллера Backend\Controllers\ProductsController для ссылок начинающихся на /api/products
         $router->addModuleResource('backend', 'Products', '/api/products');
 
         return $router;
@@ -834,7 +836,7 @@ If routes map to controllers in modules is better use the addModuleResource meth
 
 Создание собственного маршрутизатора
 ------------------------------------
-Для создания адаптера необходимо реализовать интерфейс :doc:`Phalcon\\Mvc\\RouterInterface <../api/Phalcon_Mvc_RouterInterface>`. Созданным классом
-надо подменить маршрутизатор ('router') в момент инициализации приложения.
+Для создания адаптера необходимо реализовать интерфейс :doc:`Phalcon\\Mvc\\RouterInterface <../api/Phalcon_Mvc_RouterInterface>`.
+Созданным классом надо подменить маршрутизатор ('router') в момент инициализации приложения.
 
 .. _регулярных выражений PCRE: http://www.php.net/manual/en/book.pcre.php
