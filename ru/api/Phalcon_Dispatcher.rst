@@ -162,3 +162,9 @@ Forwards the execution flow to another controller/action
 
 
 
+public *boolean*  **wasForwarded** ()
+
+Check if the current executed action was forwarded by another one
+
+
+
