@@ -223,3 +223,9 @@ Forwards the execution flow to another controller/action
 
 
 
+public *boolean*  **wasForwarded** () inherited from Phalcon\\Dispatcher
+
+Check if the current executed action was forwarded by another one
+
+
+
