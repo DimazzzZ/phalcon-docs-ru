@@ -123,7 +123,7 @@ Sets the default action suffix
 
 public  **setNamespaceName** (*string* $namespaceName) inherited from Phalcon\\Dispatcher
 
-Sets a namespace to be prepended to the handler name
+Sets the namespace where the controller class is
 
 
 
@@ -219,7 +219,14 @@ Dispatches a handle action taking into account the routing parameters
 
 public  **forward** (*array* $forward) inherited from Phalcon\\Dispatcher
 
-Forwards the execution flow to another controller/action
+Forwards the execution flow to another controller/action Dispatchers are unique per module. Forwarding between modules is not allowed 
+
+.. code-block:: php
+
+    <?php
+
+      $this->dispatcher->forward(array('controller' => 'posts', 'action' => 'index'));
+
 
 
 
