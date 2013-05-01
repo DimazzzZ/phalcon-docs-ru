@@ -53,7 +53,7 @@ Check if a cookie is defined in the bag or exists in the $_COOKIE superglobal
 
 public *boolean*  **send** ()
 
-Sends the cookies to the client
+Sends the cookies to the client Cookies aren't sent if headers are sent in the current request
 
 
 

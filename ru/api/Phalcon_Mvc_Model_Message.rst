@@ -9,7 +9,7 @@ Encapsulates validation info generated before save/delete records fails
 
     <?php
 
-      use Phalcon\Mvc\Model\Message as Message;
+    use Phalcon\Mvc\Model\Message as Message;
     
       class Robots extends Phalcon\Mvc\Model
       {
