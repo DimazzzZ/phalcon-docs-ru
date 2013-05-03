@@ -125,13 +125,7 @@ Generates the SQL to describe the table creation options
 
 
 
-public *string*  **select** (*array* $definition)
-
-Builds a SELECT statement
-
-
-
-public *string*  **limit** (*string* $sqlQuery, *int* $number) inherited from Phalcon\\Db\\Dialect
+public *string*  **limit** (*string* $sqlQuery, *int* $number)
 
 Generates the SQL for LIMIT clause 
 
@@ -142,6 +136,12 @@ Generates the SQL for LIMIT clause
      $sql = $dialect->limit('SELECT * FROM robots', 10);
      echo $sql; // SELECT * FROM robots LIMIT 10
 
+
+
+
+public *string*  **select** (*array* $definition)
+
+Builds a SELECT statement
 
 
 
