@@ -121,6 +121,18 @@ Sets the default action suffix
 
 
 
+public  **setModuleName** (*string* $moduleName) inherited from Phalcon\\Dispatcher
+
+Sets the module where the controller is (only informative)
+
+
+
+public *string*  **getModuleName** () inherited from Phalcon\\Dispatcher
+
+Gets the module where the controller class is
+
+
+
 public  **setNamespaceName** (*string* $namespaceName) inherited from Phalcon\\Dispatcher
 
 Sets the namespace where the controller class is
