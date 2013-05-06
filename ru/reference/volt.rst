@@ -318,6 +318,17 @@ For
         There are no robots to show
     {% endfor %}
 
+Альтернативный синтаксис:
+
+.. code-block:: html+jinja
+
+    <h1>Robots</h1>
+    {% for robot in robots %}
+        Robot: {{ robot.name|e }} Part: {{ part.name|e }} <br/>
+    {% elsefor %}
+        There are no robots to show
+    {% endfor %}
+
 Управление циклами
 ^^^^^^^^^^^^^^^^^^
 Такие операторы как 'break' and 'continue' могут быть использованы для выхода из цикла вообще, или перехода к следующей итерации:
@@ -604,6 +615,8 @@ The following built-in tests are available in Volt:
 +----------------------+----------------------------------------------------------------------------------------------+
 | Проверка             | Описание                                                                                     |
 +======================+==============================================================================================+
+| defined              | Проверяет существование переменной (isset)                                                   |
++----------------------+----------------------------------------------------------------------------------------------+
 | empty                | Проверяет, если значение пусто                                                               |
 +----------------------+----------------------------------------------------------------------------------------------+
 | even                 | Проверяет чётность целочисленного значения                                                   |
@@ -620,10 +633,16 @@ The following built-in tests are available in Volt:
 +----------------------+----------------------------------------------------------------------------------------------+
 | sameas               | Проверяет, что значение совпадает с другим                                                   |
 +----------------------+----------------------------------------------------------------------------------------------+
+| type                 | Проверяет специфичный тип переменной                                                         |
++----------------------+----------------------------------------------------------------------------------------------+
 
 Больше примеров:
 
 .. code-block:: html+jinja
+
+    {% if robot is defined %}
+        The robot variable is defined
+    {% endif }
 
     {% if robot is empty %}
         The robot is null or isn't defined
@@ -654,8 +673,18 @@ The following built-in tests are available in Volt:
         {% endfor %}
     {% endif %}
 
+    {% set world = "hello" %}
+    {% if world is sameas("hello") %}
+        {{ "it's hello" }}
+    {% endif %}
+
+    {% set external = false %}
+    {% if external is type('boolean') %}
+        {{ "external is false or true" }}
+    {% endif %}
+
 Использование Tag Helpers
----------------------------
+-------------------------
 Volt сильно связан с  :doc:`Phalcon\\Tag <tags>`, поэтому можно легко использовать в Volt-шаблонах helpers, предоставляемые этим компонентом:
 
 .. code-block:: html+jinja
@@ -710,6 +739,10 @@ Volt сильно связан с  :doc:`Phalcon\\Tag <tags>`, поэтому м
 | Phalcon\\Tag::checkField           | check_field           |
 +------------------------------------+-----------------------+
 | Phalcon\\Tag::radioField           | radio_field           |
++------------------------------------+-----------------------+
+| Phalcon\\Tag::dateField            | date_field            |
++------------------------------------+-----------------------+
+| Phalcon\\Tag::numberField          | number_field          |
 +------------------------------------+-----------------------+
 | Phalcon\\Tag::submitButton         | submit_button         |
 +------------------------------------+-----------------------+
@@ -1079,11 +1112,11 @@ Volt-компилятор позволяет вам расширить его, �
 
     <?php
 
-    $compiler->addFunction('include_text', function($resolvedArgs, $exprArgs) {
+    $compiler->addFunction('contains_text', function($resolvedArgs, $exprArgs) {
         if (function_exists('mb_stripos')) {
-            return 'mb_stripos('.$resolvedArgs.')';
+            return 'mb_stripos(' . $resolvedArgs . ')';
         } else {
-            return 'stripos('.$resolvedArgs.')';
+            return 'stripos(' . $resolvedArgs . ')';
         }
     });
 
@@ -1203,6 +1236,8 @@ Volt-компилятор позволяет вам расширить его, �
 * Пакет для Sublime/Textmate можно скачать `тут <https://github.com/phalcon/volt-sublime-textmate>`_
 * `Наш сайт <http://phalconphp.com>`_ работает на шаблонизаторе Volt, посмотрите код на `github <https://github.com/phalcon/website>`_
 * `Album-O-Rama <https://github.com/phalcon/album-o-rama>`_ — пример приложения, использующего Volt в качестве шаблонизатоа, смотрите код на Github
+* `Phosphorum <http://forum.phalconphp.com>`_, форум Phalcon так же использует Volt, [`Github <https://github.com/phalcon/forum>`_]
+* `Vökuró <http://vokuro.phalconphp.com>`_, еще одно приложение с использованием Volt, [`Github <https://github.com/phalcon/vokuro>`_]
 
 .. _Armin Ronacher: https://github.com/mitsuhiko
 .. _Twig: https://github.com/vito/chyrp/wiki/Twig-Reference

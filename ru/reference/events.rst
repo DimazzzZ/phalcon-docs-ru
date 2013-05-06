@@ -40,7 +40,10 @@
 
     <?php
 
-    $eventsManager = new \Phalcon\Events\Manager();
+    use Phalcon\Events\Manager as EventsManager,
+        Phalcon\Db\Adapter\Pdo\Mysql as DbAdapter;
+
+    $eventsManager = new Events\Manager();
 
     // Создание слушателе базы данных
     $dbListener = new MyDbListener();
@@ -48,7 +51,7 @@
     // Слушать все события базы данных
     $eventsManager->attach('db', $dbListener);
 
-    $connection = new \Phalcon\Db\Adapter\Pdo\Mysql(array(
+    $connection = new DbAdapter(array(
         "host" => "localhost",
         "username" => "root",
         "password" => "secret",
@@ -71,6 +74,8 @@ the event listener contains contextual information about the event that is runni
 
     <?php
 
+    use Phalcon\Logger\Adapter\File as Logger;
+
     class MyDbListener
     {
 
@@ -78,7 +83,7 @@ the event listener contains contextual information about the event that is runni
 
         public function __construct()
         {
-            $this->_logger = new \Phalcon\Logger\Adapter\File("../apps/logs/db.log");
+            $this->_logger = new Logger("../apps/logs/db.log");
         }
 
         public function afterQuery($event, $connection)
@@ -94,6 +99,10 @@ the event listener contains contextual information about the event that is runni
 
     <?php
 
+    use Phalcon\Db\Profiler,
+        Phalcon\Logger,
+        Phalcon\Logger\Adapter\File;
+
     class MyDbListener
     {
 
@@ -101,20 +110,29 @@ the event listener contains contextual information about the event that is runni
 
         protected $_logger;
 
+        /**
+         * Creates the profiler and starts the logger
+         */
         public function __construct()
         {
-            $this->_profiler = new \Phalcon\Db\Profiler();
-            $this->_logger = new \Phalcon\Logger\Adapter\File("../apps/logs/db.log");
+            $this->_profiler = new Profiler();
+            $this->_logger = new Logger("../apps/logs/db.log");
         }
 
+        /**
+         * This executed if the event triggered is 'beforeQuery'
+         */
         public function beforeQuery($event, $connection)
         {
             $this->_profiler->startProfile($connection->getSQLStatement());
         }
 
+        /**
+         * This executed if the event triggered is 'afterQuery'
+         */
         public function afterQuery($event, $connection)
         {
-            $this->_logger->log($connection->getSQLStatement(), \Phalcon\Logger::INFO);
+            $this->_logger->log($connection->getSQLStatement(), Logger::INFO);
             $this->_profiler->stopProfile();
         }
 
@@ -134,7 +152,7 @@ the event listener contains contextual information about the event that is runni
     // Выполнение SQL запроса
     $connection->execute("SELECT * FROM products p WHERE p.status = 1");
 
-    foreach($dbListener->getProfiler()->getProfiles() as $profile){
+    foreach ($dbListener->getProfiler()->getProfiles() as $profile) {
         echo "SQL Statement: ", $profile->getSQLStatement(), "\n";
         echo "Start Time: ", $profile->getInitialTime(), "\n";
         echo "Final Time: ", $profile->getFinalTime(), "\n";
@@ -164,7 +182,9 @@ the event listener contains contextual information about the event that is runni
 
     <?php
 
-    class MyComponent implements \Phalcon\Events\EventsAwareInterface
+    use Phalcon\Events\EventsAwareInterface
+
+    class MyComponent implements EventsAwareInterface
     {
 
         protected $_eventsManager;
@@ -323,6 +343,42 @@ the same name. Now let's create a listener to this component:
     $evManager->attach('db', new DbListener(), 100); // Нормальный приоитет
     $evManager->attach('db', new DbListener(), 50); // Низкий приоритет
 
+Сбор ответов
+------------
+Менеджер событий умеет собрать каждый ответ, возвращаемый каждым слушателем, пример ниже показывает как это можно использовать:
+
+.. code-block:: php
+
+    <?php
+
+    use Phalcon\Events\Manager as EventsManager;
+
+    $evManager = new EventsManager();
+
+    // Настройка сборщика ответов
+    $evManager->collectResponses(true);
+
+    // Добавления слушателя
+    $evManager->attach('custom:custom', function() {
+        return 'first response';
+    });
+
+    // Добавления еще одного слушателя
+    $evManager->attach('custom:custom', function() {
+        return 'second response';
+    });
+
+    // Выполнение события
+    $evManager->fire('custom:custom', null);
+
+    // Получаем все ответы
+    print_r($evManager->getResponses());
+
+Сформируются такие данные:
+
+.. code-block:: html
+
+    Array ( [0] => first response [1] => second response )
 
 Создание собственных менеджеров событий (EventsManager)
 -------------------------------------------------------

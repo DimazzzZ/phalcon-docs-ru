@@ -27,7 +27,9 @@
 
     <?php
 
-    $logger = new \Phalcon\Logger\Adapter\File("app/logs/test.log");
+    use Phalcon\Logger\Adapter\File as FileAdapter;
+
+    $logger = new FileAdapter("app/logs/test.log");
     $logger->log("Это сообщение");
     $logger->log("А это уже сообщение об ошибке", \Phalcon\Logger::ERROR);
     $logger->error("Это тоже про ошибку");
@@ -50,8 +52,10 @@
 
     <?php
 
+    use Phalcon\Logger\Adapter\File as FileAdapter;
+
     // Создание логгера
-    $logger = new \Phalcon\Logger\Adapter\File("app/logs/test.log");
+    $logger = new FileAdapter("app/logs/test.log");
 
     // Начало транзакции
     $logger->begin();
@@ -69,15 +73,18 @@
 
 .. code-block:: php
 
-    <?php
+    use Phalcon\Logger,
+        Phalcon\Logger\Multiple as MultipleStream,
+        Phalcon\Logger\Adapter\File as FileAdapter,
+        Phalcon\Logger\Adapter\Stream as StreamAdapter;
 
-    $logger = new \Phalcon\Logger\Multiple();
+    $logger = new MultipleStream();
 
-    $logger->push(new \Phalcon\Logger\Adapter\File('test.log'));
-    $logger->push(new \Phalcon\Logger\Adapter\Stream('php://stdout'));
+    $logger->push(new FileAdapter('test.log'));
+    $logger->push(new StreamAdapter('php://stdout'));
 
     $logger->log("This is a message");
-    $logger->log("This is an error", \Phalcon\Logger::ERROR);
+    $logger->log("This is an error", Logger::ERROR);
     $logger->error("This is another error");
 
 Сообщения отправляются на обработчик в порядке их регистраций.
@@ -122,8 +129,10 @@
 
     <?php
 
+    use Phalcon\Logger\Formatter\Line as LineFormatter;
+
     // Установка формата сообщений в логе
-    $formatter = new Phalcon\Logger\Formatter\Line("%date% - %message%");
+    $formatter = new LineFormatter("%date% - %message%");
     $logger->setFormatter($formatter);
 
 Реализация собственного оформителя
@@ -142,11 +151,13 @@ Stream Logger
 
     <?php
 
+    use Phalcon\Logger\Adapter\Stream as StreamAdapter;
+
     // Открывает поток с использованием zlib компрессии
-    $logger = new \Phalcon\Logger\Adapter\Stream("compress.zlib://week.log.gz");
+    $logger = new StreamAdapter("compress.zlib://week.log.gz");
 
     // Пишет сообщения в stderr
-    $logger = new \Phalcon\Logger\Adapter\Stream("php://stderr");
+    $logger = new StreamAdapter("php://stderr");
 
 File Logger
 ^^^^^^^^^^^
@@ -158,8 +169,10 @@ File Logger
 
     <?php
 
+    use Phalcon\Logger\Adapter\File as FileAdapter;
+
     // Создание регистратора с поддержкой записи
-    $logger = new \Phalcon\Logger\Adapter\File("app/logs/test.log", array(
+    $logger = new FileAdapter("app/logs/test.log", array(
         'mode' => 'w'
     ));
 
@@ -171,11 +184,13 @@ Syslog Logger
 
     <?php
 
+    use Phalcon\Logger\Adapter\Syslog as SyslogAdapter;
+
     // Основное использование
-    $logger = new \Phalcon\Logger\Adapter\Syslog(null);
+    $logger = new SyslogAdapter(null);
 
     // Установка ident/mode/facility
-    $logger = new \Phalcon\Logger\Adapter\Syslog("ident-name", array(
+    $logger = new SyslogAdapter("ident-name", array(
         'option' => LOG_NDELAY,
         'facility' => LOG_MAIL
     ));

@@ -85,21 +85,21 @@ URL (/admin/users/a/delete/dave/301), маршрутизатор раберёт 
 Заполнители помогают написанию регулярных выражений, они более читабельны для разработчиков и проще
 для понимания. Существуют такие заполнители:
 
-+--------------+---------------------+--------------------------------------------------------------------------+
-| Placeholder  | Regular Expression  | Usage                                                                    |
-+==============+=====================+==========================================================================+
-| /:module     | /([a-zA-Z0-9\_\-]+) | Проверяет соответствие названия модуля алфавитно-цифровым символам       |
-+--------------+---------------------+--------------------------------------------------------------------------+
-| /:controller | /([a-zA-Z0-9\_\-]+) | Проверяет соответствие названия контроллера алфавитно-цифровым символам  |
-+--------------+---------------------+--------------------------------------------------------------------------+
-| /:action     | /([a-zA-Z0-9\_]+)   | Проверяет соответствие названия действия алфавитно-цифровым символам     |
-+--------------+---------------------+--------------------------------------------------------------------------+
-| /:params     | (/.*)*              | Проверяет список дополнительных частей, разделенных косыми чертами       |
-+--------------+---------------------+--------------------------------------------------------------------------+
-| /:namespace  | /([a-zA-Z0-9\_\-]+) | Проверяет пространство имен                                              |
-+--------------+---------------------+--------------------------------------------------------------------------+
-| /:int        | /([0-9]+)           | Проверяет соответсвие цифровому формату                                  |
-+--------------+---------------------+--------------------------------------------------------------------------+
++--------------+---------------------+--------------------------------------------------------------------------------------------------------+
+| Placeholder  | Regular Expression  | Usage                                                                                                  |
++==============+=====================+========================================================================================================+
+| /:module     | /([a-zA-Z0-9\_\-]+) | Проверяет соответствие названия модуля алфавитно-цифровым символам                                     |
++--------------+---------------------+--------------------------------------------------------------------------------------------------------+
+| /:controller | /([a-zA-Z0-9\_\-]+) | Проверяет соответствие названия контроллера алфавитно-цифровым символам                                |
++--------------+---------------------+--------------------------------------------------------------------------------------------------------+
+| /:action     | /([a-zA-Z0-9\_]+)   | Проверяет соответствие названия действия алфавитно-цифровым символам                                   |
++--------------+---------------------+--------------------------------------------------------------------------------------------------------+
+| /:params     | (/.*)*              | Проверяет список дополнительных частей, разделенных косыми чертами. Использовать только в конце ссылок |
++--------------+---------------------+--------------------------------------------------------------------------------------------------------+
+| /:namespace  | /([a-zA-Z0-9\_\-]+) | Проверяет пространство имен                                                                            |
++--------------+---------------------+--------------------------------------------------------------------------------------------------------+
+| /:int        | /([0-9]+)           | Проверяет соответсвие цифровому формату                                                                |
++--------------+---------------------+--------------------------------------------------------------------------------------------------------+
 
 Названия контроллеров "camelized", это означает, что символы (-) и (_) удаляются, и следующий после них символ
 преобразуется в верхний регистр. Например, some_controller преобразуется в SomeController.
@@ -387,6 +387,53 @@ URL: /admin/users/edit/sonny, будут обработан как:
     // Добавление группы в общие правила маршрутизации
     $router->mount($blog);
 
+Вы можете размечащь группы маршрутов в разных файлах приложения, добиваясь оптимальной структуры и чистоты кода:
+
+.. code-block:: php
+
+    <?php
+
+    class BlogRoutes extends Phalcon\Mvc\Router\Group
+    {
+        public function initialize()
+        {
+            // Параметры по умолчанию
+            $this->setPaths(array(
+                'module' => 'blog',
+                'namespace' => 'Blog\Controllers'
+            ));
+
+            // Маршруты начинаются с преффикса /blog
+            $this->setPrefix('/blog');
+
+            // Добавляем маршрут
+            $this->add('/save', array(
+                'action' => 'save'
+            ));
+
+            // Еще маршрут
+            $this->add('/edit/{id}', array(
+                'action' => 'edit'
+            ));
+
+            // Данные для маршрута по умолчанию
+            $this->add('/blog', array(
+                'controller' => 'blog',
+                'action' => 'index'
+            ));
+
+        }
+    }
+
+Созданную группу надо подмонтировать в маршрутизатору:
+
+.. code-block:: php
+
+    <?php
+
+    // Добавляем маршруты в общий марщрутизатор:
+    $router->mount(new BlogRoutes());
+
 Соответствие маршрутов
 ----------------------
 Текущий URI должен передаётся маршрутизатору для сопоставления его маршруту. По умолчанию, URI для обработки берется из
@@ -606,7 +653,7 @@ URL: /admin/users/edit/sonny, будут обработан как:
 
     <?php
 
-    // Индивидуальные методы
+    // Установка по умолчанию
     $router->setDefaultModule("backend");
     $router->setDefaultNamespace('Backend\Controllers');
     $router->setDefaultController("index");
@@ -645,6 +692,114 @@ URL: /admin/users/edit/sonny, будут обработан как:
             "action"     => "index"
         )
     );
+
+Match Callbacks
+---------------
+Sometimes, routes must be matched if they meet specific conditions, you can add arbitrary conditions to routes using the
+'beforeMatch' callback, if this function return false, the route will be treaded as non-matched:
+
+.. code-block:: php
+
+    <?php
+
+    $router->add('/login', array(
+        'module' => 'admin',
+        'controller' => 'session'
+    ))->beforeMatch(function($uri, $route) {
+        //Check if the request was made with Ajax
+        if ($_SERVER['X_REQUESTED_WITH'] == 'xmlhttprequest') {
+            return false;
+        }
+        return true;
+    });
+
+You can re-use these extra conditions in classes:
+
+.. code-block:: php
+
+    <?php
+
+    class AjaxFilter
+    {
+        public function check()
+        {
+            return $_SERVER['X_REQUESTED_WITH'] == 'xmlhttprequest';
+        }
+    }
+
+And use this class instead of the anonymous function:
+
+.. code-block:: php
+
+    <?php
+
+    $router->add('/get/info/{id}', array(
+        'controller' => 'products',
+        'action' => 'info'
+    ))->beforeMatch(array(new AjaxFilter(), 'check'));
+
+Hostname Constraints
+--------------------
+The router allow to set hostname contraints, this means that specific routes or a group of routes can be restricted
+to only match if the route also meets the hostname constraint:
+
+.. code-block:: php
+
+    <?php
+
+    $router->add('/login', array(
+        'module' => 'admin',
+        'controller' => 'session',
+        'action' => 'login'
+    ))->setHostName('admin.company.com');
+
+Hostname can also be regular expressions:
+
+.. code-block:: php
+
+    <?php
+
+    $router->add('/login', array(
+        'module' => 'admin',
+        'controller' => 'session',
+        'action' => 'login'
+    ))->setHostName('([a-z+]).company.com');
+
+In groups of routes you can set up a hostname constraint that apply for every route in the group:
+
+.. code-block:: php
+
+    <?php
+
+    //Create a group with a common module and controller
+    $blog = new \Phalcon\Mvc\Router\Group(array(
+        'module' => 'blog',
+        'controller' => 'posts'
+    ));
+
+    //Hostname restriction
+    $blog->setHostName('blog.mycompany.com');
+
+    //All the routes start with /blog
+    $blog->setPrefix('/blog');
+
+    //Default route
+    $blog->add('/', array(
+        'action' => 'index'
+    ));
+
+    //Add a route to the group
+    $blog->add('/save', array(
+        'action' => 'save'
+    ));
+
+    //Add another route to the group
+    $blog->add('/edit/{id}', array(
+        'action' => 'edit'
+    ));
+
+    //Add the group to the router
+    $router->mount($blog);
 
 Источники URI
 -------------
