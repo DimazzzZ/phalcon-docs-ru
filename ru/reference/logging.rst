@@ -180,6 +180,6 @@ Syslog Logger
         'facility' => LOG_MAIL
     ));
 
-Implementing your own adapters
-^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+Реализация собственных адаптеров
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 Для создания адаптера необходимо реализовать интерфейс :doc:`Phalcon\\Logger\\AdapterInterface <../api/Phalcon_Logger_AdapterInterface>` или расширить существующий адаптер.
