@@ -522,6 +522,34 @@ Javascript
     {# Сформируется <script src="/your-app/javascript/jquery.min.js" type="text/javascript"></script> #}
     {{ javascript_include("javascript/jquery.min.js") }}
 
+Элементы HTML5 - общий HTML помощник
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+Фалкон содержит HTML помощник, позволяющий генерировать любой HTML элемент. Он полностью зависит от разработчика, необходимо лишь название элемента.
+
+.. code-block:: php
+
+    <?php
+
+    // Generate 
+    // <canvas id="canvas1" width="300" class="cnvclass">
+    // This is my canvas
+    // </canvas>
+    echo \Phalcon\Tag::tagHtml("canvas", array("id" => "canvas1", "width" => "300", "class" => "cnvclass", false, true, true));
+    echo "This is my canvas";
+    echo \Phalcon\Tag::tagHtmlClose("canvas");
+
+Синтаксис Volt:
+
+.. code-block:: jinja
+
+    {# Generate #}
+    {# <canvas id="canvas1" width="300" class="cnvclass"> #}
+    {# This is my canvas #}
+    {# </canvas> #}
+    {{ tag_html("canvas", ["id":"canvas1", width":"300", "class":"cnvclass"], false, true, true) }}
+    This is my canvas
+    {{ tag_html_close("canvas") }}
+
 Создание собственных помощников
 -------------------------------
 Вы можете с лёгкостью создавать своих помощников расширяя :doc:`Phalcon\\Tag <../api/Phalcon_Tag>` и реализуя собственных помощников. Пример ниже

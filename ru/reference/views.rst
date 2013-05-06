@@ -305,7 +305,10 @@ Dispatcher будет искать "PostsController" и его действие 
 
     <?php
 
-    class PostsController extends \Phalcon\Mvc\Controller
+    use Phalcon\Mvc\Controller,
+        Phalcon\Mvc\View;
+
+    class PostsController extends Controller
     {
 
         public function indexAction()
@@ -317,7 +320,7 @@ Dispatcher будет искать "PostsController" и его действие 
         {
 
             // Ajax-ответ, генерация представления не нужна
-            $this->view->setRenderLevel(\Phalcon\Mvc\View::LEVEL_NO_RENDER);
+            $this->view->setRenderLevel(View::LEVEL_NO_RENDER);
 
             //...
         }
@@ -325,7 +328,7 @@ Dispatcher будет искать "PostsController" и его действие 
         public function showAction($postId)
         {
             // Показать только представление, относящееся к конкретному действию контроллера
-            $this->view->setRenderLevel(\Phalcon\Mvc\View::LEVEL_ACTION_VIEW);
+            $this->view->setRenderLevel(View::LEVEL_ACTION_VIEW);
         }
 
     }
@@ -738,6 +741,26 @@ Dispatcher будет искать "PostsController" и его действие 
     $view->finish();
 
     echo $view->getContent();
+
+Так же доступен короткий синтаксис:
+
+.. code-block:: php
+
+    <?php
+
+    $view = new \Phalcon\Mvc\View();
+
+    echo $view->getRender('products', 'list',
+        array(
+            "someProducts" => $products,
+            "someFeatureEnabled" => true
+        ),
+        function($view) {
+            //Set any extra options here
+            $view->setViewsDir("../app/views/");
+            $view->setRenderLevel(Phalcon\Mvc\View::LEVEL_LAYOUT)
+        }
+    );
 
 События компонента представлений
 --------------------------------

@@ -1,8 +1,8 @@
-Micro Applications
-==================
-With Phalcon you can create "Micro-Framework like" applications. By doing this, you only need to write a minimal amount of
-code to create a PHP application. Micro applications are suitable to implement small applications, APIs and
-prototypes in a practical way.
+Микро приложения
+================
+С помощью Phalcon можно создавать приложения по типу "Микро Фреймворк". 
+Для этого, необходимо написать всего лишь несколько строк кода. Микро приложения подходят для реализации 
+небольших приложений, различныx API и прототипов на практике. 
 
 .. code-block:: php
 
@@ -16,9 +16,9 @@ prototypes in a practical way.
 
     $app->handle();
 
-Creating a Micro Application
-----------------------------
-:doc:`Phalcon\\Mvc\\Micro <../api/Phalcon_Mvc_Micro>` is the class responsible for implementing a micro application.
+Создание микро приложения
+-------------------------
+:doc:`Phalcon\\Mvc\\Micro <../api/Phalcon_Mvc_Micro>` это класс, отвечающий за реализацию микро приложения.
 
 .. code-block:: php
 
@@ -26,12 +26,11 @@ Creating a Micro Application
 
     $app = new Phalcon\Mvc\Micro();
 
-Defining routes
----------------
-After instantiating the object, you will need to add some routes. :doc:`Phalcon\\Mvc\\Router <../api/Phalcon_Mvc_Router>` manages routing internally.
-Routes must always start with /. A HTTP method constraint is optionally required when defining routes, so as to instruct
-the router to match only if the request also matches the HTTP methods. The following example shows how to define
-a route for the method GET:
+Создание путей
+--------------
+После создания экземпляра класса, необходимо добавить некоторые пути. :doc:`Phalcon\\Mvc\\Router <../api/Phalcon_Mvc_Router>` отвечает за управление путями, которые должны всегда начинаться с  /.
+При создании путей, необходимо указывать какой метод HTTP используется, чтобы запросы путей соответствовали методам HTTP.
+Ниже представлен пример, показывающий как создавать пути, используя метод GET:
 
 .. code-block:: php
 
@@ -41,72 +40,73 @@ a route for the method GET:
         echo "<h1>Hello! $name</h1>";
     });
 
-The "get" method indicates that the associated HTTP method is GET. The route /say/hello/{name} also has a parameter {$name} that is passed
-directly to the route handler (the anonymous function). Handlers are executed when a route is matched. A handler could be
-any callable item in the PHP userland. The following example shows how to define different types of handlers:
+Метод "get" показывает, что используется GET запрос. Путь /say/hello/{name} также имеет параметр {$name}, 
+который напрямую передается обработчику пути (анонимная функция). Обработка пути выполняется, когда путь совпадает. 
+Обработчик может быть любого типа, который возвращает данные в PHP среде. Следующий пример демонстрирует, 
+как создавать различные типы обработчиков пути.
 
 .. code-block:: php
 
     <?php
 
-    // With a function
+    //С помощью функции
     function say_hello($name) {
         echo "<h1>Hello! $name</h1>";
     }
 
     $app->get('/say/hello/{name}', "say_hello");
 
-    // With a static method
+    // С помощью статичного метода
     $app->get('/say/hello/{name}', "SomeClass::someSayMethod");
 
-    // With a method in an object
+    // С помощью метода объекта
     $myController = new MyController();
     $app->get('/say/hello/{name}', array($myController, "someAction"));
 
-    //Anonymous function
+    //Анонимная функция (замыкание)
     $app->get('/say/hello/{name}', function ($name) {
         echo "<h1>Hello! $name</h1>";
     });
 
-:doc:`Phalcon\\Mvc\\Micro <../api/Phalcon_Mvc_Micro>` provides a set of methods to define the HTTP method (or methods)
-which the route is constrained for:
+:doc:`Phalcon\\Mvc\\Micro <../api/Phalcon_Mvc_Micro>` предлагает набор инструментов для создания HTTP метода (или методов), 
+необходимых для создания пути:
 
 .. code-block:: php
 
     <?php
 
-    //Matches if the HTTP method is GET
+    //Совпадет, если HTTP метод - GET
     $app->get('/api/products', "get_products");
 
-    //Matches if the HTTP method is POST
+    //Совпадет, если HTTP метод - POST
     $app->post('/api/products/add', "add_product");
 
-    //Matches if the HTTP method is PUT
+    //Совпадет, если HTTP метод - PUT
     $app->put('/api/products/update/{id}', "update_product");
 
-    //Matches if the HTTP method is DELETE
+    //Совпадет, если HTTP метод - DELETE
     $app->put('/api/products/remove/{id}', "delete_product");
 
-    //Matches if the HTTP method is OPTIONS
+    //Совпадет, если HTTP метод - OPTIONS
     $app->options('/api/products/info/{id}', "info_product");
 
-    //Matches if the HTTP method is PATCH
+    //Совпадет, если HTTP метод - PATCH
     $app->patch('/api/products/update/{id}', "info_product");
 
-    //Matches if the HTTP method is GET or POST
+    //Совпадет, если HTTP метод - GET или POST
     $app->map('/repos/store/refs',"action_product")->via(array('GET', 'POST'));
 
 
-Routes with Parameters
-^^^^^^^^^^^^^^^^^^^^^^
-Defining parameters in routes is very easy as demonstrated above. The name of the parameter has to be enclosed in brackets. Parameter
-formatting is also available using regular expressions to ensure consistency of data. This is demonstrated in the example below:
-
+Пути с параметрами
+^^^^^^^^^^^^^^^^^^
+Создание параметров путей - довольно простая задача, как показывает пример выше. 
+Имя параметра должно находиться в скобках. Параметры также можно задавать с помощью регулярных выражений для того, 
+чтобы быть уверенным в наличии данных. Это показано в примере ниже:
 .. code-block:: php
 
     <?php
 
-    //This route have two parameters and each of them have a format
+    //Данный путь имеет два параметра, у каждого из которых задан формат
     $app->get('/posts/{year:[0-9]+}/{title:[a-zA-Z\-]+}', function ($year, $title) {
         echo "<h1>Title: $title</h1>";
         echo "<h2>Year: $year</h2>";
@@ -233,13 +233,17 @@ can create outside the application a container to manipulate its services:
 
     <?php
 
-    $di = new \Phalcon\DI\FactoryDefault();
+    use Phalcon\DI\FactoryDefault,
+        Phalcon\Mvc\Micro,
+        Phalcon\Config\Adapter\Ini as IniConfig;
+
+    $di = new FactoryDefault();
 
     $di->set('config', function() {
-        return new \Phalcon\Config\Adapter\Ini("config.ini");
+        return new IniConfig("config.ini");
     });
 
-    $app = new Phalcon\Mvc\Micro();
+    $app = new Micro();
 
     $app->setDI($di);
 
@@ -258,11 +262,14 @@ The array-syntax is allowed to easily set/get services in the internal services 
 
     <?php
 
-    $app = new Phalcon\Mvc\Micro();
+    use Phalcon\Mvc\Micro,
+        Phalcon\Db\Adapter\Pdo\Mysql as MysqlAdapter;
+
+    $app = new Micro();
 
     //Setup the database service
     $app['db'] = function() {
-        return new \Phalcon\Db\Adapter\Pdo\Mysql(array(
+        return new MysqlAdapter(array(
             "host" => "localhost",
             "username" => "root",
             "password" => "secret",
@@ -342,8 +349,11 @@ In the following example, we explain how to control the application security usi
 
     <?php
 
+    use Phalcon\Mvc\Micro,
+        Phalcon\Events\Manager as EventsManager;
+
     //Create a events manager
-    $eventManager = \Phalcon\Events\Manager();
+    $eventManager = new EventsManager();
 
     //Listen all the application events
     $eventManager->attach('micro', function($event, $app) {
@@ -361,7 +371,7 @@ In the following example, we explain how to control the application security usi
 
     });
 
-    $app = new Phalcon\Mvc\Micro();
+    $app = new Micro();
 
     //Bind the events manager to the app
     $app->setEventsManager($eventsManager);
@@ -397,10 +407,53 @@ In addition to the events manager, events can be added using the methods 'before
     });
 
     $app->finish(function() use ($app) {
-        //This is executed when is the request has been served
+        //This is executed when the request has been served
     });
 
-You can call the methods several times to add more events of the same type. The following table explains the events:
+You can call the methods several times to add more events of the same type.
+
+Code for middlewares can be reused using separate classes:
+
+.. code-block:: php
+
+    <?php
+
+    use Phalcon\Mvc\Micro\MiddlewareInterface;
+
+    /**
+     * CacheMiddleware
+     *
+     * Caches pages to reduce processing
+     */
+    class CacheMiddleware implements MiddlewareInterface
+    {
+        public function call($application)
+        {
+
+            $cache = $application['cache'];
+            $router = $application['router'];
+
+            $key = preg_replace('/^[a-zA-Z0-9]/', '', $router->getRewriteUri());
+
+            //Check if the request is cached
+            if ($cache->exists($key)) {
+                echo $cache->get($key);
+                return false;
+            }
+
+            return true;
+        }
+    }
+
+Then add the instance to the application:
+
+.. code-block:: php
+
+    <?php
+
+    $app->before(new CacheMiddleware());
+
+The following middleware events are available:
 
 +---------------------+----------------------------------------------------------------------------------------------------------------------------+----------------------+
 | Event Name          | Triggered                                                                                                                  | Can stop operation?  |
@@ -412,20 +465,80 @@ You can call the methods several times to add more events of the same type. The 
 | finish              | Executed after sending the response. It can be used to perform clean-up                                                    | No                   |
 +---------------------+----------------------------------------------------------------------------------------------------------------------------+----------------------+
 
-Returning Responses
--------------------
-Handlers may return raw responses using :doc:`Phalcon\\Http\\Response <response>` or a component that implements the relevant interface.
+Using Controllers as Handlers
+-----------------------------
+Medium applications using the Micro\\MVC approach may require organize handlers in controllers.
+You can use :doc:`Phalcon\\Mvc\\Micro\\Collection` to group handlers that belongs to controllers:
 
 .. code-block:: php
 
     <?php
 
-    $app = new Phalcon\Mvc\Micro();
+    use Phalcon\Mvc\Micro\Collection as MicroCollection;
+
+    $posts = new MicroCollection();
+
+    //Set the main handler. ie. a controller instance
+    $posts->setHandler(new PostsController());
+
+    //Set a common prefix for all routes
+    $posts->setPrefix('/posts');
+
+    //Use the method 'index' in PostsController
+    $posts->get('/', 'index');
+
+    //Use the method 'show' in PostsController
+    $posts->get('/show/{slug}', 'show');
+
+    $app->mount($posts);
+
+The controller 'PostsController' might look like this:
+
+.. code-block:: php
+
+    <?php
+
+    class PostsController extends Phalcon\Mvc\Controller
+    {
+
+        public function index()
+        {
+            //...
+        }
+
+        public function show($slug)
+        {
+            //...
+        }
+    }
+
+The example driver directly instantiated, Collection also is provided in the ability to load
+the drivers only if the route is matched:
+
+.. code-block:: php
+
+    <?php
+
+    $posts->setHandler('PostsController', true);
+    $posts->setHandler('Blog\Controllers\PostsController', true);
+
+Returning Responses
+-------------------
+Handlers may return raw responses using :doc:`Phalcon\\Http\\Response <response>` or a component that implements the relevant interface:
+
+.. code-block:: php
+
+    <?php
+
+    use Phalcon\Mvc\Micro,
+        Phalcon\Http\Response;
+
+    $app = new Micro();
 
     //Return a response
     $app->get('/welcome/index', function() {
 
-        $response = new Phalcon\Http\Response();
+        $response = new Response();
 
         $response->setStatusCode(401, "Unauthorized");
 
@@ -460,5 +573,8 @@ Rendering Views
         ));
 
     });
+
+Related Sources
+---------------
 
 :doc:`Creating a Simple REST API <tutorial-rest>` is a tutorial that explains how to create a micro application to implement a RESTful web service.

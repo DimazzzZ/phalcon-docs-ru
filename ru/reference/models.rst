@@ -1,23 +1,22 @@
-Working with Models
+Работа с Моделями
 ===================
-A model represents the information (data) of the application and the rules to manipulate that data. Models are primarily used for managing
-the rules of interaction with a corresponding database table. In most cases, each table in your database will correspond to one model in
-your application. The bulk of your application's business logic will be concentrated in the models.
+Модель представляет собой информацию (данные) приложения и правила для манипуляции этими данными. Модели в основном используются для управления правилами 
+взаимодействия с соответствующими таблицами базы данных. В большинстве случаев, каждая таблица в вашей базе данных соответствует одной модели в вашем приложении.
+Большая часть всей бизнес-логики вашего приложения будет сосредоточена в моделях.
 
-:doc:`Phalcon\\Mvc\\Model <../api/Phalcon_Mvc_Model>` is the base for all models in a Phalcon application. It provides database independence, basic
-CRUD functionality, advanced finding capabilities, and the ability to relate models to one another, among other services.
-:doc:`Phalcon\\Mvc\\Model <../api/Phalcon_Mvc_Model>` avoids the need of having to use SQL statements because it translates methods dynamically
-to the respective database engine operations.
+:doc:`Phalcon\\Mvc\\Model <../api/Phalcon_Mvc_Model>` является родительским классом для всех моделей в вашем приложении Phalcon. Он обеспечивает независимость данных 
+от вашей базы, основные CRUD операции, расширенные поисковые возможности, а также возможность построения зависимостей между моделями. 
+:doc:`Phalcon\\Mvc\\Model <../api/Phalcon_Mvc_Model>` исключает необходимость использования SQL запросов, потому как данный класс динамически переводит методы на соответствующие им операции СУБД.
 
 .. highlights::
 
-    Models are intended to work on a database high layer of abstraction. If you need to work with databases at a lower level check out the
-    :doc:`Phalcon\\Db <../api/Phalcon_Db>` component documentation.
+    Модели предназначены для работы с базой данных на высшем уровне абстракции. Если вы испытваете потребность в работе с базой данных на низшем уровне, обратитесь к документации 
+    компонента :doc:`Phalcon\\Db <../api/Phalcon_Db>`.
 
-Creating Models
+Создание Модели
 ---------------
-A model is a class that extends from :doc:`Phalcon\\Mvc\\Model <../api/Phalcon_Mvc_Model>`. It must be placed in the models directory. A model
-file must contain a single class; its class name should be in camel case notation:
+Модель это класс, который расширяет :doc:`Phalcon\\Mvc\\Model <../api/Phalcon_Mvc_Model>`. Файл с моделью должен быть помещен в директорию models. 
+Файл должен содержать только один класс; его имя должно быть записано в CamelCase стиле.
 
 .. code-block:: php
 
@@ -28,18 +27,17 @@ file must contain a single class; its class name should be in camel case notatio
 
     }
 
-The above example shows the implementation of the "Robots" model. Note that the class Robots inherits from :doc:`Phalcon\\Mvc\\Model <../api/Phalcon_Mvc_Model>`.
-This component provides a great deal of functionality to models that inherit it, including basic database
-CRUD (Create, Read, Update, Destroy) operations, data validation, as well as sophisticated search support and the ability to relate multiple models
-with each other.
+Пример выше демонстрирует реализацию модели "Robots". Обратите внимание, что класс Robots наследуется от :doc:`Phalcon\\Mvc\\Model <../api/Phalcon_Mvc_Model>`. 
+Данный компонент предоставляет большой набор функционала для модели, которая наследует его, включая основные операции CRUD (Create, Read, Update, Destroy), 
+валидацию данных, а также поддержку усложненного поиска и возможность связывать несколько моделей друг с другом.
 
 .. highlights::
 
-    If you're using PHP 5.4 is recommended declare each column that makes part of the model in order to save
-    memory and reduce the memory allocation.
+    Если вы используете PHP 5.4 рекомендованно объявлять каждый столбец базы данных, который входит в модель в целях экономии памяти и 
+    уменьшения выделения памяти на выполнение.
 
-By default model "Robots" will refer to the table "robots". If you want to manually specify another name for the mapping table,
-you can use the getSource() method:
+По умолчанию модель "Robots" будет ссылаться на таблицу 'robots'. Если вы захотите вручную указать другое имя для маппинга таблицы,
+вы можете использовать метод getSource():
 
 .. code-block:: php
 
@@ -55,12 +53,12 @@ you can use the getSource() method:
 
     }
 
-The model Robots now maps to "the_robots" table. The initialize() method aids in setting up the model with a custom behavior i.e. a different table.
-The initialize() method is only called once during the request.
+Теперь модель Robots маппирует (использует) таблицу "the_robots". Метод initialize() помогает в создании модели с пользовательским поведением, т.е. использовании другой таблицы. 
+Метод initialize() вызывает лишь однажды во время запроса.
 
-Models in Namespaces
---------------------
-Namespaces can be used to avoid class name collision. In this case it is necessary to indicate the name of the related table using getSource:
+Модели в Пространствах Имен
+---------------------------
+Пространства имен могут быть использованы во избежание конфликтов, связанных с именами классов. В этих случаях, необходимо указывать имя соответствующей таблицы базы данных используя метод getSource:
 
 .. code-block:: php
 
@@ -78,10 +76,10 @@ Namespaces can be used to avoid class name collision. In this case it is necessa
 
     }
 
-Understanding Records To Objects
---------------------------------
-Every instance of a model represents a row in the table. You can easily access record data by reading object properties. For example,
-for a table "robots" with the records:
+Понимание Записей В Объектах
+----------------------------
+Каждый экземпляр объекта модели представляет собой строку таблицы базы данных. Вы можете легко получить доступ к любой записи, считывая свойство объекта.
+К примеру, для таблицы "robots" с записями:
 
 .. code-block:: bash
 
@@ -93,9 +91,9 @@ for a table "robots" with the records:
     |  2 | Astro Boy  | mechanical | 1952 |
     |  3 | Terminator | cyborg     | 2029 |
     +----+------------+------------+------+
-    3 rows in set (0.00 sec)
+    3 строки в наборе (0,00 сек)
 
-You could find a certain record by its primary key and then print its name:
+Вы можете найти опеределенную запись по ее первичному ключу и напечатать ее имя:
 
 .. code-block:: php
 
@@ -104,10 +102,10 @@ You could find a certain record by its primary key and then print its name:
     // Find record with id = 3
     $robot = Robots::findFirst(3);
 
-    // Prints "Terminator"
+    // Печатать "Terminator"
     echo $robot->name;
 
-Once the record is in memory, you can make modifications to its data and then save changes:
+Как только запись будет зарезервирована в памяти, мы можете производить изменения ее данных, а затем сохранить изменения.
 
 .. code-block:: php
 
@@ -117,8 +115,8 @@ Once the record is in memory, you can make modifications to its data and then sa
     $robot->name = "RoboCop";
     $robot->save();
 
-As you can see, there is no need to use raw SQL statements. :doc:`Phalcon\\Mvc\\Model <../api/Phalcon_Mvc_Model>` provides high database
-abstraction for web applications.
+Как вы можете видеть, нет никакой необходимости в использовании необработанных SQL запросов. :doc:`Phalcon\\Mvc\\Model <../api/Phalcon_Mvc_Model>` 
+предоставляет высший уровень абстракции базы данных для веб-приложений.
 
 Finding Records
 ---------------
@@ -276,21 +274,21 @@ is that at any time there is only one record in memory. This greatly helps in me
 
     // Move the internal cursor to the third robot
     $robots->seek(2);
-    $robot = $robots->current();
+    $robot = $robots->current()
 
     // Access a robot by its position in the resultset
     $robot = $robots[5];
 
     // Check if there is a record in certain position
-    if (isset($robots[3])) {
+    if (isset($robots[3]) {
        $robot = $robots[3];
     }
 
     // Get the first record in the resultset
-    $robot = $robots->getFirst();
+    $robot = robots->getFirst();
 
     // Get the last record
-    $robot = $robots->getLast();
+    $robot = robots->getLast();
 
 Phalcon's resultsets emulate scrollable cursors, you can get any row just by accessing its position, or seeking the internal pointer
 to a specific position. Note that some database systems don't support scrollable cursors, this forces to re-execute the query
@@ -478,7 +476,7 @@ The following schema shows 3 tables whose relations will serve us as an example 
 Check the EER diagram to understand better the relations:
 
 .. figure:: ../_static/img/eer-1.png
-   :align: center
+:align: center
 
 The models with their relations could be implemented as follows:
 
@@ -671,7 +669,7 @@ The table "robots_similar" has the function to define what robots are similar to
 Both "robots_id" and "similar_robots_id" have a relation to the model Robots:
 
 .. figure:: ../_static/img/eer-2.png
-   :align: center
+:align: center
 
 A model that maps this table and its relationships is the following:
 
@@ -1379,7 +1377,7 @@ If we want all objects created in our application use the same EventsManager, th
             if (get_class($model) == 'Robots') {
 
                 if ($event->getType() == 'beforeSave') {
-                    if ($model->name == 'Scooby Doo') {
+                    if ($modle->name == 'Scooby Doo') {
                         echo "Scooby Doo isn't a robot!";
                         return false;
                     }
@@ -1390,7 +1388,7 @@ If we want all objects created in our application use the same EventsManager, th
         });
 
         //Setting a default EventsManager
-        $modelsManager = new Phalcon\Mvc\Model\Manager();
+        $modelsManager = new ModelsManager();
         $modelsManager->setEventsManager($eventsManager);
         return $modelsManager;
     });
@@ -1675,7 +1673,7 @@ A callback also can be used to create a conditional assigment of automatic defau
         public function beforeCreate()
         {
             if ($this->price > 10000) {
-                $this->type = new \Phalcon\Db\RawValue('default');
+                $robot->type = new \Phalcon\Db\RawValue('default');
             }
         }
     }
@@ -1701,7 +1699,7 @@ this specially helps when the table has blob/text fields:
 
     class Robots extends Phalcon\Mvc\Model
     {
-        public function initalize()
+        public function initialize()
         {
             $this->useDynamicUpdate(true);
         }
@@ -1960,7 +1958,7 @@ that is performed operations over a model:
 
     <?php
 
-    use Phalcon\Mvc\Model\Behavior,
+    use Phalcon\Mvc\ModelInterface,
         Phalcon\Mvc\Model\BehaviorInterface;
 
     class Blameable extends Behavior implements BehaviorInterface
@@ -2371,7 +2369,7 @@ you can do this:
             return false;
         }
         return true;
-    });
+    }
 
 Deleting related records
 ^^^^^^^^^^^^^^^^^^^^^^^^
@@ -2425,7 +2423,7 @@ fields are changed according to the data queried from the persistence:
 
     class Robots extends Phalcon\Mvc\Model
     {
-        public function initalize()
+        public function initialize()
         {
             $this->keepSnapshots(true);
         }
@@ -2879,7 +2877,7 @@ As models access the default database connection, all SQL statements that are se
 
     $robot = new Robots();
     $robot->name = "Robby the Robot";
-    $robot->created_at = "1956-07-21";
+    $robot->created_at = "1956-07-21"
     if ($robot->save() == false) {
         echo "Cannot save robot";
     }
@@ -2943,8 +2941,8 @@ Profiling some queries:
 
     // Send some SQL statements to the database
     Robots::find();
-    Robots::find(array("order" => "name"));
-    Robots::find(array("limit" => 30));
+    Robots::find(array("order" => "name");
+    Robots::find(array("limit" => 30);
 
     //Get the generated profiles from the profiler
     $profiles = $di->get('profiler')->getProfiles();

@@ -17,4 +17,4 @@ Read The Docs (http://www.readthedocs.org) и автоматически обн�
 
     php scripts/gen-api.php
 
-Если вы обнаружили ошибку или желаете поуучаствовать в улучшении - отправьте нам pull request на https://github.com/xboston/phalcon-docs/ или https://github.com/phalcon/cphalcon
+Если вы обнаружили ошибку или желаете поучаствовать в улучшении - отправьте нам pull request на https://github.com/xboston/phalcon-docs/ или https://github.com/phalcon/cphalcon

@@ -82,25 +82,101 @@ html-атрибуты вторым параметром:
 
 .. code-block:: php
 
-	<?php
+    <?php
 
-	use Phalcon\Forms\Form,
-		Phalcon\Forms\Element\Text,
-		Phalcon\Forms\Element\Select;
+    use Phalcon\Forms\Form,
+        Phalcon\Forms\Element\Text,
+        Phalcon\Forms\Element\Select;
 
-	class ContactsForm extends Form
-	{
-		public function initialize()
-		{
-			$this->add(new Text("name"));
+    class ContactForm extends Form
+    {
+        public function initialize()
+        {
+            $this->add(new Text("name"));
 
-			$this->add(new Text("telephone"));
+            $this->add(new Text("telephone"));
 
-			$this->add(new Select("telephoneType", TelephoneTypes::find(), array(
-				'using' => array('id', 'name')
-			)));
-		}		
-	}
+            $this->add(new Select("telephoneType", TelephoneTypes::find(), array(
+                'using' => array('id', 'name')
+            )));
+        }
+    }
+
+
+Формы :doc:`Phalcon\\Forms\\Form <../api/Phalcon_Forms_Form>` наследуются от :doc:`Phalcon\\DI\\Injectable <../api/Phalcon_DI_Injectable>`,
+предоставляя доступ к службам приложения, если это необходимо:
+
+.. code-block:: php
+
+    <?php
+
+    use Phalcon\Forms\Form,
+        Phalcon\Forms\Element\Text,
+        Phalcon\Forms\Element\Hidden;
+
+    class ContactForm extends Form
+    {
+
+        /**
+         * Этот метод возвращает значение по умолчанию для поля 'csrf'
+         */
+        public function getCsrf()
+        {
+            return $this->security->getToken();
+        }
+
+        public function initialize()
+        {
+
+            // Установка сущности
+            $this->setEntity($this);
+
+            // Установка поля 'email'
+            $this->add(new Text("email"));
+
+            // Добавление скрытого поля csrf
+            $this->add(new Hidden("csrf"));
+        }
+    }
+
+При инициализации формы в конструктор передаётся объект пользователя и другие парамтры:
+
+.. code-block:: php
+
+    <?php
+
+    use Phalcon\Forms\Form,
+        Phalcon\Forms\Element\Text,
+        Phalcon\Forms\Element\Hidden;
+
+    class UsersForm extends Form
+    {
+        /**
+         * Инициализация формы
+         *
+         * @param Users $user
+         * @param array $options
+         */
+        public function initialize($user, $options)
+        {
+
+            if ($options['edit']) {
+                $this->add(new Hidden('id'));
+            } else {
+                $this->add(new Text('id'));
+            }
+
+            $this->add(new Text('name'));
+        }
+    }
+
+Теперь можно использовать экземпляр формы:
+
+.. code-block:: php
+
+    <?php
+
+    $form = new UsersForm(new Users(), array('edit' => true));
 
 Валидация
 ---------
@@ -218,8 +294,6 @@ Phalcon предоставляет набор элементов для испо
 | Password     | Генерирует элемент INPUT[type=password]                           | :doc:`Example <../api/Phalcon_Forms_Element_Password>`            |
 +--------------+-------------------------------------------------------------------+-------------------------------------------------------------------+
 | Select       | Генерирует элемент раскрывающегося списка SELECT                  | :doc:`Example <../api/Phalcon_Forms_Element_Select>`              |
-+--------------+-------------------------------------------------------------------+-------------------------------------------------------------------+
-| Radio        | Генерирует элемент INPUT[type=radio]                              | :doc:`Example <../api/Phalcon_Forms_Element_Radio>`               |
 +--------------+-------------------------------------------------------------------+-------------------------------------------------------------------+
 | Check        | Генерирует элемент INPUT[type=check]                              | :doc:`Example <../api/Phalcon_Forms_Element_Check>`               |
 +--------------+-------------------------------------------------------------------+-------------------------------------------------------------------+

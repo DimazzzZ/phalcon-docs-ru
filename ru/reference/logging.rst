@@ -27,18 +27,20 @@
 
     <?php
 
-    $logger = new \Phalcon\Logger\Adapter\File("app/logs/test.log");
-    $logger->log("This is a message");
-    $logger->log("This is an error", \Phalcon\Logger::ERROR);
-    $logger->error("This is another error");
+    use Phalcon\Logger\Adapter\File as FileAdapter;
+
+    $logger = new FileAdapter("app/logs/test.log");
+    $logger->log("Это сообщение");
+    $logger->log("А это уже сообщение об ошибке", \Phalcon\Logger::ERROR);
+    $logger->error("Это тоже про ошибку");
 
 Результат кода:
 
 .. code-block:: php
 
-    [Tue, 17 Apr 12 22:09:02 -0500][DEBUG] This is a message
-    [Tue, 17 Apr 12 22:09:02 -0500][ERROR] This is an error
-    [Tue, 17 Apr 12 22:09:02 -0500][ERROR] This is another error
+    [Tue, 17 Apr 12 22:09:02 -0500][DEBUG] Это сообщение
+    [Tue, 17 Apr 12 22:09:02 -0500][ERROR] А это уже сообщение об ошибке
+    [Tue, 17 Apr 12 22:09:02 -0500][ERROR] Это тоже про ошибку
 
 Транзакции
 ----------
@@ -50,8 +52,10 @@
 
     <?php
 
+    use Phalcon\Logger\Adapter\File as FileAdapter;
+
     // Создание логгера
-    $logger = new \Phalcon\Logger\Adapter\File("app/logs/test.log");
+    $logger = new FileAdapter("app/logs/test.log");
 
     // Начало транзакции
     $logger->begin();
@@ -69,15 +73,18 @@
 
 .. code-block:: php
 
-    <?php
+    use Phalcon\Logger,
+        Phalcon\Logger\Multiple as MultipleStream,
+        Phalcon\Logger\Adapter\File as FileAdapter,
+        Phalcon\Logger\Adapter\Stream as StreamAdapter;
 
-    $logger = new \Phalcon\Logger\Multiple();
+    $logger = new MultipleStream();
 
-    $logger->push(new \Phalcon\Logger\Adapter\File('test.log'));
-    $logger->push(new \Phalcon\Logger\Adapter\Stream('php://stdout'));
+    $logger->push(new FileAdapter('test.log'));
+    $logger->push(new StreamAdapter('php://stdout'));
 
     $logger->log("This is a message");
-    $logger->log("This is an error", \Phalcon\Logger::ERROR);
+    $logger->log("This is an error", Logger::ERROR);
     $logger->error("This is another error");
 
 Сообщения отправляются на обработчик в порядке их регистраций.
@@ -103,8 +110,8 @@
 
 [%date%][%type%] %message%
 
-You can change the default format using setFormat(), this allows you to change the format of the logged
-messages by defining your own. The log format variables allowed are:
+Вы можете изменить вид сообщений по умолчанию используя setFormat(), этот метод позволяет менять формат конечных сообщений, определяя свой ​​собственный.
+Подерживаются такие переменные:
 
 +-----------+------------------------------------------+
 | Переменные| Описание                                 |
@@ -116,72 +123,78 @@ messages by defining your own. The log format variables allowed are:
 | %type%    | Тип записи заглавными буквами            |
 +-----------+------------------------------------------+
 
-В приведенном примере показанно как изменить формат лога:
+В приведенном примере показанно как изменить формат сообщений в логе:
 
 .. code-block:: php
 
     <?php
 
-    //Changing the logger format
-    $formatter = new Phalcon\Logger\Formatter\Line("%date% - %message%");
+    use Phalcon\Logger\Formatter\Line as LineFormatter;
+
+    // Установка формата сообщений в логе
+    $formatter = new LineFormatter("%date% - %message%");
     $logger->setFormatter($formatter);
 
 Реализация собственного оформителя
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
-The :doc:`Phalcon\\Logger\\FormatterInterface <../api/Phalcon_Logger_FormatterInterface>` interface must be implemented in order to
-create your own logger formatter or extend the existing ones.
+Для создания оформителя необходимо реализовать интерфейс :doc:`Phalcon\\Logger\\FormatterInterface <../api/Phalcon_Logger_FormatterInterface>` или расширить существующий.
 
-Adapters
+Адаптеры
 --------
-The following examples show the basic use of each adapter:
+В Phalcon есть несколько реализованных адаптеров логирования, примеры ниже показывают как их можно использовать:
 
 Stream Logger
 ^^^^^^^^^^^^^
-The stream logger writes messages to a valid registered stream in PHP. A list of streams is available `here <http://php.net/manual/en/wrappers.php>`_:
+Записывает сообщения в зарегистрированные потоки PHP. Поддерживаемые протоколы перечислены `здесь <http://php.net/manual/en/wrappers.php>`_:
 
 .. code-block:: php
 
     <?php
 
-    // Opens a stream using zlib compression
-    $logger = new \Phalcon\Logger\Adapter\Stream("compress.zlib://week.log.gz");
+    use Phalcon\Logger\Adapter\Stream as StreamAdapter;
 
-    // Writes the logs to stderr
-    $logger = new \Phalcon\Logger\Adapter\Stream("php://stderr");
+    // Открывает поток с использованием zlib компрессии
+    $logger = new StreamAdapter("compress.zlib://week.log.gz");
+
+    // Пишет сообщения в stderr
+    $logger = new StreamAdapter("php://stderr");
 
 File Logger
 ^^^^^^^^^^^
-This logger uses plain files to log any kind of data. By default all logger files are open using
-append mode which open the files for writing only; placing the file pointer at the end of the file.
-If the file does not exist, attempt to create it. You can change this mode passing additional options to the constructor:
+Этот регистратор использует обычные файлы для ведения логов всех типов. По умолчанию все файлы регистратор открывает в
+режиме добавления записей, размещая новую запись в конеце файла. Если файл не существует, регистратор попытается его создать. Вы можете
+изменить этот режим передавая дополнительную опцию в конструктор:
 
 .. code-block:: php
 
     <?php
 
-    // Create the file logger in 'w' mode
-    $logger = new \Phalcon\Logger\Adapter\File("app/logs/test.log", array(
+    use Phalcon\Logger\Adapter\File as FileAdapter;
+
+    // Создание регистратора с поддержкой записи
+    $logger = new FileAdapter("app/logs/test.log", array(
         'mode' => 'w'
     ));
 
 Syslog Logger
 ^^^^^^^^^^^^^
-This logger sends messages to the system logger. The syslog behavior may vary from one operating system to another.
+Этот регистратор отправляет сообщения в системный журнал. Работа такого жарнала может варьироваться от одной операционной системы к другой.
 
 .. code-block:: php
 
     <?php
 
-    // Basic Usage
-    $logger = new \Phalcon\Logger\Adapter\Syslog(null);
+    use Phalcon\Logger\Adapter\Syslog as SyslogAdapter;
 
-    // Setting ident/mode/facility
-    $logger = new \Phalcon\Logger\Adapter\Syslog("ident-name", array(
+    // Основное использование
+    $logger = new SyslogAdapter(null);
+
+    // Установка ident/mode/facility
+    $logger = new SyslogAdapter("ident-name", array(
         'option' => LOG_NDELAY,
         'facility' => LOG_MAIL
     ));
 
-Implementing your own adapters
-^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
-The :doc:`Phalcon\\Logger\\AdapterInterface <../api/Phalcon_Logger_AdapterInterface>` interface must be implemented in order to
-create your own logger adapters or extend the existing ones.
+Реализация собственных адаптеров
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+Для создания адаптера необходимо реализовать интерфейс :doc:`Phalcon\\Logger\\AdapterInterface <../api/Phalcon_Logger_AdapterInterface>` или расширить существующий адаптер.
