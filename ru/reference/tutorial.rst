@@ -1,6 +1,6 @@
 Урок 1: Рассмотрим на примере
 =============================
-В этом примере рассмотрим создание приложения с простой формой регистрацией "с нуля".
+В этом примере рассмотрим создание приложения с простой формой регистрации "с нуля".
 Также рассмотрим основные аспекты поведения фреймворка. Если вам интересна автоматическая генерация кода, посмотрите :doc:`developer tools <tools>`.
 
 Проверка установки
@@ -82,7 +82,7 @@ Phalcon не обязывает использовать определенну�
 
 Bootstrap
 ^^^^^^^^^
-Это превый файл, который вам необходимо создать. Это основной файл приложения, предназначенный для управления всеми его аспектами. Здесь
+Это первый файл, который вам необходимо создать. Это основной файл приложения, предназначенный для управления всеми его аспектами. Здесь
 вы можете реализовать как инициализацию компонентов приложения, так и его поведение.
 
 Файл public/index.php содержит следующее:
@@ -153,13 +153,10 @@ DI представляет из себя глобальный контейне�
     //Создание DI
     $di = new Phalcon\DI\FactoryDefault();
 
-:doc:`Phalcon\\DI\\FactoryDefault <../api/Phalcon\_DI_FactoryDefault>` is a variant of Phalcon\\DI. To make things easier, it has registered most of the components
-that come with Phalcon. Thus we should not register them one by one. Later there will be no problem in replacing a factory service.
-
-In the next part, we register the "view" service indicating the directory where the framework will find the views files. As the views do not correspond to classes,
-they cannot be charged with an autoloader.
-
-Services can be registered in several ways, but for our tutorial we'll use lambda functions:
+:doc:`Phalcon\\DI\\FactoryDefault <../api/Phalcon\_DI_FactoryDefault>` является вариантом Phalcon\\DI. Он берет на себя функции регистрации большинства компонентов из состава Phalcon, поэтому нам не придется регистрировать их вручную, один за другим.
+В будущем нет никакой проблемы для замены этого сервиса своим.
+На следующем шаге мы регистрируем сервис 'view', который указывает на папку с файлами 'view' (вьюхи). Т.к. данные файлы не относится к классам, они не могут быть подгружены автолоадером.
+Существует несколько путей для регистрации сервисов, но в нашем примере мы используем анонимную функцию:
 
 .. code-block:: php
 
@@ -171,9 +168,8 @@ Services can be registered in several ways, but for our tutorial we'll use lambd
         $view->setViewsDir('../app/views/');
         return $view;
     });
-
-In the last part of this file, we find :doc:`Phalcon\\Mvc\\Application <../api/Phalcon_Mvc_Application>`. Its purpose is to initialize the request environment,
-route the incoming request, and then dispatch any discovered actions; it aggregates any responses and returns them when the process is complete.
+На последнем этапе мы используем :doc:`Phalcon\\Mvc\\Application <../api/Phalcon_Mvc_Application>`.
+Данная компонента служит для инициализации окружения входящих запросов, их перенаправления и обслуживания относящихся к ним действий. После отработки всех доступных действий, компонента возвращает полученные результаты.
 
 .. code-block:: php
 
@@ -183,13 +179,12 @@ route the incoming request, and then dispatch any discovered actions; it aggrega
     $application->setDI($di);
     echo $application->handle()->getContent();
 
-As you can see, the bootstrap file is very short and we do not need to include any additional files. We have set ourselves a flexible MVC application in less
-than 30 lines of code.
+Как можно увидеть, файл инициализации очень короткий, нам нет необходимости подключать какие-либо дополнительные файлы. Таким образом, мы настроили гибкую структуру MVC-приложения менее чем за 30 строк кода.
 
-Creating a Controller
+Создание контроллеров
 ^^^^^^^^^^^^^^^^^^^^^
-By default Phalcon will look for a controller named "Index". It is the starting point when no controller or action has been passed in the request. The index
-controller (app/controllers/IndexController.php) looks like:
+По умолчанию Phalcon будет искать контроллер с именем "Index". Как и во многих других фреймворках, он является исходной точкой, когда ни один другой контроллер или действие не были запрошены.
+Наш контроллер по умолчанию (app/controllers/IndexController.php) выглядит так:
 
 .. code-block:: php
 
@@ -205,13 +200,12 @@ controller (app/controllers/IndexController.php) looks like:
 
     }
 
-The controller classes must have the suffix "Controller" and controller actions must have the suffix "Action". If you access the application from your browser,
-you should see something like this:
+Классы контроллеров должны заканчиваться на "Controller", чтобы автозагрузчик смог загрузить их, а их действия должны заканчиваться на "Action" по той же причине. Теперь можно открыть браузер и увидеть результат:
 
 .. figure:: ../_static/img/tutorial-1.png
-		:align: center
+:align: center
 
-Congratulations, you're flying with Phalcon!
+Удача! Phalcon моментально отображает нашу простенькую страницу!
 
 Sending output to a view
 ^^^^^^^^^^^^^^^^^^^^^^^^
