@@ -207,17 +207,18 @@ DI представляет из себя глобальный контейне�
 
 Удача! Phalcon моментально отображает нашу простенькую страницу!
 
-Sending output to a view
-^^^^^^^^^^^^^^^^^^^^^^^^
-Sending output on the screen from the controller is at times necessary but not desirable as most purists in the MVC community will attest. Everything must be
-passed to the view that is responsible for outputting data on screen. Phalcon will look for a view with the same name as the last executed action inside a
-directory named as the last executed controller. In our case (app/views/index/index.phtml):
+Отправка результатов для просмотра
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+Отображение вывода напрямую из контроллера временами может быть хорошей идеей (например, когда нужно отослать JSON), но не всегда разумно, и пуристы шаблона MVC это подтвердят. Гораздо правильнее использовать отдельные файлы отображений.
+Phalcon ищет файл отображения с именем, совпадающим с именем действия внутри папки, совпадающей с именем последнего запущенного контроллера.
+В нашем случае это будет выглядеть так (app/views/index/index.phtml):
 
 .. code-block:: php
 
     <?php echo "<h1>Hello!</h1>";
 
-Our controller (app/controllers/IndexController.php) now has an empty action definition:
+В нашем контроллере (app/controllers/IndexController.php) теперь пустое определение действия:
 
 .. code-block:: php
 
@@ -233,7 +234,7 @@ Our controller (app/controllers/IndexController.php) now has an empty action def
 
     }
 
-The browser output should remain the same. The :doc:`Phalcon\\Mvc\\View <../api/Phalcon_Mvc_View>` static component is automatically created when the action execution has ended. Learn more about :doc:`views usage here <views>` .
+Вывод браузера останется прежним. Когда действие завершит свою работу, будет автоматически создан статический компонент :doc:`Phalcon\\Mvc\\View <../api/Phalcon_Mvc_View>`. Узнать больше об отображениях можно :doc:`здесь <views>` .
 
 Designing a sign up form
 ^^^^^^^^^^^^^^^^^^^^^^^^
