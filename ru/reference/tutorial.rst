@@ -153,13 +153,10 @@ DI представляет из себя глобальный контейне�
     //Создание DI
     $di = new Phalcon\DI\FactoryDefault();
 
-:doc:`Phalcon\\DI\\FactoryDefault <../api/Phalcon\_DI_FactoryDefault>` is a variant of Phalcon\\DI. To make things easier, it has registered most of the components
-that come with Phalcon. Thus we should not register them one by one. Later there will be no problem in replacing a factory service.
-
-In the next part, we register the "view" service indicating the directory where the framework will find the views files. As the views do not correspond to classes,
-they cannot be charged with an autoloader.
-
-Services can be registered in several ways, but for our tutorial we'll use lambda functions:
+:doc:`Phalcon\\DI\\FactoryDefault <../api/Phalcon\_DI_FactoryDefault>` является вариантом Phalcon\\DI. Он берет на себя функции регистрации большинства компонентов из состава Phalcon, поэтому нам не придется регистрировать их вручную, один за другим.
+В будущем нет никакой проблемы для замены этого сервиса своим.
+На следующем шаге мы регистрируем сервис 'view', который указывает на папку с файлами 'view' (вьюхи). Т.к. данные файлы не относится к классам, они не могут быть подгружены автолоадером.
+Существует несколько путей для регистрации сервисов, но в нашем примере мы используем анонимную функцию:
 
 .. code-block:: php
 
@@ -171,9 +168,8 @@ Services can be registered in several ways, but for our tutorial we'll use lambd
         $view->setViewsDir('../app/views/');
         return $view;
     });
-
-In the last part of this file, we find :doc:`Phalcon\\Mvc\\Application <../api/Phalcon_Mvc_Application>`. Its purpose is to initialize the request environment,
-route the incoming request, and then dispatch any discovered actions; it aggregates any responses and returns them when the process is complete.
+На последнем этапе мы используем :doc:`Phalcon\\Mvc\\Application <../api/Phalcon_Mvc_Application>`.
+Данная компонента служит для инициализации окружения входящих запросов, их перенаправления и обслуживания относящихся к ним действий. После отработки всех доступных действий, компонента возвращает полученные результаты.
 
 .. code-block:: php
 
@@ -183,8 +179,7 @@ route the incoming request, and then dispatch any discovered actions; it aggrega
     $application->setDI($di);
     echo $application->handle()->getContent();
 
-As you can see, the bootstrap file is very short and we do not need to include any additional files. We have set ourselves a flexible MVC application in less
-than 30 lines of code.
+Как можно увидеть, файл инициализации очень короткий, нам нет необходимости подключать какие-либо дополнительные файлы. Таким образом, мы настроили гибкую структуру MVC-приложения менее чем за 30 строк кода.
 
 Creating a Controller
 ^^^^^^^^^^^^^^^^^^^^^
