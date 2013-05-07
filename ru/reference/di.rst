@@ -1,11 +1,8 @@
-Using Dependency Injection
-**************************
-The following example is a bit lengthy, but explains why using a service container, service location and dependency injection.
-First, let's pretend we are developing a component called SomeComponent. This performs a task that is not important now.
-Our component has some dependency that is a connection to a database.
+Использование Dependency Injection
+**********************************
+Следующий пример немного длинный, но объясняет использование контейнера сервисов (service container), service location и dependency injection. Итак, представим, что мы разрабатываем компонент, назовём его SomeComponent. Сейчас нам не важно, какую именно задачу он выполняет. Наш компонент имеет некоторую зависимость, отвечающую за соединение с базой данных.
 
-In this first example, the connection is created inside the component. This approach is impractical; practically we cannot change the
-connection parameters or the type of database system because the component only works as created.
+В первом примере соединение устанавливается внутри компонента. Такой подход не является практичным, он не позволяет нам изменить параметры соединения или тип СУБД, потому как компонент работает только так, как был создан.
 
 .. code-block:: php
 
@@ -15,9 +12,9 @@ connection parameters or the type of database system because the component only 
     {
 
         /**
-         * The instantiation of the connection is hardcoded inside
-         * the component so is difficult replacing it externally
-         * or change its behavior
+         * Объект соединения жестко вписан в компонент,
+         * что усложняет его замену на какой-то
+         * внешний или изменение его поведения
          */
         public function someDbTask()
         {
@@ -36,8 +33,7 @@ connection parameters or the type of database system because the component only 
     $some = new SomeComponent();
     $some->someDbTask();
 
-To solve this, we create a setter that injects the dependency externally before using it. For now, this seems to be
-a good solution:
+Чтобы решить эту проблему, создадим сеттер (setter), который внедрит внешнюю зависимость перед использованием. Теперь это похоже на хорошее решение:
 
 .. code-block:: php
 
@@ -49,7 +45,7 @@ a good solution:
         protected $_connection;
 
         /**
-         * Sets the connection externally
+         * Назначает внешнее соединение
          */
         public function setConnection($connection)
         {
@@ -67,7 +63,7 @@ a good solution:
 
     $some = new SomeComponent();
 
-    //Create the connection
+    // Создание соединения с БД
     $connection = new Connection(array(
         "host" => "localhost",
         "username" => "root",
@@ -75,15 +71,12 @@ a good solution:
         "dbname" => "invo"
     ));
 
-    //Inject the connection in the component
+    // Внедрение соединения в компонент
     $some->setConnection($connection);
 
     $some->someDbTask();
 
-Now consider that we use this component in different parts of the application and
-then we will need to create the connection several times before passing it to the component.
-Using some kind of global registry where we obtain the connection instance and not have
-to create it again and again could solve this:
+Теперь примем во внимание тот факт, что мы используем компонент в различных частях приложения, поэтому появляется необходимость создавать соединение несколько раз и передавать его в компонент. С помощью некоторого глобального регистра будем получать копию соединения, тем самым нам больше нет надобности создавать его вновь и вновь:
 
 .. code-block:: php
 
@@ -93,7 +86,7 @@ to create it again and again could solve this:
     {
 
         /**
-         * Returns the connection
+         * Возвращает соединение
          */
         public static function getConnection()
         {
@@ -113,7 +106,7 @@ to create it again and again could solve this:
         protected $_connection;
 
         /**
-         * Sets the connection externally
+         * Назначает внешнее соединение
          */
         public function setConnection($connection){
             $this->_connection = $connection;
@@ -130,12 +123,12 @@ to create it again and again could solve this:
 
     $some = new SomeComponent();
 
-    //Pass the connection defined in the registry
+    // Передает соединение, определяемое в регистре
     $some->setConnection(Registry::getConnection());
 
     $some->someDbTask();
 
-Now, let's imagine that we must implement two methods in the component, the first always need to create a new connection and the second always need to use a shared connection:
+Теперь представим, что нам необходимо реализовать в компоненте два метода: первый всегда нуждается в создании нового соединения, а второй всегда использует уже установленное (shared):
 
 .. code-block:: php
 
@@ -147,7 +140,7 @@ Now, let's imagine that we must implement two methods in the component, the firs
         protected static $_connection;
 
         /**
-         * Creates a connection
+         * Создаёт соединение
          */
         protected static function _createConnection()
         {
@@ -160,7 +153,7 @@ Now, let's imagine that we must implement two methods in the component, the firs
         }
 
         /**
-         * Creates a connection only once and returns it
+         * Создаёт соединение единожды и возвращает его
          */
         public static function getSharedConnection()
         {
@@ -172,7 +165,7 @@ Now, let's imagine that we must implement two methods in the component, the firs
         }
 
         /**
-         * Always returns a new connection
+         * Всегда возвращает новое соединение
          */
         public static function getNewConnection()
         {
@@ -187,14 +180,14 @@ Now, let's imagine that we must implement two methods in the component, the firs
         protected $_connection;
 
         /**
-         * Sets the connection externally
+         * Назначает внешнее соединение
          */
         public function setConnection($connection){
             $this->_connection = $connection;
         }
 
         /**
-         * This method always needs the shared connection
+         * Для этого метода всегда требуется уже установленное соединение
          */
         public function someDbTask()
         {
@@ -204,7 +197,7 @@ Now, let's imagine that we must implement two methods in the component, the firs
         }
 
         /**
-         * This method always needs a new connection
+         * Для этого метода всегда требуется новое соединение
          */
         public function someOtherDbTask($connection)
         {
@@ -215,37 +208,33 @@ Now, let's imagine that we must implement two methods in the component, the firs
 
     $some = new SomeComponent();
 
-    //This injects the shared connection
+    // Тут внедряется уже установленное (shared) соединение
     $some->setConnection(Registry::getSharedConnection());
 
     $some->someDbTask();
 
-    //Here, we always pass a new connection as parameter
+    // А здесь всегда в качестве параметра передаётся новое соединение
     $some->someOtherDbTask(Registry::getConnection());
 
-So far we have seen how dependency injection solved our problems. Passing dependencies as arguments instead
-of creating them internally in the code makes our application more maintainable and decoupled. However, to long-term,
-this form of dependency injection have some disadvantages.
+До сих пор мы рассматривали случаи, когда внедрение зависимостей решает наши задачи. Передача зависимости в качестве аргументов вместо создания их внутри кода делает наше приложение более гибким и уменьшает его связанность. Однако, в перспективе, такая форма внедрения зависимостей имеет некоторые недостатки.
 
-For instance, if the component has many dependencies, we will need to create multiple setter arguments to pass
-the dependencies or create a constructor that pass them with many arguments, additionally creating dependencies
-before using the component, every time, makes our code not maintainable as we would like:
+Например, если компонент имеет много зависимостей, мы будем вынуждены создавать сеттеры с множеством аргументов для передачи зависимостей или конструктор, который принимает их в качестве большого числа аргументов, вдобавок к этому, всякий раз создавать ещё и сами зависимости до использования компонента. Это сделает наш код слишком сложным для сопровождения:
 
 .. code-block:: php
 
     <?php
 
-    //Create the dependencies or retrieve them from the registry
+    // Создание зависимостей или получение их из регистра
     $connection = new Connection();
     $session = new Session();
     $fileSystem = new FileSystem();
     $filter = new Filter();
     $selector = new Selector();
 
-    //Pass them as constructor parameters
+    // Передача их в конструктор в качестве параметров
     $some = new SomeComponent($connection, $session, $fileSystem, $filter, $selector);
 
-    // ... or using setters
+    // ... или использование сеттеров
 
     $some->setConnection($connection);
     $some->setSession($session);
@@ -253,10 +242,7 @@ before using the component, every time, makes our code not maintainable as we wo
     $some->setFilter($filter);
     $some->setSelector($selector);
 
-Think we had to create this object in many parts of our application. If you ever do not require any of the dependencies,
-we need to go everywhere to remove the parameter in the constructor or the setter where we injected the code. To solve this,
-we return again to a global registry to create the component. However, it adds a new layer of abstraction before creating
-the object:
+Думаю, пришлось бы создавать этот объект во многих частях нашего приложения. Если когда-нибудь мы перестанем нуждаться в какой-либо зависимости, нам придётся пройтись по всем этим местам и удалить соответствующий параметр в вызовах конструктора или сеттерах. Чтобы решить эту проблему, вернёмся к глобальному регистру для создания компонента. Однако, это добавит новый уровень обстракции, предшествующий созданию объекта:
 
 .. code-block:: php
 
@@ -268,7 +254,7 @@ the object:
         // ...
 
         /**
-         * Define a factory method to create SomeComponent instances injecting its dependencies
+         * Определение метода factory, который создаёт экземпляр SomeComponent и внедряет в него зависимости
          */
         public static function factory()
         {
@@ -284,12 +270,9 @@ the object:
 
     }
 
-One moment, we returned to the beginning, we are building again the dependencies inside the component! We can move on and find out a way
-to solve this problem every time. But it seems that time and again we fall back into bad practices.
+Минуточку, мы снова вернулись туда, откуда начали: создание зависимостей внутри компонента! Мы можем двигаться дальше и находить способ решать эту проблему каждый раз. Но, это означает, что мы снова и снова будем наступать на те же грабли.
 
-A practical and elegant way to solve these problems are using a container for dependencies. The containers act as the global registry that
-we saw earlier. Using the container for dependencies as a bridge to obtain the dependencies allows us to reduce the complexity
-of our component:
+Практически применимый и элегантный способ решить эту проблему — это использовать контейнер для зависимостей. Он играет ту же роль, что и глобальный регистр, который мы видели выше. Использование контейнера в качестве моста к зависимостям позволяет нам уменьшить сложность нашего компонента:
 
 .. code-block:: php
 
@@ -308,8 +291,8 @@ of our component:
         public function someDbTask()
         {
 
-            // Get the connection service
-            // Always returns a new connection
+            // Получение сервиса соединений
+            // Всегда возвращает соединение
             $connection = $this->_di->get('db');
 
         }
@@ -317,11 +300,11 @@ of our component:
         public function someOtherDbTask()
         {
 
-            // Get a shared connection service,
-            // this will return the same connection everytime
+            // Получение сервиса соединения, предназначенного для общего доступа,
+            // всегда возвращает одно и то же соединение
             $connection = $this->_di->getShared('db');
 
-            //This method also requires an input filtering service
+            // Этот метод так же требует сервиса фильтрации входных данных
             $filter = $this->_db->get('filter');
 
         }
@@ -330,7 +313,7 @@ of our component:
 
     $di = new Phalcon\DI();
 
-    //Register a "db" service in the container
+    // Регистрация в контейнере сервиса "db"
     $di->set('db', function() {
         return new Connection(array(
             "host" => "localhost",
@@ -340,145 +323,134 @@ of our component:
         ));
     });
 
-    //Register a "filter" service in the container
+    // Регистрация в контейнере сервиса "filter"
     $di->set('filter', function() {
         return new Filter();
     });
 
-    //Register a "session" service in the container
+    // Регистрация в контейнере сервиса "session"
     $di->set('session', function() {
         return new Session();
     });
 
-    //Pass the service container as unique parameter
+    // Передача контейнера сервисов в качестве единственного параметра
     $some = new SomeComponent($di);
 
     $some->someTask();
 
-The component now simply access the service it requires when it needs it, if it does not require a service that is not even initialized
-saving resources. The component is now highly decoupled. For example, we can replace the manner in which connections are created,
-their behavior or any other aspect of them and that would not affect the component.
+Теперь компонент имеет простой доступ к сервисам, которые ему необходимы. Если сервис не востребован, он не будет инициализирован, тем самым экономя ресурсы. Так же компонент теперь обладает низкой связанностью. Например, можно заменить способ создания соединений, поведение или любой другой аспект их работы, и это никак не отразится на компоненте.
 
-Our approach
-============
-Phalcon\\DI is a component implementing Dependency Injection and Location of services and it's itself a container for them.
+Наш подход
+==========
+Phalcon\\DI — это компонент, реализующий Dependency Injection и Location сервисов и является контейнером для них.
 
-Since Phalcon is highly decoupled, Phalcon\\DI is essential to integrate the different components of the framework. The developer can
-also use this component to inject dependencies and manage global instances of the different classes used in the application.
+Поскольку Phalcon обладает низкой связанностью, Phalcon\\DI необходимо обеспечить интеграцию различных компонентов фреймворка. Разработчики так же могут использовать этот компонент для внедрения зависимостей и использования глобальных экземпляров различных классов, используемых в приложении.
 
-Basically, this component implements the `Inversion of Control`_ pattern. Applying this, the objects do not receive their dependencies
-using setters or constructors, but requesting a service dependency injector. This reduces the overall complexity since there is only
-one way to get the required dependencies within a component.
+В основе своей, компонент реализует паттерн `Инверсии управления`_. Применяя его, объекты получают их зависимости не с использованием сеттеров или конструкторов, а с помощью сервиса внедрения зависимостей. Это снижает общую сложность, поскольку остаётся только один способ получения зависимостей в компоненте.
 
-Additionally, this pattern increases testability in the code, thus making it less prone to errors.
+К тому же, этот паттерн увеличивает тестируемость в коде, что позволяет снизить "ошибочность" кода.
 
-Registering services in the Container
-=====================================
-The framework itself or the developer can register services. When a component A requires component B (or an instance of its class) to operate, it
-can request component B from the container, rather than creating a new instance component B.
+Регистрация сервисов в Контейнере сервисов
+==========================================
+Регистрация сервисов возможна как разработчиком, так и самим фреймворком. Когда компоненту A требуется компонент B (или экземпляр его класса) для работы, он может запросить его из контейнера, а не создавать новый экземпляр.
 
-This way of working gives us many advantages:
+Такой способ работы даёт нам много преимуществ: 
 
-* We can replace a component by one created by ourselves or a third party one easily.
-* We have full control of the object initialization, allowing us to set these objects, as you need before delivering them to components.
-* We can get global instances of components in a structured and unified way
+* Мы можем легко заменять компонент на созданный нами или кем-то другим.
+* Мы обладаем полным контролем над инициализацией объекта, что позволяет нам настраивать эти объекты так, как нам необходимо, прежде, чем передать их компонентам.
+* Мы можем получать глобальный экземпляр компонента структурированным и унифицированным образом.
 
-Services can be registered using several types of definitions:
+Зарегистрировать сервисы можно несколькими различными способами:
 
 .. code-block:: php
 
     <?php
 
-    //Create the Dependency Injector Container
+    // Создание контейнера DI
     $di = new Phalcon\DI();
 
-    //By its class name
+    // По названию класса
     $di->set("request", 'Phalcon\Http\Request');
 
-    //Using an anonymous function, the instance will lazy loaded
+    // С использованием анонимной функции для отложенной загрузки
     $di->set("request", function() {
         return new Phalcon\Http\Request();
     });
 
-    //Registering directly an instance
+    // Регистрация экземпляра напрямую
     $di->set("request", new Phalcon\Http\Request());
 
-    //Using an array definition
+    // Определение с помощью массива
     $di->set("request", array(
         "className" => 'Phalcon\Http\Request'
     ));
 
+Для регистрации сервисов можно так же использовать синтаксис массивов:
 The array syntax is also allowed to register services:
 
 .. code-block:: php
 
     <?php
 
-    //Create the Dependency Injector Container
+    // Создание контейнера DI
     $di = new Phalcon\DI();
 
-    //By its class name
+    // По названию класса
     $di["request"] = 'Phalcon\Http\Request';
 
-    //Using an anonymous function, the instance will lazy loaded
+    // С использованием анонимной функции для отложенной загрузки
     $di["request"] = function() {
         return new Phalcon\Http\Request();
     };
 
-    //Registering directly an instance
+    // Регистрация экземпляра напрямую
     $di["request"] = new Phalcon\Http\Request();
 
-    //Using an array definition
+    // Определение с помощью массива
     $di["request"] = array(
         "className" => 'Phalcon\Http\Request'
     );
 
-In the examples given above, when the framework needs to access the request data, it will ask for the service identified as ‘request’ in the container.
-The container in turn will return an instance of the required service. A developer might eventually replace a component when he/she needs.
+В примере, данном выше, когда фреймворк нуждается в доступе к запрашиваемым данным, он будет запрашивать в контейнере сервис, названный 'request'.
+Контейнер, в свою очередь, возвращает экземпляр затребованного сервиса. Разработчик, в конечном итоге, может заменить компонент, когда захочет.
 
-Each of the methods (demonstrated in the example given above) used to set/register a service has advantages and disadvantages. It is up to the
-developer and the particular requirements that will designate which one is used.
+Каждый из методов регистрации сервисов имеет свои достоинства и недостатки. Какой из них использовать — зависит только от разработчика и от конкретных требований.
 
-Setting a service by a string is simple, but lacks flexibility. Setting services using an array offers a lot more flexibility, but makes the
-code more complicated. The lambda function is a good balance between the two, but could lead to more maintenance than one would expect.
+Назначение сервиса строкой очень простое, но лишено гибкости. В качестве массива — предоставляет большую гибкость, но делает код менее понятным. Анонимные функции неплохо балансируют между этими двумя способами, но им может потребоваться больше обслуживания, чем это ожидается.
 
-Phalcon\\DI offers lazy loading for every service it stores. Unless the developer chooses to instantiate an object directly and store it
-in the container, any object stored in it (via array, string, etc.) will be lazy loaded i.e. instantiated only when requested.
+Phalcon\\DI предоставляет отложенную загрузку для каждого хранимого им сервиса. Если разработчик не решит создавать экземпляр объекта напрямую и хранить его в контейнере, любой объект будет сохранённый в нём (через массив, строку и т.д.) будет загружен отложенно (lazy load), т.е. создастся только тогда, когда будет востребован.
 
-Simple Registration
+Простая регистрация
 -------------------
-As seen before, there are several ways to register services. These are we call simple:
 
-String
-^^^^^^
-This type expects the name of a valid class, returning an object of the specified class, if the class is not loaded is loaded using an auto-loader.
-This type of definition does not allow to define arguments for the class constructor or parameters:
+Как мы было показано выше, есть несколько способов для регистрации сервисов. Следующие из них мы называем "простыми":
+
+Строчный
+^^^^^^^^
+Этот способ ожидает в качестве параметра имя существующего класса, возвращает его объект, если класс не был загружен автолоадером.
+Такой способ не позволяет передавать аргументы для конструктора класса или настраивать параметры:
 
 .. code-block:: php
 
     <?php
 
-    // return new Phalcon\Http\Request();
+    // Возвращает новый Phalcon\Http\Request();
     $di->set('request', 'Phalcon\Http\Request');
 
-Object
+Объект
 ^^^^^^
-This type expects an object because the object does not need to be resolved because it is
-already an object, one could say that there is not really dependency injection here,
-but it is useful if you want to force that the returned dependency will
-always the same object/value:
+Этот способ в качестве параметра принимает объект. Объект не нуждается в создании, потому как объект уже является объектом сам по себе. Вообще говоря, в данном случае это не является настоящим внедрением зависимости, однако такой способ вполне используем, если вы хотите быть уверены в том, что возвращаемая зависимость всегда будет одним и тем же объектом/значением:
 
 .. code-block:: php
 
     <?php
 
-    // return new Phalcon\Http\Request();
+    // Возвращает новый Phalcon\Http\Request();
     $di->set('request', new Phalcon\Http\Request());
 
-Closures/Anonymous functions
-^^^^^^^^^^^^^^^^^^^^^^^^^^^^
-This method offers greater freedom to build the dependency as desired, however, it is difficult to
-change some of the parameters externally without having to completely change the definition of dependency:
+Замыкания/Анонимные функции
+^^^^^^^^^^^^^^^^^^^^^^^^^^^
+Этот метод дает больше свободы для построения зависимости, если этого захотеть, тем не менее, он весьма сложен в плане изменения некоторых параметров извне без полного замещения определения зависимости:
 
 .. code-block:: php
 
@@ -493,13 +465,13 @@ change some of the parameters externally without having to completely change the
         ));
     });
 
-Some of the limitations can be overcome by passing additional variables to the closure's environment:
+Некоторые ограничения можно преодолеть путём передачи дополнительных переменных в область видимости замыкания:
 
 .. code-block:: php
 
     <?php
 
-    //Using the $config variable in the current scope
+    // Использование переменной $config в текущей области видимости
     $di->set("db", function() use ($config) {
         return new \Phalcon\Db\Adapter\Pdo\Mysql(array(
              "host" => $config->host,
@@ -509,17 +481,15 @@ Some of the limitations can be overcome by passing additional variables to the c
         ));
     });
 
-Complex Registration
---------------------
-If it is required to change the definition of a service without instantiating/resolving the service,
-then, we need to define the services using the array syntax. Define a service using an array definition
-can be a little more verbose:
+Сложная регистрация
+-------------------
+Если потребуется изменить определение сервиса без создания экземпляра, тогда нам придётся определять его с использованием синтаксиса массивов. Такое определение может оказаться чуть более длинным:
 
 .. code-block:: php
 
     <?php
 
-    //Register a service 'logger' with a class name and its parameters
+    // Регистрация сервиса 'logger' с помощью имени класса и параметров для него
     $di->set('logger', array(
         'className' => 'Phalcon\Logger\Adapter\File',
         'arguments' => array(
@@ -530,32 +500,32 @@ can be a little more verbose:
         )
     ));
 
-    //Using an anonymous function
+    // Или в виде анонимной функции
     $di->set('logger', function() {
         return new \Phalcon\Logger\Adapter\File('../apps/logs/error.log');
     });
 
-Both service registrations above produce the same result. The array definition however, allows for alteration of the service parameters if needed:
+Оба способа приведут к одинаковому результату. Определение же с помощью массива позволяет изменение параметров, если это неободимо:
 
 .. code-block:: php
 
     <?php
 
-    //Change the service class name
+    // Измнение названия класса для сервиса
     $di->getService('logger')->setClassName('MyCustomLogger');
 
-    //Change the first parameter without instantiate the logger
+    // Измнение первого параметра без пересоздания экземпляра сервиса logger
     $di->getService('logger')->setParameter(0, array(
         'type' => 'parameter',
         'value' => '../apps/logs/error.log'
     ));
 
-In addition by using the array syntax you can use three types of dependency injection:
+В дополнение к этому, используя синтаксис массивов, можно использовать три типа внедрения зависимостей:
 
 Constructor Injection
 ^^^^^^^^^^^^^^^^^^^^^
-This injection type passes the dependencies/arguments to the class constructor.
-Let's pretend we have the following component:
+Этот тип передаёт зависимости/аргументы в конструктор класса.
+Представим, что у нас есть следующий компонент:
 
 .. code-block:: php
 
@@ -580,7 +550,7 @@ Let's pretend we have the following component:
 
     }
 
-The service can be registered this way:
+Сервис может быть зарегистрирован следующим образом:
 
 .. code-block:: php
 
@@ -598,12 +568,11 @@ The service can be registered this way:
         )
     ));
 
-The service "response" (Phalcon\\Http\\Response) is resolved to be passed as the first argument of the constructor,
-while the second is a boolean value (true) that is passed as it is.
+Сервис "response" (Phalcon\\Http\\Response) передаётся в конструктор в качестве первого параметра, в то время как вторым параметром передаётся булевое значение (true) без изменений.
 
 Setter Injection
 ^^^^^^^^^^^^^^^^
-Classes may have setters to inject optional dependencies, our previous class can be changed to accept the dependencies with setters:
+Классы могут иметь сеттеры для внедрения дополнительных зависимостей. Наш предыдущий класс может быть изменён, чтобы принимать зависимости с помощью сеттеров:
 
 .. code-block:: php
 
@@ -632,7 +601,7 @@ Classes may have setters to inject optional dependencies, our previous class can
 
     }
 
-A service with setter injection can be registered as follows:
+Сервис с сеттерами для зависимостей может быть зарегистрирован следующим образом:
 
 .. code-block:: php
 
@@ -662,7 +631,7 @@ A service with setter injection can be registered as follows:
 
 Properties Injection
 ^^^^^^^^^^^^^^^^^^^^
-A less common strategy is to inject dependencies or parameters directly in public attributes of the class:
+Менее распространённым способом является внедрение зависимостей или полей класса напрямую:
 
 .. code-block:: php
 
@@ -681,7 +650,7 @@ A less common strategy is to inject dependencies or parameters directly in publi
 
     }
 
-A service with properties injection can be registered as follows:
+Сервис с прямым внедрением может быть зарегистрирован следующим способом:
 
 .. code-block:: php
 
@@ -705,7 +674,7 @@ A service with properties injection can be registered as follows:
         )
     ));
 
-Supported parameter types include the following:
+Поддерживаются параметры следующих типов:
 
 +-------------+----------------------------------------------------------+-------------------------------------------------------------------------------------+
 | Type        | Description                                              | Example                                                                             |
@@ -1007,5 +976,5 @@ Implementing your own DI
 ========================
 The :doc:`Phalcon\\DiInterface <../api/Phalcon_DiInterface>` interface must be implemented to create your own DI replacing the one provided by Phalcon or extend the current one.
 
-.. _`Inversion of Control`: http://en.wikipedia.org/wiki/Inversion_of_control
+.. _`Инверсии управления`: http://en.wikipedia.org/wiki/Inversion_of_control
 .. _Singletons: http://en.wikipedia.org/wiki/Singleton_pattern
