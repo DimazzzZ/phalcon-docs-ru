@@ -340,11 +340,11 @@ Phalcon ищет файл представления с именем, совпа
 Снова жмем на кнопку "Send" и видим пустую страницу. Поля name и email, введенные пользователем, должны сохраниться в базе данных.
 Следуя традиции MVC, все взаимодействие с БД должно вестись через модели, получая таким образом чистый код в ООП-стиле.
 
-Creating a Model
-^^^^^^^^^^^^^^^^
-Phalcon brings the first ORM for PHP entirely written in C-language. Instead of increasing the complexity of development, it simplifies it.
+Создание модели
+^^^^^^^^^^^^^^^
 
-Before creating our first model, we need a database table to map it to. A simple table to store registered users can be defined like this:
+Phalcon преподносит первую ORm для PHP, полностью написанную на языке C. Вместо усложнения процесса разработки, он упрощает ее.
+Мы должны связать таблицу в наше базе данных перед созданием нашей первой модели. Простейшая таблица для рагеистрации пользователей приведена ниже:
 
 .. code-block:: sql
 
@@ -355,7 +355,7 @@ Before creating our first model, we need a database table to map it to. A simple
       PRIMARY KEY (`id`)
     );
 
-A model should be located in the app/models directory. The model mapping to "users" table:
+Файлы моделей должны находится в папке app/models. Модель, представляющая таблицу "users" выглядит следующим образом:
 
 .. code-block:: php
 
