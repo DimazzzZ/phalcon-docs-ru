@@ -207,17 +207,18 @@ DI представляет из себя глобальный контейне�
 
 Удача! Phalcon моментально отображает нашу простенькую страницу!
 
-Sending output to a view
-^^^^^^^^^^^^^^^^^^^^^^^^
-Sending output on the screen from the controller is at times necessary but not desirable as most purists in the MVC community will attest. Everything must be
-passed to the view that is responsible for outputting data on screen. Phalcon will look for a view with the same name as the last executed action inside a
-directory named as the last executed controller. In our case (app/views/index/index.phtml):
+Отправка результатов для просмотра
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+Отображение вывода напрямую из контроллера временами может быть хорошей идеей (например, когда нужно отослать JSON), но не всегда разумно, и сторонники шаблона MVC это подтвердят. Гораздо правильнее использовать отдельные файлы представлений.
+Phalcon ищет файл представления с именем, совпадающим с именем действия внутри папки, совпадающей с именем последнего запущенного контроллера.
+В нашем случае это будет выглядеть так (app/views/index/index.phtml):
 
 .. code-block:: php
 
     <?php echo "<h1>Hello!</h1>";
 
-Our controller (app/controllers/IndexController.php) now has an empty action definition:
+В нашем контроллере (app/controllers/IndexController.php) теперь пустое определение действия:
 
 .. code-block:: php
 
@@ -233,11 +234,12 @@ Our controller (app/controllers/IndexController.php) now has an empty action def
 
     }
 
-The browser output should remain the same. The :doc:`Phalcon\\Mvc\\View <../api/Phalcon_Mvc_View>` static component is automatically created when the action execution has ended. Learn more about :doc:`views usage here <views>` .
+Вывод браузера останется прежним. Когда действие завершит свою работу, будет автоматически создан статический компонент :doc:`Phalcon\\Mvc\\View <../api/Phalcon_Mvc_View>`. Узнать больше оо представлениях можно :doc:`здесь <views>` .
 
-Designing a sign up form
-^^^^^^^^^^^^^^^^^^^^^^^^
-Now we will change the index.phtml view file, to add a link to a new controller named "signup". The goal is to allow users to sign up in our application.
+Проектирование формы регистрации
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+Давайте теперь измением файл представления index.phtml, добавив ссылку на новый контроллер "signup". Идея проста - позволить пользователям регистрироваться в нашем приложении.
 
 .. code-block:: php
 
@@ -247,18 +249,18 @@ Now we will change the index.phtml view file, to add a link to a new controller 
 
     echo Phalcon\Tag::linkTo("signup", "Sign Up Here!");
 
-The generated HTML code displays an "A" html tag linking to a new controller:
+Сгенерированный код HTML будет выводить тэг "<a>", указывающий на наш новый контроллер:
 
 .. code-block:: html
 
     <h1>Hello!</h1> <a href="/test/signup">Sign Up Here!</a>
 
-To generate the tag we use the class :doc:`\Phalcon\\Tag <../api/Phalcon_Tag>`. This is a utility class that allows us to build HTML tags with framework conventions in mind. A more detailed article regarding HTML generation can be :doc:`found here <tags>`
+Для генерации тэга мы воспользовались встроенный классом :doc:`\Phalcon\\Tag <../api/Phalcon_Tag>`. Это служебный класс, позволяющий конструировать HTML-разметку в Phalcon-подобном стиле. Более подробно можно :doc:`узнать здесь<tags>`.
 
 .. figure:: ../_static/img/tutorial-2.png
 	:align: center
 
-Here is the controller Signup (app/controllers/SignupController.php):
+Контроллер Signup сейчас очень похож на предыдущий контроллер (app/controllers/SignupController.php):
 
 .. code-block:: php
 
@@ -274,7 +276,8 @@ Here is the controller Signup (app/controllers/SignupController.php):
 
     }
 
-The empty index action gives the clean pass to a view with the form definition:
+Пустое действие index говорит нам о том, что будет использоваться одноименный файл представления с нашей формой для регистрации:
+
 
 .. code-block:: html+php
 
@@ -300,21 +303,20 @@ The empty index action gives the clean pass to a view with the form definition:
 
     </form>
 
-Viewing the form in your browser will show something like this:
+В браузере это будет выглядеть так:
 
 .. figure:: ../_static/img/tutorial-3.png
 	:align: center
 
-:doc:`Phalcon\\Tag <../api/Phalcon_Tag>` also provides useful methods to build form elements.
+Класс :doc:`Phalcon\\Tag <../api/Phalcon_Tag>` также содержит полезные методы для работы с формами.
 
-The Phalcon\\Tag::form method receives only one parameter for instance, a relative uri to a controller/action in the application.
+Метод Phalcon\\Tag::form принимает единственный аргумент, например, относительный идентификатор контроллер/действие приложения.
 
-By clicking the "Send" button, you will notice an exception thrown from the framework,
-indicating that we are missing the "register" action in the controller "signup". Our public/index.php file throws this exception:
+При нажатии на кнопку "Send" можно увидеть исключение, вызванное фреймворком. Оно говорит нам о том, что отсутствует действие "register" нашего контроллера "signup":
 
     PhalconException: Action "register" was not found on controller "signup"
 
-Implementing that method will remove the exception:
+Не будем испытывать судьбу и реализуем данный метод:
 
 .. code-block:: php
 
@@ -335,14 +337,14 @@ Implementing that method will remove the exception:
 
     }
 
-If you click the "Send" button again, you will see a blank page. The name and email input provided by the user should be stored
-in a database. According to MVC guidelines, database interactions must be done through models so as to ensure clean object-oriented code.
+Снова жмем на кнопку "Send" и видим пустую страницу. Поля name и email, введенные пользователем, должны сохраниться в базе данных.
+Следуя традиции MVC, все взаимодействие с БД должно вестись через модели, получая таким образом чистый код в ООП-стиле.
 
-Creating a Model
-^^^^^^^^^^^^^^^^
-Phalcon brings the first ORM for PHP entirely written in C-language. Instead of increasing the complexity of development, it simplifies it.
+Создание модели
+^^^^^^^^^^^^^^^
 
-Before creating our first model, we need a database table to map it to. A simple table to store registered users can be defined like this:
+Phalcon преподносит первую ORm для PHP, полностью написанную на языке C. Вместо усложнения процесса разработки, он упрощает ее.
+Мы должны связать таблицу в наше базе данных перед созданием нашей первой модели. Простейшая таблица для рагеистрации пользователей приведена ниже:
 
 .. code-block:: sql
 
@@ -353,7 +355,7 @@ Before creating our first model, we need a database table to map it to. A simple
       PRIMARY KEY (`id`)
     );
 
-A model should be located in the app/models directory. The model mapping to "users" table:
+Файлы моделей должны находится в папке app/models. Модель, представляющая таблицу "users" выглядит следующим образом:
 
 .. code-block:: php
 
