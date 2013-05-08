@@ -386,7 +386,6 @@ Phalcon\\DI — это компонент, реализующий Dependency Inj
     ));
 
 Для регистрации сервисов можно так же использовать синтаксис массивов:
-The array syntax is also allowed to register services:
 
 .. code-block:: php
 
