@@ -366,10 +366,11 @@ Phalcon содержит первую ORM для PHP, полностью нап�
 
     }
 
-Setting a Database Connection
-^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
-In order to be able to use a database connection and subsequently access data through our models, we need to specify it in our bootstrap process.
-A database connection is just another service that our application has that can be use for several components:
+Настройка соединения с базой данных
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+Для использования базы данных и получения к ней доступа через наши модели, нам необходимо указать настройки в процессе инициализации нашего приложения.
+Соединение с базой данных это всего лишь еще один сервис в нашем сервис-локаторе:
 
 .. code-block:: php
 
@@ -413,11 +414,11 @@ A database connection is just another service that our application has that can 
          echo "PhalconException: ", $e->getMessage();
     }
 
-With the correct database parameters, our models are ready to work and interact with the rest of the application.
+При правильных настройках подключения наши модели готовы к работе и взаимодействию с остальными частями приложения.
 
-Storing data using models
-^^^^^^^^^^^^^^^^^^^^^^^^^
-Receiving data from the form and storing them in the table is the next step.
+Сохранение данных при работе с моделями
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+Следующим шагом будет обработка данных нашей формы регистрации и сохранение их в таблице базы данных.
 
 .. code-block:: php
 
@@ -450,33 +451,31 @@ Receiving data from the form and storing them in the table is the next step.
     }
 
 
-We then instantiate the Users class, which corresponds to a User record. The class public properties map to the fields
-of the record in the users table. Setting the relevant values in the new record and calling save()
-will store the data in the database for that record. The save() method returns a boolean value which
-informs us on whether the storing of the data was successful or not.
+В действии 'register' мы создаем экземпляр модели Users, отвечающий за записи пользователей. Публичные свойства класса указывают на их одноименные названия полей в таблице базы данных.
+Установка необходимых значений нашей модели и вызов метода save() приводит к сохранению этих данных в базе данных.
+Метод save() возвращает булево значение указывающее, успешно ли были сохранены данные в таблице или нет (true и false, соответственно).
 
-The ORM automatically escapes the input preventing SQL injections so we only need to pass the request to the method save().
-
-Additional validation happens automatically on fields that are not null (required). If we don't type any of the
-required files our screen will look like this:
+ORM автоматически экранирует ввод для предотвращения SQL-инъекций, так что мы можем передавать массив $_POST напрямую методу save().
+Для полей, у которых установлен параметр not null (обязательные), необходима дополнительная валидация. Без нее мы получим что-то вроде этого:
 
 .. figure:: ../_static/img/tutorial-4.png
 	:align: center
 
-Conclusion
+Заключение
 ----------
-This is a very simple tutorial and as you can see, it's easy to start building an application using Phalcon.
-The fact that Phalcon is an extension on your web server has not interfered with the ease of development or
-features available. We invite you to continue reading the manual so that you can discover additional features offered by Phalcon!
+На этом очень простом руководстве можно увидеть. как просто начать создавать приложения с помощью Phalcon.
+То, что Phalcon является расширением, никак не влияет на сложность разработки и доступные возможности.
+Продолжайте читать данное руководство для изучения новых возможностей, которые предоставляет Phalcon!
 
-Sample Applications
+Примеры приложений
 -------------------
 The following Phalcon powered applications are also available, providing more complete examples:
+Можно ознакомиться с более развернутыми примерами приложений, написанных с помощью Phalcon:
 
-* `INVO application`_: Invoice generation application. Allows for management of products, companies, product types. etc.
-* `PHP Alternative website`_: Multilingual and advanced routing application
-* `Album O'Rama`_: A showcase of music albums, handling big sets of data with :doc:`PHQL <phql>` and using :doc:`Volt <volt>` as template engine
-* `Phosphorum`_: A simple and clean forum
+* `INVO application`_: Приложение для создания счетов. Позволяет редактировать продукты, компании, типы продуктов и др.
+* `PHP Alternative website`_: Мультиязычное приложение с продвинутым роутингом.
+* `Album O'Rama`_: Витрина музыкальных альбомов. Обработка больших объемов данных с помощью диалекта :doc:`PHQL <phql>` и шаблонизатора :doc:`Volt <volt>`
+* `Phosphorum`_: Простой форум
 
 .. _INVO application: http://blog.phalconphp.com/post/20928554661/invo-a-sample-application
 .. _PHP Alternative website: http://blog.phalconphp.com/post/24622423072/sample-application-php-alternative-site
