@@ -366,10 +366,11 @@ Phalcon содержит первую ORM для PHP, полностью нап�
 
     }
 
-Setting a Database Connection
-^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
-In order to be able to use a database connection and subsequently access data through our models, we need to specify it in our bootstrap process.
-A database connection is just another service that our application has that can be use for several components:
+Настройка соединения с базой данных
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+Для использования базы данных и получения к ней доступа через наши модели, нам необходимо указать настройки в процессе инициализации нашего приложения.
+Соединение с базой данных это всего лишь еще один сервис в нашем сервис-локаторе:
 
 .. code-block:: php
 
@@ -413,7 +414,7 @@ A database connection is just another service that our application has that can 
          echo "PhalconException: ", $e->getMessage();
     }
 
-With the correct database parameters, our models are ready to work and interact with the rest of the application.
+При правильных настройках подключения наши модели готовы к работе и взаимодействию с остальными частями приложения.
 
 Storing data using models
 ^^^^^^^^^^^^^^^^^^^^^^^^^
