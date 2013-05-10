@@ -461,11 +461,11 @@ ORM автоматически экранирует ввод для предот
 .. figure:: ../_static/img/tutorial-4.png
 	:align: center
 
-Conclusion
+Заключение
 ----------
-This is a very simple tutorial and as you can see, it's easy to start building an application using Phalcon.
-The fact that Phalcon is an extension on your web server has not interfered with the ease of development or
-features available. We invite you to continue reading the manual so that you can discover additional features offered by Phalcon!
+На этом очень простом руководстве можно увидеть. как просто начать создавать приложения с помощью Phalcon.
+То, что Phalcon является расширением, никак не влияет на сложность разработки и доступные возможности.
+Продолжайте читать данное руководство для изучения новых возможностей, которые предоставляет Phalcon!
 
 Sample Applications
 -------------------
