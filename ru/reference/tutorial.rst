@@ -416,9 +416,9 @@ Phalcon содержит первую ORM для PHP, полностью нап�
 
 При правильных настройках подключения наши модели готовы к работе и взаимодействию с остальными частями приложения.
 
-Storing data using models
-^^^^^^^^^^^^^^^^^^^^^^^^^
-Receiving data from the form and storing them in the table is the next step.
+Сохранение данных при работе с моделями
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+Следующим шагом будет обработка данных нашей формы регистрации и сохранение их в таблице базы данных.
 
 .. code-block:: php
 
@@ -451,15 +451,12 @@ Receiving data from the form and storing them in the table is the next step.
     }
 
 
-We then instantiate the Users class, which corresponds to a User record. The class public properties map to the fields
-of the record in the users table. Setting the relevant values in the new record and calling save()
-will store the data in the database for that record. The save() method returns a boolean value which
-informs us on whether the storing of the data was successful or not.
+В действии 'register' мы создаем экземпляр модели Users, отвечающий за записи пользователей. Публичные свойства класса указывают на их одноименные названия полей в таблице базы данных.
+Установка необходимых значений нашей модели и вызов метода save() приводит к сохранению этих данных в базе данных.
+Метод save() возвращает булево значение указывающее, успешно ли были сохранены данные в таблице или нет (true и false, соответственно).
 
-The ORM automatically escapes the input preventing SQL injections so we only need to pass the request to the method save().
-
-Additional validation happens automatically on fields that are not null (required). If we don't type any of the
-required files our screen will look like this:
+ORM автоматически экранирует ввод для предотвращения SQL-инъекций, так что мы можем передавать массив $_POST напрямую методу save().
+Для полей, у которых установлен параметр not null (обязательные), необходима дополнительная валидация. Без нее мы получим что-то вроде этого:
 
 .. figure:: ../_static/img/tutorial-4.png
 	:align: center
