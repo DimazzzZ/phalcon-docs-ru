@@ -467,14 +467,15 @@ ORM автоматически экранирует ввод для предот
 То, что Phalcon является расширением, никак не влияет на сложность разработки и доступные возможности.
 Продолжайте читать данное руководство для изучения новых возможностей, которые предоставляет Phalcon!
 
-Sample Applications
+Примеры приложений
 -------------------
 The following Phalcon powered applications are also available, providing more complete examples:
+Можно ознакомиться с более развернутыми примерами приложений, написанных с помощью Phalcon:
 
-* `INVO application`_: Invoice generation application. Allows for management of products, companies, product types. etc.
-* `PHP Alternative website`_: Multilingual and advanced routing application
-* `Album O'Rama`_: A showcase of music albums, handling big sets of data with :doc:`PHQL <phql>` and using :doc:`Volt <volt>` as template engine
-* `Phosphorum`_: A simple and clean forum
+* `INVO application`_: Приложение для создания счетов. Позволяет редактировать продукты, компании, типы продуктов и др.
+* `PHP Alternative website`_: Мультиязычное приложение с продвинутым роутингом.
+* `Album O'Rama`_: Витрина музыкальных альбомов. Обработка больших объемов данных с помощью диалекта :doc:`PHQL <phql>` и шаблонизатора :doc:`Volt <volt>`
+* `Phosphorum`_: Простой форум
 
 .. _INVO application: http://blog.phalconphp.com/post/20928554661/invo-a-sample-application
 .. _PHP Alternative website: http://blog.phalconphp.com/post/24622423072/sample-application-php-alternative-site
