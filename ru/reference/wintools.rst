@@ -32,6 +32,7 @@
    :align: center
 
 Выберите вкладку "Advanced" и нажмите кнопку "Environment Variables":
+В Windows 7 (Компьютер - свойства - дополнительные параметры системы - параметры среды)
 
 .. figure:: ../_static/img/path-2.png
    :align: center
