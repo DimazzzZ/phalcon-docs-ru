@@ -68,5 +68,5 @@
 * :doc:`Установка в Windows <wintools>`
 * :doc:`Установка в Linux <linuxtools>`
 
-.. _Скачать: http://phalconphp.ru/download>
+.. _Скачать: http://phalconphp.ru/download
 .. _Github: https://github.com/phalcon/phalcon-devtools
