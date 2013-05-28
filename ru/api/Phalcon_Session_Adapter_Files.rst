@@ -5,6 +5,24 @@ Class **Phalcon\\Session\\Adapter\\Files**
 
 *implements* :doc:`Phalcon\\Session\\AdapterInterface <Phalcon_Session_AdapterInterface>`
 
+This adapter store sessions in plain files  
+
+.. code-block:: php
+
+    <?php
+
+     $session = new Phalcon\Session\Adapter\Files(array(
+        'uniqueId' => 'my-private-app'
+     ));
+    
+     $session->start();
+    
+     $session->set('var', 'some-value');
+    
+     echo $session->get('var');
+
+
+
 Methods
 ---------
 
@@ -16,7 +34,7 @@ Phalcon\\Session\\Adapter constructor
 
 public *boolean*  **start** () inherited from Phalcon\\Session\\Adapter
 
-Starts the session (if headers are already sent the session will not started)
+Starts the session (if headers are already sent the session will not be started)
 
 
 

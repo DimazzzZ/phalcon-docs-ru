@@ -160,7 +160,7 @@ CSS идентификаторы/значения могут быть тоже �
 
 .. code-block:: html
 
-    <script>alert('\x27\x3b\x20alert\x28100\x29\x3b\x20var\x20x\x3d\x27')</script>
+    <script>document.title = '\x27; alert(100); var x\x3d\x27'</script>
 
 .. _OWASP : https://www.owasp.org
 .. _XSS : https://www.owasp.org/index.php/XSS

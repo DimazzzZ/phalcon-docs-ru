@@ -30,7 +30,7 @@
             "host"     => "localhost",
             "username" => "scott",
             "password" => "cheetah",
-            "name"     => "test_db",
+            "dbname"     => "test_db",
         ),
          "app" => array(
             "controllersDir" => "../app/controllers/",
@@ -67,7 +67,7 @@ Ini файлы являются довольно распространённы�
     host     = localhost
     username = scott
     password = cheetah
-    name     = test_db
+    dbname     = test_db
 
     [phalcon]
     controllersDir = "../app/controllers/"
@@ -100,7 +100,7 @@ Phalcon\\Config позволяет объединить объекты конф�
     $config = new \Phalcon\Config(array(
         'database' => array(
             'host' => 'localhost',
-            'name' => 'test_db'
+            'dbname' => 'test_db'
         ),
         'debug' => 1
     ));
@@ -125,7 +125,7 @@ Phalcon\\Config позволяет объединить объекты конф�
         [database] => Phalcon\Config Object
             (
                 [host] => localhost
-                [name] => test_db
+                [dbname] => test_db
                 [username] => scott
                 [password] => secret
             )

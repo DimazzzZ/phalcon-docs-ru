@@ -3,17 +3,11 @@ Class **Phalcon\\Http\\Response\\Cookies**
 
 *implements* :doc:`Phalcon\\DI\\InjectionAwareInterface <Phalcon_DI_InjectionAwareInterface>`
 
-This class is a bag to manage the cookies
+This class is a bag to manage the cookies A cookies bag is automatically registered as part of the 'response' service in the DI
 
 
 Methods
 ---------
-
-public  **__construct** ()
-
-Phalcon\\Http\\Response\\Cookies constructor
-
-
 
 public  **setDI** (:doc:`Phalcon\\DiInterface <Phalcon_DiInterface>` $dependencyInjector)
 
@@ -27,9 +21,9 @@ Returns the internal dependency injector
 
 
 
-public  **set** (*string* $name, [*mixed* $value], [*int* $expire], [*string* $path])
+public :doc:`Phalcon\\Http\\Response\\Cookies <Phalcon_Http_Response_Cookies>`  **set** (*string* $name, [*mixed* $value], [*int* $expire], [*string* $path])
 
-Sets a header to be sent at the end of the request
+Sets a cookie to be sent at the end of the request This method overrides any cookie set before with the same name
 
 
 
@@ -39,7 +33,13 @@ Gets a cookie from the bag
 
 
 
-public  **reset** ()
+public *boolean*  **send** ()
+
+Sends the cookies to the client
+
+
+
+public :doc:`Phalcon\\Http\\Response\\Cookies <Phalcon_Http_Response_Cookies>`  **reset** ()
 
 Reset set cookies
 

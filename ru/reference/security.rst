@@ -19,57 +19,59 @@
 
     <?php
 
-	class UsersController extends Phalcon\Mvc\Controller
-	{
+    use Phalcon\Mvc\Controller;
 
-	    public function registerAction()
-	    {
-
-	        $user = new Users();
-
-	        $login = $this->request->getPost('login');
-	        $password = $this->request->getPost('password');
-
-	        $user->login = $login;
-
-	        //Сохраняем пароль хешированным
-	        $user->password = $this->security->hash($password);
-
-	        $user->save();
-	    }
-
-	}
+    class UsersController extends Controller
+		{
+	
+		    public function registerAction()
+		    {
+	
+		        $user = new Users();
+	
+		        $login = $this->request->getPost('login');
+		        $password = $this->request->getPost('password');
+	
+		        $user->login = $login;
+	
+		        //Сохраняем пароль хешированным
+		        $user->password = $this->security->hash($password);
+	
+		        $user->save();
+		    }
+	
+		}
 
 Мы сохранили пароль хешированным с коэффициентом хеширования по-умолчанию. Более высокий коэффициент хеширования сделает пароль менее уязвимым, так как
 его шифрование будет медленным. Мы можем проверить правильность пароля следующим способом:
 
 .. code-block:: php
 
-    <?php
+    use Phalcon\Mvc\Controller;
 
-	class SessionController extends Phalcon\Mvc\Controller
-	{
-
-	    public function loginAction()
-	    {
-
-	        $login = $this->request->getPost('login');
-	        $password = $this->request->getPost('password');
-
-	        $user = Users::findFirst(array(
-	            "login = ?0",
-	            "bind" => array($login)
-	        ));
-	        if ($user) {
-	            if ($this->security->checkHash($password, $user->password)) {
-	                //Пароль верный
-	            }
-	        }
-
-	        //неудачная проверка
-	    }
-
-	}
+    class SessionController extends Controller
+		{
+	
+		    public function loginAction()
+		    {
+	
+		        $login = $this->request->getPost('login');
+		        $password = $this->request->getPost('password');
+	
+		        $user = Users::findFirst(array(
+		            "login = ?0",
+		            "bind" => array($login)
+		        ));
+		        if ($user) {
+		            if ($this->security->checkHash($password, $user->password)) {
+		                //Пароль верный
+		            }
+		        }
+	
+		        //неудачная проверка
+		    }
+	
+		}
 
 Соль генерируется с использованием псевдослучайных байтов функции PHP openssl_random_pseudo_bytes_, поэтому необходимо, чтобы расширение openssl_ было загружено.
 
@@ -84,14 +86,14 @@
 
 .. code-block:: html+php
 
-	<?php echo Tag::form('session/login') ?>
-
-		<!-- поля логина и пароля ... -->
-
-		<input type="hidden" name="<?php echo $this->security->getTokenKey() ?>"
-			value="<?php echo $this->security->getToken() ?>"/>
-
-	</form>
+		<?php echo Tag::form('session/login') ?>
+	
+			<!-- поля логина и пароля ... -->
+	
+			<input type="hidden" name="<?php echo $this->security->getTokenKey() ?>"
+				value="<?php echo $this->security->getToken() ?>"/>
+	
+		</form>
 
 После этого, в действии контроллера вы можете проверить CSRF-токен на правильность:
 
@@ -99,19 +101,21 @@
 
 	<?php
 
-	class SessionController extends Phalcon\Mvc\Controller
-	{
+    use Phalcon\Mvc\Controller;
 
-	    public function loginAction()
-	    {
-	        if ($this->request->isPost()) {
-	            if ($this->security->checkToken()) {
-	                //Токен верный
-	            }
-	        }
-	    }
-
-	}
+    class SessionController extends Controller
+		{
+	
+		    public function loginAction()
+		    {
+		        if ($this->request->isPost()) {
+		            if ($this->security->checkToken()) {
+		                //Токен верный
+		            }
+		        }
+		    }
+	
+		}
 
 Также рекомендуется добавление каптчи (captcha_) в форму, чтобы полностью избежать рисков от этого типа атак.
 
@@ -122,17 +126,22 @@
 
 .. code-block:: php
 
-	<?php
+		<?php
+	
+		$di->set('security', function(){
+	
+			$security = new Phalcon\Security();
+	
+			//Устанавливаем фактор хеширования в 12 раундов
+			$security->setWorkFactor(12);
+	
+			return $security;
+		}, true);
 
-	$di->set('security', function(){
+Внешние источники
+-----------------
 
-		$security = new Phalcon\Security();
-
-		//Устанавливаем фактор хеширования в 12 раундов
-		$security->setWorkFactor(12);
-
-		return $security;
-	}, true);
+* `Vökuró <http://vokuro.phalconphp.com>`_, пример приложения с использованием Security для избежание CSRF и хешированием паролей [`Github <https://github.com/phalcon/vokuro>`_]
 
 .. _sha1 : http://php.net/manual/ru/function.sha1.php
 .. _md5 : http://php.net/manual/ru/function.md5.php

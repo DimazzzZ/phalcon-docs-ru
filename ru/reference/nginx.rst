@@ -12,28 +12,63 @@ Nginx_ это свободный, с открытым исходным кодо�
 ------------------------------
 Конфигурации ниже позволят настроить Nginx для работы с Phalcon:
 
-
 Базовая конфигурация
 ^^^^^^^^^^^^^^^^^^^^
+Использование переменной $_GET['_url'] для URIs:
 
 .. code-block:: nginx
 
     server {
-        listen   8080;
+
+        listen   80;
         server_name localhost.dev;
 
-        root /var/www/phalcon/public;
         index index.php index.html index.htm;
+        set $root_path '/var/www/phalcon/public';
+        root $root_path;
+
+        try_files $uri $uri/ @rewrite;
+
+        location @rewrite {
+            rewrite ^/(.*)$ /index.php?_url=/$1;
+        }
+
+        location ~ \.php {
+            fastcgi_pass unix:/run/php-fpm/php-fpm.sock;
+            fastcgi_index /index.php;
+
+            include /etc/nginx/fastcgi_params;
+
+            fastcgi_split_path_info       ^(.+\.php)(/.+)$;
+            fastcgi_param PATH_INFO       $fastcgi_path_info;
+            fastcgi_param PATH_TRANSLATED $document_root$fastcgi_path_info;
+            fastcgi_param SCRIPT_FILENAME $document_root$fastcgi_script_name;
+        }
+
+        location ~* ^/(css|img|js|flv|swf|download)/(.+)$ {
+            root $root_path;
+        }
+
+        location ~ /\.ht {
+            deny all;
+        }
+    }
+
+Использование $_SERVER['REQUEST_URI'] для URIs:
+
+.. code-block:: nginx
+
+    server {
+
+        listen   80;
+        server_name localhost.dev;
+
+        index index.php index.html index.htm;
+        set $root_path '/var/www/phalcon/public';
+        root $root_path;
 
         location / {
-            if (-f $request_filename) {
-                break;
-            }
-
-            if (!-e $request_filename) {
-                rewrite ^(.+)$ /index.php?_url=$1 last;
-                break;
-            }
+            try_files $uri $uri/ /index.php;
         }
 
         location ~ \.php$ {
@@ -43,6 +78,14 @@ Nginx_ это свободный, с открытым исходным кодо�
                 fastcgi_index index.php;
                 fastcgi_param  SCRIPT_FILENAME  $document_root$fastcgi_script_name;
                 include fastcgi_params;
+        }
+
+        location ~* ^/(css|img|js|flv|swf|download)/(.+)$ {
+            root $root_path;
+        }
+
+        location ~ /\.ht {
+            deny all;
         }
     }
 

@@ -31,11 +31,11 @@ to perform one or all of the following tasks:
     <?php
 
     $router->add(
-        "/admin/users/my-profile",
+        '/admin/users/my-profile',
         array(
-            "namespace"  => "Store\Admin",
-            "controller" => "Users",
-            "action"     => "profile",
+            'namespace"  => 'Store\Admin',
+            'controller" => 'Users',
+            'action"     => 'profile',
         )
     );
 
@@ -46,11 +46,11 @@ to perform one or all of the following tasks:
     <?php
 
     $router->add(
-        "/:namespace/admin/users/my-profile",
+        '/:namespace/admin/users/my-profile',
         array(
-            "namespace"  => 1,
-            "controller" => "Users",
-            "action"     => "profile",
+            'namespace"  => 1,
+            'controller" => 'Users',
+            'action"     => 'profile',
         )
     );
 
@@ -64,7 +64,7 @@ to perform one or all of the following tasks:
     // Регистрация диспетчера
     $di->set('dispatcher', function() {
         $dispatcher = new \Phalcon\Mvc\Dispatcher();
-        $dispatcher->setDefaultNamespace('Store\Admin\Controllers\\');
+        $dispatcher->setDefaultNamespace('Store\Admin\Controllers');
         return $dispatcher;
     });
 

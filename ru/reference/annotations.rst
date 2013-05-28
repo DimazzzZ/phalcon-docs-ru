@@ -305,3 +305,8 @@ CacheEnablerPlugin это плагин, который перехватывае�
 Создание собственных адаптеров
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 Для создания адаптера необходимо реализовать интерфейс  :doc:`Phalcon\\Annotations\\AdapterInterface <../api/Phalcon_Annotations_AdapterInterface>`
+
+Внешние источники
+-----------------
+
+* `Обучение: Creating a custom model’s initializer with Annotations <http://blog.phalconphp.com/post/47471246411/tutorial-creating-a-custom-models-initializer-with>`_

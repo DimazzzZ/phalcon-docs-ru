@@ -1,11 +1,11 @@
-Класс **Phalcon\\Validation\\Validator\\Regex**
+Class **Phalcon\\Validation\\Validator\\Regex**
 ===============================================
 
-*расширение* :doc:`Phalcon\\Validation\\Validator <Phalcon_Validation_Validator>`
+*extends* :doc:`Phalcon\\Validation\\Validator <Phalcon_Validation_Validator>`
 
-*реализация* :doc:`Phalcon\\Validation\\ValidatorInterface <Phalcon_Validation_ValidatorInterface>`
+*implements* :doc:`Phalcon\\Validation\\ValidatorInterface <Phalcon_Validation_ValidatorInterface>`
 
-Проводит валидацию значения поля на соответсвие регулярному выражению  
+Allows validate if the value of a field matches a regular expression  
 
 .. code-block:: php
 
@@ -20,12 +20,12 @@
 
 
 
-Методы
+Methods
 ---------
 
 public *boolean*  **validate** (:doc:`Phalcon\\Validation <Phalcon_Validation>` $validator, *string* $attribute)
 
-Выполняет валидацию
+Executes the validation
 
 
 
@@ -37,13 +37,13 @@ Phalcon\\Validation\\Validator constructor
 
 public *mixed*  **isSetOption** (*string* $key) inherited from Phalcon\\Validation\\Validator
 
-Проверяет на определение опций
+Checks if an option is defined
 
 
 
 public *mixed*  **getOption** (*string* $key) inherited from Phalcon\\Validation\\Validator
 
-Возвращает опции, если они определенны; возвращает значение null если таковых нет
+Returns an option in the validator's options Returns null if the option hasn't been set
 
 
 

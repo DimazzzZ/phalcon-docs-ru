@@ -61,8 +61,13 @@
 .. versionchanged:: 1.4
 		Обновление Ago-27-2012: PHP обновлён до to 5.3.15, APC обновлён до 3.1.11, Yii обновлён до 1.1.12, Phalcon обновлён до 0.5.0, Добавлен Laravel, операционная система обновлена до Mac OS X Lion. Обновлено железо.
 
+External Resources
+------------------
+
+* `For Impatient Web Users, an Eye Blink Is Just Too Long to Wait <http://www.nytimes.com/2012/03/01/technology/impatient-web-users-flee-slow-loading-sites.html?pagewanted=all&_r=0>`
+* `Millionaires performance cases: Impact of performance <https://github.com/zenorocha/browser-diet/wiki/Impact-of-performance>`
+
 .. _стали: http://googlewebmastercentral.blogspot.com/2010/04/using-site-speed-in-web-search-ranking.html
 .. _напишите нам: http://phalcon.uservoice.com/
 .. _исходники тестов на Github: https://github.com/phalcon/framework-bench
-.. _APC: http://php.net/manual/en/book.apc.php
-
+.. _APC:ц http://php.net/manual/en/book.apc.php

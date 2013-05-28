@@ -26,7 +26,14 @@
 
     $url = new Phalcon\Mvc\Url();
 
+    // Относительный URI
     $url->setBaseUri('/invo/');
+
+    // Установка доменного имени
+    $url->setBaseUri('//my.domain.com/');
+
+    // Установка корневой полной ссылки
+    $url->setBaseUri('http://my.domain.com/my-app/');
 
 Компонент, как правило, регистрируется в DI контейнере, что позволяет его легко настроить:
 
@@ -100,10 +107,10 @@
 
     $url = new Phalcon\Mvc\Url();
 
-    // Указание базового адреса используя $_SERVER["REQUEST_URI"]
+    // Указание базового адреса используя $_GET["_url"]
     $url->setBaseUri('/invo/index.php?_url=/');
 
-    // Передача URI в $_GET["_url"]
+    // Передача URI из $_SERVER["REQUEST_URI"]
     $url->setBaseUri('/invo/index.php/');
 
 В таком случае необходимо самостоятельно передать URI для обработки в Router:

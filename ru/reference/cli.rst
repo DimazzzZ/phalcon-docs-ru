@@ -4,7 +4,7 @@ CLI приложения выполняются в командной строк
 
 Задачи
 ------
-Задачи похожи на контроллеры, в них может быть реализовано:
+Задачи похожи на контроллеры, в них могут быть реализованы действия:
 
 .. code-block:: php
 
@@ -20,17 +20,24 @@ CLI приложения выполняются в командной строк
 
 	}
 
+Создание файла запуска
+----------------------
+Как и в MVC приложениях возможнго создание базового файла запуска
+
 .. code-block:: php
 
 	<?php
 
+   use Phalcon\DI\FactoryDefault\CLI as CliDI,
+        Phalcon\CLI\Console as ConsoleApp;
+
 	// Используйте CLI factory в качестве контейнера ресурсов
-	$di = new Phalcon\DI\FactoryDefault\CLI();
+  $di = new CliDI();
 
 	// Создание консольного приложения
-	$console = new \Phalcon\CLI\Console();
-	$console->setDI($di);
+  $console = new ConsoleApp();
+  $console->setDI($di);
 
 	// Выполнение действия
-	$console->handle(array('shell_script_name', 'echo'));
+  $console->handle(array('task' => 'shell_script_name', 'action' => 'echo'));
 

@@ -82,25 +82,101 @@ html-атрибуты вторым параметром:
 
 .. code-block:: php
 
-	<?php
+    <?php
 
-	use Phalcon\Forms\Form,
-		Phalcon\Forms\Element\Text,
-		Phalcon\Forms\Element\Select;
+    use Phalcon\Forms\Form,
+        Phalcon\Forms\Element\Text,
+        Phalcon\Forms\Element\Select;
 
-	class ContactsForm extends Form
-	{
-		public function initialize()
-		{
-			$this->add(new Text("name"));
+    class ContactForm extends Form
+    {
+        public function initialize()
+        {
+            $this->add(new Text("name"));
 
-			$this->add(new Text("telephone"));
+            $this->add(new Text("telephone"));
 
-			$this->add(new Select("telephoneType", TelephoneTypes::find(), array(
-				'using' => array('id', 'name')
-			)));
-		}		
-	}
+            $this->add(new Select("telephoneType", TelephoneTypes::find(), array(
+                'using' => array('id', 'name')
+            )));
+        }
+    }
+
+
+Формы :doc:`Phalcon\\Forms\\Form <../api/Phalcon_Forms_Form>` наследуются от :doc:`Phalcon\\DI\\Injectable <../api/Phalcon_DI_Injectable>`,
+предоставляя доступ к службам приложения, если это необходимо:
+
+.. code-block:: php
+
+    <?php
+
+    use Phalcon\Forms\Form,
+        Phalcon\Forms\Element\Text,
+        Phalcon\Forms\Element\Hidden;
+
+    class ContactForm extends Form
+    {
+
+        /**
+         * Этот метод возвращает значение по умолчанию для поля 'csrf'
+         */
+        public function getCsrf()
+        {
+            return $this->security->getToken();
+        }
+
+        public function initialize()
+        {
+
+            // Установка сущности
+            $this->setEntity($this);
+
+            // Установка поля 'email'
+            $this->add(new Text("email"));
+
+            // Добавление скрытого поля csrf
+            $this->add(new Hidden("csrf"));
+        }
+    }
+
+При инициализации формы в конструктор передаётся объект пользователя и другие парамтры:
+
+.. code-block:: php
+
+    <?php
+
+    use Phalcon\Forms\Form,
+        Phalcon\Forms\Element\Text,
+        Phalcon\Forms\Element\Hidden;
+
+    class UsersForm extends Form
+    {
+        /**
+         * Инициализация формы
+         *
+         * @param Users $user
+         * @param array $options
+         */
+        public function initialize($user, $options)
+        {
+
+            if ($options['edit']) {
+                $this->add(new Hidden('id'));
+            } else {
+                $this->add(new Text('id'));
+            }
+
+            $this->add(new Text('name'));
+        }
+    }
+
+Теперь можно использовать экземпляр формы:
+
+.. code-block:: php
+
+    <?php
+
+    $form = new UsersForm(new Users(), array('edit' => true));
 
 Валидация
 ---------
@@ -167,6 +243,14 @@ html-атрибуты вторым параметром:
         echo $message, '<br>';
     }
 
+Filtering
+---------
+A form is also able to filter data before be validated, you can set filters in each element:
+
+
+
+Setting User Options
+--------------------
 
 Формы и сущности
 ----------------
@@ -206,6 +290,67 @@ html-атрибуты вторым параметром:
 		$robot->save();
 	}
 
+Setting up a plain class as entity also is possible:
+
+.. code-block:: php
+
+    <?php
+
+    class Preferences
+    {
+
+        public $timezone = 'Europe/Amsterdam';
+
+        public $receiveEmails = 'No';
+
+    }
+
+Using this class as entity, allows the form to take the default values from it:
+
+.. code-block:: php
+
+    <?php
+
+    $form = new Form(new Preferences());
+
+    $form->add(new Select("timezone", array(
+        'America/New_York' => 'New York',
+        'Europe/Amsterdam' => 'Amsterdam',
+        'America/Sao_Paulo' => 'Sao Paulo',
+        'Asia/Tokio' => 'Tokio',
+    )));
+
+    $form->add(new Select("receiveEmails", array(
+        'Yes' => 'Yes, please!',
+        'No' => 'No, thanks'
+    )));
+
+Entities can implement getters, which have more precedence than public propierties, these methods
+give you more free to produce values:
+
+.. code-block:: php
+
+    <?php
+
+    class Preferences
+    {
+
+        public $timezone;
+
+        public $receiveEmails;
+
+        public function getTimezone()
+        {
+            return 'Europe/Amsterdam';
+        }
+
+        public function getTimezone()
+        {
+            return 'No';
+        }
+
+    }
+
 Элементы форм
 -------------
 Phalcon предоставляет набор элементов для использования в ваших формах:
@@ -223,3 +368,136 @@ Phalcon предоставляет набор элементов для испо
 +--------------+-------------------------------------------------------------------+-------------------------------------------------------------------+
 | Textarea     | Генерирует элемент TEXTAREA                                       | :doc:`Example <../api/Phalcon_Forms_Element_TextArea>`            |
 +--------------+-------------------------------------------------------------------+-------------------------------------------------------------------+
+| Hidden       | Generate INPUT[type=hidden] elements                              | :doc:`Example <../api/Phalcon_Forms_Element_Hidden>`              |
++--------------+-------------------------------------------------------------------+-------------------------------------------------------------------+
+| File         | Generate INPUT[type=file] elements                                | :doc:`Example <../api/Phalcon_Forms_Element_File>`                |
++--------------+-------------------------------------------------------------------+-------------------------------------------------------------------+
+| Date         | Generate INPUT[type=date] elements                                | :doc:`Example <../api/Phalcon_Forms_Element_Date>`                |
++--------------+-------------------------------------------------------------------+-------------------------------------------------------------------+
+| Numeric      | Generate INPUT[type=number] elements                              | :doc:`Example <../api/Phalcon_Forms_Element_Numeric>`             |
++--------------+-------------------------------------------------------------------+-------------------------------------------------------------------+
+| Submit       | Generate INPUT[type=submit] elements                              | :doc:`Example <../api/Phalcon_Forms_Element_Submit>`              |
++--------------+-------------------------------------------------------------------+-------------------------------------------------------------------+
+
+Event Callbacks
+---------------
+Whenever forms are implemented as classes, the callbacks: beforeValidation and afterValidation can be implemented
+in the form's class to perform pre-validations and post-validations:
+
+.. code-block:: html+php
+
+    <?php
+
+    class ContactForm extends Phalcon\Mvc\Form
+    {
+        public function beforeValidation()
+        {
+
+        }
+    }
+
+Rendering Forms
+---------------
+You can render the form with total flexibility, the following example shows how to render each element using an standard procedure:
+
+.. code-block:: html+php
+
+    <?php
+
+    <form method="post">
+        <?php
+            //Traverse the form
+            foreach ($form as $element) {
+
+                //Get any generated messages for the current element
+                $messages = $form->getMessagesFor($element->getName());
+
+                if (count($messages)) {
+                    //Print each element
+                    echo '<div class="messages">';
+                    foreach ($messages as $message) {
+                        echo $message;
+                    }
+                    echo '</div>';
+                }
+
+                echo '<p>';
+                echo '<label for="', $element->getName(), '">', $element->getLabel(), '</label>';
+                echo $element;
+                echo '</p>';
+
+            }
+        ?>
+        <input type="submit" value="Send"/>
+    </form>
+
+Or reuse the logic in your form class:
+
+.. code-block:: php
+
+    <?php
+
+    class ContactForm extends Phalcon\Forms\Form
+    {
+        public function initialize()
+        {
+            //...
+        }
+
+        public function renderDecorated($name)
+        {
+            $element = $this->get($name);
+
+            //Get any generated messages for the current element
+            $messages = $this->getMessagesFor($element->getName());
+
+            if (count($messages)) {
+                //Print each element
+                echo '<div class="messages">';
+                foreach ($messages as $message) {
+                    echo $this->flash->error($message);
+                }
+                echo '</div>';
+            }
+
+            echo '<p>';
+            echo '<label for="', $element->getName(), '">', $element->getLabel(), '</label>';
+            echo $element;
+            echo '</p>';
+        }
+
+    }
+
+In the view:
+
+.. code-block:: php
+
+    <?php
+
+    echo $element->renderDecorated('name');
+
+    echo $element->renderDecorated('telephone');
+
+Creating Form Elements
+----------------------
+In addition to the form elements provided by Phalcon you can create your own custom elements:
+
+.. code-block:: php
+
+    <?php
+
+    use Phalcon\Forms\Element;
+
+    class MyElement extends Element
+    {
+        public function render($attributes=null)
+        {
+            $html = //... produce some html
+            return $html;
+        }
+    }
+
+External Resources
+------------------
+
+* `Vökuró <http://vokuro.phalconphp.com>`_, is a sample application that uses the forms builder to create forms in this application, [`Github <https://github.com/phalcon/vokuro>`_]

@@ -567,13 +567,21 @@ UPDATE выполняет изменение в два этапа:
 
     <?php
 
+    // Получение целого набора
     $robots = $this->modelsManager->createBuilder()
         ->from('Robots')
         ->join('RobotsParts')
-        ->limit(20)
         ->order('Robots.name')
         ->getQuery()
         ->execute();
+
+    // Получение первой записи
+    $robots = $this->modelsManager->createBuilder()
+        ->from('Robots')
+        ->join('RobotsParts')
+        ->order('Robots.name')
+        ->getQuery()
+        ->getSingleResult();
 
 Что то же самое, что и:
 
@@ -689,6 +697,41 @@ UPDATE выполняет изменение в два этапа:
     $builder->from('Robots')
             ->limit(10, 5);
 
+    // 'SELECT Robots.* FROM Robots WHERE id BETWEEN 1 AND 100'
+    $builder->from('Robots')
+            ->betweenWhere('id', 1, 100);
+
+    // 'SELECT Robots.* FROM Robots WHERE id IN (1, 2, 3)'
+    $builder->from('Robots')
+            ->inWhere('id', array(1, 2, 3));
+
+    // 'SELECT Robots.* FROM Robots WHERE id NOT IN (1, 2, 3)'
+    $builder->from('Robots')
+            ->notInWhere('id', array(1, 2, 3));
+
+Связанные параметры
+^^^^^^^^^^^^^^^^^^^
+В Query Builder можно устанавливать связанные параметры, указывать их можно непосредственно в запросе, либо в момент выполнения:
+
+.. code-block:: php
+
+    <?php
+
+    // Указываем параметры в формирующих участках
+    $robots = $this->modelsManager->createBuilder()
+        ->from('Robots')
+        ->where('name = :name:', array('name' => $name))
+        ->andWhere('type = :type:', array('type' => $type))
+        ->getQuery()
+        ->execute();
+
+    // Указываем параметры при выполнении запроса
+    $robots = $this->modelsManager->createBuilder()
+        ->from('Robots')
+        ->where('name = :name:')
+        ->andWhere('type = :type:')
+        ->getQuery()
+        ->execute(array('name' => $name, 'type' => $type));
 
 Экранирование зарезервированных слов
 ------------------------------------
@@ -712,6 +755,7 @@ UPDATE выполняет изменение в два этапа:
 
 * PHQL разбирает и преобразует в промежуточное представление, независящее от текущей СУБД
 * Это промежуточное представление перобразуется в валидный SQL, соответствующий СУБД, связанной с моделью
+* Все параметры и сформированный PHQL запрос кешируется в памяти. Повторные выполнения этого же запроса производятся в разы быстрее
 
 Использование чистого SQL
 -------------------------

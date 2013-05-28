@@ -111,8 +111,8 @@ Bootstrap
         });
 
         //Handle the request
-        $application = new \Phalcon\Mvc\Application();
-        $application->setDI($di);
+        $application = new \Phalcon\Mvc\Application($di);
+
         echo $application->handle()->getContent();
 
     } catch(\Phalcon\Exception $e) {
@@ -175,8 +175,8 @@ DI представляет из себя глобальный контейне�
 
     <?php
 
-    $application = new \Phalcon\Mvc\Application();
-    $application->setDI($di);
+    $application = new \Phalcon\Mvc\Application($di);
+
     echo $application->handle()->getContent();
 
 Как можно увидеть, файл инициализации очень короткий, нам нет необходимости подключать какие-либо дополнительные файлы. Таким образом, мы настроили гибкую структуру MVC-приложения менее чем за 30 строк кода.
@@ -406,11 +406,11 @@ Phalcon содержит первую ORM для PHP, полностью нап�
         });
 
         //Handle the request
-        $application = new \Phalcon\Mvc\Application();
-        $application->setDI($di);
+        $application = new \Phalcon\Mvc\Application($di);
+
         echo $application->handle()->getContent();
 
-    } catch(\Phalcon\Exception $e) {
+    } catch(Exception $e) {
          echo "PhalconException: ", $e->getMessage();
     }
 
@@ -438,7 +438,9 @@ Phalcon содержит первую ORM для PHP, полностью нап�
             $user = new Users();
 
             //Store and check for errors
-            if ($user->save($_POST, array('name', 'email')) == true) {
+            $success = $user->save($this->request->getPost(), array('name', 'email'));
+
+            if ($success) {
                 echo "Thanks for register!";
             } else {
                 echo "Sorry, the following problems were generated: ";

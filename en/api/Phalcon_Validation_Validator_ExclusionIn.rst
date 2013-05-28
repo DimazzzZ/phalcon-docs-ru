@@ -14,7 +14,7 @@ Check if a value is not included into a list of values
     use Phalcon\Validation\Validator\ExclusionIn;
     
     $validator->add('status', new ExclusionIn(array(
-       'message' => 'The status must not be A or B'
+       'message' => 'The status must not be A or B',
        'domain' => array('A', 'B')
     )));
 
@@ -44,6 +44,12 @@ Checks if an option is defined
 public *mixed*  **getOption** (*string* $key) inherited from Phalcon\\Validation\\Validator
 
 Returns an option in the validator's options Returns null if the option hasn't been set
+
+
+
+public  **setOption** (*string* $key, *mixed* $value) inherited from Phalcon\\Validation\\Validator
+
+Sets an option in the validator
 
 
 

@@ -22,6 +22,7 @@ Table of Contents
    reference/tutorial
    reference/tutorial-invo
    reference/tutorial-rest
+   reference/samples
    reference/di
    reference/mvc
    reference/controllers
@@ -31,6 +32,7 @@ Table of Contents
    reference/odm
    reference/views
    reference/tags
+   reference/assets
    reference/volt
    reference/applications
    reference/routing
@@ -40,6 +42,7 @@ Table of Contents
    reference/events
    reference/request
    reference/response
+   reference/cookies
    reference/url
    reference/flash
    reference/session
@@ -51,12 +54,14 @@ Table of Contents
    reference/pagination
    reference/cache
    reference/security
+   reference/crypt
    reference/acl
    reference/translate
    reference/loader
    reference/logging
    reference/annotations
    reference/cli
+   reference/queue
    reference/db
    reference/intl
    reference/migrations

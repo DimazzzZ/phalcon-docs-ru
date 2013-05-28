@@ -56,15 +56,6 @@
           {%- endblock %}
           {%- block sidebarsearch %}
           {%- if pagename != "search" %}
-            {% if versions %}
-                <h3>Версия проекта</h3>
-
-                <select name="versions" id="versions">
-            {% for slug, url in versions %}
-            <option value="http://docs.phalconphp.ru{{ url }}">{{ slug }}</option>
-            {% endfor %}
-                </select>
-            {% endif %}
             <div id="searchbox" style="">
               <h3>Поиск</h3>
                 <form class="search" action="http://readthedocs.org/search/project/" method="get">

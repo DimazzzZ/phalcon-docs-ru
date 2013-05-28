@@ -1,6 +1,7 @@
 MVC Приложения
 ==============
-Всю тяжелую работу при планировании работы MVC в Phalcon обычно выполняет :doc:`Phalcon\\Mvc\\Application <../api/Phalcon_Mvc_Application>`.
+Всю тяжелую работу при планировании работы MVC в Phalcon обычно выполняет
+:doc:`Phalcon\\Mvc\\Application <../api/Phalcon_Mvc_Application>`.
 Этот компонент инкапсулирует все сложные задачи необходимые изнутри, создаёт компоненты и интегрирует их в проект
 для реализации шаблона MVC по своему желанию.
 
@@ -31,7 +32,13 @@ MVC Приложения
 
     <?php
 
-    $loader = new \Phalcon\Loader();
+    use Phalcon\Loader,
+        Phalcon\DI\FactoryDefault,
+        Phalcon\Mvc\Application,
+        Phalcon\Exception,
+        Phalcon\Mvc\View;
+
+    $loader = new Loader();
 
     $loader->registerDirs(
         array(
@@ -40,20 +47,22 @@ MVC Приложения
         )
     )->register();
 
-    $di = new \Phalcon\DI\FactoryDefault();
+    $di = new FactoryDefault();
 
     // Регистрация компонента представлений
     $di->set('view', function() {
-        $view = new \Phalcon\Mvc\View();
+        $view = new View();
         $view->setViewsDir('../apps/views/');
         return $view;
     });
 
     try {
-        $application = new \Phalcon\Mvc\Application();
+
+        $application = new Application();
         $application->setDI($di);
         echo $application->handle()->getContent();
-    } catch(Phalcon\Exception $e) {
+        
+    } catch (Exception $e) {
         echo $e->getMessage();
     }
 
@@ -63,7 +72,14 @@ MVC Приложения
 
     <?php
 
-    $loader = new \Phalcon\Loader();
+    use Phalcon\Loader,
+        Phalcon\Mvc\View,
+        Phalcon\DI\FactoryDefault,
+        Phalcon\Mvc\Dispatcher,
+        Phalcon\Mvc\Application,
+        Phalcon\Exception;
+
+    $loader = new Loader();
 
     // Использование автозагрузки по префиксу пространства имён
     $loader->registerNamespaces(
@@ -73,29 +89,29 @@ MVC Приложения
         )
     )->register();
 
-    $di = new \Phalcon\DI\FactoryDefault();
+    $di = new FactoryDefault();
 
-    // Регистрация диспетчера пространства имён для контроллеров
-    // Обратите внимание на двойной слеш в конце
-    // параметра используемого в функции setDefaultNamespace
+    // Регистрация диспетчера c пространством имён для контроллеров
     $di->set('dispatcher', function() {
-        $dispatcher = new \Phalcon\Mvc\Dispatcher();
-        $dispatcher->setDefaultNamespace('Single\Controllers\\');
+        $dispatcher = new Dispatcher();
+        $dispatcher->setDefaultNamespace('Single\Controllers');
         return $dispatcher;
     });
 
     // Регистрация компонента представлений
     $di->set('view', function() {
-        $view = new \Phalcon\Mvc\View();
+        $view = new View();
         $view->setViewsDir('../apps/views/');
         return $view;
     });
 
     try {
-        $application = new \Phalcon\Mvc\Application();
+
+        $application = new Application();
         $application->setDI($di);
         echo $application->handle()->getContent();
-    } catch(Phalcon\Exception $e){
+
+    } catch(Exception $e){
         echo $e->getMessage();
     }
 
@@ -123,8 +139,8 @@ MVC Приложения
         img/
         js/
 
-Каждый каталог в apps/ содержит собственную MVC структуру. Файл Module.php внутри каждого такого каталога сделан для настройки параметров
-каждого модуля, таких как автозагрузка и настраиваемые сервисы.
+Каждый каталог в apps/ содержит собственную MVC структуру. Файл Module.php внутри такого каталога создан для настройки параметров этого модуля,
+таких как автозагрузка и настраиваемые сервисы.
 
 .. code-block:: php
 
@@ -132,7 +148,10 @@ MVC Приложения
 
     namespace Multiple\Backend;
 
-    use Phalcon\Mvc\ModuleDefinitionInterface;
+    use Phalcon\Loader,
+        Phalcon\Mvc\Dispatcher,
+        Phalcon\Mvc\View,
+        Phalcon\Mvc\ModuleDefinitionInterface;
 
     class Module implements ModuleDefinitionInterface
     {
@@ -143,7 +162,7 @@ MVC Приложения
         public function registerAutoloaders()
         {
 
-            $loader = new \Phalcon\Loader();
+            $loader = new Loader();
 
             $loader->registerNamespaces(
                 array(
@@ -163,14 +182,14 @@ MVC Приложения
 
             // Регистрация диспетчера
             $di->set('dispatcher', function() {
-                $dispatcher = new \Phalcon\Mvc\Dispatcher();
+                $dispatcher = new Dispatcher();
                 $dispatcher->setDefaultNamespace("Multiple\Backend\Controllers\\");
                 return $dispatcher;
             });
 
             // Регистрация компонента представлений
             $di->set('view', function() {
-                $view = new \Phalcon\Mvc\View();
+                $view = new View();
                 $view->setViewsDir('../apps/backend/views/');
                 return $view;
             });
@@ -184,12 +203,17 @@ MVC Приложения
 
     <?php
 
-    $di = new \Phalcon\DI\FactoryDefault();
+    use Phalcon\Mvc\Router,
+        Phalcon\Mvc\Application,
+        Phalcon\DI\FactoryDefault,
+        Phalcon\Exception;
+
+    $di = new FactoryDefault();
 
     // Специфичные роуты для модуля
     $di->set('router', function () {
 
-        $router = new \Phalcon\Mvc\Router();
+        $router = new Router();
 
         $router->setDefaultModule("frontend");
 
@@ -226,7 +250,7 @@ MVC Приложения
     try {
 
         // Создание приложения
-        $application = new \Phalcon\Mvc\Application();
+        $application = new Application();
         $application->setDI($di);
 
         // Регистрация установленных модулей
@@ -246,7 +270,7 @@ MVC Приложения
         // Обработка запроса
         echo $application->handle()->getContent();
 
-    } catch(Phalcon\Exception $e){
+    } catch(Exception $e){
         echo $e->getMessage();
     }
 
@@ -258,6 +282,9 @@ MVC Приложения
 
     // Создание компонента представлений
     $view = new \Phalcon\Mvc\View();
+
+    // Установка параметров компонента представлений
+    //...
 
     // Регистрация установленых модулей
     $application->registerModules(
@@ -281,6 +308,7 @@ MVC Приложения
 чтобы каждая регистрация возвращала существующий модуль. Каждый зарегистрированный модуль должен иметь соответствующий класс
 и функцию для настройки самого модуля. Каждый модуль должен обязательно содержать два методы: registerAutoloaders() и registerServices(),
 они будут автоматически вызваны :doc:`Phalcon\\Mvc\\Application <../api/Phalcon_Mvc_Application>` при выполнении модуля.
+
 
 Понятие поведения по умолчанию
 ------------------------------
@@ -323,12 +351,13 @@ MVC Приложения
     <?php
 
     // Запускаем  сервис из контернейра сервисов
-    $router = $di->get('router');
+    $router = $di['router'];
+    
     $router->handle();
 
-    $view = $di->getShared('view');
+    $view = $di['view'];
 
-    $dispatcher = $di->get('dispatcher');
+    $dispatcher = $di['dispatcher'];
 
     // Передаём обработанные параметры моршрутизатора в диспетчер
     $dispatcher->setControllerName($router->getControllerName());
@@ -351,7 +380,7 @@ MVC Приложения
     // Завершаем работу представления
     $view->finish();
 
-    $response = $di->get('response');
+    $response = $di['response'];
 
     // Передаём результат для ответа
     $response->setContent($view->getContent());
@@ -389,7 +418,9 @@ MVC Приложения
 
     <?php
 
-    $eventsManager = new Phalcon\Events\Manager();
+    use Phalcon\Events\Manager as EventsManager;
+
+    $eventsManager = new EventsManager();
 
     $application->setEventsManager($eventsManager);
 

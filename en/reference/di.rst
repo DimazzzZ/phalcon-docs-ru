@@ -1,5 +1,5 @@
-Using Dependency Injection
-**************************
+Dependency Injection/Service Location
+*************************************
 The following example is a bit lengthy, but explains why using a service container, service location and dependency injection.
 First, let's pretend we are developing a component called SomeComponent. This performs a task that is not important now.
 Our component has some dependency that is a connection to a database.
@@ -16,7 +16,7 @@ connection parameters or the type of database system because the component only 
 
         /**
          * The instantiation of the connection is hardcoded inside
-         * the component so is difficult replacing it externally
+         * the component so is difficult replace it externally
          * or change its behavior
          */
         public function someDbTask()
@@ -36,7 +36,7 @@ connection parameters or the type of database system because the component only 
     $some = new SomeComponent();
     $some->someDbTask();
 
-To solve this, we create a setter that injects the dependency externally before using it. For now, this seems to be
+To solve this, we have created a setter that injects the dependency externally before using it. For now, this seems to be
 a good solution:
 
 .. code-block:: php
@@ -974,6 +974,8 @@ right services when you need it requires them.
 +---------------------+---------------------------------------------+----------------------------------------------------------------------------------------------------+--------+
 | response            | HTTP Response Environment Service           | :doc:`Phalcon\\Http\\Response <../api/Phalcon_Http_Response>`                                      | Yes    |
 +---------------------+---------------------------------------------+----------------------------------------------------------------------------------------------------+--------+
+| cookies             | HTTP Cookies Management Service             | :doc:`Phalcon\\Http\\Response\\Cookies <../api/Phalcon_Http_Response_Cookies>`                     | Yes    |
++---------------------+---------------------------------------------+----------------------------------------------------------------------------------------------------+--------+
 | filter              | Input Filtering Service                     | :doc:`Phalcon\\Filter <../api/Phalcon_Filter>`                                                     | Yes    |
 +---------------------+---------------------------------------------+----------------------------------------------------------------------------------------------------+--------+
 | flash               | Flash Messaging Service                     | :doc:`Phalcon\\Flash\\Direct <../api/Phalcon_Flash_Direct>`                                        | Yes    |
@@ -987,6 +989,8 @@ right services when you need it requires them.
 | db                  | Low-Level Database Connection Service       | :doc:`Phalcon\\Db <../api/Phalcon_Db>`                                                             | Yes    |
 +---------------------+---------------------------------------------+----------------------------------------------------------------------------------------------------+--------+
 | security            | Security helpers                            | :doc:`Phalcon\\Security <../api/Phalcon_Security>`                                                 | Yes    |
++---------------------+---------------------------------------------+----------------------------------------------------------------------------------------------------+--------+
+| crypt               | Encrypt/Decrypt data                        | :doc:`Phalcon\\Crypt <../api/Phalcon_Crypt>`                                                       | Yes    |
 +---------------------+---------------------------------------------+----------------------------------------------------------------------------------------------------+--------+
 | escaper             | Contextual Escaping                         | :doc:`Phalcon\\Escaper <../api/Phalcon_Escaper>`                                                   | Yes    |
 +---------------------+---------------------------------------------+----------------------------------------------------------------------------------------------------+--------+

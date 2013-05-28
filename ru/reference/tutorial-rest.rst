@@ -109,17 +109,18 @@
 
 Создание модели
 ----------------
-Наше AIP предоставляет информацию о "роботах", хранящуюся в базе данных. Описанная ниже модель позволяет нам получить доступ к таблице объектно-ориентированным путём. Мы реализуем немного бизнес-правил, используя встроенные валидаторы с простейшими проверками. Мы делаем это, чтобы иметь уверенность в том, что сохраняемые данные отвечают требованиям нашего приложения:
+Наше API предоставляет информацию о "роботах", хранящуюся в базе данных. Описанная ниже модель позволяет нам получить доступ к таблице объектно-ориентированным путём. Мы реализуем немного бизнес-правил, используя встроенные валидаторы с простейшими проверками. Мы делаем это, чтобы иметь уверенность в том, что сохраняемые данные отвечают требованиям нашего приложения:
 
 .. code-block:: php
 
     <?php
 
-    use \Phalcon\Mvc\Model\Message;
-    use \Phalcon\Mvc\Model\Validator\InclusionIn;
-    use \Phalcon\Mvc\Model\Validator\Uniqueness;
+    use Phalcon\Mvc\Model,
+        Phalcon\Mvc\Model\Message,
+        Phalcon\Mvc\Model\Validator\InclusionIn,
+        Phalcon\Mvc\Model\Validator\Uniqueness;
 
-    class Robots extends \Phalcon\Mvc\Model
+    class Robots extends Model
     {
 
         public function validation()
@@ -214,7 +215,7 @@
 
         $phql = "SELECT * FROM Robots WHERE name LIKE :name: ORDER BY name";
         $robots = $app->modelsManager->executeQuery($phql, array(
-            'name' => '%'.$name.'%'
+            'name' => '%' . $name . '%'
         ));
 
         $data = array();
