@@ -69,7 +69,7 @@
           {%- block sidebartoc %}
           {%- if display_toc %}
             <h3><a href="{{ pathto(master_doc) }}">{{ _('Table Of Contents') }}</a></h3>
-            {{ toc }}
+            {{ toctree(maxdepth=2|toint, collapse=False, includehidden=false|tobool, ) }}
           {%- endif %}
           {%- endblock %}
           {%- block sidebarrel %}
