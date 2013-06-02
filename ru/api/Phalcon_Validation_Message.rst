@@ -7,7 +7,7 @@ Encapsulates validation info generated in the validation process
 Methods
 ---------
 
-public  **__construct** (*string* $message, [*string* $field], [*string* $type])
+public  **__construct** (*string* $message, *string* $field=null, *string* $type=null)
 
 Phalcon\\Validation\\Message constructor
 

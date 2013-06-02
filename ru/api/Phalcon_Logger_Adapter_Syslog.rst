@@ -24,7 +24,7 @@ Sends logs to the system logger
 Methods
 ---------
 
-public  **__construct** (*string* $name, [*array* $options])
+public  **__construct** (*string* $name, *array* $options=null)
 
 Phalcon\\Logger\\Adapter\\Syslog constructor
 
@@ -126,7 +126,7 @@ Sends/Writes an alert message to the log
 
 
 
-public  **log** (*string* $message, [*int* $type]) inherited from Phalcon\\Logger\\Adapter
+public  **log** (*string* $message, *int* $type=null) inherited from Phalcon\\Logger\\Adapter
 
 Logs messages to the internal loggger. Appends logs to the
 

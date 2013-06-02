@@ -9,13 +9,13 @@ Component INPUT[type=submit] for forms
 Methods
 ---------
 
-public *string*  **render** ([*array* $attributes])
+public *string*  **render** (*array* $attributes=null)
 
 Renders the element widget
 
 
 
-public  **__construct** (*string* $name, [*array* $attributes]) inherited from Phalcon\\Forms\\Element
+public  **__construct** (*string* $name, *array* $attributes=null) inherited from Phalcon\\Forms\\Element
 
 Phalcon\\Forms\\Element constructor
 
@@ -51,13 +51,19 @@ Sets the element's filters
 
 
 
+public *Phalcon\\Forms\\ElementInterface*  **addFilter** (*string* $filter) inherited from Phalcon\\Forms\\Element
+
+Adds a filter to current list of filters
+
+
+
 public *mixed*  **getFilters** () inherited from Phalcon\\Forms\\Element
 
 Returns the element's filters
 
 
 
-public *Phalcon\\Forms\\ElementInterface*  **addValidators** (*unknown* $validators, [*unknown* $merge]) inherited from Phalcon\\Forms\\Element
+public *Phalcon\\Forms\\ElementInterface*  **addValidators** (*unknown* $validators, *unknown* $merge=null) inherited from Phalcon\\Forms\\Element
 
 Adds a group of validators
 
@@ -75,7 +81,7 @@ Returns the validators registered for the element
 
 
 
-public *array*  **prepareAttributes** ([*array* $attributes]) inherited from Phalcon\\Forms\\Element
+public *array*  **prepareAttributes** (*array* $attributes=null) inherited from Phalcon\\Forms\\Element
 
 Returns an array of attributes for  prepared attributes for Phalcon\\Tag helpers according to the element's parameters
 
@@ -87,7 +93,7 @@ Sets a default attribute for the element
 
 
 
-public *mixed*  **getAttribute** (*string* $attribute, [*mixed* $defaultValue]) inherited from Phalcon\\Forms\\Element
+public *mixed*  **getAttribute** (*string* $attribute, *mixed* $defaultValue=null) inherited from Phalcon\\Forms\\Element
 
 Returns the value of an attribute if present
 
@@ -111,7 +117,7 @@ Sets an option for the element
 
 
 
-public *mixed*  **getUserOption** (*string* $option, [*mixed* $defaultValue]) inherited from Phalcon\\Forms\\Element
+public *mixed*  **getUserOption** (*string* $option, *mixed* $defaultValue=null) inherited from Phalcon\\Forms\\Element
 
 Returns the value of an option if present
 
@@ -174,6 +180,18 @@ Returns the messages that belongs to the element The element needs to be attache
 public *boolean*  **hasMessages** () inherited from Phalcon\\Forms\\Element
 
 Returns the messages that belongs to the element The element needs to be attached to a form
+
+
+
+public *Phalcon\\Forms\\ElementInterface*  **setMessages** (:doc:`Phalcon\\Validation\\Message\\Group <Phalcon_Validation_Message_Group>` $group) inherited from Phalcon\\Forms\\Element
+
+Sets the validation messages related to the element
+
+
+
+public *Phalcon\\Forms\\ElementInterface*  **appendMessage** (:doc:`Phalcon\\Validation\\Message <Phalcon_Validation_Message>` $message) inherited from Phalcon\\Forms\\Element
+
+Appends a message to the internal message list
 
 
 

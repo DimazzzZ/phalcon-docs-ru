@@ -58,7 +58,7 @@ Sets the default action name
 
 
 
-public  **handle** ([*array* $arguments])
+public  **handle** (*array* $arguments=null)
 
 Handles routing information received from command-line arguments
 

@@ -44,7 +44,7 @@ Constants
 Methods
 ---------
 
-final public  **__construct** ([:doc:`Phalcon\\DiInterface <Phalcon_DiInterface>` $dependencyInjector], [:doc:`Phalcon\\Mvc\\Model\\ManagerInterface <Phalcon_Mvc_Model_ManagerInterface>` $modelsManager])
+final public  **__construct** (:doc:`Phalcon\\DiInterface <Phalcon_DiInterface>` $dependencyInjector=null, :doc:`Phalcon\\Mvc\\Model\\ManagerInterface <Phalcon_Mvc_Model_ManagerInterface>` $modelsManager=null)
 
 Phalcon\\Mvc\\Model constructor
 
@@ -205,7 +205,7 @@ Gets the connection used to write data to the model
 
 
 
-public :doc:`Phalcon\\Mvc\\Model <Phalcon_Mvc_Model>`  **assign** (*array* $data, [*array* $columnMap])
+public :doc:`Phalcon\\Mvc\\Model <Phalcon_Mvc_Model>`  **assign** (*array* $data, *array* $columnMap=null)
 
 Assigns values to a model from an array 
 
@@ -222,7 +222,7 @@ Assigns values to a model from an array
 
 
 
-public static :doc:`Phalcon\\Mvc\\Model <Phalcon_Mvc_Model>`  **cloneResultMap** (:doc:`Phalcon\\Mvc\\Model <Phalcon_Mvc_Model>` $base, *array* $data, *array* $columnMap, [*int* $dirtyState], [*boolean* $keepSnapshots])
+public static :doc:`Phalcon\\Mvc\\Model <Phalcon_Mvc_Model>`  **cloneResultMap** (:doc:`Phalcon\\Mvc\\Model <Phalcon_Mvc_Model>` $base, *array* $data, *array* $columnMap, *int* $dirtyState=null, *boolean* $keepSnapshots=null)
 
 Assigns values to a model from an array returning a new model. 
 
@@ -245,7 +245,7 @@ Returns an hydrated result based on the data and the column map
 
 
 
-public static :doc:`Phalcon\\Mvc\\Model <Phalcon_Mvc_Model>`  **cloneResult** (:doc:`Phalcon\\Mvc\\Model <Phalcon_Mvc_Model>` $base, *array* $data, [*int* $dirtyState])
+public static :doc:`Phalcon\\Mvc\\Model <Phalcon_Mvc_Model>`  **cloneResult** (:doc:`Phalcon\\Mvc\\Model <Phalcon_Mvc_Model>` $base, *array* $data, *int* $dirtyState=null)
 
 Assigns values to a model from an array returning a new model 
 
@@ -262,7 +262,7 @@ Assigns values to a model from an array returning a new model
 
 
 
-public static :doc:`Phalcon\\Mvc\\Model\\ResultsetInterface <Phalcon_Mvc_Model_ResultsetInterface>`  **find** ([*array* $parameters])
+public static :doc:`Phalcon\\Mvc\\Model\\ResultsetInterface <Phalcon_Mvc_Model_ResultsetInterface>`  **find** (*array* $parameters=null)
 
 Allows to query a set of records that match the specified conditions 
 
@@ -293,7 +293,7 @@ Allows to query a set of records that match the specified conditions
 
 
 
-public static :doc:`Phalcon\\Mvc\\Model <Phalcon_Mvc_Model>`  **findFirst** ([*array* $parameters])
+public static :doc:`Phalcon\\Mvc\\Model <Phalcon_Mvc_Model>`  **findFirst** (*array* $parameters=null)
 
 Allows to query the first record that match the specified conditions 
 
@@ -316,7 +316,7 @@ Allows to query the first record that match the specified conditions
 
 
 
-public static :doc:`Phalcon\\Mvc\\Model\\Criteria <Phalcon_Mvc_Model_Criteria>`  **query** ([:doc:`Phalcon\\DiInterface <Phalcon_DiInterface>` $dependencyInjector])
+public static :doc:`Phalcon\\Mvc\\Model\\Criteria <Phalcon_Mvc_Model_Criteria>`  **query** (:doc:`Phalcon\\DiInterface <Phalcon_DiInterface>` $dependencyInjector=null)
 
 Create a criteria for a specific model
 
@@ -334,7 +334,7 @@ Generate a PHQL SELECT statement for an aggregate
 
 
 
-public static *int*  **count** ([*array* $parameters])
+public static *int*  **count** (*array* $parameters=null)
 
 Allows to count how many records match the specified conditions 
 
@@ -353,7 +353,7 @@ Allows to count how many records match the specified conditions
 
 
 
-public static *double*  **sum** ([*array* $parameters])
+public static *double*  **sum** (*array* $parameters=null)
 
 Allows to calculate a summatory on a column that match the specified conditions 
 
@@ -372,7 +372,7 @@ Allows to calculate a summatory on a column that match the specified conditions
 
 
 
-public static *mixed*  **maximum** ([*array* $parameters])
+public static *mixed*  **maximum** (*array* $parameters=null)
 
 Allows to get the maximum value of a column that match the specified conditions 
 
@@ -391,7 +391,7 @@ Allows to get the maximum value of a column that match the specified conditions
 
 
 
-public static *mixed*  **minimum** ([*array* $parameters])
+public static *mixed*  **minimum** (*array* $parameters=null)
 
 Allows to get the minimum value of a column that match the specified conditions 
 
@@ -410,7 +410,7 @@ Allows to get the minimum value of a column that match the specified conditions
 
 
 
-public static *double*  **average** ([*array* $parameters])
+public static *double*  **average** (*array* $parameters=null)
 
 Allows to calculate the average value on a column matching the specified conditions 
 
@@ -602,7 +602,7 @@ Save the related records assigned in the has-one/has-many relations
 
 
 
-public *boolean*  **save** ([*array* $data], [*array* $whiteList])
+public *boolean*  **save** (*array* $data=null, *array* $whiteList=null)
 
 Inserts or updates a model instance. Returning true on success or false otherwise. 
 
@@ -625,7 +625,7 @@ Inserts or updates a model instance. Returning true on success or false otherwis
 
 
 
-public *boolean*  **create** ([*array* $data], [*array* $whiteList])
+public *boolean*  **create** (*array* $data=null, *array* $whiteList=null)
 
 Inserts a model instance. If the instance already exists in the persistance it will throw an exception Returning true on success or false otherwise. 
 
@@ -651,7 +651,7 @@ Inserts a model instance. If the instance already exists in the persistance it w
 
 
 
-public *boolean*  **update** ([*array* $data], [*array* $whiteList])
+public *boolean*  **update** (*array* $data=null, *array* $whiteList=null)
 
 Updates a model instance. If the instance doesn't exist in the persistance it will throw an exception Returning true on success or false otherwise. 
 
@@ -929,7 +929,7 @@ Sets if the model must keep the original record snapshot in memory
 
 
 
-public  **setSnapshotData** (*array* $data, [*array* $columnMap])
+public  **setSnapshotData** (*array* $data, *array* $columnMap=null)
 
 Sets the record's snapshot data. This method is used internally to set snapshot data when the model was set up to keep snapshot data
 
@@ -947,7 +947,7 @@ Returns the internal snapshot data
 
 
 
-public  **hasChanged** ([*boolean* $fieldName])
+public  **hasChanged** (*boolean* $fieldName=null)
 
 Check if a specific attribute has changed This only works if the model is keeping data snapshots
 
@@ -980,7 +980,7 @@ Sets if a model must use dynamic update instead of the all-field update
 
 
 
-public :doc:`Phalcon\\Mvc\\Model\\ResultsetInterface <Phalcon_Mvc_Model_ResultsetInterface>`  **getRelated** (*string* $alias, [*array* $arguments])
+public :doc:`Phalcon\\Mvc\\Model\\ResultsetInterface <Phalcon_Mvc_Model_ResultsetInterface>`  **getRelated** (*string* $alias, *array* $arguments=null)
 
 Returns related records based on defined relations
 
@@ -992,13 +992,13 @@ Returns related records defined relations depending on the method name
 
 
 
-public *mixed*  **__call** (*string* $method, [*array* $arguments])
+public *mixed*  **__call** (*string* $method, *array* $arguments=null)
 
 Handles method calls when a method is not implemented
 
 
 
-public static *mixed*  **__callStatic** (*string* $method, [*array* $arguments])
+public static *mixed*  **__callStatic** (*string* $method, *array* $arguments=null)
 
 Handles method calls when a static method is not implemented
 

@@ -486,6 +486,17 @@ foreach ( $classes as $className ) {
             $cp = array();
             foreach ( $method->getParameters() as $parameter ) {
                 $name = '$' . $parameter->name;
+
+                if($parameter->isOptional() ){
+                  if($parameter->isDefaultValueAvailable()){
+                    $default = $parameter->getDefaultValue();
+                  } else {
+                    $default = 'null';
+                  }
+                }else{
+                  $default = '';
+                }
+              
                 if ( isset($ret['parameters'][$name]) ) {
                     if ( strpos($ret['parameters'][$name] , 'Phalcon') !== false ) {
                         if ( class_exists($ret['parameters'][$name]) || interface_exists($ret['parameters'][$name]) ) {
@@ -494,21 +505,21 @@ foreach ( $classes as $className ) {
                             if ( !$parameter->isOptional() ) {
                                 $cp[] = ':doc:`' . $parameterName . ' <' . $parameterPath . '>` ' . $name;
                             } else {
-                                $cp[] = '[:doc:`' . $parameterName . ' <' . $parameterPath . '>` ' . $name . ']';
+                                $cp[] = ':doc:`' . $parameterName . ' <' . $parameterPath . '>` ' . $name . '='.$default;
                             }
                         } else {
                             $parameterName = str_replace("\\" , "\\\\" , $ret['parameters'][$name]);
                             if ( !$parameter->isOptional() ) {
                                 $cp[] = '*' . $parameterName . '* ' . $name;
                             } else {
-                                $cp[] = '[*' . $parameterName . '* ' . $name . ']';
+                                $cp[] = '*' . $parameterName . '* ' . $name . '='.$default;
                             }
                         }
                     } else {
                         if ( !$parameter->isOptional() ) {
                             $cp[] = '*' . $ret['parameters'][$name] . '* ' . $name;
                         } else {
-                            $cp[] = '[*' . $ret['parameters'][$name] . '* ' . $name . ']';
+                            $cp[] = '*' . $ret['parameters'][$name] . '* ' . $name . '='.$default;
                         }
                     }
                 } else {
@@ -520,7 +531,7 @@ foreach ( $classes as $className ) {
                     if ( !$parameter->isOptional() ) {
                         $cp[] = '*unknown* ' . $name;
                     } else {
-                        $cp[] = '[*unknown* ' . $name . ']';
+                        $cp[] = '*unknown* ' . $name . '='.$default;
                     }
                 }
             }

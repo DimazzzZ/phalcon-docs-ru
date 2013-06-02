@@ -48,7 +48,7 @@ Returns the registered handlers
 
 
 
-public :doc:`Phalcon\\Mvc\\Micro\\Collection <Phalcon_Mvc_Micro_Collection>`  **setHandler** (*mixed* $handler, [*boolean* $lazy])
+public :doc:`Phalcon\\Mvc\\Micro\\Collection <Phalcon_Mvc_Micro_Collection>`  **setHandler** (*mixed* $handler, *boolean* $lazy=null)
 
 Sets the main handler
 

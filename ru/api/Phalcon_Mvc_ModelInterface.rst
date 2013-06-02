@@ -7,7 +7,7 @@ Phalcon\\Mvc\\ModelInterface initializer
 Methods
 ---------
 
-abstract public  **__construct** ([:doc:`Phalcon\\DiInterface <Phalcon_DiInterface>` $dependencyInjector], [:doc:`Phalcon\\Mvc\\Model\\ManagerInterface <Phalcon_Mvc_Model_ManagerInterface>` $modelsManager])
+abstract public  **__construct** (:doc:`Phalcon\\DiInterface <Phalcon_DiInterface>` $dependencyInjector=null, :doc:`Phalcon\\Mvc\\Model\\ManagerInterface <Phalcon_Mvc_Model_ManagerInterface>` $modelsManager=null)
 
 Phalcon\\Mvc\\Model constructor
 
@@ -73,13 +73,13 @@ Gets internal database connection
 
 
 
-abstract public :doc:`Phalcon\\Mvc\\Model <Phalcon_Mvc_Model>`  **assign** (*array* $data, [*array* $columnMap])
+abstract public :doc:`Phalcon\\Mvc\\Model <Phalcon_Mvc_Model>`  **assign** (*array* $data, *array* $columnMap=null)
 
 Assigns values to a model from an array
 
 
 
-abstract public static :doc:`Phalcon\\Mvc\\Model <Phalcon_Mvc_Model>`  $result **cloneResultMap** (:doc:`Phalcon\\Mvc\\Model <Phalcon_Mvc_Model>` $base, *array* $data, *array* $columnMap, [*int* $dirtyState])
+abstract public static :doc:`Phalcon\\Mvc\\Model <Phalcon_Mvc_Model>`  $result **cloneResultMap** (:doc:`Phalcon\\Mvc\\Model <Phalcon_Mvc_Model>` $base, *array* $data, *array* $columnMap, *int* $dirtyState=null)
 
 Assigns values to a model from an array returning a new model
 
@@ -97,49 +97,49 @@ Returns an hydrated result based on the data and the column map
 
 
 
-abstract public static :doc:`Phalcon\\Mvc\\Model\\ResultsetInterface <Phalcon_Mvc_Model_ResultsetInterface>`  **find** ([*array* $parameters])
+abstract public static :doc:`Phalcon\\Mvc\\Model\\ResultsetInterface <Phalcon_Mvc_Model_ResultsetInterface>`  **find** (*array* $parameters=null)
 
 Allows to query a set of records that match the specified conditions
 
 
 
-abstract public static :doc:`Phalcon\\Mvc\\ModelInterface <Phalcon_Mvc_ModelInterface>`  **findFirst** ([*array* $parameters])
+abstract public static :doc:`Phalcon\\Mvc\\ModelInterface <Phalcon_Mvc_ModelInterface>`  **findFirst** (*array* $parameters=null)
 
 Allows to query the first record that match the specified conditions
 
 
 
-abstract public static :doc:`Phalcon\\Mvc\\Model\\CriteriaInterface <Phalcon_Mvc_Model_CriteriaInterface>`  **query** ([:doc:`Phalcon\\DiInterface <Phalcon_DiInterface>` $dependencyInjector])
+abstract public static :doc:`Phalcon\\Mvc\\Model\\CriteriaInterface <Phalcon_Mvc_Model_CriteriaInterface>`  **query** (:doc:`Phalcon\\DiInterface <Phalcon_DiInterface>` $dependencyInjector=null)
 
 Create a criteria for a especific model
 
 
 
-abstract public static *int*  **count** ([*array* $parameters])
+abstract public static *int*  **count** (*array* $parameters=null)
 
 Allows to count how many records match the specified conditions
 
 
 
-abstract public static *double*  **sum** ([*array* $parameters])
+abstract public static *double*  **sum** (*array* $parameters=null)
 
 Allows to calculate a summatory on a column that match the specified conditions
 
 
 
-abstract public static *mixed*  **maximum** ([*array* $parameters])
+abstract public static *mixed*  **maximum** (*array* $parameters=null)
 
 Allows to get the maximum value of a column that match the specified conditions
 
 
 
-abstract public static *mixed*  **minimum** ([*array* $parameters])
+abstract public static *mixed*  **minimum** (*array* $parameters=null)
 
 Allows to get the minimum value of a column that match the specified conditions
 
 
 
-abstract public static *double*  **average** ([*array* $parameters])
+abstract public static *double*  **average** (*array* $parameters=null)
 
 Allows to calculate the average value on a column matching the specified conditions
 
@@ -175,19 +175,19 @@ Returns all the validation messages
 
 
 
-abstract public *boolean*  **save** ([*array* $data])
+abstract public *boolean*  **save** (*array* $data=null)
 
 Inserts or updates a model instance. Returning true on success or false otherwise.
 
 
 
-abstract public *boolean*  **create** ([*array* $data])
+abstract public *boolean*  **create** (*array* $data=null)
 
 Inserts a model instance. If the instance already exists in the persistance it will throw an exception Returning true on success or false otherwise.
 
 
 
-abstract public *boolean*  **update** ([*array* $data])
+abstract public *boolean*  **update** (*array* $data=null)
 
 Updates a model instance. If the instance doesn't exist in the persistance it will throw an exception Returning true on success or false otherwise.
 
@@ -223,7 +223,7 @@ Writes an attribute value by its name
 
 
 
-abstract public :doc:`Phalcon\\Mvc\\Model\\ResultsetInterface <Phalcon_Mvc_Model_ResultsetInterface>`  **getRelated** (*string* $modelName, [*array* $arguments])
+abstract public :doc:`Phalcon\\Mvc\\Model\\ResultsetInterface <Phalcon_Mvc_Model_ResultsetInterface>`  **getRelated** (*string* $modelName, *array* $arguments=null)
 
 Returns related records based on defined relations
 

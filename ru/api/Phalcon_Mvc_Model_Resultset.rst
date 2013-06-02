@@ -156,7 +156,7 @@ Returns the error messages produced by a batch operation
 
 
 
-public *boolean*  **delete** ([*Closure* $conditionCallback])
+public *boolean*  **delete** (*Closure* $conditionCallback=null)
 
 Delete every record in the resultset
 

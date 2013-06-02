@@ -70,7 +70,7 @@ Phalcon\\Acl\\Adapter\\Memory constructor
 
 
 
-public *boolean*  **addRole** (:doc:`Phalcon\\Acl\\RoleInterface <Phalcon_Acl_RoleInterface>` $role, [*array|string* $accessInherits])
+public *boolean*  **addRole** (:doc:`Phalcon\\Acl\\RoleInterface <Phalcon_Acl_RoleInterface>` $role, *array|string* $accessInherits=null)
 
 Adds a role to the ACL list. Second parameter allows inheriting access data from other existing role Example: 
 
@@ -102,7 +102,7 @@ Check whether resource exist in the resources list
 
 
 
-public *boolean*  **addResource** (:doc:`Phalcon\\Acl\\Resource <Phalcon_Acl_Resource>` $resource, [*array* $accessList])
+public *boolean*  **addResource** (:doc:`Phalcon\\Acl\\Resource <Phalcon_Acl_Resource>` $resource, *array* $accessList=null)
 
 Adds a resource to the ACL list Access names can be a particular action, by example search, update, delete, etc or a list of them Example: 
 

@@ -32,7 +32,7 @@ Phalcon\\DI constructor
 
 
 
-public :doc:`Phalcon\\DI\\ServiceInterface <Phalcon_DI_ServiceInterface>`  **set** (*string* $name, *mixed* $definition, [*boolean* $shared])
+public :doc:`Phalcon\\DI\\ServiceInterface <Phalcon_DI_ServiceInterface>`  **set** (*string* $name, *mixed* $definition, *boolean* $shared=null)
 
 Registers a service in the services container
 
@@ -50,7 +50,7 @@ Removes a service in the services container
 
 
 
-public :doc:`Phalcon\\DI\\ServiceInterface <Phalcon_DI_ServiceInterface>`  **attempt** (*string* $name, *mixed* $definition, [*boolean* $shared])
+public :doc:`Phalcon\\DI\\ServiceInterface <Phalcon_DI_ServiceInterface>`  **attempt** (*string* $name, *mixed* $definition, *boolean* $shared=null)
 
 Attempts to register a service in the services container Only is successful if a service hasn't been registered previously with the same name
 
@@ -74,13 +74,13 @@ Returns a Phalcon\\DI\\Service instance
 
 
 
-public *mixed*  **get** (*string* $name, [*array* $parameters])
+public *mixed*  **get** (*string* $name, *array* $parameters=null)
 
 Resolves the service based on its configuration
 
 
 
-public *mixed*  **getShared** (*string* $name, [*array* $parameters])
+public *mixed*  **getShared** (*string* $name, *array* $parameters=null)
 
 Resolves a service, the resolved service is stored in the DI, subsequent requests for this service will return the same instance
 
@@ -142,7 +142,7 @@ Removes a service from the services container using the array syntax
 
 
 
-public *mixed*  **__call** (*string* $method, [*array* $arguments])
+public *mixed*  **__call** (*string* $method, *array* $arguments=null)
 
 Magic method to get or set services using setters/getters
 

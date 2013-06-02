@@ -24,7 +24,7 @@ Constants
 Methods
 ---------
 
-public  **__construct** (*int* $type, *string* $referencedModel, *string|array* $fields, *string|array* $referencedFields, [*array* $options])
+public  **__construct** (*int* $type, *string* $referencedModel, *string|array* $fields, *string|array* $referencedFields, *array* $options=null)
 
 Phalcon\\Mvc\\Model\\Relation constructor
 

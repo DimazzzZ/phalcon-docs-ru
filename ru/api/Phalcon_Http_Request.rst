@@ -33,7 +33,7 @@ Returns the internal dependency injector
 
 
 
-public *mixed*  **get** ([*string* $name], [*string|array* $filters], [*mixed* $defaultValue])
+public *mixed*  **get** (*string* $name=null, *string|array* $filters=null, *mixed* $defaultValue=null)
 
 Gets a variable from the $_REQUEST superglobal applying filters if needed. If no parameters are given the $_REQUEST superglobal is returned 
 
@@ -50,7 +50,7 @@ Gets a variable from the $_REQUEST superglobal applying filters if needed. If no
 
 
 
-public *mixed*  **getPost** ([*string* $name], [*string|array* $filters], [*mixed* $defaultValue])
+public *mixed*  **getPost** (*string* $name=null, *string|array* $filters=null, *mixed* $defaultValue=null)
 
 Gets a variable from the $_POST superglobal applying filters if needed If no parameters are given the $_POST superglobal is returned 
 
@@ -67,7 +67,7 @@ Gets a variable from the $_POST superglobal applying filters if needed If no par
 
 
 
-public *mixed*  **getQuery** ([*string* $name], [*string|array* $filters], [*mixed* $defaultValue])
+public *mixed*  **getQuery** (*string* $name=null, *string|array* $filters=null, *mixed* $defaultValue=null)
 
 Gets variable from $_GET superglobal applying filters if needed If no parameters are given the $_GET superglobal is returned 
 
@@ -171,7 +171,7 @@ Gets information about schema, host and port used by the request
 
 
 
-public *string*  **getClientAddress** ([*boolean* $trustForwardedHeader])
+public *string*  **getClientAddress** (*boolean* $trustForwardedHeader=null)
 
 Gets most possible client IPv4 Address. This method search in $_SERVER['REMOTE_ADDR'] and optionally in $_SERVER['HTTP_X_FORWARDED_FOR']
 
@@ -237,13 +237,13 @@ Checks whether HTTP method is OPTIONS. if $_SERVER['REQUEST_METHOD']=='OPTIONS'
 
 
 
-public *boolean*  **hasFiles** ([*unknown* $notErrored])
+public *boolean*  **hasFiles** (*unknown* $notErrored=null)
 
 Checks whether request include attached files
 
 
 
-public :doc:`Phalcon\\Http\\Request\\File <Phalcon_Http_Request_File>` [] **getUploadedFiles** ([*boolean* $notErrored])
+public :doc:`Phalcon\\Http\\Request\\File <Phalcon_Http_Request_File>` [] **getUploadedFiles** (*boolean* $notErrored=null)
 
 Gets attached files as Phalcon\\Http\\Request\\File instances
 

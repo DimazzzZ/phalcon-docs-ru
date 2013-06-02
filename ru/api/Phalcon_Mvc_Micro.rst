@@ -96,7 +96,7 @@ Returns the internal router used by the application
 
 
 
-public :doc:`Phalcon\\DI\\ServiceInterface <Phalcon_DI_ServiceInterface>`  **setService** (*string* $serviceName, *mixed* $definition, [*boolean* $shared])
+public :doc:`Phalcon\\DI\\ServiceInterface <Phalcon_DI_ServiceInterface>`  **setService** (*string* $serviceName, *mixed* $definition, *boolean* $shared=null)
 
 Sets a service from the DI
 
@@ -120,9 +120,15 @@ Obtains a shared service from the DI
 
 
 
-public *mixed*  **handle** ([*string* $uri])
+public *mixed*  **handle** (*string* $uri=null)
 
 Handle the whole request
+
+
+
+public  **stop** ()
+
+Stops the middleware execution avoiding than other middlewares be executed
 
 
 
@@ -196,7 +202,7 @@ Appends an 'after' middleware to be called after execute the route
 
 public :doc:`Phalcon\\Mvc\\Micro <Phalcon_Mvc_Micro>`  **finish** (*callable* $handler)
 
-Appends an 'finish' middleware to be called when the request is finished
+Appends a 'finish' middleware to be called when the request is finished
 
 
 

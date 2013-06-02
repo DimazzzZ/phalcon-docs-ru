@@ -7,7 +7,7 @@ This is a base class for validators
 Methods
 ---------
 
-public  **__construct** ([*array* $options])
+public  **__construct** (*array* $options=null)
 
 Phalcon\\Validation\\Validator constructor
 
@@ -22,6 +22,12 @@ Checks if an option is defined
 public *mixed*  **getOption** (*string* $key)
 
 Returns an option in the validator's options Returns null if the option hasn't been set
+
+
+
+public  **setOption** (*string* $key, *mixed* $value)
+
+Sets an option in the validator
 
 
 

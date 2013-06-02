@@ -44,7 +44,7 @@ A transaction acts on a single database connection. If you have multiple class-s
 Methods
 ---------
 
-public  **__construct** ([:doc:`Phalcon\\DiInterface <Phalcon_DiInterface>` $dependencyInjector])
+public  **__construct** (:doc:`Phalcon\\DiInterface <Phalcon_DiInterface>` $dependencyInjector=null)
 
 Phalcon\\Mvc\\Model\\Transaction\\Manager constructor
 
@@ -92,13 +92,13 @@ Checks whether the manager has an active transaction
 
 
 
-public :doc:`Phalcon\\Mvc\\Model\\TransactionInterface <Phalcon_Mvc_Model_TransactionInterface>`  **get** ([*boolean* $autoBegin])
+public :doc:`Phalcon\\Mvc\\Model\\TransactionInterface <Phalcon_Mvc_Model_TransactionInterface>`  **get** (*boolean* $autoBegin=null)
 
 Returns a new Phalcon\\Mvc\\Model\\Transaction or an already created once This method registers a shutdown function to rollback active connections
 
 
 
-public :doc:`Phalcon\\Mvc\\Model\\TransactionInterface <Phalcon_Mvc_Model_TransactionInterface>`  **getOrCreateTransaction** ([*boolean* $autoBegin])
+public :doc:`Phalcon\\Mvc\\Model\\TransactionInterface <Phalcon_Mvc_Model_TransactionInterface>`  **getOrCreateTransaction** (*boolean* $autoBegin=null)
 
 Create/Returns a new transaction or an existing one
 
@@ -116,7 +116,7 @@ Commmits active transactions within the manager
 
 
 
-public  **rollback** ([*boolean* $collect])
+public  **rollback** (*boolean* $collect=null)
 
 Rollbacks active transactions within the manager Collect will remove transaction from the manager
 

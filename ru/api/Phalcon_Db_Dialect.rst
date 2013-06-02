@@ -62,13 +62,13 @@ Gets a list of columns with escaped identifiers
 
 
 
-public *string*  **getSqlExpression** (*array* $expression, [*string* $escapeChar])
+public *string*  **getSqlExpression** (*array* $expression, *string* $escapeChar=null)
 
 Transforms an intermediate representation for a expression into a database system valid expression
 
 
 
-public *string*  **getSqlTable** (*array* $table, [*string* $escapeChar])
+public *string*  **getSqlTable** (*array* $table, *string* $escapeChar=null)
 
 Transform an intermediate representation for a schema/table into a database system valid expression
 

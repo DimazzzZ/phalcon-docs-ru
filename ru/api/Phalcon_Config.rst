@@ -29,7 +29,7 @@ Phalcon\\Config is designed to simplify the access to, and the use of, configura
 Methods
 ---------
 
-public  **__construct** ([*array* $arrayConfig])
+public  **__construct** (*array* $arrayConfig=null)
 
 Phalcon\\Config constructor
 
@@ -48,7 +48,7 @@ Allows to check whether an attribute is defined using the array-syntax
 
 
 
-public *mixed*  **get** (*string* $index, [*mixed* $defaultValue])
+public *mixed*  **get** (*string* $index, *mixed* $defaultValue=null)
 
 Gets an attribute from the configuration, if the attribute isn't defined returns null If the value is exactly null or is not defined the default value will be used instead 
 

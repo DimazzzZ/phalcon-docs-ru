@@ -13,13 +13,13 @@ Phalcon\\Translate\\Adapter\\NativeArray constructor
 
 
 
-abstract public *string*  **_** (*string* $translateKey, [*array* $placeholders])
+abstract public *string*  **_** (*string* $translateKey, *array* $placeholders=null)
 
 Returns the translation string of the given key
 
 
 
-abstract public *string*  **query** (*string* $index, [*array* $placeholders])
+abstract public *string*  **query** (*string* $index, *array* $placeholders=null)
 
 Returns the translation related to the given key
 

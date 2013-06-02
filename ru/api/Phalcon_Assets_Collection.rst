@@ -15,13 +15,13 @@ Adds a resource to the collection
 
 
 
-public :doc:`Phalcon\\Assets\\Collection <Phalcon_Assets_Collection>`  **addCss** (*string* $path, [*boolean* $local])
+public :doc:`Phalcon\\Assets\\Collection <Phalcon_Assets_Collection>`  **addCss** (*string* $path, *boolean* $local=null)
 
 Adds a CSS resource to the collection
 
 
 
-public :doc:`Phalcon\\Assets\\Collection <Phalcon_Assets_Collection>`  **addJs** (*string* $path, [*boolean* $local])
+public :doc:`Phalcon\\Assets\\Collection <Phalcon_Assets_Collection>`  **addJs** (*string* $path, *boolean* $local=null)
 
 Adds a Js resource to the collection
 

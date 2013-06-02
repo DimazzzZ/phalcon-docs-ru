@@ -85,7 +85,7 @@ Sends/Writes an alert message to the log
 
 
 
-public  **log** (*string* $message, [*int* $type])
+public  **log** (*string* $message, *int* $type=null)
 
 Logs messages to the internal loggger. Appends logs to the
 

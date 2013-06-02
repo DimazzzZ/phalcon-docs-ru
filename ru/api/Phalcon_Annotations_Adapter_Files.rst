@@ -20,7 +20,7 @@ Stores the parsed annotations in diles. This adapter is the suitable for product
 Methods
 ---------
 
-public  **__construct** ([*array* $options])
+public  **__construct** (*array* $options=null)
 
 Phalcon\\Annotations\\Adapter\\Files constructor
 

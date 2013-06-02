@@ -41,19 +41,19 @@ Adds a message to the session flasher
 
 
 
-public *array*  **getMessages** ([*string* $type], [*boolean* $remove])
+public *array*  **getMessages** (*string* $type=null, *boolean* $remove=null)
 
 Returns the messages in the session flasher
 
 
 
-public  **output** ([*boolean* $remove])
+public  **output** (*boolean* $remove=null)
 
 Prints the messages in the session flasher
 
 
 
-public  **__construct** ([*array* $cssClasses]) inherited from Phalcon\\Flash
+public  **__construct** (*array* $cssClasses=null) inherited from Phalcon\\Flash
 
 Phalcon\\Flash constructor
 

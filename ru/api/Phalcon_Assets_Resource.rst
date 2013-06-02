@@ -7,7 +7,7 @@ Represents an asset resource
 Methods
 ---------
 
-public  **__construct** (*string* $type, *string* $path, [*boolean* $local])
+public  **__construct** (*string* $type, *string* $path, *boolean* $local=null)
 
 
 

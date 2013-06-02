@@ -31,7 +31,7 @@ Executes the validation
 
 
 
-public  **__construct** ([*array* $options]) inherited from Phalcon\\Validation\\Validator
+public  **__construct** (*array* $options=null) inherited from Phalcon\\Validation\\Validator
 
 Phalcon\\Validation\\Validator constructor
 
@@ -46,6 +46,12 @@ Checks if an option is defined
 public *mixed*  **getOption** (*string* $key) inherited from Phalcon\\Validation\\Validator
 
 Returns an option in the validator's options Returns null if the option hasn't been set
+
+
+
+public  **setOption** (*string* $key, *mixed* $value) inherited from Phalcon\\Validation\\Validator
+
+Sets an option in the validator
 
 
 

@@ -31,7 +31,7 @@ Returns the current log level
 
 
 
-abstract public  **log** (*string* $message, [*int* $type])
+abstract public  **log** (*string* $message, *int* $type=null)
 
 Sends/Writes messages to the file log
 

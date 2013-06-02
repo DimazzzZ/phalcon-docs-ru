@@ -83,13 +83,13 @@ Generates SQL to create a table in MySQL
 
 
 
-public *string*  **dropTable** (*string* $tableName, *string* $schemaName, [*boolean* $ifExists])
+public *string*  **dropTable** (*string* $tableName, *string* $schemaName, *boolean* $ifExists=null)
 
 Generates SQL to drop a table
 
 
 
-public *string*  **tableExists** (*string* $tableName, [*string* $schemaName])
+public *string*  **tableExists** (*string* $tableName, *string* $schemaName=null)
 
 Generates SQL checking for the existence of a schema.table 
 
@@ -103,7 +103,7 @@ Generates SQL checking for the existence of a schema.table
 
 
 
-public *string*  **describeColumns** (*string* $table, [*string* $schema])
+public *string*  **describeColumns** (*string* $table, *string* $schema=null)
 
 Generates SQL describing a table 
 
@@ -116,7 +116,7 @@ Generates SQL describing a table
 
 
 
-public *array*  **listTables** ([*string* $schemaName])
+public *array*  **listTables** (*string* $schemaName=null)
 
 List all tables on database 
 
@@ -129,19 +129,19 @@ List all tables on database
 
 
 
-public *string*  **describeIndexes** (*string* $table, [*string* $schema])
+public *string*  **describeIndexes** (*string* $table, *string* $schema=null)
 
 Generates SQL to query indexes on a table
 
 
 
-public *string*  **describeReferences** (*string* $table, [*string* $schema])
+public *string*  **describeReferences** (*string* $table, *string* $schema=null)
 
 Generates SQL to query foreign keys on a table
 
 
 
-public *string*  **tableOptions** (*string* $table, [*string* $schema])
+public *string*  **tableOptions** (*string* $table, *string* $schema=null)
 
 Generates the SQL to describe the table creation options
 
@@ -202,13 +202,13 @@ Gets a list of columns with escaped identifiers
 
 
 
-public *string*  **getSqlExpression** (*array* $expression, [*string* $escapeChar]) inherited from Phalcon\\Db\\Dialect
+public *string*  **getSqlExpression** (*array* $expression, *string* $escapeChar=null) inherited from Phalcon\\Db\\Dialect
 
 Transforms an intermediate representation for a expression into a database system valid expression
 
 
 
-public *string*  **getSqlTable** (*array* $table, [*string* $escapeChar]) inherited from Phalcon\\Db\\Dialect
+public *string*  **getSqlTable** (*array* $table, *string* $escapeChar=null) inherited from Phalcon\\Db\\Dialect
 
 Transform an intermediate representation for a schema/table into a database system valid expression
 

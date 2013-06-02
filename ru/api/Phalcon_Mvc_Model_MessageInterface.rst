@@ -7,7 +7,7 @@ Phalcon\\Mvc\\Model\\MessageInterface initializer
 Methods
 ---------
 
-abstract public  **__construct** (*string* $message, [*string* $field], [*string* $type])
+abstract public  **__construct** (*string* $message, *string* $field=null, *string* $type=null)
 
 Phalcon\\Mvc\\Model\\Message constructor
 

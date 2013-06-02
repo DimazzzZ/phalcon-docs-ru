@@ -24,7 +24,7 @@ Constants
 Methods
 ---------
 
-public  **__construct** (*array* $columnsTypes, :doc:`Phalcon\\Db\\ResultInterface <Phalcon_Db_ResultInterface>` $result, [:doc:`Phalcon\\Cache\\BackendInterface <Phalcon_Cache_BackendInterface>` $cache])
+public  **__construct** (*array* $columnsTypes, :doc:`Phalcon\\Db\\ResultInterface <Phalcon_Db_ResultInterface>` $result, :doc:`Phalcon\\Cache\\BackendInterface <Phalcon_Cache_BackendInterface>` $cache=null)
 
 Phalcon\\Mvc\\Model\\Resultset\\Complex constructor
 
@@ -168,7 +168,7 @@ Returns the error messages produced by a batch operation
 
 
 
-public *boolean*  **delete** ([*Closure* $conditionCallback]) inherited from Phalcon\\Mvc\\Model\\Resultset
+public *boolean*  **delete** (*Closure* $conditionCallback=null) inherited from Phalcon\\Mvc\\Model\\Resultset
 
 Delete every record in the resultset
 

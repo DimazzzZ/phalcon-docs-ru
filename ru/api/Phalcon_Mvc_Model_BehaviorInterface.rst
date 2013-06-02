@@ -7,7 +7,7 @@ Phalcon\\Mvc\\Model\\BehaviorInterface initializer
 Methods
 ---------
 
-abstract public  **__construct** ([*array* $options])
+abstract public  **__construct** (*array* $options=null)
 
 Phalcon\\Mvc\\Model\\Behavior
 
@@ -19,7 +19,7 @@ This method receives the notifications from the EventsManager
 
 
 
-abstract public  **missingMethod** (:doc:`Phalcon\\Mvc\\ModelInterface <Phalcon_Mvc_ModelInterface>` $model, *string* $method, [*array* $arguments])
+abstract public  **missingMethod** (:doc:`Phalcon\\Mvc\\ModelInterface <Phalcon_Mvc_ModelInterface>` $model, *string* $method, *array* $arguments=null)
 
 Calls a method when it's missing in the model
 

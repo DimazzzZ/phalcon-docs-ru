@@ -9,7 +9,7 @@ Represents CSS resources
 Methods
 ---------
 
-public  **__construct** (*string* $path, [*boolean* $local])
+public  **__construct** (*string* $path, *boolean* $local=null)
 
 
 

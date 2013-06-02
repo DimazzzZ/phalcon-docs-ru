@@ -20,7 +20,7 @@ Constants
 Methods
 ---------
 
-final public  **__construct** ([:doc:`Phalcon\\DiInterface <Phalcon_DiInterface>` $dependencyInjector], [:doc:`Phalcon\\Mvc\\Collection\\ManagerInterface <Phalcon_Mvc_Collection_ManagerInterface>` $modelsManager])
+final public  **__construct** (:doc:`Phalcon\\DiInterface <Phalcon_DiInterface>` $dependencyInjector=null, :doc:`Phalcon\\Mvc\\Collection\\ManagerInterface <Phalcon_Mvc_Collection_ManagerInterface>` $modelsManager=null)
 
 Phalcon\\Mvc\\Model constructor
 
@@ -309,7 +309,7 @@ Find a document by its id (_id)
 
 
 
-public static *array*  **findFirst** ([*array* $parameters])
+public static *array*  **findFirst** (*array* $parameters=null)
 
 Allows to query the first record that match the specified conditions 
 
@@ -337,7 +337,7 @@ Allows to query the first record that match the specified conditions
 
 
 
-public static *array*  **find** ([*array* $parameters])
+public static *array*  **find** (*array* $parameters=null)
 
 Allows to query a set of records that match the specified conditions 
 
@@ -377,7 +377,7 @@ Allows to query a set of records that match the specified conditions
 
 
 
-public static *array*  **count** ([*array* $parameters])
+public static *array*  **count** (*array* $parameters=null)
 
 Perform a count over a collection 
 

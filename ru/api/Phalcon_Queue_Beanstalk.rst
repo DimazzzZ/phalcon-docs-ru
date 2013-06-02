@@ -7,7 +7,7 @@ Class to access the beanstalk queue service. Partially implements the protocol v
 Methods
 ---------
 
-public  **__construct** ([*array* $options])
+public  **__construct** (*array* $options=null)
 
 
 
@@ -18,13 +18,13 @@ public  **connect** ()
 ...
 
 
-public  **put** (*string* $data, [*array* $options])
+public  **put** (*string* $data, *array* $options=null)
 
 Inserts jobs into the queue
 
 
 
-public *boolean|Phalcon\Queue\Beanstalk\Job*  **reserve** ([*unknown* $timeout])
+public *boolean|Phalcon\Queue\Beanstalk\Job*  **reserve** (*unknown* $timeout=null)
 
 Reserves a job in the queue
 
@@ -53,7 +53,7 @@ protected  **readStatus** ()
 ...
 
 
-public *string|boolean Data or `false` on error.*  **read** ([*unknown* $length])
+public *string|boolean Data or `false` on error.*  **read** (*unknown* $length=null)
 
 Reads a packet from the socket. Prior to reading from the socket will check for availability of the connection.
 

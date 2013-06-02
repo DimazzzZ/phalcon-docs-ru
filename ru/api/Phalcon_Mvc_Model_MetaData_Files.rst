@@ -51,7 +51,7 @@ Constants
 Methods
 ---------
 
-public  **__construct** ([*array* $options])
+public  **__construct** (*array* $options=null)
 
 Phalcon\\Mvc\\Model\\MetaData\\Files constructor
 

@@ -13,31 +13,31 @@ Constructor for Phalcon\\Db\\Adapter
 
 
 
-abstract public *array*  **fetchOne** (*string* $sqlQuery, [*int* $fetchMode], [*int* $placeholders])
+abstract public *array*  **fetchOne** (*string* $sqlQuery, *int* $fetchMode=null, *int* $placeholders=null)
 
 Returns the first row in a SQL query result
 
 
 
-abstract public *array*  **fetchAll** (*string* $sqlQuery, [*int* $fetchMode], [*int* $placeholders])
+abstract public *array*  **fetchAll** (*string* $sqlQuery, *int* $fetchMode=null, *int* $placeholders=null)
 
 Dumps the complete result of a query into an array
 
 
 
-abstract public *boolean*  **insert** (*string* $table, *array* $values, [*array* $fields], [*array* $dataTypes])
+abstract public *boolean*  **insert** (*string* $table, *array* $values, *array* $fields=null, *array* $dataTypes=null)
 
 Inserts data into a table using custom RBDM SQL syntax
 
 
 
-abstract public *boolean*  **update** (*string* $table, *array* $fields, *array* $values, [*string* $whereCondition], [*array* $dataTypes])
+abstract public *boolean*  **update** (*string* $table, *array* $fields, *array* $values, *string* $whereCondition=null, *array* $dataTypes=null)
 
 Updates data on a table using custom RBDM SQL syntax
 
 
 
-abstract public *boolean*  **delete** (*string* $table, [*string* $whereCondition], [*array* $placeholders], [*array* $dataTypes])
+abstract public *boolean*  **delete** (*string* $table, *string* $whereCondition=null, *array* $placeholders=null, *array* $dataTypes=null)
 
 Deletes data from a table using custom RBDM SQL syntax
 
@@ -55,13 +55,13 @@ Appends a LIMIT clause to $sqlQuery argument
 
 
 
-abstract public *string*  **tableExists** (*string* $tableName, [*string* $schemaName])
+abstract public *string*  **tableExists** (*string* $tableName, *string* $schemaName=null)
 
 Generates SQL checking for the existence of a schema.table
 
 
 
-abstract public *string*  **viewExists** (*string* $viewName, [*string* $schemaName])
+abstract public *string*  **viewExists** (*string* $viewName, *string* $schemaName=null)
 
 Generates SQL checking for the existence of a schema.view
 
@@ -85,7 +85,7 @@ Creates a table
 
 
 
-abstract public *boolean*  **dropTable** (*string* $tableName, *string* $schemaName, [*boolean* $ifExists])
+abstract public *boolean*  **dropTable** (*string* $tableName, *string* $schemaName, *boolean* $ifExists=null)
 
 Drops a table from a schema/database
 
@@ -151,7 +151,7 @@ Returns the SQL column definition from a column
 
 
 
-abstract public *array*  **listTables** ([*string* $schemaName])
+abstract public *array*  **listTables** (*string* $schemaName=null)
 
 List all tables on a database <code> print_r($connection->listTables("blog") ?>
 
@@ -211,19 +211,19 @@ Returns internal dialect instance
 
 
 
-abstract public *boolean*  **connect** ([*array* $descriptor])
+abstract public *boolean*  **connect** (*array* $descriptor=null)
 
 This method is automatically called in Phalcon\\Db\\Adapter\\Pdo constructor. Call it when you need to restore a database connection
 
 
 
-abstract public :doc:`Phalcon\\Db\\ResultInterface <Phalcon_Db_ResultInterface>`  **query** (*string* $sqlStatement, [*array* $placeholders], [*array* $dataTypes])
+abstract public :doc:`Phalcon\\Db\\ResultInterface <Phalcon_Db_ResultInterface>`  **query** (*string* $sqlStatement, *array* $placeholders=null, *array* $dataTypes=null)
 
 Sends SQL statements to the database server returning the success state. Use this method only when the SQL statement sent to the server return rows
 
 
 
-abstract public *boolean*  **execute** (*string* $sqlStatement, [*array* $placeholders], [*array* $dataTypes])
+abstract public *boolean*  **execute** (*string* $sqlStatement, *array* $placeholders=null, *array* $dataTypes=null)
 
 Sends SQL statements to the database server returning the success state. Use this method only when the SQL statement sent to the server don't return any row
 
@@ -259,7 +259,7 @@ Converts bound params like :name: or ?1 into ? bind params
 
 
 
-abstract public *int*  **lastInsertId** ([*string* $sequenceName])
+abstract public *int*  **lastInsertId** (*string* $sequenceName=null)
 
 Returns insert id for the auto_increment column inserted in the last SQL statement
 
@@ -295,19 +295,19 @@ Return internal PDO handler
 
 
 
-abstract public :doc:`Phalcon\\Db\\IndexInterface <Phalcon_Db_IndexInterface>` [] **describeIndexes** (*string* $table, [*string* $schema])
+abstract public :doc:`Phalcon\\Db\\IndexInterface <Phalcon_Db_IndexInterface>` [] **describeIndexes** (*string* $table, *string* $schema=null)
 
 Lists table indexes
 
 
 
-abstract public :doc:`Phalcon\\Db\\ReferenceInterface <Phalcon_Db_ReferenceInterface>` [] **describeReferences** (*string* $table, [*string* $schema])
+abstract public :doc:`Phalcon\\Db\\ReferenceInterface <Phalcon_Db_ReferenceInterface>` [] **describeReferences** (*string* $table, *string* $schema=null)
 
 Lists table references
 
 
 
-abstract public *array*  **tableOptions** (*string* $tableName, [*string* $schemaName])
+abstract public *array*  **tableOptions** (*string* $tableName, *string* $schemaName=null)
 
 Gets creation options from a table
 
@@ -331,7 +331,7 @@ Check whether the database system requires a sequence to produce auto-numeric va
 
 
 
-abstract public :doc:`Phalcon\\Db\\ColumnInterface <Phalcon_Db_ColumnInterface>` [] **describeColumns** (*string* $table, [*string* $schema])
+abstract public :doc:`Phalcon\\Db\\ColumnInterface <Phalcon_Db_ColumnInterface>` [] **describeColumns** (*string* $table, *string* $schema=null)
 
 Returns an array of Phalcon\\Db\\Column objects describing a table
 

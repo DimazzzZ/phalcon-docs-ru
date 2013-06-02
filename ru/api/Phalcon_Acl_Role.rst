@@ -9,7 +9,7 @@ This class defines role entity and its description
 Methods
 ---------
 
-public  **__construct** (*string* $name, [*string* $description])
+public  **__construct** (*string* $name, *string* $description=null)
 
 Phalcon\\Acl\\Role description
 

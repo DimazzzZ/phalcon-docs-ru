@@ -15,7 +15,7 @@ Clone the exception
 
 
 
-public  **__construct** ([*string* $message], [*int* $code], [*Exception* $previous]) inherited from Exception
+public  **__construct** (*string* $message=null, *int* $code=null, *Exception* $previous=null) inherited from Exception
 
 Exception constructor
 

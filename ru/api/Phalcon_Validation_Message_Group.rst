@@ -9,7 +9,7 @@ Represents a group of validation messages
 Methods
 ---------
 
-public  **__construct** ([*array* $messages])
+public  **__construct** (*array* $messages=null)
 
 Phalcon\\Validation\\Message\\Group constructor
 
@@ -93,6 +93,12 @@ Appends an array of messages to the group
 
 
 
+public *array*  **filter** (*string* $fieldName)
+
+Filters the message group by field name
+
+
+
 public *int*  **count** ()
 
 Returns the number of messages in the list
@@ -125,13 +131,13 @@ Moves the internal iteration pointer to the next position
 
 public *boolean*  **valid** ()
 
-Check if the current message the iterator is valid
+Check if the current message in the iterator is valid
 
 
 
 public static *Phalcon\\Mvc\\Model\\Message\\Group*  **__set_state** (*array* $group)
 
-Magic __set_state helps to re-build messages variable exporting
+Magic __set_state helps to re-build messages variable when exporting
 
 
 
