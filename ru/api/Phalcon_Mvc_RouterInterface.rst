@@ -31,49 +31,49 @@ Sets an array of default paths
 
 
 
-abstract public  **handle** (*string* $uri=null)
+abstract public  **handle** ([*string* $uri])
 
 Handles routing information received from the rewrite engine
 
 
 
-abstract public :doc:`Phalcon\\Mvc\\Router\\RouteInterface <Phalcon_Mvc_Router_RouteInterface>`  **add** (*string* $pattern, *string/array* $paths=null, *string* $httpMethods=null)
+abstract public :doc:`Phalcon\\Mvc\\Router\\RouteInterface <Phalcon_Mvc_Router_RouteInterface>`  **add** (*string* $pattern, [*string/array* $paths], [*string* $httpMethods])
 
 Adds a route to the router on any HTTP method
 
 
 
-abstract public :doc:`Phalcon\\Mvc\\Router\\RouteInterface <Phalcon_Mvc_Router_RouteInterface>`  **addGet** (*string* $pattern, *string/array* $paths=null)
+abstract public :doc:`Phalcon\\Mvc\\Router\\RouteInterface <Phalcon_Mvc_Router_RouteInterface>`  **addGet** (*string* $pattern, [*string/array* $paths])
 
 Adds a route to the router that only match if the HTTP method is GET
 
 
 
-abstract public :doc:`Phalcon\\Mvc\\Router\\RouteInterface <Phalcon_Mvc_Router_RouteInterface>`  **addPost** (*string* $pattern, *string/array* $paths=null)
+abstract public :doc:`Phalcon\\Mvc\\Router\\RouteInterface <Phalcon_Mvc_Router_RouteInterface>`  **addPost** (*string* $pattern, [*string/array* $paths])
 
 Adds a route to the router that only match if the HTTP method is POST
 
 
 
-abstract public :doc:`Phalcon\\Mvc\\Router\\RouteInterface <Phalcon_Mvc_Router_RouteInterface>`  **addPut** (*string* $pattern, *string/array* $paths=null)
+abstract public :doc:`Phalcon\\Mvc\\Router\\RouteInterface <Phalcon_Mvc_Router_RouteInterface>`  **addPut** (*string* $pattern, [*string/array* $paths])
 
 Adds a route to the router that only match if the HTTP method is PUT
 
 
 
-abstract public :doc:`Phalcon\\Mvc\\Router\\RouteInterface <Phalcon_Mvc_Router_RouteInterface>`  **addDelete** (*string* $pattern, *string/array* $paths=null)
+abstract public :doc:`Phalcon\\Mvc\\Router\\RouteInterface <Phalcon_Mvc_Router_RouteInterface>`  **addDelete** (*string* $pattern, [*string/array* $paths])
 
 Adds a route to the router that only match if the HTTP method is DELETE
 
 
 
-abstract public :doc:`Phalcon\\Mvc\\Router\\RouteInterface <Phalcon_Mvc_Router_RouteInterface>`  **addOptions** (*string* $pattern, *string/array* $paths=null)
+abstract public :doc:`Phalcon\\Mvc\\Router\\RouteInterface <Phalcon_Mvc_Router_RouteInterface>`  **addOptions** (*string* $pattern, [*string/array* $paths])
 
 Add a route to the router that only match if the HTTP method is OPTIONS
 
 
 
-abstract public :doc:`Phalcon\\Mvc\\Router\\RouteInterface <Phalcon_Mvc_Router_RouteInterface>`  **addHead** (*string* $pattern, *string/array* $paths=null)
+abstract public :doc:`Phalcon\\Mvc\\Router\\RouteInterface <Phalcon_Mvc_Router_RouteInterface>`  **addHead** (*string* $pattern, [*string/array* $paths])
 
 Adds a route to the router that only match if the HTTP method is HEAD
 

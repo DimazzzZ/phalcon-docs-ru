@@ -108,7 +108,7 @@ Check if a helper has a default value set using Phalcon\\Tag::setDefault or valu
 
 
 
-public static *mixed*  **getValue** (*string* $name, *array* $params=null)
+public static *mixed*  **getValue** (*string* $name, [*array* $params])
 
 Every helper calls this function to check whether a component has a predefined value using Phalcon\\Tag::setDefault or value from $_POST
 
@@ -120,7 +120,7 @@ Resets the request and internal values to avoid those fields will have any defau
 
 
 
-public static *string*  **linkTo** (*array|string* $parameters, *string* $text=null)
+public static *string*  **linkTo** (*array|string* $parameters, [*string* $text])
 
 Builds a HTML A tag using framework conventions 
 
@@ -295,7 +295,7 @@ Volt syntax:
 
 
 
-public static *string*  **selectStatic** (*array* $parameters, *array* $data=null)
+public static *string*  **selectStatic** (*array* $parameters, [*array* $data])
 
 Builds a HTML SELECT tag using a PHP array for options 
 
@@ -308,7 +308,7 @@ Builds a HTML SELECT tag using a PHP array for options
 
 
 
-public static *string*  **select** (*array* $parameters, *array* $data=null)
+public static *string*  **select** (*array* $parameters, [*array* $data])
 
 Builds a HTML SELECT tag using a Phalcon\\Mvc\\Model resultset as options 
 
@@ -354,7 +354,7 @@ Volt syntax:
 
 
 
-public static *string*  **form** (*array* $parameters=null)
+public static *string*  **form** ([*array* $parameters])
 
 Builds a HTML FORM tag 
 
@@ -408,7 +408,7 @@ Prepends a text to current document title
 
 
 
-public static *string*  **getTitle** (*unknown* $tags=null)
+public static *string*  **getTitle** ([*unknown* $tags])
 
 Gets the current document title 
 
@@ -427,7 +427,7 @@ Gets the current document title
 
 
 
-public static *string*  **stylesheetLink** (*array* $parameters=null, *boolean* $local=null)
+public static *string*  **stylesheetLink** ([*array* $parameters], [*boolean* $local])
 
 Builds a LINK[rel="stylesheet"] tag 
 
@@ -450,7 +450,7 @@ Volt Syntax:
 
 
 
-public static *string*  **javascriptInclude** (*array* $parameters=null, *boolean* $local=null)
+public static *string*  **javascriptInclude** ([*array* $parameters], [*boolean* $local])
 
 Builds a SCRIPT[type="javascript"] tag 
 
@@ -473,7 +473,7 @@ Volt syntax:
 
 
 
-public static *string*  **image** (*array* $parameters=null)
+public static *string*  **image** ([*array* $parameters])
 
 Builds HTML IMG tags 
 
@@ -496,7 +496,7 @@ Volt Syntax:
 
 
 
-public static *text*  **friendlyTitle** (*string* $text, *string* $separator=null, *boolean* $lowercase=null)
+public static *text*  **friendlyTitle** (*string* $text, [*string* $separator], [*boolean* $lowercase])
 
 Converts texts into URL-friendly titles 
 
@@ -521,7 +521,7 @@ Get the document type declaration of content
 
 
 
-public static *string*  **tagHtml** (*string* $tagName, *array* $parameters=null, *boolean* $selfClose=null, *boolean* $onlyStart=null, *boolean* $useEol=null)
+public static *string*  **tagHtml** (*string* $tagName, [*array* $parameters], [*boolean* $selfClose], [*boolean* $onlyStart], [*boolean* $useEol])
 
 Builds a HTML tag 
 
@@ -534,7 +534,7 @@ Builds a HTML tag
 
 
 
-public static *string*  **tagHtmlClose** (*string* $tagName, *boolean* $useEol=null)
+public static *string*  **tagHtmlClose** (*string* $tagName, [*boolean* $useEol])
 
 Builds a HTML tag closing tag 
 

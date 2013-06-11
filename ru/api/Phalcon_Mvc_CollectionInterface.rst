@@ -7,7 +7,7 @@ Phalcon\\Mvc\\CollectionInterface initializer
 Methods
 ---------
 
-abstract public  **__construct** (:doc:`Phalcon\\DiInterface <Phalcon_DiInterface>` $dependencyInjector=null)
+abstract public  **__construct** ([:doc:`Phalcon\\DiInterface <Phalcon_DiInterface>` $dependencyInjector], [*unknown* $modelsManager])
 
 Phalcon\\Mvc\\Collection
 
@@ -109,19 +109,19 @@ Find a document by its id
 
 
 
-abstract public static *array*  **findFirst** (*array* $parameters=null)
+abstract public static *array*  **findFirst** ([*array* $parameters])
 
 Allows to query the first record that match the specified conditions
 
 
 
-abstract public static *array*  **find** (*array* $parameters=null)
+abstract public static *array*  **find** ([*array* $parameters])
 
 Allows to query a set of records that match the specified conditions
 
 
 
-abstract public static *array*  **count** (*array* $parameters=null)
+abstract public static *array*  **count** ([*array* $parameters])
 
 Perform a count over a collection
 

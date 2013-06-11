@@ -34,19 +34,19 @@ Constants
 Methods
 ---------
 
-public :doc:`Phalcon\\Mvc\\Router\\Annotations <Phalcon_Mvc_Router_Annotations>`  **addResource** (*string* $handler, *string* $prefix=null)
+public :doc:`Phalcon\\Mvc\\Router\\Annotations <Phalcon_Mvc_Router_Annotations>`  **addResource** (*string* $handler, [*string* $prefix])
 
 Adds a resource to the annotations handler A resource is a class that contains routing annotations
 
 
 
-public :doc:`Phalcon\\Mvc\\Router\\Annotations <Phalcon_Mvc_Router_Annotations>`  **addModuleResource** (*string* $module, *string* $handler, *string* $prefix=null)
+public :doc:`Phalcon\\Mvc\\Router\\Annotations <Phalcon_Mvc_Router_Annotations>`  **addModuleResource** (*string* $module, *string* $handler, [*string* $prefix])
 
 Adds a resource to the annotations handler A resource is a class that contains routing annotations The class is located in a module
 
 
 
-public  **handle** (*string* $uri=null)
+public  **handle** ([*string* $uri])
 
 Produce the routing parameters from the rewrite information
 
@@ -82,7 +82,7 @@ Return the registered resources
 
 
 
-public  **__construct** (*boolean* $defaultRoutes=null) inherited from Phalcon\\Mvc\\Router
+public  **__construct** ([*boolean* $defaultRoutes]) inherited from Phalcon\\Mvc\\Router
 
 Phalcon\\Mvc\\Router constructor
 
@@ -165,7 +165,7 @@ Sets an array of default paths. If a route is missing a path the router will use
 
 
 
-public :doc:`Phalcon\\Mvc\\Router\\Route <Phalcon_Mvc_Router_Route>`  **add** (*string* $pattern, *string/array* $paths=null, *string* $httpMethods=null) inherited from Phalcon\\Mvc\\Router
+public :doc:`Phalcon\\Mvc\\Router\\Route <Phalcon_Mvc_Router_Route>`  **add** (*string* $pattern, [*string/array* $paths], [*string* $httpMethods]) inherited from Phalcon\\Mvc\\Router
 
 Adds a route to the router without any HTTP constraint 
 
@@ -178,43 +178,43 @@ Adds a route to the router without any HTTP constraint
 
 
 
-public :doc:`Phalcon\\Mvc\\Router\\Route <Phalcon_Mvc_Router_Route>`  **addGet** (*string* $pattern, *string/array* $paths=null) inherited from Phalcon\\Mvc\\Router
+public :doc:`Phalcon\\Mvc\\Router\\Route <Phalcon_Mvc_Router_Route>`  **addGet** (*string* $pattern, [*string/array* $paths]) inherited from Phalcon\\Mvc\\Router
 
 Adds a route to the router that only match if the HTTP method is GET
 
 
 
-public :doc:`Phalcon\\Mvc\\Router\\Route <Phalcon_Mvc_Router_Route>`  **addPost** (*string* $pattern, *string/array* $paths=null) inherited from Phalcon\\Mvc\\Router
+public :doc:`Phalcon\\Mvc\\Router\\Route <Phalcon_Mvc_Router_Route>`  **addPost** (*string* $pattern, [*string/array* $paths]) inherited from Phalcon\\Mvc\\Router
 
 Adds a route to the router that only match if the HTTP method is POST
 
 
 
-public :doc:`Phalcon\\Mvc\\Router\\Route <Phalcon_Mvc_Router_Route>`  **addPut** (*string* $pattern, *string/array* $paths=null) inherited from Phalcon\\Mvc\\Router
+public :doc:`Phalcon\\Mvc\\Router\\Route <Phalcon_Mvc_Router_Route>`  **addPut** (*string* $pattern, [*string/array* $paths]) inherited from Phalcon\\Mvc\\Router
 
 Adds a route to the router that only match if the HTTP method is PUT
 
 
 
-public :doc:`Phalcon\\Mvc\\Router\\Route <Phalcon_Mvc_Router_Route>`  **addPatch** (*string* $pattern, *string/array* $paths=null) inherited from Phalcon\\Mvc\\Router
+public :doc:`Phalcon\\Mvc\\Router\\Route <Phalcon_Mvc_Router_Route>`  **addPatch** (*string* $pattern, [*string/array* $paths]) inherited from Phalcon\\Mvc\\Router
 
 Adds a route to the router that only match if the HTTP method is PATCH
 
 
 
-public :doc:`Phalcon\\Mvc\\Router\\Route <Phalcon_Mvc_Router_Route>`  **addDelete** (*string* $pattern, *string/array* $paths=null) inherited from Phalcon\\Mvc\\Router
+public :doc:`Phalcon\\Mvc\\Router\\Route <Phalcon_Mvc_Router_Route>`  **addDelete** (*string* $pattern, [*string/array* $paths]) inherited from Phalcon\\Mvc\\Router
 
 Adds a route to the router that only match if the HTTP method is DELETE
 
 
 
-public :doc:`Phalcon\\Mvc\\Router\\Route <Phalcon_Mvc_Router_Route>`  **addOptions** (*string* $pattern, *string/array* $paths=null) inherited from Phalcon\\Mvc\\Router
+public :doc:`Phalcon\\Mvc\\Router\\Route <Phalcon_Mvc_Router_Route>`  **addOptions** (*string* $pattern, [*string/array* $paths]) inherited from Phalcon\\Mvc\\Router
 
 Add a route to the router that only match if the HTTP method is OPTIONS
 
 
 
-public :doc:`Phalcon\\Mvc\\Router\\Route <Phalcon_Mvc_Router_Route>`  **addHead** (*string* $pattern, *string/array* $paths=null) inherited from Phalcon\\Mvc\\Router
+public :doc:`Phalcon\\Mvc\\Router\\Route <Phalcon_Mvc_Router_Route>`  **addHead** (*string* $pattern, [*string/array* $paths]) inherited from Phalcon\\Mvc\\Router
 
 Adds a route to the router that only match if the HTTP method is HEAD
 

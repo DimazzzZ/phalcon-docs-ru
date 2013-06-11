@@ -9,7 +9,7 @@ Phalcon Events Manager, offers an easy way to intercept and manipulate, if neede
 Methods
 ---------
 
-public  **attach** (*string* $eventType, *object* $handler, *int* $priority=null)
+public  **attach** (*string* $eventType, *object* $handler, [*int* $priority])
 
 Attach a listener to the events manager
 
@@ -45,7 +45,7 @@ Returns all the responses returned by every handler executed by the last 'fire' 
 
 
 
-public  **dettachAll** (*string* $type=null)
+public  **dettachAll** ([*string* $type])
 
 Removes all events from the EventsManager
 
@@ -57,7 +57,7 @@ Internal handler to call a queue of events
 
 
 
-public *mixed*  **fire** (*string* $eventType, *object* $source, *mixed* $data=null, *int* $cancelable=null)
+public *mixed*  **fire** (*string* $eventType, *object* $source, [*mixed* $data], [*int* $cancelable])
 
 Fires an event in the events manager causing that active listeners be notified about it 
 

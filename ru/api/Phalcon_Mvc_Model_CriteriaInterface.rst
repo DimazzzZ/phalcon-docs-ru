@@ -43,19 +43,19 @@ Adds the order-by parameter to the criteria
 
 
 
-abstract public :doc:`Phalcon\\Mvc\\Model\\CriteriaInterface <Phalcon_Mvc_Model_CriteriaInterface>`  **limit** (*int* $limit, *int* $offset=null)
+abstract public :doc:`Phalcon\\Mvc\\Model\\CriteriaInterface <Phalcon_Mvc_Model_CriteriaInterface>`  **limit** (*int* $limit, [*int* $offset])
 
 Adds the limit parameter to the criteria
 
 
 
-abstract public :doc:`Phalcon\\Mvc\\Model\\CriteriaInterface <Phalcon_Mvc_Model_CriteriaInterface>`  **forUpdate** (*boolean* $forUpdate=null)
+abstract public :doc:`Phalcon\\Mvc\\Model\\CriteriaInterface <Phalcon_Mvc_Model_CriteriaInterface>`  **forUpdate** ([*boolean* $forUpdate])
 
 Adds the "for_update" parameter to the criteria
 
 
 
-abstract public :doc:`Phalcon\\Mvc\\Model\\Criteria <Phalcon_Mvc_Model_Criteria>`  **sharedLock** (*boolean* $sharedLock=null)
+abstract public :doc:`Phalcon\\Mvc\\Model\\Criteria <Phalcon_Mvc_Model_Criteria>`  **sharedLock** ([*boolean* $sharedLock])
 
 Adds the "shared_lock" parameter to the criteria
 

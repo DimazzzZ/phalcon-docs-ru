@@ -132,7 +132,7 @@ Set a param by its name or numeric index
 
 
 
-public *mixed*  **getParam** (*mixed* $param, *string|array* $filters=null, *mixed* $defaultValue=null)
+public *mixed*  **getParam** (*mixed* $param, [*string|array* $filters], [*mixed* $defaultValue])
 
 Gets a param by its name or numeric index
 

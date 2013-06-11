@@ -9,7 +9,7 @@ Represents a group of validation messages
 Methods
 ---------
 
-public  **__construct** (*array* $messages=null)
+public  **__construct** ([*array* $messages])
 
 Phalcon\\Validation\\Message\\Group constructor
 

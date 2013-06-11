@@ -7,7 +7,7 @@ Phalcon\\DI\\ServiceInterface initializer
 Methods
 ---------
 
-abstract public  **__construct** (*string* $name, *mixed* $definition, *boolean* $shared=null)
+abstract public  **__construct** (*string* $name, *mixed* $definition, [*boolean* $shared])
 
 
 
@@ -43,7 +43,7 @@ Returns the service definition
 
 
 
-abstract public *mixed*  **resolve** (*array* $parameters=null, :doc:`Phalcon\\DiInterface <Phalcon_DiInterface>` $dependencyInjector=null)
+abstract public *mixed*  **resolve** ([*array* $parameters], [:doc:`Phalcon\\DiInterface <Phalcon_DiInterface>` $dependencyInjector])
 
 Resolves the service
 

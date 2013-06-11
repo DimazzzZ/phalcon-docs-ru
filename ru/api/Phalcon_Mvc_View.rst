@@ -43,7 +43,7 @@ Constants
 Methods
 ---------
 
-public  **__construct** (*array* $options=null)
+public  **__construct** ([*array* $options])
 
 Phalcon\\Mvc\\View constructor
 
@@ -216,7 +216,7 @@ Adds parameters to views (alias of setVar)
 
 
 
-public  **setVars** (*array* $params, *boolean* $merge=null)
+public  **setVars** (*array* $params, [*boolean* $merge])
 
 Set all the render params 
 
@@ -307,7 +307,7 @@ Register templating engines
 
 
 
-public  **render** (*string* $controllerName, *string* $actionName, *array* $params=null)
+public  **render** (*string* $controllerName, *string* $actionName, [*array* $params])
 
 Executes render process from dispatching data 
 
@@ -361,7 +361,7 @@ Renders a partial view
 
 
 
-public *string*  **getRender** (*string* $controllerName, *string* $actionName, *array* $params=null, *mixed* $configCallback=null)
+public *string*  **getRender** (*string* $controllerName, *string* $actionName, [*array* $params], [*mixed* $configCallback])
 
 Perform the automatic rendering returning the output as a string 
 
@@ -398,7 +398,7 @@ Returns the cache instance used to cache
 
 
 
-public  **cache** (*boolean|array* $options=null)
+public  **cache** ([*boolean|array* $options])
 
 Cache the actual view render to certain level
 

@@ -70,13 +70,13 @@ Returns a base path
 
 
 
-public *string*  **get** (*string|array* $uri=null)
+public *string*  **get** ([*string|array* $uri])
 
 Generates a URL
 
 
 
-public *string*  **path** (*string* $path=null)
+public *string*  **path** ([*string* $path])
 
 Generates a local path
 

@@ -17,7 +17,7 @@ Outputs a message
 
 
 
-public  **__construct** (*array* $cssClasses=null) inherited from Phalcon\\Flash
+public  **__construct** ([*array* $cssClasses]) inherited from Phalcon\\Flash
 
 Phalcon\\Flash constructor
 

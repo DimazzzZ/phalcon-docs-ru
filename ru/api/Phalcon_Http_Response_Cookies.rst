@@ -33,7 +33,7 @@ Returns if the bag is automatically encrypting/decrypting cookies
 
 
 
-public :doc:`Phalcon\\Http\\Response\\Cookies <Phalcon_Http_Response_Cookies>`  **set** (*string* $name, *mixed* $value=null, *int* $expire=null, *string* $path=null, *boolean* $secure=null, *boolean* $httpOnly=null)
+public :doc:`Phalcon\\Http\\Response\\Cookies <Phalcon_Http_Response_Cookies>`  **set** (*string* $name, [*mixed* $value], [*int* $expire], [*string* $path], [*boolean* $secure], [*boolean* $httpOnly])
 
 Sets a cookie to be sent at the end of the request This method overrides any cookie set before with the same name
 

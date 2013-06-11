@@ -9,7 +9,7 @@ This class represents every route added to the router
 Methods
 ---------
 
-public  **__construct** (*string* $pattern, *array* $paths=null, *array|string* $httpMethods=null)
+public  **__construct** (*string* $pattern, [*array* $paths], [*array|string* $httpMethods])
 
 Phalcon\\Mvc\\Router\\Route constructor
 
@@ -35,7 +35,7 @@ Set one or more HTTP methods that constraint the matching of the route
 
 
 
-public  **reConfigure** (*string* $pattern, *array* $paths=null)
+public  **reConfigure** (*string* $pattern, [*array* $paths])
 
 Reconfigure the route adding a new pattern and a set of paths
 

@@ -7,7 +7,7 @@ This is a base class for form elements
 Methods
 ---------
 
-public  **__construct** (*string* $name, *array* $attributes=null)
+public  **__construct** (*string* $name, [*array* $attributes])
 
 Phalcon\\Forms\\Element constructor
 
@@ -55,7 +55,7 @@ Returns the element's filters
 
 
 
-public *Phalcon\\Forms\\ElementInterface*  **addValidators** (*unknown* $validators, *unknown* $merge=null)
+public *Phalcon\\Forms\\ElementInterface*  **addValidators** (*unknown* $validators, [*unknown* $merge])
 
 Adds a group of validators
 
@@ -73,7 +73,7 @@ Returns the validators registered for the element
 
 
 
-public *array*  **prepareAttributes** (*array* $attributes=null)
+public *array*  **prepareAttributes** ([*array* $attributes])
 
 Returns an array of attributes for  prepared attributes for Phalcon\\Tag helpers according to the element's parameters
 
@@ -85,7 +85,7 @@ Sets a default attribute for the element
 
 
 
-public *mixed*  **getAttribute** (*string* $attribute, *mixed* $defaultValue=null)
+public *mixed*  **getAttribute** (*string* $attribute, [*mixed* $defaultValue])
 
 Returns the value of an attribute if present
 
@@ -109,7 +109,7 @@ Sets an option for the element
 
 
 
-public *mixed*  **getUserOption** (*string* $option, *mixed* $defaultValue=null)
+public *mixed*  **getUserOption** (*string* $option, [*mixed* $defaultValue])
 
 Returns the value of an option if present
 

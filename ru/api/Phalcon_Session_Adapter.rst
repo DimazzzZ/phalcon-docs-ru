@@ -7,7 +7,7 @@ Base class for Phalcon\\Session adapters
 Methods
 ---------
 
-public  **__construct** (*array* $options=null)
+public  **__construct** ([*array* $options])
 
 Phalcon\\Session\\Adapter constructor
 
@@ -40,7 +40,7 @@ Get internal options
 
 
 
-public *mixed*  **get** (*string* $index, *mixed* $defaultValue=null)
+public *mixed*  **get** (*string* $index, [*mixed* $defaultValue])
 
 Gets a session variable from an application context
 

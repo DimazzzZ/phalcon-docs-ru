@@ -27,7 +27,7 @@ Returns the internal event manager
 
 
 
-public *array*  **fetchOne** (*string* $sqlQuery, *int* $fetchMode=null, *array* $bindParams=null, *array* $bindTypes=null)
+public *array*  **fetchOne** (*string* $sqlQuery, [*int* $fetchMode], [*array* $bindParams], [*array* $bindTypes])
 
 Returns the first row in a SQL query result 
 
@@ -46,7 +46,7 @@ Returns the first row in a SQL query result
 
 
 
-public *array*  **fetchAll** (*string* $sqlQuery, *int* $fetchMode=null, *array* $bindParams=null, *array* $bindTypes=null)
+public *array*  **fetchAll** (*string* $sqlQuery, [*int* $fetchMode], [*array* $bindParams], [*array* $bindTypes])
 
 Dumps the complete result of a query into an array 
 
@@ -72,7 +72,7 @@ Dumps the complete result of a query into an array
 
 
 
-public *boolean*  **insert** (*string* $table, *array* $values, *array* $fields=null, *array* $dataTypes=null)
+public *boolean*  **insert** (*string* $table, *array* $values, [*array* $fields], [*array* $dataTypes])
 
 Inserts data into a table using custom RBDM SQL syntax 
 
@@ -93,7 +93,7 @@ Inserts data into a table using custom RBDM SQL syntax
 
 
 
-public *boolean*  **update** (*string* $table, *array* $fields, *array* $values, *string* $whereCondition=null, *array* $dataTypes=null)
+public *boolean*  **update** (*string* $table, *array* $fields, *array* $values, [*string* $whereCondition], [*array* $dataTypes])
 
 Updates data on a table using custom RBDM SQL syntax 
 
@@ -115,7 +115,7 @@ Updates data on a table using custom RBDM SQL syntax
 
 
 
-public *boolean*  **delete** (*string* $table, *string* $whereCondition=null, *array* $placeholders=null, *array* $dataTypes=null)
+public *boolean*  **delete** (*string* $table, [*string* $whereCondition], [*array* $placeholders], [*array* $dataTypes])
 
 Deletes data from a table using custom RBDM SQL syntax 
 
@@ -154,7 +154,7 @@ Appends a LIMIT clause to $sqlQuery argument
 
 
 
-public *string*  **tableExists** (*string* $tableName, *string* $schemaName=null)
+public *string*  **tableExists** (*string* $tableName, [*string* $schemaName])
 
 Generates SQL checking for the existence of a schema.table 
 
@@ -167,7 +167,7 @@ Generates SQL checking for the existence of a schema.table
 
 
 
-public *string*  **viewExists** (*string* $viewName, *string* $schemaName=null)
+public *string*  **viewExists** (*string* $viewName, [*string* $schemaName])
 
 Generates SQL checking for the existence of a schema.view 
 
@@ -198,7 +198,7 @@ Creates a table
 
 
 
-public *boolean*  **dropTable** (*string* $tableName, *string* $schemaName, *boolean* $ifExists=null)
+public *boolean*  **dropTable** (*string* $tableName, *string* $schemaName, [*boolean* $ifExists])
 
 Drops a table from a schema/database
 
@@ -264,7 +264,7 @@ Returns the SQL column definition from a column
 
 
 
-public *array*  **listTables** (*string* $schemaName=null)
+public *array*  **listTables** ([*string* $schemaName])
 
 List all tables on a database 
 
@@ -277,7 +277,7 @@ List all tables on a database
 
 
 
-public :doc:`Phalcon\\Db\\Index <Phalcon_Db_Index>` [] **describeIndexes** (*string* $table, *string* $schema=null)
+public :doc:`Phalcon\\Db\\Index <Phalcon_Db_Index>` [] **describeIndexes** (*string* $table, [*string* $schema])
 
 Lists table indexes 
 
@@ -290,7 +290,7 @@ Lists table indexes
 
 
 
-public :doc:`Phalcon\\Db\\Reference <Phalcon_Db_Reference>` [] **describeReferences** (*string* $table, *string* $schema=null)
+public :doc:`Phalcon\\Db\\Reference <Phalcon_Db_Reference>` [] **describeReferences** (*string* $table, [*string* $schema])
 
 Lists table references 
 
@@ -303,7 +303,7 @@ Lists table references
 
 
 
-public *array*  **tableOptions** (*string* $tableName, *string* $schemaName=null)
+public *array*  **tableOptions** (*string* $tableName, [*string* $schemaName])
 
 Gets creation options from a table 
 

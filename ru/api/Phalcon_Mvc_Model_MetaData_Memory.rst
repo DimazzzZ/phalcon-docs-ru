@@ -42,7 +42,7 @@ Constants
 Methods
 ---------
 
-public  **__construct** (*array* $options=null)
+public  **__construct** ([*array* $options])
 
 Phalcon\\Mvc\\Model\\MetaData\\Memory constructor
 

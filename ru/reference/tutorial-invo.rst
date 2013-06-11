@@ -34,7 +34,7 @@ provides a simple MVC structure and a public document root.
 Once you open the application in your browser http://localhost/invo you'll something like this:
 
 .. figure:: ../_static/img/invo-1.png
-:align: center
+    :align: center
 
 The application is divided in two parts, a frontend, that is a public part where visitors can receive information
 about INVO and request contact information. The second part is the backend, an administrative area where a
@@ -303,7 +303,7 @@ registered users have access to these controllers. If you aren't logged in the a
 for example, the products controller (that is private) you will see a screen like this:
 
 .. figure:: ../_static/img/invo-2.png
-:align: center
+    :align: center
 
 Every time someone attempts to access any controller/action, the application verifies that the current role (in session)
 has access to it, otherwise it displays a message like the above and forwards the flow to the home page.

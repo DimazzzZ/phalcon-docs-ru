@@ -26,7 +26,7 @@ This adapter store sessions in plain files
 Methods
 ---------
 
-public  **__construct** (*array* $options=null) inherited from Phalcon\\Session\\Adapter
+public  **__construct** ([*array* $options]) inherited from Phalcon\\Session\\Adapter
 
 Phalcon\\Session\\Adapter constructor
 
@@ -59,7 +59,7 @@ Get internal options
 
 
 
-public *mixed*  **get** (*string* $index, *mixed* $defaultValue=null) inherited from Phalcon\\Session\\Adapter
+public *mixed*  **get** (*string* $index, [*mixed* $defaultValue]) inherited from Phalcon\\Session\\Adapter
 
 Gets a session variable from an application context
 

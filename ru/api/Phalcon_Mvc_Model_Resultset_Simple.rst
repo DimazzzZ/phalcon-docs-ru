@@ -24,7 +24,7 @@ Constants
 Methods
 ---------
 
-public  **__construct** (*array* $columnMap, :doc:`Phalcon\\Mvc\\ModelInterface <Phalcon_Mvc_ModelInterface>` $model, :doc:`Phalcon\\Db\\Result\\Pdo <Phalcon_Db_Result_Pdo>` $result, :doc:`Phalcon\\Cache\\BackendInterface <Phalcon_Cache_BackendInterface>` $cache=null, *boolean* $keepSnapshots=null)
+public  **__construct** (*array* $columnMap, :doc:`Phalcon\\Mvc\\ModelInterface <Phalcon_Mvc_ModelInterface>` $model, :doc:`Phalcon\\Db\\Result\\Pdo <Phalcon_Db_Result_Pdo>` $result, [:doc:`Phalcon\\Cache\\BackendInterface <Phalcon_Cache_BackendInterface>` $cache], [*boolean* $keepSnapshots])
 
 Phalcon\\Mvc\\Model\\Resultset\\Simple constructor
 
@@ -36,7 +36,7 @@ Check whether internal resource has rows to fetch
 
 
 
-public *array*  **toArray** (*boolean* $renameColumns=null)
+public *array*  **toArray** ([*boolean* $renameColumns])
 
 Returns a complete resultset as an array, if the resultset has a big number of rows it could consume more memory than currently it does. Export the resultset to an array couldn't be faster with a large number of records
 
@@ -168,7 +168,7 @@ Returns the error messages produced by a batch operation
 
 
 
-public *boolean*  **delete** (*Closure* $conditionCallback=null) inherited from Phalcon\\Mvc\\Model\\Resultset
+public *boolean*  **delete** ([*Closure* $conditionCallback]) inherited from Phalcon\\Mvc\\Model\\Resultset
 
 Delete every record in the resultset
 

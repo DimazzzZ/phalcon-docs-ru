@@ -9,7 +9,7 @@ Provide OO wrappers to manage a HTTP cookie
 Methods
 ---------
 
-public  **__construct** (*string* $name, *mixed* $value=null, *int* $expire=null, *string* $path=null, *boolean* $secure=null, *boolean* $httpOnly=null)
+public  **__construct** (*string* $name, [*mixed* $value], [*int* $expire], [*string* $path], [*boolean* $secure], [*boolean* $httpOnly])
 
 Phalcon\\Http\\Cookie constructor
 
@@ -33,7 +33,7 @@ Sets the cookie's value
 
 
 
-public *mixed*  **getValue** (*string|array* $filters=null, *string* $defaultValue=null)
+public *mixed*  **getValue** ([*string|array* $filters], [*string* $defaultValue])
 
 Returns the cookie's value
 

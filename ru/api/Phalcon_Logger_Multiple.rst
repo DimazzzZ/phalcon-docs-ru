@@ -31,7 +31,7 @@ Returns a formatter
 
 
 
-public  **log** (*string* $message, *int* $type=null)
+public  **log** (*string* $message, [*int* $type])
 
 Sends a message to each registered logger
 

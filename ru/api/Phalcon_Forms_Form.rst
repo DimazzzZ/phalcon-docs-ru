@@ -11,7 +11,7 @@ This component allows to build forms
 Methods
 ---------
 
-public  **__construct** (*object* $entity=null, *array* $userOptions=null)
+public  **__construct** ([*object* $entity], [*array* $userOptions])
 
 Phalcon\\Forms\\Form constructor
 
@@ -35,7 +35,7 @@ Sets an option for the form
 
 
 
-public *mixed*  **getUserOption** (*string* $option, *mixed* $defaultValue=null)
+public *mixed*  **getUserOption** (*string* $option, [*mixed* $defaultValue])
 
 Returns the value of an option if present
 
@@ -71,19 +71,19 @@ Returns the form elements added to the form
 
 
 
-public :doc:`Phalcon\\Forms\\Form <Phalcon_Forms_Form>`  **bind** (*array* $data, *object* $entity, *array* $whitelist=null)
+public :doc:`Phalcon\\Forms\\Form <Phalcon_Forms_Form>`  **bind** (*array* $data, *object* $entity, [*array* $whitelist])
 
 Binds data to the entity
 
 
 
-public *boolean*  **isValid** (*array* $data=null, *object* $entity=null)
+public *boolean*  **isValid** ([*array* $data], [*object* $entity])
 
 Validates the form
 
 
 
-public *array*  **getMessages** (*boolean* $byItemName=null)
+public *array*  **getMessages** ([*boolean* $byItemName])
 
 Returns the messages generated in the validation
 
@@ -107,7 +107,7 @@ Adds an element to the form
 
 
 
-public *string*  **render** (*string* $name, *array* $attributes=null)
+public *string*  **render** (*string* $name, [*array* $attributes])
 
 Renders a specific item in the form
 

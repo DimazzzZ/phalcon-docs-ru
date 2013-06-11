@@ -32,7 +32,7 @@ Allows to cache data converting/deconverting them to JSON.  This adapters uses t
 Methods
 ---------
 
-public  **__construct** (*array* $frontendOptions=null)
+public  **__construct** ([*array* $frontendOptions])
 
 Phalcon\\Cache\\Frontend\\Base64 constructor
 

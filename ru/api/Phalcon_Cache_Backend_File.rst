@@ -40,19 +40,19 @@ Allows to cache output fragments using a file backend
 Methods
 ---------
 
-public  **__construct** (:doc:`Phalcon\\Cache\\FrontendInterface <Phalcon_Cache_FrontendInterface>` $frontend, *array* $options=null)
+public  **__construct** (:doc:`Phalcon\\Cache\\FrontendInterface <Phalcon_Cache_FrontendInterface>` $frontend, [*array* $options])
 
 Phalcon\\Cache\\Backend\\File constructor
 
 
 
-public *mixed*  **get** (*int|string* $keyName, *long* $lifetime=null)
+public *mixed*  **get** (*int|string* $keyName, [*long* $lifetime])
 
 Returns a cached content
 
 
 
-public  **save** (*int|string* $keyName=null, *string* $content=null, *long* $lifetime=null, *boolean* $stopBuffer=null)
+public  **save** ([*int|string* $keyName], [*string* $content], [*long* $lifetime], [*boolean* $stopBuffer])
 
 Stores cached content into the file backend and stops the frontend
 
@@ -64,25 +64,25 @@ Deletes a value from the cache by its key
 
 
 
-public *array*  **queryKeys** (*string* $prefix=null)
+public *array*  **queryKeys** ([*string* $prefix])
 
 Query the existing cached keys
 
 
 
-public *boolean*  **exists** (*string* $keyName=null, *long* $lifetime=null)
+public *boolean*  **exists** ([*string* $keyName], [*long* $lifetime])
 
 Checks if cache exists and it isn't expired
 
 
 
-public *mixed*  **start** (*int|string* $keyName, *long* $lifetime=null) inherited from Phalcon\\Cache\\Backend
+public *mixed*  **start** (*int|string* $keyName, [*long* $lifetime]) inherited from Phalcon\\Cache\\Backend
 
 Starts a cache. The $keyname allows to identify the created fragment
 
 
 
-public  **stop** (*boolean* $stopBuffer=null) inherited from Phalcon\\Cache\\Backend
+public  **stop** ([*boolean* $stopBuffer]) inherited from Phalcon\\Cache\\Backend
 
 Stops the frontend without store any cached content
 

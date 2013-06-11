@@ -31,13 +31,13 @@ Returns a base path
 
 
 
-abstract public *string*  **get** (*string|array* $uri=null)
+abstract public *string*  **get** ([*string|array* $uri])
 
 Generates a URL
 
 
 
-abstract public *string*  **path** (*string* $path=null)
+abstract public *string*  **path** ([*string* $path])
 
 Generates a local path
 

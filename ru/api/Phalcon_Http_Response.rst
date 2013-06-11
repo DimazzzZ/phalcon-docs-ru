@@ -19,7 +19,7 @@ Part of the HTTP cycle is return responses to the clients. Phalcon\\HTTP\\Respon
 Methods
 ---------
 
-public  **__construct** (*string* $content=null, *int* $code=null, *string* $status=null)
+public  **__construct** ([*string* $content], [*int* $code], [*string* $status])
 
 Phalcon\\Http\\Response constructor
 
@@ -125,7 +125,7 @@ Sends a Not-Modified response
 
 
 
-public :doc:`Phalcon\\Http\\ResponseInterface <Phalcon_Http_ResponseInterface>`  **setContentType** (*string* $contentType, *string* $charset=null)
+public :doc:`Phalcon\\Http\\ResponseInterface <Phalcon_Http_ResponseInterface>`  **setContentType** (*string* $contentType, [*string* $charset])
 
 Sets the response content-type mime, optionally the charset 
 
@@ -152,7 +152,7 @@ Set a custom ETag
 
 
 
-public :doc:`Phalcon\\Http\\ResponseInterface <Phalcon_Http_ResponseInterface>`  **redirect** (*string* $location=null, *boolean* $externalRedirect=null, *int* $statusCode=null)
+public :doc:`Phalcon\\Http\\ResponseInterface <Phalcon_Http_ResponseInterface>`  **redirect** ([*string* $location], [*boolean* $externalRedirect], [*int* $statusCode])
 
 Redirect by HTTP to another action or URL 
 
@@ -230,7 +230,7 @@ Prints out HTTP response to the client
 
 
 
-public  **setFileToSend** (*unknown* $filePath, *unknown* $attachmentName=null)
+public  **setFileToSend** (*unknown* $filePath, [*unknown* $attachmentName])
 
 ...
 

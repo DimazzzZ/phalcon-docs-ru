@@ -21,7 +21,7 @@ Represents individually a service in the services container
 Methods
 ---------
 
-public  **__construct** (*string* $name, *mixed* $definition, *boolean* $shared=null)
+public  **__construct** (*string* $name, *mixed* $definition, [*boolean* $shared])
 
 
 
@@ -63,7 +63,7 @@ Returns the service definition
 
 
 
-public *mixed*  **resolve** (*array* $parameters=null, :doc:`Phalcon\\DiInterface <Phalcon_DiInterface>` $dependencyInjector=null)
+public *mixed*  **resolve** ([*array* $parameters], [:doc:`Phalcon\\DiInterface <Phalcon_DiInterface>` $dependencyInjector])
 
 Resolves the service
 

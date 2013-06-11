@@ -96,7 +96,7 @@ Returns the internal router used by the application
 
 
 
-public :doc:`Phalcon\\DI\\ServiceInterface <Phalcon_DI_ServiceInterface>`  **setService** (*string* $serviceName, *mixed* $definition, *boolean* $shared=null)
+public :doc:`Phalcon\\DI\\ServiceInterface <Phalcon_DI_ServiceInterface>`  **setService** (*string* $serviceName, *mixed* $definition, [*boolean* $shared])
 
 Sets a service from the DI
 
@@ -120,7 +120,7 @@ Obtains a shared service from the DI
 
 
 
-public *mixed*  **handle** (*string* $uri=null)
+public *mixed*  **handle** ([*string* $uri])
 
 Handle the whole request
 

@@ -13,13 +13,13 @@ Sets if the html generated must be directly printed or returned
 
 
 
-public :doc:`Phalcon\\Assets\\Manager <Phalcon_Assets_Manager>`  **addCss** (*string* $path, *boolean* $local=null)
+public :doc:`Phalcon\\Assets\\Manager <Phalcon_Assets_Manager>`  **addCss** (*string* $path, [*boolean* $local])
 
 Adds a Css resource to the 'css' collection
 
 
 
-public :doc:`Phalcon\\Assets\\Manager <Phalcon_Assets_Manager>`  **addJs** (*string* $path, *boolean* $local=null)
+public :doc:`Phalcon\\Assets\\Manager <Phalcon_Assets_Manager>`  **addJs** (*string* $path, [*boolean* $local])
 
 Adds a javascript resource to the 'js' collection
 
@@ -95,13 +95,13 @@ Creates/Returns a collection of resources
 
 
 
-public  **outputCss** (*string* $collectionName=null)
+public  **outputCss** ([*string* $collectionName])
 
 Prints the HTML for CSS resources
 
 
 
-public  **outputJs** (*string* $collectionName=null)
+public  **outputJs** ([*string* $collectionName])
 
 Prints the HTML for JS resources
 

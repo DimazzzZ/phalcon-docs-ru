@@ -11,13 +11,13 @@ Allows to validate data using validators
 Methods
 ---------
 
-public  **__construct** (*array* $validators=null)
+public  **__construct** ([*array* $validators])
 
 Phalcon\\Validation constructor
 
 
 
-public  **validate** (*array|object* $data=null, *object* $entity=null)
+public  **validate** ([*array|object* $data], [*object* $entity])
 
 Validate a set of data according to a set of rules
 
@@ -35,7 +35,7 @@ Adds filters to the field
 
 
 
-public *mixed*  **getFilters** (*string* $attribute=null)
+public *mixed*  **getFilters** ([*string* $attribute])
 
 Returns all the filters or a specific one
 

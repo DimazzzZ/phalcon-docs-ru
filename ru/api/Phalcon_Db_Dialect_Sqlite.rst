@@ -83,31 +83,31 @@ Generates SQL to create a table in Sqlite
 
 
 
-public *boolean*  **dropTable** (*string* $tableName, *string* $schemaName, *boolean* $ifExists=null)
+public *boolean*  **dropTable** (*string* $tableName, *string* $schemaName, [*boolean* $ifExists])
 
 Generates SQL to drop a table
 
 
 
-public *string*  **tableExists** (*string* $tableName, *string* $schemaName=null)
+public *string*  **tableExists** (*string* $tableName, [*string* $schemaName])
 
 Generates SQL checking for the existence of a schema.table <code>echo $dialect->tableExists("posts", "blog") <code>echo $dialect->tableExists("posts")
 
 
 
-public *string*  **describeColumns** (*string* $table, *string* $schema=null)
+public *string*  **describeColumns** (*string* $table, [*string* $schema])
 
 Generates a SQL describing a table <code>print_r($dialect->describeColumns("posts") ?>
 
 
 
-public *array*  **listTables** (*string* $schemaName=null)
+public *array*  **listTables** ([*string* $schemaName])
 
 List all tables on database <code>print_r($dialect->listTables("blog") ?>
 
 
 
-public *string*  **describeIndexes** (*string* $table, *string* $schema=null)
+public *string*  **describeIndexes** (*string* $table, [*string* $schema])
 
 Generates SQL to query indexes on a table
 
@@ -119,13 +119,13 @@ Generates SQL to query indexes detail on a table
 
 
 
-public *string*  **describeReferences** (*string* $table, *string* $schema=null)
+public *string*  **describeReferences** (*string* $table, [*string* $schema])
 
 Generates SQL to query foreign keys on a table
 
 
 
-public *string*  **tableOptions** (*string* $table, *string* $schema=null)
+public *string*  **tableOptions** (*string* $table, [*string* $schema])
 
 Generates the SQL to describe the table creation options
 
@@ -186,13 +186,13 @@ Gets a list of columns with escaped identifiers
 
 
 
-public *string*  **getSqlExpression** (*array* $expression, *string* $escapeChar=null) inherited from Phalcon\\Db\\Dialect
+public *string*  **getSqlExpression** (*array* $expression, [*string* $escapeChar]) inherited from Phalcon\\Db\\Dialect
 
 Transforms an intermediate representation for a expression into a database system valid expression
 
 
 
-public *string*  **getSqlTable** (*array* $table, *string* $escapeChar=null) inherited from Phalcon\\Db\\Dialect
+public *string*  **getSqlTable** (*array* $table, [*string* $escapeChar]) inherited from Phalcon\\Db\\Dialect
 
 Transform an intermediate representation for a schema/table into a database system valid expression
 

@@ -7,7 +7,7 @@ Phalcon\\Mvc\\Model\\RelationInterface initializer
 Methods
 ---------
 
-abstract public  **__construct** (*int* $type, *string* $referencedModel, *string|array* $fields, *string|array* $referencedFields, *array* $options=null)
+abstract public  **__construct** (*int* $type, *string* $referencedModel, *string|array* $fields, *string|array* $referencedFields, [*array* $options])
 
 Phalcon\\Mvc\\Model\\Relation constructor
 

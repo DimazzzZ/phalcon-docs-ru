@@ -9,13 +9,13 @@ Component INPUT[type=password] for forms
 Methods
 ---------
 
-public *string*  **render** (*array* $attributes=null)
+public *string*  **render** ([*array* $attributes])
 
 Renders the element widget returning html
 
 
 
-public  **__construct** (*string* $name, *array* $attributes=null) inherited from Phalcon\\Forms\\Element
+public  **__construct** (*string* $name, [*array* $attributes]) inherited from Phalcon\\Forms\\Element
 
 Phalcon\\Forms\\Element constructor
 
@@ -63,7 +63,7 @@ Returns the element's filters
 
 
 
-public *Phalcon\\Forms\\ElementInterface*  **addValidators** (*unknown* $validators, *unknown* $merge=null) inherited from Phalcon\\Forms\\Element
+public *Phalcon\\Forms\\ElementInterface*  **addValidators** (*unknown* $validators, [*unknown* $merge]) inherited from Phalcon\\Forms\\Element
 
 Adds a group of validators
 
@@ -81,7 +81,7 @@ Returns the validators registered for the element
 
 
 
-public *array*  **prepareAttributes** (*array* $attributes=null) inherited from Phalcon\\Forms\\Element
+public *array*  **prepareAttributes** ([*array* $attributes]) inherited from Phalcon\\Forms\\Element
 
 Returns an array of attributes for  prepared attributes for Phalcon\\Tag helpers according to the element's parameters
 
@@ -93,7 +93,7 @@ Sets a default attribute for the element
 
 
 
-public *mixed*  **getAttribute** (*string* $attribute, *mixed* $defaultValue=null) inherited from Phalcon\\Forms\\Element
+public *mixed*  **getAttribute** (*string* $attribute, [*mixed* $defaultValue]) inherited from Phalcon\\Forms\\Element
 
 Returns the value of an attribute if present
 
@@ -117,7 +117,7 @@ Sets an option for the element
 
 
 
-public *mixed*  **getUserOption** (*string* $option, *mixed* $defaultValue=null) inherited from Phalcon\\Forms\\Element
+public *mixed*  **getUserOption** (*string* $option, [*mixed* $defaultValue]) inherited from Phalcon\\Forms\\Element
 
 Returns the value of an option if present
 

@@ -22,7 +22,7 @@ Helps to create PHQL queries using an OO interface
 Methods
 ---------
 
-public  **__construct** (*array* $params=null)
+public  **__construct** ([*array* $params])
 
 Phalcon\\Mvc\\Model\\Query\\Builder constructor
 
@@ -72,7 +72,7 @@ Sets the models who makes part of the query
 
 
 
-public :doc:`Phalcon\\Mvc\\Model\\Query\\Builder <Phalcon_Mvc_Model_Query_Builder>`  **addFrom** (*string* $model, *string* $alias=null)
+public :doc:`Phalcon\\Mvc\\Model\\Query\\Builder <Phalcon_Mvc_Model_Query_Builder>`  **addFrom** (*string* $model, [*string* $alias])
 
 Add a model to take part of the query 
 
@@ -91,7 +91,7 @@ Return the models who makes part of the query
 
 
 
-public :doc:`Phalcon\\Mvc\\Model\\Query\\Builder <Phalcon_Mvc_Model_Query_Builder>`  **join** (*string* $model, *string* $conditions=null, *string* $alias=null, *string* $type=null)
+public :doc:`Phalcon\\Mvc\\Model\\Query\\Builder <Phalcon_Mvc_Model_Query_Builder>`  **join** (*string* $model, [*string* $conditions], [*string* $alias], [*string* $type])
 
 Adds a join to the query 
 
@@ -107,7 +107,7 @@ Adds a join to the query
 
 
 
-public :doc:`Phalcon\\Mvc\\Model\\Query\\Builder <Phalcon_Mvc_Model_Query_Builder>`  **leftJoin** (*string* $model, *string* $conditions=null, *string* $alias=null)
+public :doc:`Phalcon\\Mvc\\Model\\Query\\Builder <Phalcon_Mvc_Model_Query_Builder>`  **leftJoin** (*string* $model, [*string* $conditions], [*string* $alias])
 
 Adds a LEFT join to the query 
 
@@ -120,7 +120,7 @@ Adds a LEFT join to the query
 
 
 
-public :doc:`Phalcon\\Mvc\\Model\\Query\\Builder <Phalcon_Mvc_Model_Query_Builder>`  **rightJoin** (*string* $model, *string* $conditions=null, *string* $alias=null)
+public :doc:`Phalcon\\Mvc\\Model\\Query\\Builder <Phalcon_Mvc_Model_Query_Builder>`  **rightJoin** (*string* $model, [*string* $conditions], [*string* $alias])
 
 Adds a RIGHT join to the query 
 
@@ -133,7 +133,7 @@ Adds a RIGHT join to the query
 
 
 
-public :doc:`Phalcon\\Mvc\\Model\\Query\\Builder <Phalcon_Mvc_Model_Query_Builder>`  **where** (*string* $conditions, *array* $bindParams=null, *array* $bindTypes=null)
+public :doc:`Phalcon\\Mvc\\Model\\Query\\Builder <Phalcon_Mvc_Model_Query_Builder>`  **where** (*string* $conditions, [*array* $bindParams], [*array* $bindTypes])
 
 Sets the query conditions 
 
@@ -146,7 +146,7 @@ Sets the query conditions
 
 
 
-public :doc:`Phalcon\\Mvc\\Model\\Query\\Builder <Phalcon_Mvc_Model_Query_Builder>`  **andWhere** (*string* $conditions, *array* $bindParams=null, *array* $bindTypes=null)
+public :doc:`Phalcon\\Mvc\\Model\\Query\\Builder <Phalcon_Mvc_Model_Query_Builder>`  **andWhere** (*string* $conditions, [*array* $bindParams], [*array* $bindTypes])
 
 Appends a condition to the current conditions using a AND operator 
 
@@ -160,7 +160,7 @@ Appends a condition to the current conditions using a AND operator
 
 
 
-public :doc:`Phalcon\\Mvc\\Model\\Query\\Builder <Phalcon_Mvc_Model_Query_Builder>`  **orWhere** (*string* $conditions, *array* $bindParams=null, *array* $bindTypes=null)
+public :doc:`Phalcon\\Mvc\\Model\\Query\\Builder <Phalcon_Mvc_Model_Query_Builder>`  **orWhere** (*string* $conditions, [*array* $bindParams], [*array* $bindTypes])
 
 Appends a condition to the current conditions using a OR operator 
 
@@ -258,7 +258,7 @@ Return the current having clause
 
 
 
-public :doc:`Phalcon\\Mvc\\Model\\Query\\Builder <Phalcon_Mvc_Model_Query_Builder>`  **limit** (*int* $limit, *int* $offset=null)
+public :doc:`Phalcon\\Mvc\\Model\\Query\\Builder <Phalcon_Mvc_Model_Query_Builder>`  **limit** (*int* $limit, [*int* $offset])
 
 Sets a LIMIT clause, optionally a offset clause 
 

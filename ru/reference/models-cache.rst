@@ -228,7 +228,7 @@ you can create a base class for all of them:
         protected static function _createKey($parameters)
         {
             // .. create a cache key based on the parameters
-}
+        }
 
         public static function find($parameters=null)
         {
@@ -279,7 +279,7 @@ we can override the find/findFirst method to force every query to be cached:
         protected static function _createKey($parameters)
         {
             // .. create a cache key based on the parameters
-}
+        }
 
         public static function find($parameters=null)
         {
@@ -519,7 +519,7 @@ to obtain all entities:
         protected static function _createKey($parameters)
         {
             // .. create a cache key based on the parameters
-}
+        }
 
         protected static function _getCache($key)
         {
@@ -588,7 +588,7 @@ Note that this process can also be performed with PHQL following an alternative 
         protected static function _createKey($conditions, $params)
         {
             // .. create a cache key based on the parameters
-}
+        }
 
         public function getInvoicesCustomers($conditions, $params=null)
         {

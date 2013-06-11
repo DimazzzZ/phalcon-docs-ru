@@ -17,7 +17,7 @@ Phalcon\\DI\\FactoryDefault constructor
 
 
 
-public :doc:`Phalcon\\DI\\ServiceInterface <Phalcon_DI_ServiceInterface>`  **set** (*string* $name, *mixed* $definition, *boolean* $shared=null) inherited from Phalcon\\DI
+public :doc:`Phalcon\\DI\\ServiceInterface <Phalcon_DI_ServiceInterface>`  **set** (*string* $name, *mixed* $definition, [*boolean* $shared]) inherited from Phalcon\\DI
 
 Registers a service in the services container
 
@@ -35,7 +35,7 @@ Removes a service in the services container
 
 
 
-public :doc:`Phalcon\\DI\\ServiceInterface <Phalcon_DI_ServiceInterface>`  **attempt** (*string* $name, *mixed* $definition, *boolean* $shared=null) inherited from Phalcon\\DI
+public :doc:`Phalcon\\DI\\ServiceInterface <Phalcon_DI_ServiceInterface>`  **attempt** (*string* $name, *mixed* $definition, [*boolean* $shared]) inherited from Phalcon\\DI
 
 Attempts to register a service in the services container Only is successful if a service hasn't been registered previously with the same name
 
@@ -59,13 +59,13 @@ Returns a Phalcon\\DI\\Service instance
 
 
 
-public *mixed*  **get** (*string* $name, *array* $parameters=null) inherited from Phalcon\\DI
+public *mixed*  **get** (*string* $name, [*array* $parameters]) inherited from Phalcon\\DI
 
 Resolves the service based on its configuration
 
 
 
-public *mixed*  **getShared** (*string* $name, *array* $parameters=null) inherited from Phalcon\\DI
+public *mixed*  **getShared** (*string* $name, [*array* $parameters]) inherited from Phalcon\\DI
 
 Resolves a service, the resolved service is stored in the DI, subsequent requests for this service will return the same instance
 
@@ -89,13 +89,13 @@ Return the services registered in the DI
 
 
 
-public *boolean*  **offsetExists** (*string* $alias) inherited from Phalcon\\DI
+public *boolean*  **offsetExists** (*unknown* $alias) inherited from Phalcon\\DI
 
 Check if a service is registered using the array syntax
 
 
 
-public  **offsetSet** (*string* $alias, *mixed* $definition) inherited from Phalcon\\DI
+public  **offsetSet** (*unknown* $alias, *unknown* $definition) inherited from Phalcon\\DI
 
 Allows to register a shared service using the array syntax 
 
@@ -108,7 +108,7 @@ Allows to register a shared service using the array syntax
 
 
 
-public *mixed*  **offsetGet** (*string* $alias) inherited from Phalcon\\DI
+public *mixed*  **offsetGet** (*unknown* $alias) inherited from Phalcon\\DI
 
 Allows to obtain a shared service using the array syntax 
 
@@ -121,13 +121,13 @@ Allows to obtain a shared service using the array syntax
 
 
 
-public  **offsetUnset** (*string* $alias) inherited from Phalcon\\DI
+public  **offsetUnset** (*unknown* $alias) inherited from Phalcon\\DI
 
 Removes a service from the services container using the array syntax
 
 
 
-public *mixed*  **__call** (*string* $method, *array* $arguments=null) inherited from Phalcon\\DI
+public *mixed*  **__call** (*string* $method, [*array* $arguments]) inherited from Phalcon\\DI
 
 Magic method to get or set services using setters/getters
 

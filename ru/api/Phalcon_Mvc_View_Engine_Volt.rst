@@ -29,7 +29,7 @@ Returns the Volt's compiler
 
 
 
-public  **render** (*string* $templatePath, *array* $params, *boolean* $mustClean=null)
+public  **render** (*string* $templatePath, *array* $params, [*boolean* $mustClean])
 
 Renders a view using the template engine
 
@@ -53,13 +53,13 @@ Performs a string conversion
 
 
 
-public  **slice** (*mixed* $value, *unknown* $start, *unknown* $end=null)
+public  **slice** (*mixed* $value, *unknown* $start, [*unknown* $end])
 
 Extracts a slice from a string/array/traversable object value
 
 
 
-public  **__construct** (:doc:`Phalcon\\Mvc\\ViewInterface <Phalcon_Mvc_ViewInterface>` $view, :doc:`Phalcon\\DiInterface <Phalcon_DiInterface>` $dependencyInjector=null) inherited from Phalcon\\Mvc\\View\\Engine
+public  **__construct** (:doc:`Phalcon\\Mvc\\ViewInterface <Phalcon_Mvc_ViewInterface>` $view, [:doc:`Phalcon\\DiInterface <Phalcon_DiInterface>` $dependencyInjector]) inherited from Phalcon\\Mvc\\View\\Engine
 
 Phalcon\\Mvc\\View\\Engine constructor
 

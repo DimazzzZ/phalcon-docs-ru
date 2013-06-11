@@ -1234,9 +1234,9 @@ Volt-компилятор позволяет вам расширить его, �
 Внешние ресурсы
 ---------------
 
-* Пакет для Sublime/Textmate можно скачать `тут <https://github.com/phalcon/volt-sublime-textmate>`_
-* `Наш сайт <http://phalconphp.com>`_ работает на шаблонизаторе Volt, посмотрите код на `github <https://github.com/phalcon/website>`_
-* `Album-O-Rama <https://github.com/phalcon/album-o-rama>`_ — пример приложения, использующего Volt в качестве шаблонизатоа, смотрите код на Github
+* Пакет для Sublime/Textmate можно скачать на [`Github <https://github.com/phalcon/volt-sublime-textmate>`_]
+* `Album-O-Rama <https://github.com/phalcon/album-o-rama>`_ — пример приложения, использующего Volt в качестве шаблонизатоа, [`Github <https://github.com/phalcon/album-o-rama>`_]
+* `Наш сайт <http://phalconphp.com>`_ работает на шаблонизаторе Volt, [`Github <https://github.com/phalcon/website>`_]
 * `Phosphorum <http://forum.phalconphp.com>`_, форум Phalcon так же использует Volt, [`Github <https://github.com/phalcon/forum>`_]
 * `Vökuró <http://vokuro.phalconphp.com>`_, еще одно приложение с использованием Volt, [`Github <https://github.com/phalcon/vokuro>`_]
 

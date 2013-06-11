@@ -22,7 +22,7 @@ Allows to manipulate the annotations reflection in an OO manner
 Methods
 ---------
 
-public  **__construct** (*array* $reflectionData=null)
+public  **__construct** ([*array* $reflectionData])
 
 Phalcon\\Annotations\\Reflection constructor
 

@@ -49,13 +49,13 @@ This component encapsulates all the complex operations behind instantiating ever
 Methods
 ---------
 
-public  **__construct** (:doc:`Phalcon\\DI <Phalcon_DI>` $dependencyInjector=null)
+public  **__construct** ([:doc:`Phalcon\\DI <Phalcon_DI>` $dependencyInjector])
 
 
 
 
 
-public  **registerModules** (*array* $modules, *boolean* $merge=null)
+public  **registerModules** (*array* $modules, [*boolean* $merge])
 
 Register an array of modules present in the application 
 
@@ -95,7 +95,7 @@ Returns the default module name
 
 
 
-public :doc:`Phalcon\\Http\\ResponseInterface <Phalcon_Http_ResponseInterface>`  **handle** (*string* $uri=null)
+public :doc:`Phalcon\\Http\\ResponseInterface <Phalcon_Http_ResponseInterface>`  **handle** ([*string* $uri])
 
 Handles a MVC request
 

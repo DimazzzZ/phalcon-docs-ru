@@ -28,7 +28,7 @@ Executes the validation
 
 
 
-public  **__construct** (*array* $options=null) inherited from Phalcon\\Validation\\Validator
+public  **__construct** ([*array* $options]) inherited from Phalcon\\Validation\\Validator
 
 Phalcon\\Validation\\Validator constructor
 

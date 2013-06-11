@@ -51,7 +51,7 @@ Generate a >22-length pseudo random string to be used as salt for passwords
 
 
 
-public *string*  **hash** (*string* $password, *int* $workFactor=null)
+public *string*  **hash** (*string* $password, [*int* $workFactor])
 
 Creates a password hash using bcrypt with a pseudo random salt
 
@@ -69,19 +69,19 @@ Checks a plain text password and its hash version to check if the password match
 
 
 
-public *string*  **getTokenKey** (*int* $numberBytes=null)
+public *string*  **getTokenKey** ([*int* $numberBytes])
 
 Generates a pseudo random token key to be used as input's name in a CSRF check
 
 
 
-public *string*  **getToken** (*int* $numberBytes=null)
+public *string*  **getToken** ([*int* $numberBytes])
 
 Generates a pseudo random token value to be used as input's value in a CSRF check
 
 
 
-public *boolean*  **checkToken** (*string* $tokenKey=null, *string* $tokenValue=null)
+public *boolean*  **checkToken** ([*string* $tokenKey], [*string* $tokenValue])
 
 Check if the CSRF token sent in the request is the same that the current in session
 

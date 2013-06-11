@@ -7,7 +7,7 @@ Phalcon\\Acl\\RoleInterface initializer
 Methods
 ---------
 
-abstract public  **__construct** (*string* $name, *string* $description=null)
+abstract public  **__construct** (*string* $name, [*string* $description])
 
 Phalcon\\Acl\\Role constructor
 

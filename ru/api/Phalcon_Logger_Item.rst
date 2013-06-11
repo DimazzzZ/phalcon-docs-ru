@@ -7,7 +7,7 @@ Represents each item in a logging transaction
 Methods
 ---------
 
-public  **__construct** (*string* $message, *integer* $type, *integer* $time=null)
+public  **__construct** (*string* $message, *integer* $type, [*integer* $time])
 
 Phalcon\\Logger\\Item constructor
 

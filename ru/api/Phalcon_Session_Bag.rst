@@ -81,7 +81,7 @@ Magic setter to assign values to the session bag
 
 
 
-public *mixed*  **get** (*string* $property, *string* $defaultValue=null)
+public *mixed*  **get** (*string* $property, [*string* $defaultValue])
 
 Obtains a value from the session bag optionally setting a default value 
 

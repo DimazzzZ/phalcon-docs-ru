@@ -9,7 +9,7 @@ Represents Javascript resources
 Methods
 ---------
 
-public  **__construct** (*string* $path, *boolean* $local=null)
+public  **__construct** (*string* $path, [*boolean* $local])
 
 
 

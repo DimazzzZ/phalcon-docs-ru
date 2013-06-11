@@ -151,7 +151,7 @@ Register templating engines
 
 
 
-abstract public  **render** (*string* $controllerName, *string* $actionName, *array* $params=null)
+abstract public  **render** (*string* $controllerName, *string* $actionName, [*array* $params])
 
 Executes render process from dispatching data
 
@@ -181,7 +181,7 @@ Returns the cache instance used to cache
 
 
 
-abstract public  **cache** (*boolean|array* $options=null)
+abstract public  **cache** ([*boolean|array* $options])
 
 Cache the actual view render to certain level
 

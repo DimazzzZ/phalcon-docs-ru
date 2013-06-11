@@ -43,25 +43,25 @@ Returns the encryption key
 
 
 
-abstract public *string*  **encrypt** (*string* $text, *string* $key=null)
+abstract public *string*  **encrypt** (*string* $text, [*string* $key])
 
 Encrypts a text
 
 
 
-abstract public *string*  **decrypt** (*string* $text, *string* $key=null)
+abstract public *string*  **decrypt** (*string* $text, [*string* $key])
 
 Decrypts a text
 
 
 
-abstract public *string*  **encryptBase64** (*string* $text, *string* $key=null)
+abstract public *string*  **encryptBase64** (*string* $text, [*string* $key])
 
 Encrypts a text returning the result as a base64 string
 
 
 
-abstract public *string*  **decryptBase64** (*string* $text, *string* $key=null)
+abstract public *string*  **decryptBase64** (*string* $text, [*string* $key])
 
 Decrypt a text that is coded as a base64 string
 

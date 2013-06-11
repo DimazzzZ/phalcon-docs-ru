@@ -49,13 +49,13 @@ Sends a Not-Modified response
 
 
 
-abstract public :doc:`Phalcon\\Http\\ResponseInterface <Phalcon_Http_ResponseInterface>`  **setContentType** (*string* $contentType, *string* $charset=null)
+abstract public :doc:`Phalcon\\Http\\ResponseInterface <Phalcon_Http_ResponseInterface>`  **setContentType** (*string* $contentType, [*string* $charset])
 
 Sets the response content-type mime, optionally the charset
 
 
 
-abstract public :doc:`Phalcon\\Http\\ResponseInterface <Phalcon_Http_ResponseInterface>`  **redirect** (*string* $location=null, *boolean* $externalRedirect=null, *int* $statusCode=null)
+abstract public :doc:`Phalcon\\Http\\ResponseInterface <Phalcon_Http_ResponseInterface>`  **redirect** ([*string* $location], [*boolean* $externalRedirect], [*int* $statusCode])
 
 Redirect by HTTP to another action or URL
 

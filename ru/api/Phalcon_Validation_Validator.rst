@@ -7,7 +7,7 @@ This is a base class for validators
 Methods
 ---------
 
-public  **__construct** (*array* $options=null)
+public  **__construct** ([*array* $options])
 
 Phalcon\\Validation\\Validator constructor
 

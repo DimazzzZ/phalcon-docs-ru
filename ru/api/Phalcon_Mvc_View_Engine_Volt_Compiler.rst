@@ -19,7 +19,7 @@ This class reads and compiles Volt templates into PHP plain code
 Methods
 ---------
 
-public  **__construct** (:doc:`Phalcon\\Mvc\\ViewInterface <Phalcon_Mvc_ViewInterface>` $view=null)
+public  **__construct** ([:doc:`Phalcon\\Mvc\\ViewInterface <Phalcon_Mvc_ViewInterface>` $view])
 
 
 
@@ -120,7 +120,7 @@ protected  **_statementListOrExtends** ()
 ...
 
 
-public *string*  **compileForeach** (*array* $statement, *boolean* $extendsMode=null)
+public *string*  **compileForeach** (*array* $statement, [*boolean* $extendsMode])
 
 Compiles a 'foreach' intermediate code representation into plain PHP code
 
@@ -132,7 +132,7 @@ Generates a 'forelse' PHP code
 
 
 
-public  **compileIf** (*unknown* $statement, *unknown* $extendsMode=null)
+public  **compileIf** (*unknown* $statement, [*unknown* $extendsMode])
 
 ...
 
@@ -142,7 +142,7 @@ public  **compileElseIf** (*unknown* $statement)
 ...
 
 
-public  **compileCache** (*unknown* $statement, *unknown* $extendsMode=null)
+public  **compileCache** (*unknown* $statement, [*unknown* $extendsMode])
 
 ...
 
@@ -186,7 +186,7 @@ Compiles a Volt source code returning a PHP plain version
 
 
 
-public *string*  **compileString** (*string* $viewCode, *boolean* $extendsMode=null)
+public *string*  **compileString** (*string* $viewCode, [*boolean* $extendsMode])
 
 Compiles a template into a string 
 
@@ -199,7 +199,7 @@ Compiles a template into a string
 
 
 
-public *string|array*  **compileFile** (*string* $path, *string* $compiledPath, *boolean* $extendsMode=null)
+public *string|array*  **compileFile** (*string* $path, *string* $compiledPath, [*boolean* $extendsMode])
 
 Compiles a template into a file forcing the destination path 
 
@@ -212,7 +212,7 @@ Compiles a template into a file forcing the destination path
 
 
 
-public *string|array*  **compile** (*string* $templatePath, *boolean* $extendsMode=null)
+public *string|array*  **compile** (*string* $templatePath, [*boolean* $extendsMode])
 
 Compiles a template into a file applying the compiler options This method does not return the compiled path if the template was not compiled 
 

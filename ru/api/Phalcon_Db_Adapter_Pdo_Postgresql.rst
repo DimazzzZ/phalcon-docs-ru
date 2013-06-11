@@ -25,13 +25,13 @@ Specific functions for the Postgresql database system
 Methods
 ---------
 
-public *boolean*  **connect** (*array* $descriptor=null)
+public *boolean*  **connect** ([*array* $descriptor])
 
 This method is automatically called in Phalcon\\Db\\Adapter\\Pdo constructor. Call it when you need to restore a database connection. Support set search_path after connectted if schema is specified in config.
 
 
 
-public :doc:`Phalcon\\Db\\Column <Phalcon_Db_Column>` [] **describeColumns** (*string* $table, *string* $schema=null)
+public :doc:`Phalcon\\Db\\Column <Phalcon_Db_Column>` [] **describeColumns** (*string* $table, [*string* $schema])
 
 Returns an array of Phalcon\\Db\\Column objects describing a table <code>print_r($connection->describeColumns("posts")); ?>
 
@@ -89,7 +89,7 @@ Executes a prepared statement binding. This function uses integer indexes starti
 
 
 
-public :doc:`Phalcon\\Db\\ResultInterface <Phalcon_Db_ResultInterface>`  **query** (*string* $sqlStatement, *array* $bindParams=null, *array* $bindTypes=null) inherited from Phalcon\\Db\\Adapter\\Pdo
+public :doc:`Phalcon\\Db\\ResultInterface <Phalcon_Db_ResultInterface>`  **query** (*string* $sqlStatement, [*array* $bindParams], [*array* $bindTypes]) inherited from Phalcon\\Db\\Adapter\\Pdo
 
 Sends SQL statements to the database server returning the success state. Use this method only when the SQL statement sent to the server is returning rows 
 
@@ -104,7 +104,7 @@ Sends SQL statements to the database server returning the success state. Use thi
 
 
 
-public *boolean*  **execute** (*string* $sqlStatement, *array* $bindParams=null, *array* $bindTypes=null) inherited from Phalcon\\Db\\Adapter\\Pdo
+public *boolean*  **execute** (*string* $sqlStatement, [*array* $bindParams], [*array* $bindTypes]) inherited from Phalcon\\Db\\Adapter\\Pdo
 
 Sends SQL statements to the database server returning the success state. Use this method only when the SQL statement sent to the server doesn't return any row 
 
@@ -178,7 +178,7 @@ Converts bound parameters such as :name: or ?1 into PDO bind params ?
 
 
 
-public *int*  **lastInsertId** (*string* $sequenceName=null) inherited from Phalcon\\Db\\Adapter\\Pdo
+public *int*  **lastInsertId** ([*string* $sequenceName]) inherited from Phalcon\\Db\\Adapter\\Pdo
 
 Returns the insert id for the auto_increment/serial column inserted in the lastest executed SQL statement 
 
@@ -255,7 +255,7 @@ Returns the internal event manager
 
 
 
-public *array*  **fetchOne** (*string* $sqlQuery, *int* $fetchMode=null, *array* $bindParams=null, *array* $bindTypes=null) inherited from Phalcon\\Db\\Adapter
+public *array*  **fetchOne** (*string* $sqlQuery, [*int* $fetchMode], [*array* $bindParams], [*array* $bindTypes]) inherited from Phalcon\\Db\\Adapter
 
 Returns the first row in a SQL query result 
 
@@ -274,7 +274,7 @@ Returns the first row in a SQL query result
 
 
 
-public *array*  **fetchAll** (*string* $sqlQuery, *int* $fetchMode=null, *array* $bindParams=null, *array* $bindTypes=null) inherited from Phalcon\\Db\\Adapter
+public *array*  **fetchAll** (*string* $sqlQuery, [*int* $fetchMode], [*array* $bindParams], [*array* $bindTypes]) inherited from Phalcon\\Db\\Adapter
 
 Dumps the complete result of a query into an array 
 
@@ -300,7 +300,7 @@ Dumps the complete result of a query into an array
 
 
 
-public *boolean*  **insert** (*string* $table, *array* $values, *array* $fields=null, *array* $dataTypes=null) inherited from Phalcon\\Db\\Adapter
+public *boolean*  **insert** (*string* $table, *array* $values, [*array* $fields], [*array* $dataTypes]) inherited from Phalcon\\Db\\Adapter
 
 Inserts data into a table using custom RBDM SQL syntax 
 
@@ -321,7 +321,7 @@ Inserts data into a table using custom RBDM SQL syntax
 
 
 
-public *boolean*  **update** (*string* $table, *array* $fields, *array* $values, *string* $whereCondition=null, *array* $dataTypes=null) inherited from Phalcon\\Db\\Adapter
+public *boolean*  **update** (*string* $table, *array* $fields, *array* $values, [*string* $whereCondition], [*array* $dataTypes]) inherited from Phalcon\\Db\\Adapter
 
 Updates data on a table using custom RBDM SQL syntax 
 
@@ -343,7 +343,7 @@ Updates data on a table using custom RBDM SQL syntax
 
 
 
-public *boolean*  **delete** (*string* $table, *string* $whereCondition=null, *array* $placeholders=null, *array* $dataTypes=null) inherited from Phalcon\\Db\\Adapter
+public *boolean*  **delete** (*string* $table, [*string* $whereCondition], [*array* $placeholders], [*array* $dataTypes]) inherited from Phalcon\\Db\\Adapter
 
 Deletes data from a table using custom RBDM SQL syntax 
 
@@ -382,7 +382,7 @@ Appends a LIMIT clause to $sqlQuery argument
 
 
 
-public *string*  **tableExists** (*string* $tableName, *string* $schemaName=null) inherited from Phalcon\\Db\\Adapter
+public *string*  **tableExists** (*string* $tableName, [*string* $schemaName]) inherited from Phalcon\\Db\\Adapter
 
 Generates SQL checking for the existence of a schema.table 
 
@@ -395,7 +395,7 @@ Generates SQL checking for the existence of a schema.table
 
 
 
-public *string*  **viewExists** (*string* $viewName, *string* $schemaName=null) inherited from Phalcon\\Db\\Adapter
+public *string*  **viewExists** (*string* $viewName, [*string* $schemaName]) inherited from Phalcon\\Db\\Adapter
 
 Generates SQL checking for the existence of a schema.view 
 
@@ -426,7 +426,7 @@ Creates a table
 
 
 
-public *boolean*  **dropTable** (*string* $tableName, *string* $schemaName, *boolean* $ifExists=null) inherited from Phalcon\\Db\\Adapter
+public *boolean*  **dropTable** (*string* $tableName, *string* $schemaName, [*boolean* $ifExists]) inherited from Phalcon\\Db\\Adapter
 
 Drops a table from a schema/database
 
@@ -492,7 +492,7 @@ Returns the SQL column definition from a column
 
 
 
-public *array*  **listTables** (*string* $schemaName=null) inherited from Phalcon\\Db\\Adapter
+public *array*  **listTables** ([*string* $schemaName]) inherited from Phalcon\\Db\\Adapter
 
 List all tables on a database 
 
@@ -505,7 +505,7 @@ List all tables on a database
 
 
 
-public :doc:`Phalcon\\Db\\Index <Phalcon_Db_Index>` [] **describeIndexes** (*string* $table, *string* $schema=null) inherited from Phalcon\\Db\\Adapter
+public :doc:`Phalcon\\Db\\Index <Phalcon_Db_Index>` [] **describeIndexes** (*string* $table, [*string* $schema]) inherited from Phalcon\\Db\\Adapter
 
 Lists table indexes 
 
@@ -518,7 +518,7 @@ Lists table indexes
 
 
 
-public :doc:`Phalcon\\Db\\Reference <Phalcon_Db_Reference>` [] **describeReferences** (*string* $table, *string* $schema=null) inherited from Phalcon\\Db\\Adapter
+public :doc:`Phalcon\\Db\\Reference <Phalcon_Db_Reference>` [] **describeReferences** (*string* $table, [*string* $schema]) inherited from Phalcon\\Db\\Adapter
 
 Lists table references 
 
@@ -531,7 +531,7 @@ Lists table references
 
 
 
-public *array*  **tableOptions** (*string* $tableName, *string* $schemaName=null) inherited from Phalcon\\Db\\Adapter
+public *array*  **tableOptions** (*string* $tableName, [*string* $schemaName]) inherited from Phalcon\\Db\\Adapter
 
 Gets creation options from a table 
 

@@ -45,25 +45,25 @@ Returns the encryption key
 
 
 
-public *string*  **encrypt** (*string* $text, *string* $key=null)
+public *string*  **encrypt** (*string* $text, [*string* $key])
 
 Encrypts a text
 
 
 
-public *string*  **decrypt** (*string* $text, *string* $key=null)
+public *string*  **decrypt** (*string* $text, [*string* $key])
 
 Decrypts a text
 
 
 
-public *string*  **encryptBase64** (*string* $text, *string* $key=null)
+public *string*  **encryptBase64** (*string* $text, [*string* $key])
 
 Encrypts a text returning the result as a base64 string
 
 
 
-public *string*  **decryptBase64** (*string* $text, *string* $key=null)
+public *string*  **decryptBase64** (*string* $text, [*string* $key])
 
 Decrypt a text that is coded as a base64 string
 

@@ -11,7 +11,7 @@ Formats messages using a one-line string
 Methods
 ---------
 
-public  **__construct** (*string* $format=null, *string* $dateFormat=null)
+public  **__construct** ([*string* $format], [*string* $dateFormat])
 
 Phalcon\\Logger\\Formatter\\Line construct
 

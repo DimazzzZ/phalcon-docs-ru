@@ -19,7 +19,7 @@ Returns the default ACL access level
 
 
 
-abstract public *boolean*  **addRole** (:doc:`Phalcon\\Acl\\RoleInterface <Phalcon_Acl_RoleInterface>` $role, *string* $accessInherits=null)
+abstract public *boolean*  **addRole** (:doc:`Phalcon\\Acl\\RoleInterface <Phalcon_Acl_RoleInterface>` $role, [*string* $accessInherits])
 
 Adds a role to the ACL list. Second parameter lets to inherit access data from other existing role
 
@@ -43,7 +43,7 @@ Check whether resource exist in the resources list
 
 
 
-abstract public *boolean*  **addResource** (:doc:`Phalcon\\Acl\\ResourceInterface <Phalcon_Acl_ResourceInterface>` $resource, *array* $accessList=null)
+abstract public *boolean*  **addResource** (:doc:`Phalcon\\Acl\\ResourceInterface <Phalcon_Acl_ResourceInterface>` $resource, [*array* $accessList])
 
 Adds a resource to the ACL list Access names can be a particular action, by example search, update, delete, etc or a list of them
 
