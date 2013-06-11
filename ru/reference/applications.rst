@@ -60,7 +60,7 @@ MVC Приложения
 
         $application = new Application($di);
         echo $application->handle()->getContent();
-        
+
     } catch (Exception $e) {
         echo $e->getMessage();
     }
@@ -349,7 +349,7 @@ MVC Приложения
 
     // Запускаем  сервис из контернейра сервисов
     $router = $di['router'];
-    
+
     $router->handle();
 
     $view = $di['view'];
@@ -430,5 +430,4 @@ MVC Приложения
 
 Внешние источники
 -----------------
-
 * `Примеры MVC Github <https://github.com/phalcon/mvc>`_

@@ -16,7 +16,7 @@ Phalcon заботится не только о производительнос
 
 .. highlights::
     Перевод документации на русский язык производится энтузиастами. Мы будем рады всем желающим поучаствовать в переводе и поиске ошибок.
-    Перевод и координация осуществляется на `GitHub проекта <http://github.com/xboston/phalcon-docs-ru>`_ и группе `Вконтакте <http://vk.com/phalconphp>`_.
+    Перевод и координация осуществляется на `GitHub проекта <https://github.com/xboston/phalcon-docs-ru>`_ и группе `Вконтакте <http://vk.com/phalconphp>`_.
 
 Оглавление
 ----------
@@ -30,7 +30,7 @@ Phalcon заботится не только о производительнос
    reference/tutorial
    reference/tutorial-invo
    reference/tutorial-rest
-   reference/samples 
+   reference/samples
    reference/di
    reference/mvc
    reference/controllers

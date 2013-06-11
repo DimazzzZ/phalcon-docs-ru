@@ -450,7 +450,6 @@ Phalcon предоставляет ряд помощников для созда
 
 Изображения
 ^^^^^^^^^^^
-
 .. code-block:: php
 
     <?php
@@ -478,7 +477,6 @@ Phalcon предоставляет ряд помощников для созда
 
 Таблицы стилей (Stylesheets)
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^
-
 .. code-block:: php
 
     <?php
@@ -501,7 +499,6 @@ Phalcon предоставляет ряд помощников для созда
 
 Javascript
 ^^^^^^^^^^
-
 .. code-block:: php
 
     <?php
@@ -530,7 +527,7 @@ Javascript
 
     <?php
 
-    // Generate 
+    // Generate
     // <canvas id="canvas1" width="300" class="cnvclass">
     // This is my canvas
     // </canvas>

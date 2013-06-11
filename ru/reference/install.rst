@@ -29,12 +29,11 @@ Windows
 
 Краткое руководство
 ^^^^^^^^^^^^^^^^^^^
-
 .. toctree::
-	:maxdepth: 1
+   :maxdepth: 1
 
-	xampp
-	wamp
+   xampp
+   wamp
 
 Linux/Solaris/Mac
 -----------------

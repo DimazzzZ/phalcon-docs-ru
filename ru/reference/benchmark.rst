@@ -36,7 +36,6 @@
 
 Список тестов
 -------------
-
 .. toctree::
    :maxdepth: 1
 
@@ -45,9 +44,8 @@
 
 Список изменений
 ----------------
-
 .. versionadded:: 1.0
-    Обновление Mar-20-2012: Тесты переделаны с учетом apc.stat установленного в ВЫКЛ. Расширение информации 
+    Обновление Mar-20-2012: Тесты переделаны с учетом apc.stat установленного в ВЫКЛ. Расширение информации
 
 .. versionchanged:: 1.1
 		Обновление May-13-2012: Шаблонизация в Symfony была переделана с Twig на прямое использование PHP. Параметры конфигурации Yii были изменены в соответсвии с рекомндациями.
@@ -61,13 +59,12 @@
 .. versionchanged:: 1.4
 		Обновление Ago-27-2012: PHP обновлён до to 5.3.15, APC обновлён до 3.1.11, Yii обновлён до 1.1.12, Phalcon обновлён до 0.5.0, Добавлен Laravel, операционная система обновлена до Mac OS X Lion. Обновлено железо.
 
-External Resources
-------------------
-
+Внешние источники
+-----------------
 * `For Impatient Web Users, an Eye Blink Is Just Too Long to Wait <http://www.nytimes.com/2012/03/01/technology/impatient-web-users-flee-slow-loading-sites.html?pagewanted=all&_r=0>`
 * `Millionaires performance cases: Impact of performance <https://github.com/zenorocha/browser-diet/wiki/Impact-of-performance>`
 
 .. _стали: http://googlewebmastercentral.blogspot.com/2010/04/using-site-speed-in-web-search-ranking.html
 .. _напишите нам: http://phalcon.uservoice.com/
 .. _исходники тестов на Github: https://github.com/phalcon/framework-bench
-.. _APC:ц http://php.net/manual/en/book.apc.php
+.. _APC: http://php.net/manual/en/book.apc.php

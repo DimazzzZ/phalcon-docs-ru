@@ -272,13 +272,13 @@ Setting User Options
 При отображении формы, если нет значений по умолчанию для элементов, будут использованы значения из сущностей:
 
 .. code-block:: html+php
-	
+
 	<?php echo $form->render('name') ?>
 
 Проверить введённые пользователем значения в форму можно следующим образом:
 
 .. code-block:: php
-	
+
 	<?php
 
 	$form->bind($_POST, $robot);
@@ -525,7 +525,6 @@ Using the unique name, forms can be accesed in any part of the application:
 
     echo $this->forms->get('login')->render();
 
-External Resources
-------------------
-
+Внешние источники
+-----------------
 * `Vökuró <http://vokuro.phalconphp.com>`_, is a sample application that uses the forms builder to create forms in this application, [`Github <https://github.com/phalcon/vokuro>`_]
