@@ -192,7 +192,7 @@
         $robots = $app->modelsManager->executeQuery($phql);
 
         $data = array();
-        foreach($robots as $robot){
+        foreach( $robots as $robot){
             $data[] = array(
                 'id' => $robot->id,
                 'name' => $robot->name,
@@ -219,7 +219,7 @@
         ));
 
         $data = array();
-        foreach($robots as $robot){
+        foreach ($robots as $robot){
             $data[] = array(
                 'id' => $robot->id,
                 'name' => $robot->name,
@@ -244,7 +244,7 @@
             'id' => $id
         ))->getFirst();
 
-        if ($robot==false) {
+        if ($robot == false) {
             $response = array('status' => 'NOT-FOUND');
         } else {
             $response = array(
@@ -281,7 +281,7 @@
         ));
 
         // Проверка, что вставка произведена успешно
-        if($status->success()==true){
+        if($status->success() == true){
 
             $robot->id = $status->getModel()->id;
 
@@ -328,7 +328,7 @@
         ));
 
         // Проверка, что обновление произведено успешно
-        if($status->success()==true){
+        if($status->success() == true){
 
             $response = array('status' => 'OK');
 
@@ -365,7 +365,7 @@
         $status = $app->modelsManager->executeQuery($phql, array(
             'id' => $id
         ));
-        if($status->success()==true){
+        if($status->success() == true){
 
             $response = array('status' => 'OK');
 

@@ -14,6 +14,7 @@
 
     // Проверка что даные пришли методом POST
     if ($request->isPost() == true) {
+    
         // Проверка что request создан через Ajax
         if ($request->isAjax() == true) {
             echo "Request создан используя POST и AJAX";
@@ -63,7 +64,9 @@ $_GET и $_POST массивам и обезопасивает или фильт
 
     <?php
 
-    class PostsController extends \Phalcon\Mvc\Controller
+    use Phalcon\Mvc\Controller;
+
+    class PostsController extends Controller
     {
 
         public function indexAction()
@@ -96,22 +99,24 @@ $_GET и $_POST массивам и обезопасивает или фильт
 
     <?php
 
-    class PostsController extends \Phalcon\Mvc\Controller
+    use Phalcon\Mvc\Controller;
+
+    class PostsController extends Controller
     {
 
         public function uploadAction()
         {
             // Проверяем что файл загрузился
             if ($this->request->hasFiles() == true) {
+            
                 // Выводим имя и размер файла
                 foreach ($this->request->getUploadedFiles() as $file) {
 
                     // Выводим детали
                     echo $file->getName(), " ", $file->getSize(), "\n";
 
-
                     // Перемещаем в приложение
-                    $file->moveTo('files/');
+                    $file->moveTo('files/' . $file->getName());
                 }
             }
         }

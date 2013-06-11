@@ -413,7 +413,7 @@ Backend Адаптеры
 | collection | Коллекция в базе данных                     |
 +------------+---------------------------------------------+
 
-Существует еще несколько типов адаптеров, их можно изучить в "Инкубаторе" - `Phalcon Incubator <https://github.com/phalcon/incubator>`_
+Существует еще несколько типов адаптеров, их можно получить в "Инкубаторе" - `Phalcon Incubator <https://github.com/phalcon/incubator>`_
 
 .. _Memcached: http://ru.wikipedia.org/wiki/Memcached
 .. _memcache: http://pecl.php.net/package/memcache

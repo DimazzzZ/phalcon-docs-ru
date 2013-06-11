@@ -108,8 +108,9 @@ Volt был написан под вдохновлением от Jinja_, кот
 
             $this->view->setVar("title", $post->title);
             $this->view->setVar("post", $post);
-            $this->view->setVar("menu", Menu::find());
-            $this->view->setVar("show_navigation", true);
+            // или 
+            $this->view->menu = Menu::find();
+            $this->view->show_navigation = true;
 
         }
 

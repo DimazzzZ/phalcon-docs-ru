@@ -709,6 +709,10 @@ UPDATE выполняет изменение в два этапа:
     $builder->from('Robots')
             ->notInWhere('id', array(1, 2, 3));
 
+    // 'SELECT Robots.* FROM Robots WHERE name LIKE '%Art%'
+    $builder->from('Robots')
+            ->where('name LIKE :name:', array('name' => '%' . $name . '%'));
+
 Связанные параметры
 ^^^^^^^^^^^^^^^^^^^
 В Query Builder можно устанавливать связанные параметры, указывать их можно непосредственно в запросе, либо в момент выполнения:

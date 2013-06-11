@@ -1,6 +1,6 @@
 Управление ресурсами (Assets Management)
 ========================================
-Phalcon\Assets - это компонент позволяющий разработчику управлять статичными ресурсами в веб-приложении,
+Phalcon\\Assets - это компонент позволяющий разработчику управлять статичными ресурсами в веб-приложении,
 такими как каскадные таблицы стилей или javascript'ы.
 
 :doc:`Phalcon\\Assets\\Manager <../api/Phalcon_Assets_Manager>` доступен в контейнере сервисов,
@@ -135,7 +135,7 @@ Phalcon\Assets - это компонент позволяющий разрабо
 
     $scripts = $assets
         ->collection('header')
-        ->setPrefix('http:://cdn.example.com/')
+        ->setPrefix('http://cdn.example.com/')
         ->setLocal(false)
         ->addJs('js/jquery.js')
         ->addJs('js/bootstrap.min.js');
@@ -150,5 +150,5 @@ Phalcon\Assets - это компонент позволяющий разрабо
     <?php
 
     foreach ($this->assets->collection('js') as $resource) {
-        echo Phalcon_Tag::javascriptInclude($resource->getPath());
+        echo \Phalcon\Tag::javascriptInclude($resource->getPath());
     }

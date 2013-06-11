@@ -7,22 +7,22 @@ Annotations are read from docblocks in classes, methods and properties. An annot
 
 .. code-block:: php
 
-	<?php
+    <?php
 
-	/**
-	 * This is the class description
-	 *
-	 * @AmazingClass(true)
-	 */
-	class Example
-	{
+    /**
+     * This is the class description
+     *
+     * @AmazingClass(true)
+     */
+    class Example
+    {
 
-		/**
-		 * This a property with a special feature
-		 *
-		 * @SpecialFeature
-		 */
-		protected $someProperty;
+        /**
+         * This a property with a special feature
+         *
+         * @SpecialFeature
+         */
+        protected $someProperty;
 
         /**
          * This is a method
@@ -178,7 +178,7 @@ Annotations may have parameters or not. A parameter could be a simple literal (s
 
 Practical Usage
 ---------------
-Let's pretend we've the following controller and the developer wants to create a plugin that automatically starts the
+Let's pretend we've the following controller and the developer wants to create a plugin that automatically start the
 cache if the latest action executed is marked as cacheable. First off all we register a plugin in the Dispatcher service
 to be notified when a route is executed:
 
@@ -198,7 +198,7 @@ to be notified when a route is executed:
         return $dispatcher;
     };
 
-CacheEnablerPlugin is a plugin that intercepts every action executed in the dispatcher enabling the cache if needed:
+CacheEnablerPlugin is a plugin that intercept every action executed in the dispatcher enabling the cache if needed:
 
 .. code-block:: php
 

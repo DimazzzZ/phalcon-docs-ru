@@ -202,13 +202,15 @@ The available query options are:
 +=============+====================================================================================================================================================================================================+=========================================================================+
 | conditions  | Search conditions for the find operation. Is used to extract only those records that fulfill a specified criterion. By default Phalcon\\Mvc\\Model assumes the first parameter are the conditions. | "conditions" => "name LIKE 'steve%'"                                    |
 +-------------+----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+-------------------------------------------------------------------------+
+| columns     | Return specific columns instead of the full columns in the model. When using this option an incomplete object is returned                                                                          | "columns" => "id, name"                                                 |
++-------------+----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+-------------------------------------------------------------------------+
 | bind        | Bind is used together with options, by replacing placeholders and escaping values thus increasing security                                                                                         | "bind" => array("status" => "A", "type" => "some-time")                 |
 +-------------+----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+-------------------------------------------------------------------------+
 | bindTypes   | When binding parameters, you can use this parameter to define additional casting to the bound parameters increasing even more the security                                                         | "bindTypes" => array(Column::BIND_TYPE_STR, Column::BIND_TYPE_INT)      |
 +-------------+----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+-------------------------------------------------------------------------+
 | order       | Is used to sort the resultset. Use one or more fields separated by commas.                                                                                                                         | "order" => "name DESC, status"                                          |
 +-------------+----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+-------------------------------------------------------------------------+
-| limit       | Limit the results of the query to results to certain range                                                                                                                                         | "limit" => 10                                                           |
+| limit       | Limit the results of the query to results to certain range                                                                                                                                         | "limit" => 10 / "limit" => array("number" => 10, "offset" => 5)         |
 +-------------+----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+-------------------------------------------------------------------------+
 | group       | Allows to collect data across multiple records and group the results by one or more columns                                                                                                        | "group" => "name, status"                                               |
 +-------------+----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+-------------------------------------------------------------------------+
@@ -287,10 +289,10 @@ is that at any time there is only one record in memory. This greatly helps in me
     }
 
     // Get the first record in the resultset
-    $robot = robots->getFirst();
+    $robot = $robots->getFirst();
 
     // Get the last record
-    $robot = robots->getLast();
+    $robot = $robots->getLast();
 
 Phalcon's resultsets emulate scrollable cursors, you can get any row just by accessing its position, or seeking the internal pointer
 to a specific position. Note that some database systems don't support scrollable cursors, this forces to re-execute the query
@@ -321,6 +323,24 @@ thus consuming more memory while this process takes place.
     foreach ($parts as $part) {
        echo $part->id;
     }
+
+Filtering Resultsets
+^^^^^^^^^^^^^^^^^^^^
+The most efficient way to filter data is setting some search criteria, databases will use indexes set on tables to return data faster.
+Phalcon additionally allows you to filter the data using PHP using any resource that is not available in the database:
+
+.. code-block:: php
+
+    <?php
+
+    $customers = Customers::find()->filter(function($customer) {
+
+        //Return only customers with a valid e-mail
+        if (filter_var($customer->email, FILTER_VALIDATE_EMAIL))) {
+            return $customer;
+        }
+
+    });
 
 Binding Parameters
 ^^^^^^^^^^^^^^^^^^
@@ -1351,6 +1371,9 @@ this means we can create listeners that run when an event is triggered.
                 }
                 return true;
             });
+
+            //Attach the events manager to the event
+            $this->setEventsManager($eventsManager);
         }
 
     }
@@ -3036,7 +3059,7 @@ Using :doc:`Phalcon\\Mvc\\Model <models>` in a stand-alone mode can be demonstra
     <?php
 
     use Phalcon\DI,
-        Phalcon\Db\Adapter\Pdo\Sqlite,
+        Phalcon\Db\Adapter\Pdo\Sqlite as Connection,
         Phalcon\Mvc\Model\Manager as ModelsManager,
         Phalcon\Mvc\Model\Metadata\Memory as MetaData,
         Phalcon\Mvc\Model;

@@ -1,6 +1,6 @@
 Формы
 =====
-Компонент Phalcon\Forms позволяет создавать и управлять формами вашего приложения.
+Компонент Phalcon\\Forms позволяет создавать и управлять формами вашего приложения.
 
 Ниже представлен базовый пример работы с формами:
 
@@ -496,6 +496,34 @@ In addition to the form elements provided by Phalcon you can create your own cus
             return $html;
         }
     }
+
+Forms Manager
+-------------
+This component provides a forms manager that can be used by the developer to register forms and access them via the service locator:
+
+.. code-block:: php
+
+    <?php
+
+    $di['forms'] = function() {
+        return new Phalcon\Forms\Manager();
+    }
+
+Forms are added to the forms manager and referenced by a unique name:
+
+.. code-block:: php
+
+    <?php
+
+    $this->forms->set('login', new LoginForm());
+
+Using the unique name, forms can be accesed in any part of the application:
+
+.. code-block:: php
+
+    <?php
+
+    echo $this->forms->get('login')->render();
 
 External Resources
 ------------------

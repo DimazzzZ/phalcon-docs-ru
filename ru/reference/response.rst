@@ -1,6 +1,6 @@
 Заголовки ответа (Responses)
 ============================
-Одной из частей работы HTTP протокола является возвращение ответа клиенту. В Phalcon существует компонент :doc:`Phalcon\\HTTP\\Response <../api/Phalcon_Http_Response>` 
+Одной из частей работы HTTP протокола является возвращение ответа клиенту. В Phalcon существует компонент :doc:`Phalcon\\Http\\Response <../api/Phalcon_Http_Response>` 
 для реализации этой задачи. HTTP ответ состоит из заголовков и тела ответа. Типичное ипользование Response выглядит следующим образом:
 
 .. code-block:: php
@@ -11,7 +11,7 @@
     $response = new \Phalcon\Http\Response();
 
     // Установка кода статуса
-    $response->setRawHeader(404, "Not Found");
+    $response->setStatusCode(404, "Not Found");
 
     // Установка содержимого ответа
     $response->setContent("Сожалеем, но страница не существует");
@@ -103,7 +103,7 @@
     <?php
 
     // Переадресация по именованному правилу роутинга
-    $response->redirect(array(
+    return $response->redirect(array(
         "for" => "index-lang",
         "lang" => "jp",
         "controller" => "index"
@@ -192,5 +192,4 @@ E-Tag
 
     // Отправка E-Tag
     $response->setHeader('E-Tag', $eTag);
-
 

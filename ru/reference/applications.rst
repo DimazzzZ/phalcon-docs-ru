@@ -58,8 +58,7 @@ MVC Приложения
 
     try {
 
-        $application = new Application();
-        $application->setDI($di);
+        $application = new Application($di);
         echo $application->handle()->getContent();
         
     } catch (Exception $e) {
@@ -107,8 +106,7 @@ MVC Приложения
 
     try {
 
-        $application = new Application();
-        $application->setDI($di);
+        $application = new Application($di);
         echo $application->handle()->getContent();
 
     } catch(Exception $e){
@@ -250,8 +248,7 @@ MVC Приложения
     try {
 
         // Создание приложения
-        $application = new Application();
-        $application->setDI($di);
+        $application = new Application($di);
 
         // Регистрация установленных модулей
         $application->registerModules(
@@ -328,8 +325,8 @@ MVC Приложения
         //...
 
         // Handle the request
-        $application = new \Phalcon\Mvc\Application();
-        $application->setDI($di);
+        $application = new \Phalcon\Mvc\Application($di);
+
         echo $application->handle()->getContent();
 
     } catch (\Phalcon\Exception $e) {

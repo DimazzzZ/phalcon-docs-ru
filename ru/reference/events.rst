@@ -336,6 +336,9 @@ the same name. Now let's create a listener to this component:
 
     <?php
 
+    // активация установки приоритетов
+    $evManager->enablePriorities(true);
+
     $evManager->attach('db', new DbListener(), 150); // Высокий приоритет
     $evManager->attach('db', new DbListener(), 100); // Нормальный приоитет
     $evManager->attach('db', new DbListener(), 50); // Низкий приоритет

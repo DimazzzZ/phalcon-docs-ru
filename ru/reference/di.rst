@@ -741,7 +741,7 @@ Properties Injection
     $session = $di->get('session'); // Locates the service for the first time
     $session = $di->getSession(); // Returns the first instantiated object
 
-Так же можно зарегистрировать сервис, передав "true" в качестве третьего параметра метода "set":
+Так же можно зарегистрировать сервис с совместным доступом, передав "true" в качестве третьего параметра метода "set":
 
 .. code-block:: php
 
@@ -845,7 +845,7 @@ Properties Injection
     // Регистрация сервиса
     $di->set('myClass', 'MyClass');
 
-    // Получение сервиса ($myClass->setDi($di) вызовется автоматически)
+    // Получение сервиса (ВНИМАНИЕ: $myClass->setDi($di) вызовется автоматически)
     $myClass = $di->get('myClass');
 
 Избежание разрешения сервисов
