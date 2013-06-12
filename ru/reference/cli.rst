@@ -28,16 +28,16 @@ CLI приложения выполняются в командной строк
 
     <?php
 
-   use Phalcon\DI\FactoryDefault\CLI as CliDI,
+    use Phalcon\DI\FactoryDefault\CLI as CliDI,
         Phalcon\CLI\Console as ConsoleApp;
 
     // Используйте CLI factory в качестве контейнера ресурсов
-  $di = new CliDI();
+    $di = new CliDI();
 
     // Создание консольного приложения
-  $console = new ConsoleApp();
-  $console->setDI($di);
+    $console = new ConsoleApp();
+    $console->setDI($di);
 
     // Выполнение действия
-  $console->handle(array('task' => 'shell_script_name', 'action' => 'echo'));
+    $console->handle(array('task' => 'shell_script_name', 'action' => 'echo'));
 

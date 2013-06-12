@@ -15,12 +15,12 @@ Xdebug_ предоставляет простой способ профилир�
 
 .. code-block:: ini
 
-	xdebug.profiler_enable = On
+    xdebug.profiler_enable = On
 
 С помощью инструмента Webgrind_ можно визуально понять какие функции и методы медленнее остальных:
 
 .. figure:: ../_static/img/webgrind.jpg
-	:align: center
+    :align: center
 
 Профилирование с Xhprof
 ^^^^^^^^^^^^^^^^^^^^^^^
@@ -28,34 +28,34 @@ Xhprof_ еще одно интересное расширение для про�
 
 .. code-block:: php
 
-	<?php
+    <?php
 
-	xhprof_enable(XHPROF_FLAGS_CPU + XHPROF_FLAGS_MEMORY);
+    xhprof_enable(XHPROF_FLAGS_CPU + XHPROF_FLAGS_MEMORY);
 
 Потом, в конце файла, сохраните данные профилирования:
 
 .. code-block:: php
 
-	<?php
+    <?php
 
-	$xhprof_data = xhprof_disable('/tmp');
+    $xhprof_data = xhprof_disable('/tmp');
 
-	$XHPROF_ROOT = "/var/www/xhprof/";
-	include_once $XHPROF_ROOT . "/xhprof_lib/utils/xhprof_lib.php";
-	include_once $XHPROF_ROOT . "/xhprof_lib/utils/xhprof_runs.php";
+    $XHPROF_ROOT = "/var/www/xhprof/";
+    include_once $XHPROF_ROOT . "/xhprof_lib/utils/xhprof_lib.php";
+    include_once $XHPROF_ROOT . "/xhprof_lib/utils/xhprof_runs.php";
 
-	$xhprof_runs = new XHProfRuns_Default();
-	$run_id = $xhprof_runs->save_run($xhprof_data, "xhprof_testing");
+    $xhprof_runs = new XHProfRuns_Default();
+    $run_id = $xhprof_runs->save_run($xhprof_data, "xhprof_testing");
 
-	echo "http://localhost/xhprof/xhprof_html/index.php?run={$run_id}&source=xhprof_testing\n";
+    echo "http://localhost/xhprof/xhprof_html/index.php?run={$run_id}&source=xhprof_testing\n";
 
 Xhprof обеспечивает встроенный просмотрщик для анализа данных профилирования:
 
 .. figure:: ../_static/img/xhprof-2.jpg
-	:align: center
+    :align: center
 
 .. figure:: ../_static/img/xhprof-1.jpg
-	:align: center
+    :align: center
 
 Профилирование SQL запросов
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^
@@ -65,8 +65,8 @@ Xhprof обеспечивает встроенный просмотрщик дл
 
 .. code-block:: ini
 
-	log-slow-queries = /var/log/slow-queries.log
-	long_query_time = 1.5
+    log-slow-queries = /var/log/slow-queries.log
+    long_query_time = 1.5
 
 Профилирование на клиенте
 -------------------------
@@ -79,19 +79,19 @@ Xhprof обеспечивает встроенный просмотрщик дл
 различных ресурсов можно использовать веб-инспектор:
 
 .. figure:: ../_static/img/chrome-1.jpg
-	:align: center
+    :align: center
 
 Firebug_ обеспечивает схожую функциональность:
 
 .. figure:: ../_static/img/firefox-1.jpg
-	:align: center
+    :align: center
 
 Использование Yahoo! YSlow
 --------------------------
 YSlow_ анализирует веб-страницу и показывает советы по улучшению производительности на основе комплекса `правил для высокопроизводительных веб-страниц`_
 
 .. figure:: ../_static/img/yslow-1.jpg
-	:align: center
+    :align: center
 
 Использование Speed Tracer
 ^^^^^^^^^^^^^^^^^^^^^^^^^^
@@ -100,7 +100,7 @@ YSlow_ анализирует веб-страницу и показывает с
 время платформах (Windows и Linux).
 
 .. figure:: ../_static/img/speed-tracer.jpg
-	:align: center
+    :align: center
 
 Этот инструмент очень полезен, так как он позволяет получать в реальном времени параметры, используемые для отображения полной страницы, включая разбор HTML,
 оценку Javascript и CSS стилей.
@@ -112,7 +112,7 @@ APC_ как и многие другие PHP акселераторы помог
 
 .. code-block:: ini
 
-	apc.enabled = On
+    apc.enabled = On
 
 Модуль Google Page Speed
 ------------------------
