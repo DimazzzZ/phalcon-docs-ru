@@ -1,6 +1,5 @@
 Отладка приложений
 ==================
-
 .. figure:: ../_static/img/xdebug-1.jpg
     :align: center
 

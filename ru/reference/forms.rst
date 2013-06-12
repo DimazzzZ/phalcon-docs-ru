@@ -6,51 +6,51 @@
 
 .. code-block:: php
 
-	<?php
+    <?php
 
-	use Phalcon\Forms\Form,
-		Phalcon\Forms\Element\Text,
-		Phalcon\Forms\Element\Select;
+    use Phalcon\Forms\Form,
+        Phalcon\Forms\Element\Text,
+        Phalcon\Forms\Element\Select;
 
-	$form = new Form();
+    $form = new Form();
 
-	$form->add(new Text("name"));
+    $form->add(new Text("name"));
 
-	$form->add(new Text("telephone"));
+    $form->add(new Text("telephone"));
 
-	$form->add(new Select("telephoneType", array(
-		'H' => 'Home',
-		'C' => 'Cell'
-	)));
+    $form->add(new Select("telephoneType", array(
+        'H' => 'Home',
+        'C' => 'Cell'
+    )));
 
 Элементы форм выводятся по указанным при создании именам:
 
 .. code-block:: html+php
 
-	<h1>Контакты</h1>
+    <h1>Контакты</h1>
 
-	<form method="post">
+    <form method="post">
 
-		<p>
-			<label>Имя</label>
-			<?php echo $form->render("name") ?>
-		</p>
+        <p>
+            <label>Имя</label>
+            <?php echo $form->render("name") ?>
+        </p>
 
-		<p>
-			<label>Телефон</label>
-			<?php echo $form->render("telephone") ?>
-		</p>
+        <p>
+            <label>Телефон</label>
+            <?php echo $form->render("telephone") ?>
+        </p>
 
-		<p>
-			<label>Тип телефона</label>
-			<?php echo $form->render("telephoneType") ?>
-		</p>
+        <p>
+            <label>Тип телефона</label>
+            <?php echo $form->render("telephoneType") ?>
+        </p>
 
-		<p>
-			<input type="submit" value="Сохранить" />
-		</p>
+        <p>
+            <input type="submit" value="Сохранить" />
+        </p>
 
-	</form>
+    </form>
 
 Каждый элемент формы может быть настроен по желанию разработчика. Внутри компонент исполльзует возможности
 :doc:`Phalcon\\Tag <../api/Phalcon_Tag>` для генерации HTML кода каждого документа, вы можете передавать дополнительные
@@ -58,21 +58,21 @@ html-атрибуты вторым параметром:
 
 .. code-block:: html+php
 
-	<p>
-		<label>Имя</label>
-		<?php echo $form->render("name", array('maxlength' => 30, 'placeholder' => 'Введите своё имя')) ?>
-	</p>
+    <p>
+        <label>Имя</label>
+        <?php echo $form->render("name", array('maxlength' => 30, 'placeholder' => 'Введите своё имя')) ?>
+    </p>
 
 Аттрибуты HTML могут быть указаны в параметрах при создании элемента:
 
 .. code-block:: php
 
-	<?php
+    <?php
 
-	$form->add(new Text("name", array(
-		'maxlength' => 30,
-		'placeholder' => 'Введите своё имя'
-	)));
+    $form->add(new Text("name", array(
+        'maxlength' => 30,
+        'placeholder' => 'Введите своё имя'
+    )));
 
 
 Инициализация
@@ -185,36 +185,36 @@ html-атрибуты вторым параметром:
 
 .. code-block:: php
 
-	<?php
+    <?php
 
-	use Phalcon\Forms\Element\Text,
-		Phalcon\Validation\Validator\PresenceOf,
-		Phalcon\Validation\Validator\StringLength;
+    use Phalcon\Forms\Element\Text,
+        Phalcon\Validation\Validator\PresenceOf,
+        Phalcon\Validation\Validator\StringLength;
 
-	$name = new Text("name");
+    $name = new Text("name");
 
-	$name->addValidator(new PresenceOf(array(
-		'message' => 'Поле Name обязательно для заполнения'
-	)));
+    $name->addValidator(new PresenceOf(array(
+        'message' => 'Поле Name обязательно для заполнения'
+    )));
 
-	$name->addValidator(new StringLength(array(
-		'min' => 10,
-		'messageMinimum' => 'Значение поля Name слишком короткое'
-	)));
+    $name->addValidator(new StringLength(array(
+        'min' => 10,
+        'messageMinimum' => 'Значение поля Name слишком короткое'
+    )));
 
-	$form->add($name);
+    $form->add($name);
 
 Затем вы сможете проверить правильность заполнения формы пользователем:
 
 .. code-block:: php
 
-	<?php
+    <?php
 
-	if (!$form->isValid($_POST)) {
-		foreach ($form->getMessages() as $message) {
-			echo $message, '<br>';
-		}
-	}
+    if (!$form->isValid($_POST)) {
+        foreach ($form->getMessages() as $message) {
+            echo $message, '<br>';
+        }
+    }
 
 Валидаторы выполняются в порядке регистрации.
 
@@ -243,15 +243,15 @@ html-атрибуты вторым параметром:
         echo $message, '<br>';
     }
 
-Filtering
----------
+
+Фильтрация
+----------
 A form is also able to filter data before be validated, you can set filters in each element:
 
 
 
-Setting User Options
---------------------
-
+Настройка пользовательских параметров
+-------------------------------------
 Формы и сущности
 ----------------
 Модели или коллекции являются такими сущностями, которые можно без проблем связать с формами, их значения в таком случае будут использоваться
@@ -259,36 +259,36 @@ Setting User Options
 
 .. code-block:: php
 
-	<?php
+    <?php
 
-	$robot = Robots::findFirst();
+    $robot = Robots::findFirst();
 
-	$form = new Form($robot);
+    $form = new Form($robot);
 
-	$form->add(new Text("name"));
+    $form->add(new Text("name"));
 
-	$form->add(new Text("year"));
+    $form->add(new Text("year"));
 
 При отображении формы, если нет значений по умолчанию для элементов, будут использованы значения из сущностей:
 
 .. code-block:: html+php
 
-	<?php echo $form->render('name') ?>
+    <?php echo $form->render('name') ?>
 
 Проверить введённые пользователем значения в форму можно следующим образом:
 
 .. code-block:: php
 
-	<?php
+    <?php
 
-	$form->bind($_POST, $robot);
+    $form->bind($_POST, $robot);
 
-	// Проверка правильности введённых данных формы
-	if ($form->isValid()) {
+    // Проверка правильности введённых данных формы
+    if ($form->isValid()) {
 
-		// Сохранение сущности
-		$robot->save();
-	}
+        // Сохранение сущности
+        $robot->save();
+    }
 
 Setting up a plain class as entity also is possible:
 
@@ -355,29 +355,29 @@ give you more free to produce values:
 -------------
 Phalcon предоставляет набор элементов для использования в ваших формах:
 
-+--------------+-------------------------------------------------------------------+-------------------------------------------------------------------+
-| Название     | Описание                                                          | Example                                                           |
-+==============+===================================================================+===================================================================+
-| Text         | Генерирует элемент INPUT[type=text]                               | :doc:`Example <../api/Phalcon_Forms_Element_Text>`                |
-+--------------+-------------------------------------------------------------------+-------------------------------------------------------------------+
-| Password     | Генерирует элемент INPUT[type=password]                           | :doc:`Example <../api/Phalcon_Forms_Element_Password>`            |
-+--------------+-------------------------------------------------------------------+-------------------------------------------------------------------+
-| Select       | Генерирует элемент раскрывающегося списка SELECT                  | :doc:`Example <../api/Phalcon_Forms_Element_Select>`              |
-+--------------+-------------------------------------------------------------------+-------------------------------------------------------------------+
-| Check        | Генерирует элемент INPUT[type=check]                              | :doc:`Example <../api/Phalcon_Forms_Element_Check>`               |
-+--------------+-------------------------------------------------------------------+-------------------------------------------------------------------+
-| Textarea     | Генерирует элемент TEXTAREA                                       | :doc:`Example <../api/Phalcon_Forms_Element_TextArea>`            |
-+--------------+-------------------------------------------------------------------+-------------------------------------------------------------------+
-| Hidden       | Generate INPUT[type=hidden] elements                              | :doc:`Example <../api/Phalcon_Forms_Element_Hidden>`              |
-+--------------+-------------------------------------------------------------------+-------------------------------------------------------------------+
-| File         | Generate INPUT[type=file] elements                                | :doc:`Example <../api/Phalcon_Forms_Element_File>`                |
-+--------------+-------------------------------------------------------------------+-------------------------------------------------------------------+
-| Date         | Generate INPUT[type=date] elements                                | :doc:`Example <../api/Phalcon_Forms_Element_Date>`                |
-+--------------+-------------------------------------------------------------------+-------------------------------------------------------------------+
-| Numeric      | Generate INPUT[type=number] elements                              | :doc:`Example <../api/Phalcon_Forms_Element_Numeric>`             |
-+--------------+-------------------------------------------------------------------+-------------------------------------------------------------------+
-| Submit       | Generate INPUT[type=submit] elements                              | :doc:`Example <../api/Phalcon_Forms_Element_Submit>`              |
-+--------------+-------------------------------------------------------------------+-------------------------------------------------------------------+
++--------------+-------------------------------------------------------------------+---------------------------------------------------------+
+| Название     | Описание                                                          | Пример использования                                    |
++==============+===================================================================+=========================================================+
+| Text         | Генерирует элемент INPUT[type=text]                               | :doc:`Пример <../api/Phalcon_Forms_Element_Text>`       |
++--------------+-------------------------------------------------------------------+---------------------------------------------------------+
+| Password     | Генерирует элемент INPUT[type=password]                           | :doc:`Пример <../api/Phalcon_Forms_Element_Password>`   |
++--------------+-------------------------------------------------------------------+---------------------------------------------------------+
+| Select       | Генерирует элемент раскрывающегося списка SELECT                  | :doc:`Пример <../api/Phalcon_Forms_Element_Select>`     |
++--------------+-------------------------------------------------------------------+---------------------------------------------------------+
+| Check        | Генерирует элемент INPUT[type=check]                              | :doc:`Пример <../api/Phalcon_Forms_Element_Check>`      |
++--------------+-------------------------------------------------------------------+---------------------------------------------------------+
+| Textarea     | Генерирует элемент TEXTAREA                                       | :doc:`Пример <../api/Phalcon_Forms_Element_TextArea>`   |
++--------------+-------------------------------------------------------------------+---------------------------------------------------------+
+| Hidden       | Генерирует элемент INPUT[type=hidden]                             | :doc:`Пример <../api/Phalcon_Forms_Element_Hidden>`     |
++--------------+-------------------------------------------------------------------+---------------------------------------------------------+
+| File         | Генерирует элемент INPUT[type=file]                               | :doc:`Пример <../api/Phalcon_Forms_Element_File>`       |
++--------------+-------------------------------------------------------------------+---------------------------------------------------------+
+| Date         | Генерирует элемент INPUT[type=date]                               | :doc:`Пример <../api/Phalcon_Forms_Element_Date>`       |
++--------------+-------------------------------------------------------------------+---------------------------------------------------------+
+| Numeric      | Генерирует элемент INPUT[type=number]                             | :doc:`Пример <../api/Phalcon_Forms_Element_Numeric>`    |
++--------------+-------------------------------------------------------------------+---------------------------------------------------------+
+| Submit       | Генерирует элемент INPUT[type=submit]                             | :doc:`Пример <../api/Phalcon_Forms_Element_Submit>`     |
++--------------+-------------------------------------------------------------------+---------------------------------------------------------+
 
 Event Callbacks
 ---------------

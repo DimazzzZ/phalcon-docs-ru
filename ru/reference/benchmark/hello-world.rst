@@ -1,9 +1,8 @@
 Тест производительности Hello World
 ===================================
-
 Цель тестирования
 -----------------
-Мы создали тест "Hello World" для создания минимальной нагрузки на каждый фреймворк. Большинство не любит такие 
+Мы создали тест "Hello World" для создания минимальной нагрузки на каждый фреймворк. Большинство не любит такие
 сравнения, потому что в реальных приложения используются более сложные функции и структуры. Однако, данный тест позволяет выявить
 минимальное время, необходимое каждому фреймворку для выполнения одной простой задачи. Такая задача требует выполнения минимальных
 условий для работы каждого фреймворка.
@@ -13,7 +12,7 @@
 требуемое для более сложных операций будет выше.
 
 Для каждого фреймворка были созданы Контроллер и представление (view). Контроллер называется "say", а выполняемое действие "hello". Контроллер
-только передает в представление данные для отображения строки ("Hello!"). Для тестирования была использована утилита "ab", мы отправляли фреймворкам 
+только передает в представление данные для отображения строки ("Hello!"). Для тестирования была использована утилита "ab", мы отправляли фреймворкам
 2000 запросов с 10 одновременными подключениями.
 
 Контрольные замеры
@@ -27,7 +26,6 @@
 
 Соперники
 ---------
-
 * Yii_ (YII_DEBUG=false) (yii-1.1.13)
 * Symfony_ (2.0.11)
 * `Zend Framework`_ (1.11.11)
@@ -40,10 +38,8 @@
 
 Результаты
 ----------
-
 Yii (YII_DEBUG=false) версии yii-1.1.13
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
-
 .. code-block:: php
 
 	# ab -n 2000 -c 10 http://localhost/bench/helloworld/yii/index.php?r=say/hello
@@ -93,7 +89,6 @@ Yii (YII_DEBUG=false) версии yii-1.1.13
 
 Symfony версии 2.1.6
 ^^^^^^^^^^^^^^^^^^^^
-
 .. code-block:: php
 
 	# ab -n 2000 -c 10 http://localhost/bench/Symfony/web/app.php/say/hello/
@@ -143,7 +138,6 @@ Symfony версии 2.1.6
 
 CodeIgniter версии 2.1.0
 ^^^^^^^^^^^^^^^^^^^^^^^^
-
 .. code-block:: php
 
 	# ab -n 2000 -c 10 http://localhost/bench/codeigniter/index.php/say/hello
@@ -193,7 +187,6 @@ CodeIgniter версии 2.1.0
 
 Kohana версии 3.2.0
 ^^^^^^^^^^^^^^^^^^^
-
 .. code-block:: php
 
 	# ab -n 2000 -c 10 http://localhost/bench/helloworld/kohana/index.php/say/hello
@@ -243,7 +236,6 @@ Kohana версии 3.2.0
 
 Fuel версии 1.2.1
 ^^^^^^^^^^^^^^^^^
-
 .. code-block:: php
 
 	# ab -n 2000 -c 10 http://localhost/bench/helloworld/fuel/public/say/hello
@@ -293,7 +285,6 @@ Fuel версии 1.2.1
 
 Cake версии 2.1.3
 ^^^^^^^^^^^^^^^^^
-
 .. code-block:: php
 
 	# ab -n 10 -c 5 http://localhost/bench/cake/say/hello
@@ -343,7 +334,6 @@ Cake версии 2.1.3
 
 Zend Framework версии 1.11.11
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
-
 .. code-block:: php
 
 	# ab -n 2000 -c 10 http://localhost/bench/helloworld/zendfw/public/index.php
@@ -393,7 +383,6 @@ Zend Framework версии 1.11.11
 
 Laravel версии 3.2.5
 ^^^^^^^^^^^^^^^^^^^^
-
 .. code-block:: php
 
 	# ab -n 2000 -c 10 http://localhost/bench/helloworld/laravel/public/say/hello
@@ -444,7 +433,6 @@ Laravel версии 3.2.5
 
 Nette версии 2.0.4
 ^^^^^^^^^^^^^^^^^^
-
 .. code-block:: php
 
 	# ab -n 2000 -c 10 http://localhost/bench/helloworld/nette/www/index.php
@@ -496,7 +484,6 @@ Nette версии 2.0.4
 
 Phalcon версии 0.8.0
 ^^^^^^^^^^^^^^^^^^^^
-
 .. code-block:: php
 
 	# ab -n 2000 -c 10 http://localhost/bench/helloworld/phalcon/index.php?_url=/say/hello

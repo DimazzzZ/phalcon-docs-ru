@@ -1233,11 +1233,11 @@ Volt-компилятор позволяет вам расширить его, �
 
 Внешние ресурсы
 ---------------
-* Пакет для Sublime/Textmate можно скачать на [`Github <https://github.com/phalcon/volt-sublime-textmate>`_]
-* `Album-O-Rama <https://github.com/phalcon/album-o-rama>`_ — пример приложения, использующего Volt в качестве шаблонизатоа, [`Github <https://github.com/phalcon/album-o-rama>`_]
-* `Наш сайт <http://phalconphp.com>`_ работает на шаблонизаторе Volt, [`Github <https://github.com/phalcon/website>`_]
-* `Phosphorum <http://forum.phalconphp.com>`_, форум Phalcon так же использует Volt, [`Github <https://github.com/phalcon/forum>`_]
-* `Vökuró <http://vokuro.phalconphp.com>`_, еще одно приложение с использованием Volt, [`Github <https://github.com/phalcon/vokuro>`_]
+* Пакет для Sublime/Textmate можно скачать [`на Github <https://github.com/phalcon/volt-sublime-textmate>`_]
+* `Album-O-Rama <https://github.com/phalcon/album-o-rama>`_ — пример приложения, использующего Volt в качестве шаблонизатоа, [`код album-o-rama на Github <https://github.com/phalcon/album-o-rama>`_]
+* `Наш сайт <http://phalconphp.com>`_ работает на шаблонизаторе Volt, [`код website на Github <https://github.com/phalcon/website>`_]
+* `Phosphorum <http://forum.phalconphp.com>`_, форум Phalcon так же использует Volt, [`код forum на Github <https://github.com/phalcon/forum>`_]
+* `Vökuró <http://vokuro.phalconphp.com>`_, еще одно приложение с использованием Volt, [`код vokuro на Github <https://github.com/phalcon/vokuro>`_]
 
 .. _Armin Ronacher: https://github.com/mitsuhiko
 .. _Twig: https://github.com/vito/chyrp/wiki/Twig-Reference
