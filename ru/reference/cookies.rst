@@ -11,29 +11,29 @@
 
 .. code-block:: php
 
-	<?php
+    <?php
 
-	class SessionController extends Phalcon\Mvc\Controller
-	{
-		public function loginAction()
-		{
-			// Проверяем была ли установлен Кука ранее
-			if ($this->cookies->has('remember-me')) {
+    class SessionController extends Phalcon\Mvc\Controller
+    {
+        public function loginAction()
+        {
+            // Проверяем была ли установлен Кука ранее
+            if ($this->cookies->has('remember-me')) {
 
-				// Извлекаем Куку
-				$rememberMe = $this->cookies->get('remember-me');
+                // Извлекаем Куку
+                $rememberMe = $this->cookies->get('remember-me');
 
-				// Извлекаем значение из Куки
-				$value = $rememberMe->getValue();
+                // Извлекаем значение из Куки
+                $value = $rememberMe->getValue();
 
-			}
-		}
+            }
+        }
 
-		public function startAction()
-		{
-			$this->cookies->set('remember-me', 'некоторое значение', time() + 15 * 86400);
-		}
-	}
+        public function startAction()
+        {
+            $this->cookies->set('remember-me', 'некоторое значение', time() + 15 * 86400);
+        }
+    }
 
 Шифрование/дешифрование Кук
 ---------------------------
@@ -45,25 +45,25 @@
 
 .. code-block:: php
 
-	<?php
+    <?php
 
-	$di->set('cookies', function() {
-		$cookies = new Phalcon\Http\Response\Cookies();
-		$cookies->setEncryption(false);
-		return $cookies;
-	});
+    $di->set('cookies', function() {
+        $cookies = new Phalcon\Http\Response\Cookies();
+        $cookies->setEncryption(false);
+        return $cookies;
+    });
 
 При использовании шифрования должен быть установлен глобальный ключ в сервисе 'crypt':
 
 .. code-block:: php
 
-	<?php
+    <?php
 
-	$di->set('crypt', function() {
-		$crypt = new Phalcon\Crypt();
-		$crypt->setKey('#1dj8$=dp?.ak//j1V$'); // Используйте свой собственный ключ!
-		return $crypt;
-	});
+    $di->set('crypt', function() {
+        $crypt = new Phalcon\Crypt();
+        $crypt->setKey('#1dj8$=dp?.ak//j1V$'); // Используйте свой собственный ключ!
+        return $crypt;
+    });
 
 
 .. _Куки: http://ru.wikipedia.org/wiki/HTTP_cookie

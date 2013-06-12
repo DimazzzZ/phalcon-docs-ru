@@ -8,17 +8,17 @@ CLI приложения выполняются в командной строк
 
 .. code-block:: php
 
-	<?php
+    <?php
 
-	class MonitoringTask extends \Phalcon\CLI\Task
-	{
+    class MonitoringTask extends \Phalcon\CLI\Task
+    {
 
-	    public function mainAction()
-	    {
+        public function mainAction()
+        {
 
-	    }
+        }
 
-	}
+    }
 
 Создание файла запуска
 ----------------------
@@ -26,18 +26,18 @@ CLI приложения выполняются в командной строк
 
 .. code-block:: php
 
-	<?php
+    <?php
 
    use Phalcon\DI\FactoryDefault\CLI as CliDI,
         Phalcon\CLI\Console as ConsoleApp;
 
-	// Используйте CLI factory в качестве контейнера ресурсов
+    // Используйте CLI factory в качестве контейнера ресурсов
   $di = new CliDI();
 
-	// Создание консольного приложения
+    // Создание консольного приложения
   $console = new ConsoleApp();
   $console->setDI($di);
 
-	// Выполнение действия
+    // Выполнение действия
   $console->handle(array('task' => 'shell_script_name', 'action' => 'echo'));
 
