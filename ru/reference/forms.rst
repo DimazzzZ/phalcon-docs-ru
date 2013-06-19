@@ -344,7 +344,7 @@ give you more free to produce values:
             return 'Europe/Amsterdam';
         }
 
-        public function getTimezone()
+        public function getReceiveEmails()
         {
             return 'No';
         }
