@@ -184,7 +184,7 @@ Dispatcher будет искать "PostsController" и его действие 
 
 .. code-block:: html+php
 
-    <!-- app/views/layouts/posts/last.phtml -->
+    <!-- app/views/posts/last.phtml -->
 
     <article>
         <h2>This is a title</h2>
@@ -222,7 +222,7 @@ Dispatcher будет искать "PostsController" и его действие 
 
                 <h1>Blog Title</h1>
 
-                <!-- app/views/layouts/posts/last.phtml -->
+                <!-- app/views/posts/last.phtml -->
 
                 <article>
                     <h2>This is a title</h2>
