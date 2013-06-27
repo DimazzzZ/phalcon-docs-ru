@@ -294,7 +294,7 @@ MVC Приложения
             },
             'backend' => function($di) use ($view) {
                 $di->setShared('view', function() use ($view) {
-                    $view->setViewsDir('../apps/frontend/views/');
+                    $view->setViewsDir('../apps/backend/views/');
                     return $view;
                 });
             }
@@ -341,7 +341,7 @@ MVC Приложения
 
     echo $application->handle()->getContent();
 
-Если вы не хотите использовать :doc:`Phalcon\\Mvc\\Application <../api/Phalcon_Mvc_Application>`, код выше может можно изменить вот так:
+Если вы не хотите использовать :doc:`Phalcon\\Mvc\\Application <../api/Phalcon_Mvc_Application>`, код выше можно изменить вот так:
 
 .. code-block:: php
 
@@ -404,7 +404,7 @@ MVC Приложения
 +---------------------+--------------------------------------------------------------+
 | afterStartModule    | После инициализации зарегистрированнного модуля              |
 +---------------------+--------------------------------------------------------------+
-| beforeHandleRequest | До выполнения цукла диспетчера                               |
+| beforeHandleRequest | До выполнения цикла диспетчера                               |
 +---------------------+--------------------------------------------------------------+
 | afterHandleRequest  | После выполнения цикла диспетчера                            |
 +---------------------+--------------------------------------------------------------+
