@@ -96,7 +96,7 @@
     );
 
     // Передача данных из массива
-    $paginator = new \Phalcon\Paginator\Adapter\Model(
+    $paginator = new \Phalcon\Paginator\Adapter\NativeArray(
         array(
             "data"  => array(
                 array('id' => 1, 'name' => 'Artichoke'),
