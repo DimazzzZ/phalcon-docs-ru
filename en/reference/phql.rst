@@ -15,7 +15,7 @@ In PHQL, we've implemented a set of features to make your access to databases mo
 * PHQL only allows one SQL statement to be executed per call preventing injections
 * PHQL ignores all SQL comments which are often used in SQL injections
 * PHQL only allows data manipulation statements, avoiding altering or dropping tables/databases by mistake or externally without authorization
-* PHQL implements a high-level abstraction allowing you to handle models as tables and class attributes as fields
+* PHQL implements a high-level abstraction allowing you to handle tables as models and fields as class attributes
 
 Usage Example
 -------------
@@ -583,7 +583,7 @@ A builder is available to create PHQL queries without the need to write PHQL sta
     $robots = $this->modelsManager->createBuilder()
         ->from('Robots')
         ->join('RobotsParts')
-        ->order('Robots.name')
+        ->orderBy('Robots.name')
         ->getQuery()
         ->execute();
 
@@ -591,7 +591,7 @@ A builder is available to create PHQL queries without the need to write PHQL sta
     $robots = $this->modelsManager->createBuilder()
         ->from('Robots')
         ->join('RobotsParts')
-        ->order('Robots.name')
+        ->orderBy('Robots.name')
         ->getQuery()
         ->getSingleResult();
 
@@ -835,8 +835,9 @@ Troubleshooting
 ---------------
 Some things to keep in mind when using PHQL:
 
-* Classes are case-sensitive, if a class is not defined as it was defined this could lead to an unexpected behavior.
-* The correct charset must be defined in the connection to bind parameters with success.
+* Classes are case-sensitive, if a class is not defined with the same name as it was created this could lead to an unexpected behavior in operating systems with case-sensitive file systems such as Linux.
+* Correct charset must be defined in the connection to bind parameters with success
 * Aliased classes aren't replaced by full namespaced classes since this only occurs in PHP code and not inside strings
+* If column renaming is enabled avoid using column aliases with the same name as columns to be renamed, this may confuse the query resolver
 
 .. _SQLite: http://en.wikipedia.org/wiki/Lemon_Parser_Generator
