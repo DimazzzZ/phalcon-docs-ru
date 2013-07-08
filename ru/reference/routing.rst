@@ -177,7 +177,7 @@ URL (/admin/users/a/delete/dave/301), маршрутизатор раберёт 
         )
     );
 
-Вы можете получить доступ к их значения так же, как раньше:
+Вы можете получить доступ к их значениям так же, как раньше:
 
 .. code-block:: php
 
@@ -351,7 +351,7 @@ URL: /admin/users/edit/sonny, будут обработан как:
 
 Группы маршрутов
 ^^^^^^^^^^^^^^^^
-Если набор маршрутов имеют общие пути они могут быть сгруппированы для легкой поддержки:
+Если наборы маршрутов имеют общие пути они могут быть сгруппированы для легкой поддержки:
 
 .. code-block:: php
 
@@ -437,7 +437,7 @@ URL: /admin/users/edit/sonny, будут обработан как:
 Соответствие маршрутов
 ----------------------
 Текущий URI передаётся маршрутизатору для сопоставления его маршруту. По умолчанию, URI для обработки берется из
-переменной $_GET['_url'], полученной с использование mod_rewrite.
+переменной $_GET['_url'], полученной с использованием mod_rewrite.
 Для Phalcon подходят очень простые правила mod_rewrite:
 
 .. code-block:: apacheconf
@@ -693,10 +693,12 @@ URL: /admin/users/edit/sonny, будут обработан как:
         )
     );
 
-Match Callbacks
+Дополнительные условия
 ---------------
-Sometimes, routes must be matched if they meet specific conditions, you can add arbitrary conditions to routes using the
-'beforeMatch' callback, if this function return false, the route will be treaded as non-matched:
+Иногда требуется, чтобы перед выполнением маршрут удовлетворял определённым условиям. 
+Вы можете добавлять произвольные условия используя функцию обратного вызова (callback) 
+'beforeMatch'. Если эта функция вернёт false, то запрос не совпадёт с условием и 
+маршрут не выполнится:
 
 .. code-block:: php
 
@@ -706,14 +708,14 @@ Sometimes, routes must be matched if they meet specific conditions, you can add 
         'module' => 'admin',
         'controller' => 'session'
     ))->beforeMatch(function($uri, $route) {
-        //Check if the request was made with Ajax
+        // Проверим, что это был Ajax-запрос
         if ($_SERVER['X_REQUESTED_WITH'] == 'xmlhttprequest') {
             return false;
         }
         return true;
     });
 
-You can re-use these extra conditions in classes:
+Вы можете повторно использовать эти дополнительные условия в классах:
 
 .. code-block:: php
 
@@ -727,7 +729,7 @@ You can re-use these extra conditions in classes:
         }
     }
 
-And use this class instead of the anonymous function:
+И использовать этот класс вместо анонимной функции:
 
 .. code-block:: php
 
@@ -738,10 +740,10 @@ And use this class instead of the anonymous function:
         'action' => 'info'
     ))->beforeMatch(array(new AjaxFilter(), 'check'));
 
-Hostname Constraints
+Ограничение по имени хоста
 --------------------
-The router allow to set hostname contraints, this means that specific routes or a group of routes can be restricted
-to only match if the route also meets the hostname constraint:
+Маршрутизатор позволяет вам выставлять ограничения по имени хоста. Это означает, что
+конкретные маршруты или группы маршрутов могут быть привязаны к конкретным именам хостов:
 
 .. code-block:: php
 
@@ -753,7 +755,7 @@ to only match if the route also meets the hostname constraint:
         'action' => 'login'
     ))->setHostName('admin.company.com');
 
-Hostname can also be regular expressions:
+Имя хоста так же может быть регулярным выражением:
 
 .. code-block:: php
 
@@ -765,40 +767,41 @@ Hostname can also be regular expressions:
         'action' => 'login'
     ))->setHostName('([a-z+]).company.com');
 
-In groups of routes you can set up a hostname constraint that apply for every route in the group:
+В группах маршрутов вы можете установить ограничение по имени хоста, которое будет 
+применяться к каждому маршруту в группе:
 
 .. code-block:: php
 
     <?php
 
-    //Create a group with a common module and controller
+    // Создаём группу с общим модулем и контроллером
     $blog = new \Phalcon\Mvc\Router\Group(array(
         'module' => 'blog',
         'controller' => 'posts'
     ));
 
-    //Hostname restriction
+    // Ограничиваем по имени хоста
     $blog->setHostName('blog.mycompany.com');
 
-    //All the routes start with /blog
+    // Все маршруты начинаются с /blog
     $blog->setPrefix('/blog');
 
-    //Default route
+    // Маршрут по умолчанию
     $blog->add('/', array(
         'action' => 'index'
     ));
 
-    //Add a route to the group
+    // Добавляем маршрут в группу
     $blog->add('/save', array(
         'action' => 'save'
     ));
 
-    //Add another route to the group
+    // Добавляем ещё один маршрут в группу
     $blog->add('/edit/{id}', array(
         'action' => 'edit'
     ));
 
-    //Add the group to the router
+    // Добавляем группу в маршрутизатор
     $router->mount($blog);
 
 Источники URI
