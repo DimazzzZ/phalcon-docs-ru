@@ -5,9 +5,6 @@
 
 Настройка фреймворка
 --------------------
-Using namespaces has some implications when loading the appropriate controller. To adjust the framework behavior to namespaces is necessary
-to perform one or all of the following tasks:
-
 Использование пространств имен накладывает некоторые последствия на загрузку соответствующего контроллера. Для настройки работы фреймворка
 с пространством имен необходимо выполнить одно или все из следующих задач:
 
