@@ -1,7 +1,7 @@
-Микро приложения
-================
-С помощью Phalcon можно создавать приложения по типу "Микро Фреймворк".
-Для этого, необходимо написать всего лишь несколько строк кода. Микро приложения подходят для реализации
+Микроприложения
+===============
+С помощью Phalcon можно создавать приложения по типу "Микрофреймворк".
+Для этого, необходимо написать всего лишь несколько строк кода. Микроприложения подходят для реализации
 небольших приложений, различныx API и прототипов на практике.
 
 .. code-block:: php
@@ -16,9 +16,9 @@
 
     $app->handle();
 
-Создание микро приложения
--------------------------
-:doc:`Phalcon\\Mvc\\Micro <../api/Phalcon_Mvc_Micro>` это класс, отвечающий за реализацию микро приложения.
+Создание микроприложения
+------------------------
+:doc:`Phalcon\\Mvc\\Micro <../api/Phalcon_Mvc_Micro>` это класс, отвечающий за реализацию микроприложения.
 
 .. code-block:: php
 
@@ -28,9 +28,10 @@
 
 Создание путей
 --------------
-После создания экземпляра класса, необходимо добавить некоторые пути. :doc:`Phalcon\\Mvc\\Router <../api/Phalcon_Mvc_Router>` отвечает за управление путями, которые должны всегда начинаться с  /.
-При создании путей, необходимо указывать какой метод HTTP используется, чтобы запросы путей соответствовали методам HTTP.
-Ниже представлен пример, показывающий как создавать пути, используя метод GET:
+После создания экземпляра класса необходимо добавить некоторые пути. :doc:`Phalcon\\Mvc\\Router <../api/Phalcon_Mvc_Router>` 
+отвечает за управление путями, которые должны всегда начинаться с  /. При создании путей необходимо указывать, какой метод 
+HTTP используется, чтобы запросы путей соответствовали методам HTTP. Ниже представлен пример, показывающий как создавать пути 
+используя метод GET:
 
 .. code-block:: php
 
@@ -40,60 +41,60 @@
         echo "<h1>Hello! $name</h1>";
     });
 
-Метод "get" показывает, что используется GET запрос. Путь /say/hello/{name} также имеет параметр {$name},
+Метод "get" показывает, что используется GET-запрос. Путь /say/hello/{name} также имеет параметр {$name},
 который напрямую передается обработчику пути (анонимная функция). Обработка пути выполняется, когда путь совпадает.
-Обработчик может быть любого типа, который возвращает данные в PHP среде. Следующий пример демонстрирует,
-как создавать различные типы обработчиков пути.
+Обработчик может быть любого типа, который возвращает данные в PHP-среде. Следующий пример демонстрирует,
+как создавать различные типы обработчиков пути:
 
 .. code-block:: php
 
     <?php
 
-    //С помощью функции
+    // С помощью функции
     function say_hello($name) {
         echo "<h1>Hello! $name</h1>";
     }
 
     $app->get('/say/hello/{name}', "say_hello");
 
-    // С помощью статичного метода
+    // С помощью статического метода
     $app->get('/say/hello/{name}', "SomeClass::someSayMethod");
 
     // С помощью метода объекта
     $myController = new MyController();
     $app->get('/say/hello/{name}', array($myController, "someAction"));
 
-    //Анонимная функция (замыкание)
+    // Анонимная функция (замыкание)
     $app->get('/say/hello/{name}', function ($name) {
         echo "<h1>Hello! $name</h1>";
     });
 
-:doc:`Phalcon\\Mvc\\Micro <../api/Phalcon_Mvc_Micro>` предлагает набор инструментов для создания HTTP метода (или методов),
+:doc:`Phalcon\\Mvc\\Micro <../api/Phalcon_Mvc_Micro>` предлагает набор инструментов для создания HTTP-метода (или методов),
 необходимых для создания пути:
 
 .. code-block:: php
 
     <?php
 
-    //Совпадет, если HTTP метод - GET
+    // Совпадет, если HTTP-метод - GET
     $app->get('/api/products', "get_products");
 
-    //Совпадет, если HTTP метод - POST
+    // Совпадет, если HTTP-метод - POST
     $app->post('/api/products/add', "add_product");
 
-    //Совпадет, если HTTP метод - PUT
+    // Совпадет, если HTTP-метод - PUT
     $app->put('/api/products/update/{id}', "update_product");
 
-    //Совпадет, если HTTP метод - DELETE
+    // Совпадет, если HTTP-метод - DELETE
     $app->put('/api/products/remove/{id}', "delete_product");
 
-    //Совпадет, если HTTP метод - OPTIONS
+    // Совпадет, если HTTP-метод - OPTIONS
     $app->options('/api/products/info/{id}', "info_product");
 
-    //Совпадет, если HTTP метод - PATCH
+    // Совпадет, если HTTP-метод - PATCH
     $app->patch('/api/products/update/{id}', "info_product");
 
-    //Совпадет, если HTTP метод - GET или POST
+    // Совпадет, если HTTP-метод - GET или POST
     $app->map('/repos/store/refs',"action_product")->via(array('GET', 'POST'));
 
 
@@ -107,29 +108,29 @@
 
     <?php
 
-    //Данный путь имеет два параметра, у каждого из которых задан формат
+    // Данный путь имеет два параметра, у каждого из которых задан формат
     $app->get('/posts/{year:[0-9]+}/{title:[a-zA-Z\-]+}', function ($year, $title) {
         echo "<h1>Title: $title</h1>";
         echo "<h2>Year: $year</h2>";
     });
 
-Starting Route
-^^^^^^^^^^^^^^
-Normally, the starting route in an application is the route /, and it will more frequent to be accessed by the method GET.
-This scenario is coded as follows:
+Маршрут по умолчанию
+^^^^^^^^^^^^^^^^^^^^
+Как правило, маршрутом по умолчанию в приложении является маршрут /. Чаще всего, обращения будут 
+идти именно к нему через метод GET. Этот сценарий можно описать следующим образом:
 
 .. code-block:: php
 
     <?php
 
-    //This is the start route
+    // Это маршрут по умолчанию
     $app->get('/', function () {
         echo "<h1>Welcome!</h1>";
     });
 
-Rewrite Rules
-^^^^^^^^^^^^^
-The following rules can be used together with Apache to rewrite the URis:
+Правила перезаписи (Rewrite Rules)
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+Следующие правила могут быть использованы вместе с Apache для перезаписи URI:
 
 .. code-block:: apacheconf
 
@@ -139,32 +140,32 @@ The following rules can be used together with Apache to rewrite the URis:
         RewriteRule ^(.*)$ index.php?_url=/$1 [QSA,L]
     </IfModule>
 
-Working with Responses
-----------------------
-You are free to produce any kind of response in a handler: directly make an output, use a template engine, include a view,
-return a json, etc.:
+Работа с заголовками ответов (Responses)
+----------------------------------------
+Вы можете работать с любыми заголовками ответов в обработчике: сразу сделать вывод, использовать шаблонизатор, 
+подключить шаблонизатор, вернуть JSON и т.д.:
 
 .. code-block:: php
 
     <?php
 
-    //Direct output
+    // Прямой вывод
     $app->get('/say/hello', function () {
         echo "<h1>Hello! $name</h1>";
     });
 
-    //Requiring another file
+    // Подключение внешнего файла
     $app->get('/show/results', function () {
         require 'views/results.php';
     });
 
-    //Returning a JSON
+    // Возврат JSON
     $app->get('/get/some-json', function () {
         echo json_encode(array("some", "important", "data"));
     });
 
-In addition to that, you have access to the service :doc:`"response" <response>`, with which you can manipulate better the
-response:
+В дополнение к этому, у вас есть доступ к сервису :doc:`"response" <response>`, благодаря которому вы 
+можете обрабатывать ответы ещё более гибко:
 
 .. code-block:: php
 
@@ -172,23 +173,23 @@ response:
 
     $app->get('/show/data', function () use ($app) {
 
-        //Set the Content-Type header
+        // Установка заголовка Content-Type
         $app->response->setContentType('text/plain')->sendHeaders();
 
-        //Print a file
+        // Вывод содержимого файла
         readfile("data.txt");
 
     });
 
-Making redirections
--------------------
-Redirections could be performed to forward the execution flow to another route:
+Создание перенаправлений (Redirects)
+------------------------------------
+Перенаправления могут быть использованы для того, чтобы перенаправить поток исполнения на другой маршрут:
 
 .. code-block:: php
 
     <?php
 
-    //This route makes a redirection to another route
+    // Этот маршрут выполняет перенаправление на другой маршрут
     $app->post('/old/welcome', function () use ($app) {
         $app->response->redirect("new/welcome");
     });
@@ -197,23 +198,24 @@ Redirections could be performed to forward the execution flow to another route:
         echo 'This is the new Welcome';
     });
 
-Generating URLs for Routes
---------------------------
-:doc:`Phalcon\\Mvc\\Url <url>` can be used to produce URLs based on the defined routes. You need to set up a name for the route;
-by this way the "url" service can produce the corresponding URL:
+Создание URL-адресов для маршрутов
+----------------------------------
+Класс :doc:`Phalcon\\Mvc\\Url <url>` может быть использован для получения URL-адреса на основе 
+определенных маршрутов. Вам нужно создать имя для маршрута; опираясь на него служба "url" 
+выполнить соответствующий URL:
 
 .. code-block:: php
 
     <?php
 
-    //Set a route with the name "show-post"
+    // Установка маршрута с именем "show-post"
     $app->get('/blog/{year}/{title}', function ($year, $title) use ($app) {
 
-        //.. show the post here
+        //.. здесь показываем текст статьи
 
     })->setName('show-post');
 
-    //produce an URL somewhere
+    // Где-нибудь используем наш новый адрес
     $app->get('/', function() use ($app) {
 
         echo '<a href="', $app->url->get(array(
@@ -225,10 +227,11 @@ by this way the "url" service can produce the corresponding URL:
     });
 
 
-Interacting with the Dependency Injector
-----------------------------------------
-In the micro application, a :doc:`Phalcon\\DI\\FactoryDefault <di>` services container is created implicitly; additionally you
-can create outside the application a container to manipulate its services:
+Работа с Внедрением зависимостей (Dependency Injector)
+------------------------------------------------------
+В микроприложении сервисы контейнера :doc:`Phalcon\\DI\\FactoryDefault <di>` создаются неявно; 
+Кроме того, вы можете создать за пределами своего приложения контейнер, который будет 
+манипулировать этими сервисами:
 
 .. code-block:: php
 
@@ -249,7 +252,7 @@ can create outside the application a container to manipulate its services:
     $app->setDI($di);
 
     $app->get('/', function () use ($app) {
-        //Read a setting from the config
+        // Читаем свойства нашего конфигурационного файла
         echo $app->config->app_name;
     });
 
@@ -257,7 +260,7 @@ can create outside the application a container to manipulate its services:
         $app->flash->success('Yes!, the contact was made!');
     });
 
-The array-syntax is allowed to easily set/get services in the internal services container:
+Синтаксис массивов удобен для установки/получения сервисов из внутреннего контейнера сервисов:
 
 .. code-block:: php
 
@@ -268,7 +271,7 @@ The array-syntax is allowed to easily set/get services in the internal services 
 
     $app = new Micro();
 
-    //Setup the database service
+    // Установка сервиса базы данных
     $app['db'] = function() {
         return new MysqlAdapter(array(
             "host" => "localhost",
@@ -285,10 +288,10 @@ The array-syntax is allowed to easily set/get services in the internal services 
         }
     });
 
-Not-Found Handler
------------------
-When an user tries to access a route that is not defined, the micro application will try to execute the "Not-Found" handler.
-An example of that behavior is below:
+Обработка исключений "Не найдено"
+---------------------------------
+Когда пользователь пытается получить доступ к маршруту, который не определён, микроприложение 
+запускает обработчик "Не найдено". Пример:
 
 .. code-block:: php
 
@@ -299,9 +302,9 @@ An example of that behavior is below:
         echo 'This is crazy, but this page was not found!';
     });
 
-Models in Micro Applications
-----------------------------
-:doc:`Models <models>` can be used transparently in Micro Applications, only is required an autoloader to load models:
+Модели в микроприложениях
+-------------------------
+:doc:`Модели <models>` в микроприложениях работают так же, как и в обычных. Главное - зарегистрировать автозагрузчик:
 
 .. code-block:: php
 
@@ -325,8 +328,8 @@ Models in Micro Applications
 
     $app->handle();
 
-Micro Application Events
-------------------------
+События микроприложения
+-----------------------
 :doc:`Phalcon\\Mvc\\Micro <../api/Phalcon_Mvc_Micro>` is able to send events to the :doc:`EventsManager <events>` (if it is present).
 Events are triggered using the type "micro". The following events are supported:
 
