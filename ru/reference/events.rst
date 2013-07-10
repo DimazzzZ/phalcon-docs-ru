@@ -207,10 +207,6 @@
 
     }
 
-Note that events produced by this component are prefixed with "my-component". This is a unique word that helps us
-identify events that are generated from certain component. You can even generate events outside the component with
-the same name. Now let's create a listener to this component:
-
 Обратите внимание, что события, создаваемые нашим компонентом имеют префикс "my-component". Это уникальное слово для разделения событий,
 которые формируются из разных компонентах. Вы можете создавать события вне компонента с таким же именем, оно ни от чего не зависит.
 Теперь давайте создадим слушателя для нашего компонента:
