@@ -1,7 +1,7 @@
 Валидация
 =========
 Компонент Phalcon\Validation реализует независимую возможность проверки произвольного набора данных.
-Компонет можно использовать для проверки данных не относящихся к моделям или коллекциям.
+Компонент можно использовать для проверки данных не относящихся к моделям или коллекциям.
 
 Ниже показан пример использования компонента:
 
@@ -33,12 +33,13 @@
         }
     }
 
-The loose-coupled design of this component allows you to create your own validators together with the ones provided by the framework.
+Свободная блочная конструкция этого компонента позволяет вам создавать свои собственные валидаторы 
+наряду с теми, что предоставляет фреймворк.
 
-Initializing validation
+Инициализация валидации
 -----------------------
-As seen before, Validation chains can be initialized in a direct manner by just adding validators to the Phalcon\\Validation object.
-You can re-use code or organize better your validations implementing them in a separated file:
+Как вы уже поняли, цепочка проверок может быть иницилизирована простым добавлением их в объект Phalcon\\Validation.
+Вы можете повторно использовать код или лучше организовывать проверки размещая их в отдельных файлах:
 
 .. code-block:: php
 
@@ -86,26 +87,26 @@ You can re-use code or organize better your validations implementing them in a s
 +--------------+-----------------------------------------------------------------------------------------------------------------------------------------+-------------------------------------------------------------------+
 | Название     | Описание                                                                                                                                | Пример                                                            |
 +==============+=========================================================================================================================================+===================================================================+
-| PresenceOf   | Проверяет, что значение поля не равно null или пустой строке.                                                                           | :doc:`Example <../api/Phalcon_Validation_Validator_PresenceOf>`   |
+| PresenceOf   | Проверяет, что значение поля не равно null или пустой строке.                                                                           | :doc:`Пример <../api/Phalcon_Validation_Validator_PresenceOf>`    |
 +--------------+-----------------------------------------------------------------------------------------------------------------------------------------+-------------------------------------------------------------------+
-| Identical    | Validates that a field's value is the same as a specified value                                                                         | :doc:`Example <../api/Phalcon_Validation_Validator_Identical>`    |
+| Identical    | Проверяет, что значение поля соответствует какому-то конкретному значению                                                               | :doc:`Пример <../api/Phalcon_Validation_Validator_Identical>`     |
 +--------------+-----------------------------------------------------------------------------------------------------------------------------------------+-------------------------------------------------------------------+
-| Email        | Проверяет сответствие email формату                                                                                                     | :doc:`Example <../api/Phalcon_Validation_Validator_Email>`        |
+| Email        | Проверяет сответствие формату электронной почты                                                                                         | :doc:`Пример <../api/Phalcon_Validation_Validator_Email>`         |
 +--------------+-----------------------------------------------------------------------------------------------------------------------------------------+-------------------------------------------------------------------+
-| ExclusionIn  | Проверяет, что значение не входит в список возможных значений                                                                           | :doc:`Example <../api/Phalcon_Validation_Validator_ExclusionIn>`  |
+| ExclusionIn  | Проверяет, что значение не входит в список возможных значений                                                                           | :doc:`Пример <../api/Phalcon_Validation_Validator_ExclusionIn>`   |
 +--------------+-----------------------------------------------------------------------------------------------------------------------------------------+-------------------------------------------------------------------+
-| InclusionIn  | Проверяет, что значение находится в списке возможных значений                                                                           | :doc:`Example <../api/Phalcon_Validation_Validator_InclusionIn>`  |
+| InclusionIn  | Проверяет, что значение находится в списке возможных значений                                                                           | :doc:`Пример <../api/Phalcon_Validation_Validator_InclusionIn>`   |
 +--------------+-----------------------------------------------------------------------------------------------------------------------------------------+-------------------------------------------------------------------+
-| Regex        | Проверяет, что значение поля соответствует регулярному выражению                                                                        | :doc:`Example <../api/Phalcon_Validation_Validator_Regex>`        |
+| Regex        | Проверяет, что значение поля соответствует регулярному выражению                                                                        | :doc:`Пример <../api/Phalcon_Validation_Validator_Regex>`         |
 +--------------+-----------------------------------------------------------------------------------------------------------------------------------------+-------------------------------------------------------------------+
-| StringLength | Проверяет длину строки                                                                                                                  | :doc:`Example <../api/Phalcon_Validation_Validator_StringLength>` |
+| StringLength | Проверяет длину строки                                                                                                                  | :doc:`Пример <../api/Phalcon_Validation_Validator_StringLength>`  |
 +--------------+-----------------------------------------------------------------------------------------------------------------------------------------+-------------------------------------------------------------------+
-| Between      | Validates that a value is between two values                                                                                            | :doc:`Example <../api/Phalcon_Validation_Validator_Between>`      |
+| Between      | Проверяет, что значение находится между двумя другими значениями                                                                        | :doc:`Пример <../api/Phalcon_Validation_Validator_Between>`       |
 +--------------+-----------------------------------------------------------------------------------------------------------------------------------------+-------------------------------------------------------------------+
-| Confirmation | Validates that a value be the same as as other present in the data                                                                      | :doc:`Example <../api/Phalcon_Validation_Validator_Confirmation>` |
+| Confirmation | Проверяет, что значение соответствует другому значению                                                                                  | :doc:`Пример <../api/Phalcon_Validation_Validator_Confirmation>`  |
 +--------------+-----------------------------------------------------------------------------------------------------------------------------------------+-------------------------------------------------------------------+
 
-Дополнительные проверки могут быть реализованы самостоятельно. Следующий класс, объясняет, как создать правило валидации для этого компонента:
+Дополнительные проверки могут быть реализованы самостоятельно. Следующий класс объясняет, как создать правило валидации для этого компонента:
 
 .. code-block:: php
 
@@ -146,7 +147,7 @@ You can re-use code or organize better your validations implementing them in a s
 
     }
 
-Is important that validators return a valid boolean value indicating if the validation was successful or not.
+Важно помнить, что валидаторы возвращают булево значение, показывающее, прошла валидация успешно, либо нет.
 
 Сообщения валидации
 -------------------
@@ -211,8 +212,8 @@ Is important that validators return a valid boolean value indicating if the vali
         'message' => 'The e-mail is not valid'
     )));
 
-By default, 'getMessages' returns all the messages generated in the validation, you can filter messages
-for a specific field using 'filter':
+По умолчанию метод 'getMessages' возвращает все сообщения сгенерированные валидатором. Вы можете отфильтровать 
+сообщения используя 'filter':
 
 .. code-block:: php
 
@@ -220,13 +221,13 @@ for a specific field using 'filter':
 
     $messages = $validation->validate();
     if (count($messages)) {
-        //Filter only the messages generated for the field 'name'
+        // Отфильтровать только те сообщения, которые были сгенерированы для поля 'name'
         foreach ($validation->getMessages()->filter('name') as $message) {
             echo $message;
         }
     }
 
-Filtering of Data
+Фильтрация данных
 -----------------
 Data can be filtering prior to the validation ensuring that malicious data or wrong is not going to
 be validated as a proper one.
