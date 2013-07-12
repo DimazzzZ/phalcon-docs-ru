@@ -229,8 +229,7 @@
 
 Фильтрация данных
 -----------------
-Data can be filtering prior to the validation ensuring that malicious data or wrong is not going to
-be validated as a proper one.
+Данные фильтруются для того, чтобы быть уверенным, что вредоносные или неверные данные не будут пропущены приложением.
 
 .. code-block:: php
 
@@ -246,18 +245,17 @@ be validated as a proper one.
             'message' => 'The email is required'
         )));
 
-    //Filter any extra space
+    // Избавимся от лишних пробелов
     $validation->setFilters('name', 'trim');
     $validation->setFilters('email', 'trim');
 
-Filtering/Sanitizing is performed using the :doc:`filter <filter>`: component. You can add more filters to this
-component or use the built-in ones.
+Фильтрация и очистка производятся с помощью компонента :doc:`filter <filter>`. Вы можете добавлять в него свои фильтры, 
+либо пользоваться встроенными.
 
-Validation Events
+События валидации
 -----------------
-When validations are organized in classes, you can implement the methods 'beforeValidation' and 'afterValidation' to
-perform additional checks/clean-up etc. If 'beforeValidation' returns 'false' the validation is automatically
-cancelled:
+Когда в классах определена валидация, вы также можете реализовать методы 'beforeValidation' и 'afterValidation', чтобы 
+добавить дополнительные проверки, очистку и т.п. Если 'beforeValidation' возвращает 'false', валидация не будет пройдена:
 
 .. code-block:: php
 
@@ -274,7 +272,7 @@ cancelled:
         }
 
         /**
-         * Executed before validation
+         * Выполняется перед валидацией
          *
          * @param array $data
          * @param object $entity
@@ -290,7 +288,7 @@ cancelled:
         }
 
         /**
-         * Executed after validation
+         * Выполняется после валидации
          *
          * @param array $data
          * @param object $entity
@@ -298,15 +296,15 @@ cancelled:
          */
         public function afterValidation($data, $entity, $messages)
         {
-            //... add additional messages or perform more validations
+            //... добавляем дополнительные сообщения или валидацию
         }
 
     }
 
-Validation Cancelling
----------------------
-By default, all validators assigned to a field are validated regardless if one of them have failed or not. You can change
-this behavior by telling the validation component which validator must stop the validation:
+Отмена валидации
+----------------
+По умолчанию все валидаторы, присвоенные полю, выполняются независимо от того, прошло одно валидацию или нет. 
+Вы можете изменить такое поведение, если укажете валидатору на каком из правил ему следует остановить дальнейшую проверку:
 
 .. code-block:: php
 
@@ -331,9 +329,10 @@ this behavior by telling the validation component which validator must stop the 
             'min' => 2
         )));
 
-The first validator has the option 'cancelOnFail' => true, therefore if that validator fails the next validator in the chain is not executed.
+Первый валидатор имеет свойство 'cancelOnFail' => true, поэтому если валидация не пройдёт эту проверку, то
+дальнейшие проверки в цепочке не будут выполнены.
 
-If you're creating custom validators, you can dynamically stop the validation chain, by setting the 'cancelOnFail' option:
+Если вы создаёте собственные валидаторы, то можете динамически останавливать их используя свойство 'cancelOnFail':
 
 .. code-block:: php
 
@@ -347,7 +346,7 @@ If you're creating custom validators, you can dynamically stop the validation ch
     {
 
         /**
-         * Executes the validation
+         * Выполняем проверку
          *
          * @param Phalcon\Validation $validator
          * @param string $attribute
@@ -355,7 +354,7 @@ If you're creating custom validators, you can dynamically stop the validation ch
          */
         public function validate($validator, $attribute)
         {
-            // If the attribute is name we must stop the chain
+            // Если имя атрибута 'name' - останавливаем дальнейшие проверки
             if ($attribute == 'name') {
                 $validator->setOption('cancelOnFail', true);
             }
