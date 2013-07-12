@@ -139,7 +139,7 @@ html-атрибуты вторым параметром:
         }
     }
 
-При инициализации формы в конструктор передаётся объект пользователя и другие парамтры:
+При инициализации формы в конструктор передаётся объект пользователя и другие параметры:
 
 .. code-block:: php
 
@@ -246,8 +246,7 @@ html-атрибуты вторым параметром:
 
 Фильтрация
 ----------
-A form is also able to filter data before be validated, you can set filters in each element:
-
+Форма может фильтровать данные до валидации, вы можете установить фильтры в каждом из элементов:
 
 
 Настройка пользовательских параметров
@@ -290,7 +289,7 @@ A form is also able to filter data before be validated, you can set filters in e
         $robot->save();
     }
 
-Setting up a plain class as entity also is possible:
+Установка обычного класса в качестве сущности тоже возможна:
 
 .. code-block:: php
 
@@ -305,7 +304,7 @@ Setting up a plain class as entity also is possible:
 
     }
 
-Using this class as entity, allows the form to take the default values from it:
+Использование данного класса в виде сущности позволяет форме брать из него значения по умолчанию:
 
 .. code-block:: php
 
@@ -325,8 +324,8 @@ Using this class as entity, allows the form to take the default values from it:
         'No' => 'No, thanks'
     )));
 
-Entities can implement getters, which have more precedence than public propierties, these methods
-give you more free to produce values:
+Сущности могут содержать геттеры, приоритет которых выше, чем у публичных свойств. Эти методы 
+дают вам больше свободы для работы со значениями:
 
 .. code-block:: php
 
@@ -379,10 +378,10 @@ Phalcon предоставляет набор элементов для испо
 | Submit       | Генерирует элемент INPUT[type=submit]                             | :doc:`Пример <../api/Phalcon_Forms_Element_Submit>`     |
 +--------------+-------------------------------------------------------------------+---------------------------------------------------------+
 
-Event Callbacks
+Дополнительные условия
 ---------------
-Whenever forms are implemented as classes, the callbacks: beforeValidation and afterValidation can be implemented
-in the form's class to perform pre-validations and post-validations:
+Когда формы реализованы в виде классов, в них могут быть определены функции обратного вызова: 
+beforeValidation и afterValidation. Данные методы позволяют осуществлять проверки до и после валидации соответственно:
 
 .. code-block:: html+php
 
@@ -396,9 +395,9 @@ in the form's class to perform pre-validations and post-validations:
         }
     }
 
-Rendering Forms
----------------
-You can render the form with total flexibility, the following example shows how to render each element using an standard procedure:
+Отрисовка форм
+--------------
+Вы можете гибко отрисовывать формы. Данный пример показывает, как отрисовать каждый элемент, используя стандартную процедуру:
 
 .. code-block:: html+php
 
@@ -406,14 +405,14 @@ You can render the form with total flexibility, the following example shows how 
 
     <form method="post">
         <?php
-            //Traverse the form
+            // Проходим через форму
             foreach ($form as $element) {
 
-                //Get any generated messages for the current element
+                // Собираем все сгенерированные сообщения для текущего элемента
                 $messages = $form->getMessagesFor($element->getName());
 
                 if (count($messages)) {
-                    //Print each element
+                    // Выводим каждый элемент
                     echo '<div class="messages">';
                     foreach ($messages as $message) {
                         echo $message;
@@ -431,7 +430,7 @@ You can render the form with total flexibility, the following example shows how 
         <input type="submit" value="Send"/>
     </form>
 
-Or reuse the logic in your form class:
+Или повторно использовать логику в классе формы:
 
 .. code-block:: php
 
@@ -448,11 +447,11 @@ Or reuse the logic in your form class:
         {
             $element = $this->get($name);
 
-            //Get any generated messages for the current element
+            // Собираем все сгенерированные сообщения для текущего элемента
             $messages = $this->getMessagesFor($element->getName());
 
             if (count($messages)) {
-                //Print each element
+                // Выводим каждый элемент
                 echo '<div class="messages">';
                 foreach ($messages as $message) {
                     echo $this->flash->error($message);
@@ -468,7 +467,7 @@ Or reuse the logic in your form class:
 
     }
 
-In the view:
+В представлении:
 
 .. code-block:: php
 
@@ -478,9 +477,9 @@ In the view:
 
     echo $element->renderDecorated('telephone');
 
-Creating Form Elements
-----------------------
-In addition to the form elements provided by Phalcon you can create your own custom elements:
+Создание элементов форм
+-----------------------
+В дополнение к элементам форм, которые предоставляет Phalcon, вы можете создавать свои собственные элементы:
 
 .. code-block:: php
 
@@ -492,14 +491,15 @@ In addition to the form elements provided by Phalcon you can create your own cus
     {
         public function render($attributes=null)
         {
-            $html = //... produce some html
+            $html = //... немного html-кода
             return $html;
         }
     }
 
-Forms Manager
+Менеджер форм
 -------------
-This component provides a forms manager that can be used by the developer to register forms and access them via the service locator:
+Этот компонент предоставляет доступ к менеджеру форм, который может быть использован разработчиком для регистрации форм 
+и доступа к ним через локатор сервисов:
 
 .. code-block:: php
 
@@ -509,7 +509,7 @@ This component provides a forms manager that can be used by the developer to reg
         return new Phalcon\Forms\Manager();
     }
 
-Forms are added to the forms manager and referenced by a unique name:
+Формы добавляются к менеджеру форм и в дальнейшем могут быть доступны через уникальное имя:
 
 .. code-block:: php
 
@@ -517,7 +517,7 @@ Forms are added to the forms manager and referenced by a unique name:
 
     $this->forms->set('login', new LoginForm());
 
-Using the unique name, forms can be accesed in any part of the application:
+С помощью уникального имени формы могут быть доступны в любой части приложения:
 
 .. code-block:: php
 
@@ -527,4 +527,4 @@ Using the unique name, forms can be accesed in any part of the application:
 
 Внешние источники
 -----------------
-* `Vökuró <http://vokuro.phalconphp.com>`_, is a sample application that uses the forms builder to create forms in this application, [`Github <https://github.com/phalcon/vokuro>`_]
+* `Vökuró <http://vokuro.phalconphp.com>`_, простое приложение, которое использует конструктор форм для создания форм в приложении, [`Github <https://github.com/phalcon/vokuro>`_]
