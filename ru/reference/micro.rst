@@ -403,7 +403,7 @@ Events are triggered using the type "micro". The following events are supported:
     $app->setEventsManager($eventsManager);
 
 Промежуточные события
------------------
+---------------------
 В дополнение к менеджеру событий, события могут быть добавлены с использованием методов 'before', 'after' и 'finish':
 
 .. code-block:: php
@@ -504,7 +504,7 @@ Events are triggered using the type "micro". The following events are supported:
 +---------------------+----------------------------------------------------------------------------------------------------------------------------+------------------------------+
 
 Использование контроллеров и обработчиков
------------------------------
+-----------------------------------------
 При создании приложений среднего уровня через Micro\\MVC может потребоваться определённой организации обработчиков в контроллерах.
 Вы можете использовать :doc:`Phalcon\\Mvc\\Micro\\Collection <../api/Phalcon_Mvc_Micro_Collection>`, чтобы группировать обработчики в контроллерах:
 
@@ -560,7 +560,7 @@ Events are triggered using the type "micro". The following events are supported:
     $posts->setHandler('Blog\Controllers\PostsController', true);
 
 Возврат заголовков ответов (Responses)
--------------------
+--------------------------------------
 Обработчики могут возвращать ответы при помощи :doc:`Phalcon\\Http\\Response <response>`
 или компонента, который реализует соответствующий интерфейс:
 
@@ -586,7 +586,7 @@ Events are triggered using the type "micro". The following events are supported:
     });
 
 Отрисовка представлений
----------------
+-----------------------
 Класс :doc:`Phalcon\\Mvc\\View\\Simple <views>` может быть использован для отрисовки представлений. Следующий
 пример показывает как именно:
 

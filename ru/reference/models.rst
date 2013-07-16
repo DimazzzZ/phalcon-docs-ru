@@ -1058,7 +1058,7 @@ The above code set up to delete all the referenced records (parts) if the master
     $salary = Employees::minimum(array("column" => "salary"));
 
 Hydration ModesHydration Modes
----------------
+------------------------------
 As mentioned above, resultsets are collections of complete objects, this means that every returned result is an object
 representing a row in the database. These objects can be modified and saved again to persistence:
 
