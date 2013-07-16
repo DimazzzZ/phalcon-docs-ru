@@ -302,7 +302,7 @@ registered users have access to these controllers. If you aren't logged in the a
 for example, the products controller (that is private) you will see a screen like this:
 
 .. figure:: ../_static/img/invo-2.png
-:align: center
+   :align: center
 
 Every time someone attempts to access any controller/action, the application verifies that the current role (in session)
 has access to it, otherwise it displays a message like the above and forwards the flow to the home page.
