@@ -83,7 +83,7 @@
         }
     }
 
-Создание PHQL запросов 
+Создание PHQL запросов
 ----------------------
 PHQL запросы могут быть созданы только как экземпляр класса :doc:`Phalcon\\Mvc\\Model\\Query <../api/Phalcon_Mvc_Model_Query>`:
 
@@ -92,10 +92,7 @@ PHQL запросы могут быть созданы только как эк�
     <?php
 
     // Экземпляр Query
-    $query = new Phalcon\Mvc\Model\Query("SELECT * FROM Cars");
-
-    // Назначение контейнера DI
-    $query->setDI($di);
+    $query = new Phalcon\Mvc\Model\Query("SELECT * FROM Cars", $di);
 
     // Выполнение запроса возвращает какой-то результат
     $cars = $query->execute();
@@ -307,6 +304,26 @@ PHQL поддерживает большинство стандартов SQL, �
         echo "Car: ", $row->c->name, "\n";
         echo "Brand: ", $row->b->name, "\n";
     }
+
+When the joined model has a many-to-many relation to the 'from' model, implicitly the
+intermediate model is added to the generated query:
+
+.. code-block:: php
+
+    <?php
+
+    $phql = 'SELECT Brands.name, Songs.name FROM Artists ' .
+            'JOIN Songs WHERE Artists.genre = "Trip-Hop"';
+    $result = $this->modelsManager->query($phql);
+
+Produce the following SQL in MySQL:
+
+.. code-block:: sql
+
+    SELECT `brands`.`name`, `songs`.`name` FROM `artists`
+    INNER JOIN `albums` ON `albums`.`artists_id` = `artists`.`id`
+    INNER JOIN `songs` ON `albums`.`songs_id` = `songs`.`id`
+    WHERE `artists`.`genre` = 'Trip-Hop'
 
 Аггрегаторы
 ^^^^^^^^^^^
@@ -736,6 +753,39 @@ UPDATE выполняет изменение в два этапа:
         ->andWhere('type = :type:')
         ->getQuery()
         ->execute(array('name' => $name, 'type' => $type));
+
+Disabling Literals
+------------------
+Literals can be disabled in PHQL, this means that directly using strings, numbers and boolean values in PHQL strings
+will be disallowed. If PHQL statements are created embedding external data on them, this could open the application
+to potential SQL injections:
+
+.. code-block:: php
+
+    <?php
+
+    $login = 'voltron';
+    $phql = "SELECT * FROM Models\Users WHERE login = '$login'";
+    $result = $manager->executeQuery($phql);
+
+If $login is changed to ' OR '' = ', the produced PHQL is:
+
+.. code-block:: sql
+
+    SELECT * FROM Models\Users WHERE login = '' OR '' = ''
+
+Which is always true no matter what the login stored in the database is.
+
+If literals are disallowed strings can be used as part of a PHQL statement, thus an exception
+will be thrown forcing the developer to use bound parameters. The same query can be written in a
+secure way like this:
+
+.. code-block:: php
+
+    <?php
+
+    $phql = "SELECT Robots.* FROM Robots WHERE Robots.name = :name:";
+    $result = $manager->executeQuery($phql, array('name' => $name));
 
 Экранирование зарезервированных слов
 ------------------------------------

@@ -179,6 +179,27 @@ response:
 
     });
 
+Or create a response object and return it from the handler:
+
+.. code-block:: php
+
+    <?php
+
+    $app->get('/show/data', function () {
+
+        //Create a response
+        $response = new Phalcon\Http\Response();
+
+        //Set the Content-Type header
+        $response->setContentType('text/plain');
+
+        //Pass the content of a file
+        $response->setContent(file_get_contents("data.txt"));
+
+        //Return the response
+        return $response;
+    });
+
 Making redirections
 -------------------
 Redirections could be performed to forward the execution flow to another route:
@@ -386,7 +407,7 @@ In addition to the events manager, events can be added using the methods 'before
 
     $app = new Phalcon\Mvc\Micro();
 
-    //Executed before every route executed
+    //Executed before every route is executed
     //Return false cancels the route execution
     $app->before(function() use ($app) {
         if ($app['session']->get('auth') == false) {
@@ -402,7 +423,7 @@ In addition to the events manager, events can be added using the methods 'before
     });
 
     $app->after(function() use ($app) {
-        //This is executed after the route is executed
+        //This is executed after the route was executed
         echo json_encode($app->getReturnedValue());
     });
 
@@ -410,7 +431,19 @@ In addition to the events manager, events can be added using the methods 'before
         //This is executed when the request has been served
     });
 
-You can call the methods several times to add more events of the same type.
+You can call the methods several times to add more events of the same type:
+
+.. code-block:: php
+
+    <?php
+
+    $app->finish(function() use ($app) {
+        //First 'finish' middleware
+    });
+
+    $app->finish(function() use ($app) {
+        //Second 'finish' middleware
+    });
 
 Code for middlewares can be reused using separate classes:
 
@@ -550,7 +583,7 @@ When responses are returned by handlers they are automatically sent by the appli
 
 Rendering Views
 ---------------
-:doc:`Phalcon\\Mvc\\View <views>` can be used to render views, the following example shows how to do that:
+:doc:`Phalcon\\Mvc\\View\\Simple <views>` can be used to render views, the following example shows how to do that:
 
 .. code-block:: php
 
@@ -568,7 +601,7 @@ Rendering Views
     $app->get('/products/show', function() use ($app) {
 
         // Render app/views/products/show.phtml passing some variables
-        echo $app['view']->getRender('products', 'show', array(
+        echo $app['view']->render('products/show', array(
             'id' => 100,
             'name' => 'Artichoke'
         ));

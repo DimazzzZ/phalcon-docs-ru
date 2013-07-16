@@ -172,10 +172,7 @@
         ));
     });
 
-    $app = new \Phalcon\Mvc\Micro();
-
-    // Назначает DI приложению
-    $app->setDI($di);
+    $app = new \Phalcon\Mvc\Micro($di);
 
 Получение данных
 ----------------
@@ -230,7 +227,7 @@
 
     });
 
-В нашем случае поиск по полю "id" очень похож, кроме того, мы сообщаем, найден робот или нет: 
+В нашем случае поиск по полю "id" очень похож, кроме того, мы сообщаем, найден робот или нет:
 
 .. code-block:: php
 
@@ -244,19 +241,22 @@
             'id' => $id
         ))->getFirst();
 
+        //Create a response
+        $response = new Phalcon\Http\Response();
+
         if ($robot == false) {
-            $response = array('status' => 'NOT-FOUND');
+            $response->setJsonContent(array('status' => 'NOT-FOUND'));
         } else {
-            $response = array(
+            $response->setJsonContent(array(
                 'status' => 'FOUND',
                 'data' => array(
                     'id' => $robot->id,
                     'name' => $robot->name
                 )
-            );
+            ));
         }
 
-        echo json_encode($response);
+        return $response;
     });
 
 Вставка данных
@@ -270,7 +270,7 @@
     // Добавление нового робота
     $app->post('/api/robots', function() use ($app) {
 
-        $robot = json_decode($app->request->getRawBody());
+        $robot = $app->request->getJsonRawBody();
 
         $phql = "INSERT INTO Robots (name, type, year) VALUES (:name:, :type:, :year:)";
 
@@ -280,30 +280,31 @@
             'year' => $robot->year
         ));
 
+        //Create a response
+        $response = new Phalcon\Http\Response();
+
         // Проверка, что вставка произведена успешно
-        if($status->success() == true){
+        if ($status->success() == true) {
 
             $robot->id = $status->getModel()->id;
 
-            $response = array('status' => 'OK', 'data' => $robot);
+            $response->setJsonContent(array('status' => 'OK', 'data' => $robot));
 
         } else {
 
-            // Изменение HTML статуса
-            $this->response->setStatusCode(500, "Internal Error")->sendHeaders();
+            //Change the HTTP status
+            $response->setStatusCode(500, "Internal Error");
 
-            // Отправка ошибки на клиент
+            //Send errors to the client
             $errors = array();
             foreach ($status->getMessages() as $message) {
                 $errors[] = $message->getMessage();
             }
 
-            $response = array('status' => 'ERROR', 'messages' => $errors);
-
+            $response->setJsonContent(array('status' => 'ERROR', 'messages' => $errors));
         }
 
-        echo json_encode($response);
-
+        return $response;
     });
 
 Обновление данных
@@ -317,7 +318,7 @@
     // Обновление робота по ключу
     $app->put('/api/robots/{id:[0-9]+}', function($id) use($app) {
 
-        $robot = json_decode($app->request->getRawBody());
+        $robot = $app->request->getJsonRawBody();
 
         $phql = "UPDATE Robots SET name = :name:, type = :type:, year = :year: WHERE id = :id:";
         $status = $app->modelsManager->executeQuery($phql, array(
@@ -327,27 +328,27 @@
             'year' => $robot->year
         ));
 
+        //Create a response
+        $response = new Phalcon\Http\Response();
+
         // Проверка, что обновление произведено успешно
         if($status->success() == true){
 
-            $response = array('status' => 'OK');
-
+            $response->setJsonContent(array('status' => 'OK'));
         } else {
 
             // Изменение HTML статуса
-            $this->response->setStatusCode(500, "Internal Error")->sendHeaders();
+            $response->setStatusCode(500, "Internal Error");
 
             $errors = array();
             foreach ($status->getMessages() as $message) {
                 $errors[] = $message->getMessage();
             }
 
-            $response = array('status' => 'ERROR', 'messages' => $errors);
-
+            $response->setJsonContent(array('status' => 'ERROR', 'messages' => $errors));
         }
 
-        echo json_encode($response);
-
+        return $response;
     });
 
 Удаление данных
@@ -365,26 +366,27 @@
         $status = $app->modelsManager->executeQuery($phql, array(
             'id' => $id
         ));
-        if($status->success() == true){
 
-            $response = array('status' => 'OK');
+        //Create a response
+        $response = new Phalcon\Http\Response();
 
+        if ($status->success() == true) {
+            $response->setJsonContent(array('status' => 'OK'));
         } else {
 
-            // Измненение HTML статуса
-            $this->response->setStatusCode(500, "Internal Error")->sendHeaders();
+            //Изменение HTTP статуса
+            $response->setStatusCode(500, "Internal Error");
 
             $errors = array();
             foreach ($status->getMessages() as $message) {
                 $errors[] = $message->getMessage();
             }
 
-            $response = array('status' => 'ERROR', 'messages' => $errors);
+            $response->setJsonContent(array('status' => 'ERROR', 'messages' => $errors));
 
         }
 
-        echo json_encode($response);
-
+        return $response;
     });
 
 Тестирование приложения

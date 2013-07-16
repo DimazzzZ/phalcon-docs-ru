@@ -50,7 +50,7 @@
 Генерация ссылок
 ----------------
 По умолчанию для создания ссылок используется компонент :doc:`Router <routing>`. Ваше приложение может работать используя по умолчанию
-такую схему маршрутизации: /:controller/:action/:params. Соответственно, легко создавать ссылки по этому образцу (или другим правилам, 
+такую схему маршрутизации: /:controller/:action/:params. Соответственно, легко создавать ссылки по этому образцу (или другим правилам,
 прописанным в маршрутизаторе) передавая параметры в метод "get":
 
 .. code-block:: php
@@ -142,6 +142,30 @@
 .. code-block:: html+jinja
 
     <a href="{{ url("posts/edit/1002") }}">Редактировать</a>
+
+Generate static routes:
+
+.. code-block:: html+jinja
+
+    <link rel="stylesheet" href="{{ static_url("css/style.css") }}" type="text/css" />
+
+Static vs. Dynamic Uris
+-----------------------
+This component allow you to set up a different base uri for static resources in the application:
+
+.. code-block:: php
+
+    <?php
+
+    $url = new Phalcon\Mvc\Url();
+
+    //Dynamic URIs are
+    $url->setBaseUri('/');
+
+    //Static resources go through a CDN
+    $url->setStaticBaseUri('http://static.mywebsite.com/');
+
+:doc:`Phalcon\\Tag <tags>` will request both dynamical and static URIs using this component.
 
 Реализация своего генератора ссылок
 -----------------------------------

@@ -92,7 +92,7 @@
 
 Цикл работы
 -----------
-Цикл работы диспетчера будет выполняться пока не будет явно остановлен. В примере выше выполняется лишь одно действие. Пример ниже показывает как 
+Цикл работы диспетчера будет выполняться пока не будет явно остановлен. В примере выше выполняется лишь одно действие. Пример ниже показывает как
 с использованием метода "forward" можно обеспечить более сложный процесс диспетчеризации, путём перенаправления потока на другой контроллер/действие.
 
 .. code-block:: php
@@ -174,6 +174,33 @@
         }
 
     }
+
+.. highlights::
+
+    Method 'initialize' is only called if the event 'beforeExecuteRoute' is executed with success. This avoid
+    that application logic in the initializer cannot be executed without authorization.
+
+If you want to execute some initialization logic just after build the controller object you can implement the
+method 'onConstruct':
+
+.. code-block:: php
+
+    <?php
+
+    class PostsController extends \Phalcon\Mvc\Controller
+    {
+
+        public function onConstruct()
+        {
+            //...
+        }
+    }
+
+.. highlights::
+
+    Be aware that method 'onConstruct' is executed even if the action to be executed not exists
+    in the controller or the user does not have access to it (according to custom control access
+    provided by developer).
 
 Внедерение сервисов / Injecting Services
 ----------------------------------------
@@ -316,11 +343,17 @@
         return $component;
     });
 
+    //Register a namespaced controller as a service
+    $di->set('Backend\Controllers\IndexController', function() {
+        $component = new Component();
+        return $component;
+    });
+
 Создание базового контроллера (Base Controller)
 -----------------------------------------------
 Некоторые функции в приложении, такие как контроль доступа, перевод, кэширование или шаблонизация, чаще всего однообразны для
 всех контроллеров приложения. В таких случаях рекомендуется использование "базового контроллера", что обеспечит поддержку
-кодом логики DRY_ (не повторяйся). Базовый контроллер, это просто класс расширяющий :doc:`Phalcon\\Mvc\\Controller <../api/Phalcon_Mvc_Controller>` 
+кодом логики DRY_ (не повторяйся). Базовый контроллер, это просто класс расширяющий :doc:`Phalcon\\Mvc\\Controller <../api/Phalcon_Mvc_Controller>`
 и добавляющий (encapsulates) общую фукнциональность, которую должны иметь все контроллеры. Ваши контроллеры, для получения доступа
 к этой функциональности, должны использовать наследование от базового контроллера.
 
@@ -379,7 +412,6 @@ apps/controllers/ControllerBase.php. Файл может быть напряму
         public function beforeExecuteRoute($dispatcher)
         {
             // Выполняется до запуска любого найденного действия
-
             if ($dispatcher->getActionName() == 'save') {
 
                 $this->flash->error("You don't have permission to save posts");

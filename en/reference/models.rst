@@ -35,7 +35,7 @@ with each other.
 
 .. highlights::
 
-    If you're using PHP 5.4 is recommended declare each column that makes part of the model in order to save
+    If you're using PHP 5.4/5.5 is recommended declare each column that makes part of the model in order to save
     memory and reduce the memory allocation.
 
 By default model "Robots" will refer to the table "robots". If you want to manually specify another name for the mapping table,
@@ -57,6 +57,38 @@ you can use the getSource() method:
 
 The model Robots now maps to "the_robots" table. The initialize() method aids in setting up the model with a custom behavior i.e. a different table.
 The initialize() method is only called once during the request.
+
+.. code-block:: php
+
+    <?php
+
+    class Robots extends \Phalcon\Mvc\Model
+    {
+
+        public function initialize()
+        {
+            $this->setSource("the_robots");
+        }
+
+    }
+
+The initialize() method is only called once during the request, it's intended to perform initializations that apply for
+all instances of the model created within the application. If you want to perform initialization tasks for every instance
+created you can 'onConstruct':
+
+.. code-block:: php
+
+    <?php
+
+    class Robots extends \Phalcon\Mvc\Model
+    {
+
+        public function onConstruct()
+        {
+            //...
+        }
+
+    }
 
 Models in Namespaces
 --------------------
@@ -180,20 +212,16 @@ Both find() and findFirst() methods accept an associative array specifying the s
 
     <?php
 
-    $robot = Robots::findFirst(
-        array(
-            "type = 'virtual'",
-            "order" => "name DESC",
-            "limit" => 30
-        )
-    );
+    $robot = Robots::findFirst(array(
+        "type = 'virtual'",
+        "order" => "name DESC",
+        "limit" => 30
+    ));
 
-    $robots = Robots::find(
-        array(
-            "conditions" => "type = ?1",
-            "bind"       => array(1 => "virtual")
-        )
-    );
+    $robots = Robots::find(array(
+        "conditions" => "type = ?1",
+        "bind"       => array(1 => "virtual")
+    ));
 
 The available query options are:
 
@@ -417,18 +445,46 @@ Additionally you can set the parameter "bindTypes", this allows defining how the
         "year" => Column::BIND_PARAM_INT
     );
 
-    // Query robots binding parameters with string placeholders    
+    // Query robots binding parameters with string placeholders
     $robots = Robots::find(array(
         "name = :name: AND year = :year:",
         "bind" => $parameters,
         "bindTypes" => $types
     ));
 
-Since the default bind-type is \\Phalcon\\Db\\Column::BIND_PARAM_STR, there is no need to specify the
-"bindTypes" parameter if all of the columns are of that type.
+.. highlights::
+
+    Since the default bind-type is \\Phalcon\\Db\\Column::BIND_PARAM_STR, there is no need to specify the
+    "bindTypes" parameter if all of the columns are of that type.
 
 Bound parameters are available for all query methods such as find() and findFirst() but also the calculation
 methods like count(), sum(), average() etc.
+
+Initializing fetched records
+----------------------------
+M ay be the case that after obtaining a record of the database is necessary to initialise the data before
+being used by the rest of the application. You can implement the method 'afterFetch' in a model, this event
+will be executed just after create the instance and assign the data to it:
+
+.. code-block:: php
+
+    <?php
+
+    class Robots extends Phalcon\Mvc\Model
+    {
+
+        public function beforeSave()
+        {
+            //Convert the array into a string
+            $this->status = join(',', $this->status);
+        }
+
+        public function afterFetch()
+        {
+            //Convert the string to an array
+            $this->status = explode(',', $this->status);
+        }
+    }
 
 Relationships between Models
 ----------------------------
@@ -448,19 +504,21 @@ The bidirectional relations build relationships in both models and each model de
 
 Defining relationships
 ^^^^^^^^^^^^^^^^^^^^^^
-In Phalcon, relationships must be defined in the initialize() method of a model. The methods belongsTo(), hasOne() or hasMany() define
-the relationship between one or more fields from the current model to fields in another model. Each of these methods requires 3
-parameters: local fields, referenced model, referenced fields.
+In Phalcon, relationships must be defined in the initialize() method of a model. The methods belongsTo(), hasOne(),
+hasMany() and hasManyToMany() define the relationship between one or more fields from the current model to fields in
+another model. Each of these methods requires 3 parameters: local fields, referenced model, referenced fields.
 
-+-----------+----------------------------+
-| Method    | Description                |
-+===========+============================+
-| hasMany   | Defines a 1-n relationship |
-+-----------+----------------------------+
-| hasOne    | Defines a 1-1 relationship |
-+-----------+----------------------------+
-| belongsTo | Defines a n-1 relationship |
-+-----------+----------------------------+
++---------------+----------------------------+
+| Method        | Description                |
++===============+============================+
+| hasMany       | Defines a 1-n relationship |
++---------------+----------------------------+
+| hasOne        | Defines a 1-1 relationship |
++---------------+----------------------------+
+| belongsTo     | Defines a n-1 relationship |
++---------------+----------------------------+
+| hasManyToMany | Defines a n-n relationship |
++---------------+----------------------------+
 
 The following schema shows 3 tables whose relations will serve us as an example regarding relationships:
 
@@ -493,6 +551,7 @@ The following schema shows 3 tables whose relations will serve us as an example 
 * The model "Robots" has many "RobotsParts".
 * The model "Parts" has many "RobotsParts".
 * The model "RobotsParts" belongs to both "Robots" and "Parts" models as a many-to-one relation.
+* The model "Robots" has a relation many-to-many to "Parts" through "RobotsParts"
 
 Check the EER diagram to understand better the relations:
 
@@ -559,6 +618,31 @@ The models with their relations could be implemented as follows:
 
 The first parameter indicates the field of the local model used in the relationship; the second indicates the name
 of the referenced model and the third the field name in the referenced model. You could also use arrays to define multiple fields in the relationship.
+
+Many to many relationships require 3 models and define the attributes involved in the relationship:
+
+.. code-block:: php
+
+    <?php
+
+    class Robots extends \Phalcon\Mvc\Model
+    {
+        public $id;
+
+        public $name;
+
+        public function initialize()
+        {
+            $this->hasManyToMany(
+                "id",
+                "RobotsParts",
+                "robots_id", "parts_id",
+                "Parts",
+                "id"
+            );
+        }
+
+    }
 
 Taking advantage of relationships
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
@@ -650,15 +734,17 @@ Getting related records manually:
 The prefix "get" is used to find()/findFirst() related records. Depending on the type of relation it will use
 'find' or 'findFirst':
 
-+---------------------+--------------------------------------------------------------------------------------+------------------------+
-| Type                | Description                                                                          | Implicit Method        |
-+=====================+======================================================================================+========================+
-| Belongs-To          | Returns a model instance of the related record directly                              | findFirst              |
-+---------------------+--------------------------------------------------------------------------------------+------------------------+
-| Has-One             | Returns a model instance of the related record directly                              | findFirst              |
-+---------------------+--------------------------------------------------------------------------------------+------------------------+
-| Has-Many            | Returns a collection of model instances of the referenced model                      | find                   |
-+---------------------+--------------------------------------------------------------------------------------+------------------------+
++---------------------+----------------------------------------------------------------------------------------------------------------------------+------------------------+
+| Type                | Description                                                                                                                | Implicit Method        |
++=====================+============================================================================================================================+========================+
+| Belongs-To          | Returns a model instance of the related record directly                                                                    | findFirst              |
++---------------------+----------------------------------------------------------------------------------------------------------------------------+------------------------+
+| Has-One             | Returns a model instance of the related record directly                                                                    | findFirst              |
++---------------------+----------------------------------------------------------------------------------------------------------------------------+------------------------+
+| Has-Many            | Returns a collection of model instances of the referenced model                                                            | find                   |
++---------------------+----------------------------------------------------------------------------------------------------------------------------+------------------------+
+| Has-Many-to-Many    | Returns a collection of model instances of the referenced model, it implicitly does 'inner joins' with the involved models | (complex query)        |
++---------------------+----------------------------------------------------------------------------------------------------------------------------+------------------------+
 
 You can also use "count" prefix to return an integer denoting the count of the related records:
 
@@ -797,7 +883,7 @@ docblocks helping the IDE to produce a better auto-completion:
     }
 
 Virtual Foreign Keys
-^^^^^^^^^^^^^^^^^^^^
+--------------------
 By default, relationships do not act like database foreign keys, that is, if you try to insert/update a value without having a valid
 value in the referenced model, Phalcon will not produce a validation message. You can modify this behavior by adding a fourth parameter
 when defining a relationship.
@@ -854,9 +940,43 @@ if that record is used on a referenced model.
 
     }
 
+Cascade/Restrict actions
+^^^^^^^^^^^^^^^^^^^^^^^^
+Relationships that act as virtual foreign keys by default restrict the creation/update/deletion of records
+to maintain the integrity of data:
+
+.. code-block:: php
+
+    <?php
+
+    namespace Store\Models;
+
+    use Phalcon\Mvc\Model
+        Phalcon\Mvc\Model\Relation;
+
+    class Robots extends Model
+    {
+
+        public $id;
+
+        public $name;
+
+        public function initialize()
+        {
+            $this->hasMany('id', 'Store\\Models\Parts', 'robots_id', array(
+                'foreignKey' => array(
+                    'action' => Relation::ACTION_CASCADE
+                )
+            ));
+        }
+
+    }
+
+The above code set up to delete all the referenced records (parts) if the master record (robot) is deleted.
+
 Generating Calculations
 -----------------------
-Calculations are helpers for commonly used functions of database systems such as COUNT, SUM, MAX, MIN or AVG.
+Calculations (or aggregations) are helpers for commonly used functions of database systems such as COUNT, SUM, MAX, MIN or AVG.
 :doc:`Phalcon\\Mvc\\Model <../api/Phalcon_Mvc_Model>` allows to use these functions directly from the exposed methods.
 
 Count examples:
@@ -874,19 +994,23 @@ Count examples:
     // How many employees are in the Testing area?
     $rowcount = Employees::count("area = 'Testing'");
 
-    //Count employees grouping results by their area
+    // Count employees grouping results by their area
     $group = Employees::count(array("group" => "area"));
     foreach ($group as $row) {
        echo "There are ", $row->rowcount, " in ", $row->area;
     }
 
     // Count employees grouping by their area and ordering the result by count
-    $group = Employees::count(
-        array(
-            "group" => "area",
-            "order" => "rowcount"
-        )
-    );
+    $group = Employees::count(array(
+        "group" => "area",
+        "order" => "rowcount"
+    ));
+
+    // Avoid SQL injections using bound parameters
+    $group = Employees::count(array(
+        "type > ?0"
+        "bind" => array($type)
+    ));
 
 Sum examples:
 
@@ -920,6 +1044,12 @@ Sum examples:
         "order"  => "sumatory DESC"
     ));
 
+    // Avoid SQL injections using bound parameters
+    $group = Employees::sum(array(
+        "conditions" => "area > ?0"
+        "bind" => array($area)
+    ));
+
 Average examples:
 
 .. code-block:: php
@@ -933,6 +1063,13 @@ Average examples:
     $average = Employees::average(array(
         "column" => "salary",
         "conditions" => "area = 'Sales'"
+    ));
+
+    // Avoid SQL injections using bound parameters
+    $average = Employees::average(array(
+        "column" => "age"
+        "conditions" => "area > ?0"
+        "bind" => array($area)
     ));
 
 Max/Min examples:
@@ -962,7 +1099,7 @@ representing a row in the database. These objects can be modified and saved agai
 
     <?php
 
-    //Manipulating a resultset of complete objects
+    // Manipulating a resultset of complete objects
     foreach (Robots::find() as $robot) {
         $robot->year = 2000;
         $robot->save();
@@ -1001,7 +1138,7 @@ returned in a resultset is called 'hydration mode':
         echo $robot->year, PHP_EOL;
     }
 
-The hydration mode can be passed as a parameter of 'find':
+Hydration mode can also be passed as a parameter of 'find':
 
 .. code-block:: php
 
@@ -1073,7 +1210,7 @@ an insecure array without worrying about possible SQL injections:
     if you want that a user can insert/update every column in the model, even if those fields are not in the submitted
     form.
 
-You can set an additional parameter to save to set a whitelist of fields that only must taken into account when doing
+You can set an additional parameter in 'save' to set a whitelist of fields that only must taken into account when doing
 the mass assignment:
 
 .. code-block:: php
@@ -1086,7 +1223,7 @@ the mass assignment:
 Create/Update with Confidence
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 When an application has a lot of competition, we could be expecting create a record but it is actually updated. This
-could happen if we use Phalcon\\Mvc\\Model::save() to persist the records in the database. f we want to be absolutely
+could happen if we use Phalcon\\Mvc\\Model::save() to persist the records in the database. If we want to be absolutely
 sure that a record is created or updated, we can change the save() call with create() or update():
 
 .. code-block:: php
@@ -1198,9 +1335,9 @@ Saving a record and its related records in a has-many relation:
     // Save the album + its songs
     $album->save();
 
-Saving the album and the artist at the same time uses a transaction so if anything goes wrong with
-saving the related records, the parent will not be saved either. Messages are passed back to the user
-for information regarding any errors
+Saving the album and the artist at the same time implictly makes use of a transaction so if anything
+goes wrong with saving the related records, the parent will not be saved either. Messages are
+passed back to the user for information regarding any errors.
 
 Validation Messages
 ^^^^^^^^^^^^^^^^^^^
@@ -1315,7 +1452,7 @@ The easier way to make a model react to events is implement a method with the sa
 
         public function beforeValidationOnCreate()
         {
-            echo "This is executed beforecreating a Robot!";
+            echo "This is executed before creating a Robot!";
         }
 
     }
@@ -1352,13 +1489,16 @@ this means we can create listeners that run when an event is triggered.
 
     <?php
 
-    class Robots extends Phalcon\Mvc\Model
+    use Phalcon\Mvc\Model,
+        Phalcon\Events\Manager as EventsManager;
+
+    class Robots extends Model
     {
 
         public function initialize()
         {
 
-            $eventsManager = new \Phalcon\Events\Manager();
+            $eventsManager = new EventsManager();
 
             //Attach an anonymous function as a listener for "model" events
             $eventsManager->attach('model', function($event, $robot) {
@@ -1377,12 +1517,18 @@ this means we can create listeners that run when an event is triggered.
 
     }
 
+In the example given above, EventsManager only acts as a bridge between an object and a listener (the anonymous function).
+Events will be fired to the listener when 'robots' are saved:
+
+.. code-block:: php
+
+    <?php
+
     $robot = new Robots();
     $robot->name = 'Scooby Doo';
     $robot->year = 1969;
     $robot->save();
 
-In the example given above the EventsManager only acts as a bridge between an object and a listener (the anonymous function).
 If we want all objects created in our application use the same EventsManager, then we need to assign it to the Models Manager:
 
 .. code-block:: php
@@ -1510,7 +1656,7 @@ the value is not included in the method then the validator will fail and return 
 +--------------+------------------------------------------------------------------------------------------------------------------------------------------------------------------+-------------------------------------------------------------------+
 | StringLength | Validates the length of a string                                                                                                                                 | :doc:`Example <../api/Phalcon_Mvc_Model_Validator_StringLength>`  |
 +--------------+------------------------------------------------------------------------------------------------------------------------------------------------------------------+-------------------------------------------------------------------+
-| Url          | Validates a URL format                                                                                                                                           | :doc:`Example <../api/Phalcon_Mvc_Model_Validator_Url>`           |
+| Url          | Validates that a value has a valid URL format                                                                                                                    | :doc:`Example <../api/Phalcon_Mvc_Model_Validator_Url>`           |
 +--------------+------------------------------------------------------------------------------------------------------------------------------------------------------------------+-------------------------------------------------------------------+
 
 In addition to the built-in validatiors, you can create your own validators:
@@ -1535,7 +1681,11 @@ In addition to the built-in validatiors, you can create your own validators:
             $value = $model->$field;
 
             if ($min <= $value && $value <= $max) {
-                $this->appendMessage("The field doesn't have the right range of values", $field, "MaxMinValidator");
+                $this->appendMessage(
+                    "The field doesn't have the right range of values",
+                    $field,
+                    "MaxMinValidator"
+                );
                 return false;
             }
             return true;
@@ -1573,7 +1723,7 @@ The idea of creating validators is make them reusable between several models. A 
 .. code-block:: php
 
     <?php
-    
+
     use Phalcon\Mvc\Model,
         Phalcon\Mvc\Model\Message;
 
@@ -1694,7 +1844,7 @@ A callback also can be used to create a conditional assigment of automatic defau
 .. code-block:: php
 
     <?php
-    
+
     use Phalcon\Mvc\Model,
         Phalcon\Db\RawValue;
 
@@ -2006,7 +2156,10 @@ that is performed operations over a model:
                     $userName = // ... get the current user from session
 
                     //Store in a log the username - event type and primary key
-                    file_put_contents('logs/blamable-log.txt', $userName.' '.$eventType.' '.$model->id);
+                    file_put_contents(
+                        'logs/blamable-log.txt',
+                        $userName . ' ' . $eventType . ' ' . $model->id
+                    );
 
                     break;
 
@@ -2511,7 +2664,9 @@ time you use the table. This could be done caching the meta-data using any of th
 +---------+-----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+-------------------------------------------------------------------------------------------+
 | Session | This adapter stores meta-data in the $_SESSION superglobal. This adapter is recommended only when the application is actually using a small number of models. The meta-data are refreshed every time a new session starts. This also requires the use of session_start() to start the session before using any models.                        | :doc:`Phalcon\\Mvc\\Model\\MetaData\\Session <../api/Phalcon_Mvc_Model_MetaData_Session>` |
 +---------+-----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+-------------------------------------------------------------------------------------------+
-| Apc     | The Apc adapter uses the `Alternative PHP Cache (APC)`_ to store the table meta-data. You can specify the lifetime of the meta-data with options. This is the most recommended way to store meta-data when the application is in production stage.                                                                                            | :doc:`Phalcon\\Mvc\\Model\\MetaData\\Apc <../api/Phalcon_Mvc_Model_MetaData_Apc>`         |
+| Apc     | This adapter uses the `Alternative PHP Cache (APC)`_ to store the table meta-data. You can specify the lifetime of the meta-data with options. This is the most recommended way to store meta-data when the application is in production stage.                                                                                               | :doc:`Phalcon\\Mvc\\Model\\MetaData\\Apc <../api/Phalcon_Mvc_Model_MetaData_Apc>`         |
++---------+-----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+-------------------------------------------------------------------------------------------+
+| XCache  | This adapter uses `XCache`_ to store the table meta-data. You can specify the lifetime of the meta-data with options. This is the most recommended way to store meta-data when the application is in production stage.                                                                                                                        | :doc:`Phalcon\\Mvc\\Model\\MetaData\\XCache <../api/Phalcon_Mvc_Model_MetaData_XCache>`   |
 +---------+-----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+-------------------------------------------------------------------------------------------+
 | Files   | This adapter uses plain files to store meta-data. By using this adapter the disk-reading is increased but the database access is reduced                                                                                                                                                                                                      | :doc:`Phalcon\\Mvc\\Model\\MetaData\\Files <../api/Phalcon_Mvc_Model_MetaData_Files>`     |
 +---------+-----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+-------------------------------------------------------------------------------------------+
@@ -3039,17 +3194,19 @@ According to how you use the ORM you can disable that you aren't using. These op
 
 The available options are:
 
-+---------------------+----------------------------------------------------------------------------------+
-| Option              | Description                                                                      |
-+=====================+==================================================================================+
-| events              | Enables/Disables callbacks, hooks and event notifications from all the models    |
-+---------------------+----------------------------------------------------------------------------------+
-| columnRenaming      | Enables/Disables the column renaming                                             |
-+---------------------+----------------------------------------------------------------------------------+
-| notNullValidations  | The ORM automatically validate the not null columns present in the mapped table  |
-+---------------------+----------------------------------------------------------------------------------+
-| virtualForeignKeys  | Enables/Disables the virtual foreign keys                                        |
-+---------------------+----------------------------------------------------------------------------------+
++---------------------+----------------------------------------------------------------------------------+---------+
+| Option              | Description                                                                      | Default |
++=====================+==================================================================================+=========+
+| events              | Enables/Disables callbacks, hooks and event notifications from all the models    | true    |
++---------------------+----------------------------------------------------------------------------------+---------+
+| columnRenaming      | Enables/Disables the column renaming                                             | true    |
++---------------------+----------------------------------------------------------------------------------+---------+
+| notNullValidations  | The ORM automatically validate the not null columns present in the mapped table  | true    |
++---------------------+----------------------------------------------------------------------------------+---------+
+| virtualForeignKeys  | Enables/Disables the virtual foreign keys                                        | true    |
++---------------------+----------------------------------------------------------------------------------+---------+
+| phqlLiterals        | Enables/Disables literals in the PHQL parser                                     | true    |
++---------------------+----------------------------------------------------------------------------------+---------+
 
 Stand-Alone component
 ---------------------
@@ -3088,6 +3245,7 @@ Using :doc:`Phalcon\\Mvc\\Model <models>` in a stand-alone mode can be demonstra
     echo Robots::count();
 
 .. _Alternative PHP Cache (APC): http://www.php.net/manual/en/book.apc.php
+.. _XCache: http://xcache.lighttpd.net/
 .. _PDO: http://www.php.net/manual/en/pdo.prepared-statements.php
 .. _date: http://php.net/manual/en/function.date.php
 .. _time: http://php.net/manual/en/function.time.php

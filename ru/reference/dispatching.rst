@@ -39,7 +39,7 @@
 :doc:`Phalcon\\Mvc\\Dispatcher <../api/Phalcon_Mvc_Dispatcher>` может отправлять события :doc:`EventsManager <events>` если это необходимо.
 События вызываются с помощью типа "dispatch". Некоторые события, при возвращении false, могут остановить активную операцию.
 Поддерживаются следующие события:
- 
+
 +----------------------+--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+---------------------+
 | Название события     | Время срабатывания                                                                                                                                                                                           | Прерывает операцию? |
 +======================+==============================================================================================================================================================================================================+=====================+
@@ -68,17 +68,20 @@
 
     <?php
 
+    use Phalcon\Mvc\Dispatcher as MvcDispatcher,
+        Phalcon\Events\Manager as EventsManager;
+
     $di->set('dispatcher', function(){
 
         // Создание менеджера событий
-        $eventsManager = new Phalcon\Events\Manager();
+        $eventsManager = new EventsManager();
 
         // Прикрепление функции-слушателя для событий типа "dispatch"
         $eventsManager->attach("dispatch", function($event, $dispatcher) {
             //...
         });
 
-        $dispatcher = new \Phalcon\Mvc\Dispatcher();
+        $dispatcher = new MvcDispatcher();
 
         // Связывание менеджера событий с диспетчером
         $dispatcher->setEventsManager($eventsManager);
@@ -130,7 +133,7 @@
 
             // .. сохраняем данные и перенаправляем пользователя
 
-            // Перенаправляем на действие index 
+            // Перенаправляем на действие index
             $this->dispatcher->forward(array(
                 "controller" => "post",
                 "action" => "index"
@@ -194,7 +197,7 @@
         public function saveAction()
         {
 
-            // Получение параметра title, находящимся в параметрах URL 
+            // Получение параметра title, находящимся в параметрах URL
             $title = $this->dispatcher->getParam("title");
 
             // Получение параметра year, пришедшего из URL и отфильтрованного как число
@@ -211,40 +214,33 @@
 
     <?php
 
-    $di->setShared('dispatcher', function() {
+    use Phalcon\Dispatcher,
+        Phalcon\Mvc\Dispatcher as MvcDispatcher,
+        Phalcon\Events\Manager as EventsManager;
 
-        // Создание/Получение менеджера событий EventManager
-        $eventsManager = new Phalcon\Events\Manager();
+    $di->set('dispatcher', function() {
 
-        // Присоединение слушателя (listener)
-        $eventsManager->attach("dispatch", function($event, $dispatcher, $exception) {
+        //Create an EventsManager
+        $eventsManager = new EventsManager();
 
-            // Контроллер существует, а действие нет
-            if ($event->getType() == 'beforeNotFoundAction') {
-                $dispatcher->forward(array(
-                    'controller' => 'index',
-                    'action' => 'show404'
-                ));
-                return false;
-            }
+        //Attach a listener
+        $eventsManager->attach("dispatch:beforeException", function($event, $dispatcher, $exception) {
 
-            // Альтернативный путь, контроллер или действие не существует
-            if ($event->getType() == 'beforeException') {
-                switch ($exception->getCode()) {
-                    case Phalcon\Dispatcher::EXCEPTION_HANDLER_NOT_FOUND:
-                    case Phalcon\Dispatcher::EXCEPTION_ACTION_NOT_FOUND:
-                        $dispatcher->forward(array(
-                            'controller' => 'index',
-                            'action' => 'show404'
-                        ));
-                        return false;
+            switch ($exception->getCode()) {
+                case Dispatcher::EXCEPTION_HANDLER_NOT_FOUND:
+                case Dispatcher::EXCEPTION_ACTION_NOT_FOUND:
+                    $dispatcher->forward(array(
+                        'controller' => 'index',
+                        'action' => 'show404'
+                    ));
+                    return false;
                 }
             }
         });
 
-        $dispatcher = new Phalcon\Mvc\Dispatcher();
+        $dispatcher = new MvcDispatcher();
 
-        // Присоединение EventsManager к диспетчеру 
+        //Bind the EventsManager to the dispatcher
         $dispatcher->setEventsManager($eventsManager);
 
         return $dispatcher;

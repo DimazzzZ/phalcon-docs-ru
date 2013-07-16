@@ -486,7 +486,7 @@ If an expression needs to be evaluated without be printed the 'do' statement can
 
 Массивы
 ^^^^^^^
-Если вы используете PHP 5.3 or 5.4, то можете создавать массивы, перечисляя список значений в квадратных скобках:
+Если вы используете PHP 5.3 or 5.4, 5.5, то можете создавать массивы, перечисляя список значений в квадратных скобках:
 
 .. code-block:: html+jinja
 
@@ -501,6 +501,13 @@ If an expression needs to be evaluated without be printed the 'do' statement can
 
     {# Хэш-массив #}
     {{ ['first': 1, 'second': 4/2, 'third': '3'] }}
+
+Curly braces also can be used to define arrays or hashes:
+
+.. code-block:: html+jinja
+
+    {% set myArray = {'Apple', 'Banana', 'Orange'} %}
+    {% set myHash = {'first': 1, 'second': 4/2, 'third': '3'} %}
 
 Математические операторы
 ^^^^^^^^^^^^^^^^^^^^^^^^
@@ -1054,6 +1061,33 @@ Volt можно настроить так, чтобы изменить его п
 | prefix            | Позволяет добавлять префикс к шаблонам в папке скомпилированных PHP файлов                                                     | null         |
 +-------------------+--------------------------------------------------------------------------------------------------------------------------------+--------------+
 
+The compilation path is generated according to the above options, if the developer wants total freedom defining the compilation path,
+an anonymous function can be used to generate the compilation path, this function receives the relative path to the template in the
+views directory. The following examples show how to change the compilation path dynamically:
+
+.. code-block:: php
+
+    <?php
+
+    // Just append the .php extension to the template path
+    // leaving the compiled templates in the same directory
+    $volt->setOptions(array(
+        'compiledPath' => function($templatePath) {
+            return $templatePath . '.php';
+        }
+    ));
+
+    // ​​Recursively create the same structure in another directory
+    $volt->setOptions(array(
+        'compiledPath' => function($templatePath) {
+            $dirName = dirname($templatePath);
+            if (!is_dir('cache/' . $dirName)) {
+                mkdir('cache/' . $dirName);
+            }
+            return 'cache/' . $dirName . '/'. $templatePath . '.php';
+        }
+    ));
+
 Расширение Volt
 ---------------
 В отличие от других шаблонизаторов, Volt не требуется для запуска скомпилированных шаблонов. После того, как шаблон был собран, он больше никак не зависит от Volt. Иными словами, он используется лишь в качестве компилятора для PHP-шаблонов.
@@ -1104,7 +1138,7 @@ Volt-компилятор позволяет вам расширить его, �
             $secondArgument = '10';
         }
 
-        return 'str_repeat('.$firstArgument.', '.$secondArgument.')';
+        return 'str_repeat(' . $firstArgument . ', ' . $secondArgument . ')';
     });
 
 Генерация кода на основе некоторой готовой функции:
@@ -1146,7 +1180,7 @@ Volt-компилятор позволяет вам расширить его, �
     <?php
 
     $compiler->addFilter('int', function($resolvedArgs, $exprArgs) {
-        return 'intval('.$resolvedArgs.')';
+        return 'intval(' . $resolvedArgs . ')';
     });
 
 Встроенные фильтры могут быть перегружены добавлением фильтра с таким же именем:
@@ -1157,6 +1191,61 @@ Volt-компилятор позволяет вам расширить его, �
 
     //Replace built-in filter 'capitalize'
     $compiler->addFilter('capitalize', 'lcfirst');
+
+Extensions
+^^^^^^^^^^
+With extensions the developer has more flexibility to extend the template engine, and override the compilation
+of ​a specific instruction, change the behavior of an expression or operator, add functions/filters, and more.
+
+An extension is a class that implements the events triggered by Volt as a method of itself.
+
+For example, the class below allows to use any PHP function in Volt:
+
+.. code-block:: php
+
+    <?php
+
+    class PhpFunctionExtension
+    {
+        /**
+         * This method is called on any attempt to compile a function call
+         */
+        public function compileFunction($name, $arguments)
+        {
+            if (function_exists($name)) {
+                return $name . '('. $arguments . ')';
+            }
+        }
+    }
+
+The above class implements the method 'compileFunction' which is invoked before any attempt to compile a function call in any
+template. The purpose of the extension is to verify if a function to be compiled is a PHP function allowing to call it
+from the template. Events in extensions must return valid PHP code, this will be used as result of the compilation
+instead of the one generated by Volt. If an event doesn't return an string the compilation is done using the default
+behavior provided by the engine.
+
+The following compilation events are available to be implemented in extensions:
+
++-------------------+------------------------------------------------------------------------------------------------------------+
+| Event/Method      | Description                                                                                                |
++===================+============================================================================================================+
+| compileFunction   | Triggered before trying to compile any function call in a template                                         |
++-------------------+------------------------------------------------------------------------------------------------------------+
+| compileFilter     | Triggered before trying to compile any filter call in a template                                           |
++-------------------+------------------------------------------------------------------------------------------------------------+
+| resolveExpression | Triggered before trying to compile any expression. This allows the developer to override operators         |
++-------------------+------------------------------------------------------------------------------------------------------------+
+| compileStatement  | Triggered before trying to compile any expression. This allows the developer to override any statement     |
++-------------------+------------------------------------------------------------------------------------------------------------+
+
+Volt extensions must be in registered in the compiler making them available in compile time:
+
+.. code-block:: php
+
+    <?php
+
+    //Register the extension in the compiler
+    $compiler->addExtension(new PhpFunctionExtension());
 
 Кэширование частей представления
 --------------------------------

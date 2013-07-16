@@ -33,7 +33,7 @@ provides a simple MVC structure and a public document root.
 Once you open the application in your browser http://localhost/invo you'll something like this:
 
 .. figure:: ../_static/img/invo-1.png
-    :align: center
+   :align: center
 
 The application is divided in two parts, a frontend, that is a public part where visitors can receive information
 about INVO and request contact information. The second part is the backend, an administrative area where a
@@ -88,7 +88,7 @@ there are three sections to be used later.
 
 Autoloaders
 -----------
-A second part that appears in the boostrap file (public/index.php) is the autoloader. The autoloader registers a set
+A second part that appears in the bootstrap file (public/index.php) is the autoloader. The autoloader registers a set
 of directories where the application will look for the classes that it eventually will need.
 
 .. code-block:: php
@@ -124,7 +124,7 @@ this class initializes and executes all the necessary to make the application ru
 
 Dependency Injection
 --------------------
-Look at the second line of the code block above, the variable $application is receiving another variable $di.
+Look at the first line of the code block above, the variable $app is receiving another variable $di in its constructor.
 What is the purpose of that variable? Phalcon is a highly decoupled framework, so we need a component that acts as glue
 to make everything work together. That component is Phalcon\\DI. It is a service container that also performs
 dependency injection, instantiating all components, as they are needed by the application.
@@ -302,7 +302,7 @@ registered users have access to these controllers. If you aren't logged in the a
 for example, the products controller (that is private) you will see a screen like this:
 
 .. figure:: ../_static/img/invo-2.png
-    :align: center
+:align: center
 
 Every time someone attempts to access any controller/action, the application verifies that the current role (in session)
 has access to it, otherwise it displays a message like the above and forwards the flow to the home page.
@@ -442,7 +442,7 @@ If he/she does not have access we redirect him/her to the home screen as explain
 
 Providing an ACL list
 ^^^^^^^^^^^^^^^^^^^^^
-In the previous example we have obtained the ACL using the method $this->_getAcl(). This method is also
+In the above example we have obtained the ACL using the method $this->_getAcl(). This method is also
 implemented in the Plugin. Now we are going to explain step-by-step how we built the access control list (ACL):
 
 .. code-block:: php
