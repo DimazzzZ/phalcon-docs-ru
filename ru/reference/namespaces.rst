@@ -5,9 +5,6 @@
 
 Настройка фреймворка
 --------------------
-Using namespaces has some implications when loading the appropriate controller. To adjust the framework behavior to namespaces is necessary
-to perform one or all of the following tasks:
-
 Использование пространств имен накладывает некоторые последствия на загрузку соответствующего контроллера. Для настройки работы фреймворка
 с пространством имен необходимо выполнить одно или все из следующих задач:
 
@@ -33,8 +30,8 @@ to perform one or all of the following tasks:
     $router->add(
         '/admin/users/my-profile',
         array(
-            'namespace"  => 'Store\Admin',
-            'controller" => 'Users',
+            'namespace'  => 'Store\Admin',
+            'controller' => 'Users',
             'action"     => 'profile',
         )
     );
@@ -48,14 +45,14 @@ to perform one or all of the following tasks:
     $router->add(
         '/:namespace/admin/users/my-profile',
         array(
-            'namespace"  => 1,
-            'controller" => 'Users',
-            'action"     => 'profile',
+            'namespace'  => 1,
+            'controller' => 'Users',
+            'action'     => 'profile',
         )
     );
 
 Если в вашем приложении используется единое пространство имён для контроллеров, то вы можете определить пространство имен по умолчанию в диспетчере.
-Делая это, вы не потребуется указывать полное имя класса в пути маршрутизатора:
+Делая это, вам не потребуется указывать полное имя класса в пути маршрутизатора:
 
 .. code-block:: php
 
