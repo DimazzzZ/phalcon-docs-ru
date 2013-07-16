@@ -445,6 +445,8 @@ Phalcon содержит первую ORM для PHP, полностью нап�
                     echo $message->getMessage(), "<br/>";
                 }
             }
+
+            $this->view->disable();
         }
 
     }
