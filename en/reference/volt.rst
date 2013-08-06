@@ -7,8 +7,8 @@ just as you can use it as a stand-alone component in your applications.
 .. figure:: ../_static/img/volt.jpg
    :align: center
 
-Volt is inspired on Jinja_, originally created by `Armin Ronacher`_. Therefore many developers will be in familiar
-ground using the same syntax they have been using with similar template engines. Volt’s syntax and features
+Volt is inspired by Jinja_, originally created by `Armin Ronacher`_. Therefore many developers will be in familiar
+territory using the same syntax they have been using with similar template engines. Volt’s syntax and features
 have been enhanced with more elements and of course with the performance that developers have been
 accustomed to while working with Phalcon.
 
@@ -66,7 +66,7 @@ Use the standard ".phtml" extension:
 
 Basic Usage
 -----------
-A view consists on Volt code, PHP and HTML. A set of special delimiters is available to enter in
+A view consists of Volt code, PHP and HTML. A set of special delimiters is available to enter into
 Volt mode. {% ... %} is used to execute statements such as for-loops or assign values and {{ ... }},
 prints the result of an expression to the template.
 
@@ -125,8 +125,8 @@ In the above example, three variables were passed to the view: title, menu and p
 
 Variables
 ---------
-Variables may have attributes, those can be accessed using the syntax: foo.bar. If you are
-passing arrays, you can access using the curly braces syntax: foo['bar']
+Variables may have attributes which can be accessed using the syntax: foo.bar. If you are
+passing arrays, you can access using the square bracket syntax: foo['bar']
 
 .. code-block:: jinja
 
@@ -239,16 +239,16 @@ Examples:
     {{ "some\ntext"|nl2br }}
 
     {# sort filter #}
-    {{ [3, 1, 2]|sort }}
+    {% set sorted=[3, 1, 2]|sort %}
 
     {# keys filter #}
-    {{ ['first': 1, 'second': 2, 'third': 3]|keys }}
+    {% set keys=['first': 1, 'second': 2, 'third': 3]|keys %}
 
     {# json_encode filter #}
-    {{ robots|json_encode }}
+    {% robots|json_encode %}
 
     {# json_decode filter #}
-    {{ '{"one":1,"two":2,"three":3}'|json_decode }}
+    {% set decoded='{"one":1,"two":2,"three":3}'|json_decode %}
 
     {# url_encode filter #}
     {{ post.permanent_link|url_encode }}
@@ -421,11 +421,11 @@ A special variable is available inside 'for' loops providing you information abo
 +----------------------+------------------------------------------------------------------------------+
 | loop.revindex0       | The number of iterations from the end of the loop (0 indexed)                |
 +----------------------+------------------------------------------------------------------------------+
-| loop.first           | True if is the first iteration.                                              |
+| loop.first           | True if in the first iteration.                                              |
 +----------------------+------------------------------------------------------------------------------+
-| loop.last            | True if is the last iteration.                                               |
+| loop.last            | True if in the last iteration.                                               |
 +----------------------+------------------------------------------------------------------------------+
-| loop.length          | The number of items to itarate                                               |
+| loop.length          | The number of items to iterate                                               |
 +----------------------+------------------------------------------------------------------------------+
 
 .. code-block:: html+jinja
@@ -457,6 +457,35 @@ Variables may be changed in a template using the instruction "set":
 
     {% set fruits = ['Apple', 'Banana', 'Orange'] %}
     {% set name = robot.name %}
+
+Multiple assignments are allowed in the same instruction:
+
+.. code-block:: html+jinja
+
+    {% set fruits = ['Apple', 'Banana', 'Orange'], name = robot.name, active = true %}
+
+Additionally, you can use compound assignment operators:
+
+.. code-block:: html+jinja
+
+    {% set price += 100.00 %}
+    {% set age *= 5 %}
+
+The following operators are available:
+
++----------------------+------------------------------------------------------------------------------+
+| Operator             | Description                                                                  |
++======================+==============================================================================+
+| =                    | Standard Assignment                                                          |
++----------------------+------------------------------------------------------------------------------+
+| +=                   | Addition assignment                                                          |
++----------------------+------------------------------------------------------------------------------+
+| -=                   | Subtraction assignment                                                       |
++----------------------+------------------------------------------------------------------------------+
+| *=                   | Multiplication assignment                                                    |
++----------------------+------------------------------------------------------------------------------+
+| /=                   | Division assignment                                                          |
++----------------------+------------------------------------------------------------------------------+
 
 Expressions
 -----------
@@ -518,7 +547,6 @@ Curly braces also can be used to define arrays or hashes:
 
     {% set myArray = {'Apple', 'Banana', 'Orange'} %}
     {% set myHash = {'first': 1, 'second': 4/2, 'third': '3'} %}
-
 
 Math
 ^^^^
@@ -601,6 +629,10 @@ Additional operators seen the following operators are available:
 +----------------------+----------------------------------------------------------------------------------------------+
 | 'a' ? 'b' : 'c'      | Ternary operator. The same as the PHP ternary operator                                       |
 +----------------------+----------------------------------------------------------------------------------------------+
+| ++                   | Increments a value                                                                           |
++----------------------+----------------------------------------------------------------------------------------------+
+| --                   | Decrements a value                                                                           |
++----------------------+----------------------------------------------------------------------------------------------+
 
 The following example shows how to use operators:
 
@@ -660,7 +692,7 @@ More examples:
 
     {% if robot is defined %}
         The robot variable is defined
-    {% endif }
+    {% endif %}
 
     {% if robot is empty %}
         The robot is null or isn't defined
@@ -700,6 +732,66 @@ More examples:
     {% if external is type('boolean') %}
         {{ "external is false or true" }}
     {% endif %}
+
+Macros
+------
+Macros can be used to reuse logic in a template, they act as PHP functions, can receive parameters and return values:
+
+.. code-block:: html+jinja
+
+    {%- macro related_bar(related_links) %}
+        <ul>
+            {%- for rellink in related_links %}
+                <li><a href="{{ url(link.url) }}" title="{{ link.title|striptags }}">{{ link.text }}</a></li>
+            {%- endfor %}
+        </ul>
+    {%- endmacro %}
+
+    {# Print related links #}
+    {{ related_bar(links) }}
+
+    <div>This is the content</div>
+
+    {# Print related links again #}
+    {{ related_bar(links) }}
+
+When calling macros, parameters can be passed by name:
+
+.. code-block:: html+jinja
+
+    {%- macro error_messages(message, field, type) %}
+        <div>
+            <span class="error-type">{{ type }}</span>
+            <span class="error-field">{{ field }}</span>
+            <span class="error-message">{{ message }}</span>
+        </div>
+    {%- endmacro %}
+
+    {# Call the macro #}
+    {{ error_messages('type': 'Invalid', 'message': 'The name is invalid', 'field': 'name') }}
+
+Macros can return values:
+
+.. code-block:: html+jinja
+
+    {%- macro my_input(name, class) %}
+        {% return text_field(name, 'class': class) %}
+    {%- endmacro %}
+
+    {# Call the macro #}
+    {{ '<p>' ~ my_input('name', 'input-text') ~ '</p>' }}
+
+And receive optional parameters:
+
+.. code-block:: html+jinja
+
+    {%- macro my_input(name, class="input-text") %}
+        {% return text_field(name, 'class': class) %}
+    {%- endmacro %}
+
+    {# Call the macro #}
+    {{ '<p>' ~ my_input('name') ~ '</p>' }}
+    {{ '<p>' ~ my_input('name', 'input-text') ~ '</p>' }}
 
 Using Tag Helpers
 -----------------
@@ -760,6 +852,8 @@ To call a Phalcon\\Tag helper, you only need to call an uncamelized version of t
 +------------------------------------+-----------------------+
 | Phalcon\\Tag::dateField            | date_field            |
 +------------------------------------+-----------------------+
+| Phalcon\\Tag::emailField           | email_field           |
++------------------------------------+-----------------------+
 | Phalcon\\Tag::numberField          | number_field          |
 +------------------------------------+-----------------------+
 | Phalcon\\Tag::submitButton         | submit_button         |
@@ -817,30 +911,37 @@ View Integration
 ----------------
 Also, Volt is integrated with :doc:`Phalcon\\Mvc\\View <views>`, you can play with the view hierarchy and include partials as well:
 
-.. code-block:: html+jinja
+.. code-block:: html+php
 
     {{ content() }}
 
+    <!-- Simple include of a partial -->
     <div id="footer">{{ partial("partials/footer") }}</div>
+
+    <!-- Passing extra variables -->
+    <div id="footer">{{ partial("partials/footer", ['links': $links]) }}</div>
 
 A partial is included in runtime, Volt also provides "include", this compiles the content of a view and returns its contents
 as part of the view which was included:
 
 .. code-block:: html+jinja
 
+    {# Simple include of a partial #}
     <div id="footer">{% include "partials/footer" %}</div>
 
-Partial vs Include
-^^^^^^^^^^^^^^^^^^
-Keep the following points in mind when choosing to use the "partial" function or "include":
+    {# Passing extra variables #}
+    <div id="footer">{% include "partials/footer" with ['links': links] %}</div>
 
-* 'Partial' allows you to include templates made in Volt and in other template engines as well
-* 'Partial' allows you to pass an expression like a variable allowing to include the content of other view dynamically
-* 'Partial' is better if the content that you have to include changes frequently
+Include
+^^^^^^^
+'include' has a special behavior that will help us improve performance a bit when using Volt, if you specify the extension
+when including the file and it exists when the template is compiled, Volt can inline the contents of the template in the parent
+template where it's included. Templates aren't inlined if the 'include' have variables passed with 'with':
 
-* 'Include' copies the compiled content into the view which improves the performance
-* 'Include' only allows to include templates made with Volt
-* 'Include' requires an existing template at compile time
+.. code-block:: html+jinja
+
+    {# The contents of 'partials/footer.volt' is compiled and inlined #}
+    <div id="footer">{% include "partials/footer.volt" %}</div>
 
 Template Inheritance
 --------------------
@@ -1005,10 +1106,13 @@ Volt can be configured to alter its default behavior, the following example expl
 
     <?php
 
+    use Phalcon\Mvc\View,
+        Phalcon\Mvc\View\Engine\Volt;
+
     //Register Volt as a service
     $di->set('voltService', function($view, $di) {
 
-        $volt = new \Phalcon\Mvc\View\Engine\Volt($view, $di);
+        $volt = new Volt($view, $di);
 
         $volt->setOptions(array(
             "compiledPath" => "../app/compiled-templates/",
@@ -1021,7 +1125,7 @@ Volt can be configured to alter its default behavior, the following example expl
     //Register Volt as template engine
     $di->set('view', function() {
 
-        $view = new \Phalcon\Mvc\View();
+        $view = new View();
 
         $view->setViewsDir('../app/views/');
 
@@ -1078,7 +1182,7 @@ The following options are available in Volt:
 +-------------------+--------------------------------------------------------------------------------------------------------------------------------+---------+
 
 The compilation path is generated according to the above options, if the developer wants total freedom defining the compilation path,
-an anonymous function can be used to generate the compilation path, this function receives the relative path to the template in the
+an anonymous function can be used to generate it, this function receives the relative path to the template in the
 views directory. The following examples show how to change the compilation path dynamically:
 
 .. code-block:: php
@@ -1137,7 +1241,7 @@ as were passed in the arguments:
     <?php
 
     $compiler->addFunction('widget', function($resolvedArgs, $exprArgs) {
-        return 'MyLibrary\Widgets::get('.$resolvedArgs.')';
+        return 'MyLibrary\Widgets::get(' . $resolvedArgs . ')';
     });
 
 Treat the arguments independently and unresolved:
@@ -1342,7 +1446,7 @@ Using Volt in a stand-alone mode can be demonstrated below:
     $compiler->compile('layouts/main.volt');
 
     //Require the compiled templated (optional)
-    require $compiler->getCompiledPath();
+    require $compiler->getCompiledTemplatePath();
 
 External Resources
 ------------------

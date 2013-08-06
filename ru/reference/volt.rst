@@ -227,22 +227,22 @@ Volt был написан под вдохновлением от Jinja_, кот
     {# nl2br #}
     {{ "some\ntext"|nl2br }}
 
-    {# sort #}
-    {{ [3, 1, 2]|sort }}
+    {# sort filter #}
+    {% set sorted=[3, 1, 2]|sort %}
 
-    {# keys #}
-    {{ ['first': 1, 'second': 2, 'third': 3]|keys }}
+    {# keys filter #}
+    {% set keys=['first': 1, 'second': 2, 'third': 3]|keys %}
 
-    {# json_encode #}
-    {{ robots|json_encode }}
+    {# json_encode filter #}
+    {% robots|json_encode %}
 
-    {# json_decode #}
-    {{ '{"one":1,"two":2,"three":3}'|json_decode }}
+    {# json_decode filter #}
+    {% set decoded='{"one":1,"two":2,"three":3}'|json_decode %}
 
-    {# url_encode #}
+    {# url_encode filter #}
     {{ post.permanent_link|url_encode }}
 
-    {# convert_encoding #}
+    {# convert_encoding filter #}
     {{ "désolé"|convert_encoding('utf8', 'latin1') }}
 
 Комментарии
@@ -448,6 +448,35 @@ If
     {% set fruits = ['Apple', 'Banana', 'Orange'] %}
     {% set name = robot.name %}
 
+Multiple assignments are allowed in the same instruction:
+
+.. code-block:: html+jinja
+
+    {% set fruits = ['Apple', 'Banana', 'Orange'], name = robot.name, active = true %}
+
+Additionally, you can use compound assignment operators:
+
+.. code-block:: html+jinja
+
+    {% set price += 100.00 %}
+    {% set age *= 5 %}
+
+The following operators are available:
+
++----------------------+------------------------------------------------------------------------------+
+| Operator             | Description                                                                  |
++======================+==============================================================================+
+| =                    | Standard Assignment                                                          |
++----------------------+------------------------------------------------------------------------------+
+| +=                   | Addition assignment                                                          |
++----------------------+------------------------------------------------------------------------------+
+| -=                   | Subtraction assignment                                                       |
++----------------------+------------------------------------------------------------------------------+
+| *=                   | Multiplication assignment                                                    |
++----------------------+------------------------------------------------------------------------------+
+| /=                   | Division assignment                                                          |
++----------------------+------------------------------------------------------------------------------+
+
 Выражения
 ---------
 Volt позволяет использовать базовый набор выражений, включая литералы.
@@ -590,7 +619,10 @@ Curly braces also can be used to define arrays or hashes:
 +----------------------+----------------------------------------------------------------------------------------------+
 | 'a' ? 'b' : 'c'      | Тернарный оператор. Аналогичен тернароному оператору в PHP                                   |
 +----------------------+----------------------------------------------------------------------------------------------+
-
+| ++                   | Increments a value                                                                           |
++----------------------+----------------------------------------------------------------------------------------------+
+| --                   | Decrements a value                                                                           |
++----------------------+----------------------------------------------------------------------------------------------+
 
 Пример ниже показывает их использование:
 
@@ -650,7 +682,7 @@ The following built-in tests are available in Volt:
 
     {% if robot is defined %}
         The robot variable is defined
-    {% endif }
+    {% endif %}
 
     {% if robot is empty %}
         The robot is null or isn't defined
@@ -690,6 +722,66 @@ The following built-in tests are available in Volt:
     {% if external is type('boolean') %}
         {{ "external is false or true" }}
     {% endif %}
+
+Macros
+------
+Macros can be used to reuse logic in a template, they act as PHP functions, can receive parameters and return values:
+
+.. code-block:: html+jinja
+
+    {%- macro related_bar(related_links) %}
+        <ul>
+            {%- for rellink in related_links %}
+                <li><a href="{{ url(link.url) }}" title="{{ link.title|striptags }}">{{ link.text }}</a></li>
+            {%- endfor %}
+        </ul>
+    {%- endmacro %}
+
+    {# Print related links #}
+    {{ related_bar(links) }}
+
+    <div>This is the content</div>
+
+    {# Print related links again #}
+    {{ related_bar(links) }}
+
+When calling macros, parameters can be passed by name:
+
+.. code-block:: html+jinja
+
+    {%- macro error_messages(message, field, type) %}
+        <div>
+            <span class="error-type">{{ type }}</span>
+            <span class="error-field">{{ field }}</span>
+            <span class="error-message">{{ message }}</span>
+        </div>
+    {%- endmacro %}
+
+    {# Call the macro #}
+    {{ error_messages('type': 'Invalid', 'message': 'The name is invalid', 'field': 'name') }}
+
+Macros can return values:
+
+.. code-block:: html+jinja
+
+    {%- macro my_input(name, class) %}
+        {% return text_field(name, 'class': class) %}
+    {%- endmacro %}
+
+    {# Call the macro #}
+    {{ '<p>' ~ my_input('name', 'input-text') ~ '</p>' }}
+
+And receive optional parameters:
+
+.. code-block:: html+jinja
+
+    {%- macro my_input(name, class="input-text") %}
+        {% return text_field(name, 'class': class) %}
+    {%- endmacro %}
+
+    {# Call the macro #}
+    {{ '<p>' ~ my_input('name') ~ '</p>' }}
+    {{ '<p>' ~ my_input('name', 'input-text') ~ '</p>' }}
 
 Использование Tag Helpers
 -------------------------
@@ -750,6 +842,8 @@ Volt сильно связан с  :doc:`Phalcon\\Tag <tags>`, поэтому м
 +------------------------------------+-----------------------+
 | Phalcon\\Tag::dateField            | date_field            |
 +------------------------------------+-----------------------+
+| Phalcon\\Tag::emailField           | email_field           |
++------------------------------------+-----------------------+
 | Phalcon\\Tag::numberField          | number_field          |
 +------------------------------------+-----------------------+
 | Phalcon\\Tag::submitButton         | submit_button         |
@@ -807,29 +901,36 @@ Volt сильно связан с  :doc:`Phalcon\\Tag <tags>`, поэтому м
 ----------------------------
 Кроме того, Volt связан с :doc:`Phalcon\\Mvc\\View <views>`, что позволяет вам поиграться с иерархией и включением partials:
 
-.. code-block:: html+jinja
+.. code-block:: html+php
 
     {{ content() }}
 
+    <!-- Simple include of a partial -->
     <div id="footer">{{ partial("partials/footer") }}</div>
+
+    <!-- Passing extra variables -->
+    <div id="footer">{{ partial("partials/footer", ['links': $links]) }}</div>
 
 Partial включается в момент выполнения, Volt так же предоставляет "include", которая собирает содержимое представления и возвращает его в виде включаемой части:
 
 .. code-block:: html+jinja
 
+    {# Simple include of a partial #}
     <div id="footer">{% include "partials/footer" %}</div>
 
-Partials vs включения
-^^^^^^^^^^^^^^^^^^^^^
-Имейте в виду следующие моменты, когда будете выбирать, что использовать "partial" или "include":
+    {# Passing extra variables #}
+    <div id="footer">{% include "partials/footer" with ['links': links] %}</div>
 
-* 'Partial' позволяет влючать шаблоны, созданные в Volt а так же в других шаблонизаторах
-* 'Partial' позволяет передавать выражения как переменную, что позволяет динамически включать содержимое других представлений
-* 'Partial' лучше, если включаемое вами содержимое часто изменяется
+Include
+^^^^^^^
+'include' has a special behavior that will help us improve performance a bit when using Volt, if you specify the extension
+when including the file and it exists when the template is compiled, Volt can inline the contents of the template in the parent
+template where it's included. Templates aren't inlined if the 'include' have variables passed with 'with':
 
-* 'Include' копирует собранное содержимое в представление, что повышает производительность
-* 'Include' позволяет включать только шаблоны, созданные в Volt
-* 'Include' требует существующий шаблон во время сборки
+.. code-block:: html+jinja
+
+    {# The contents of 'partials/footer.volt' is compiled and inlined #}
+    <div id="footer">{% include "partials/footer.volt" %}</div>
 
 Наследование шаблонов
 ---------------------
@@ -990,10 +1091,13 @@ Volt можно настроить так, чтобы изменить его п
 
     <?php
 
-    // Регистрация Volt в качестве сервиса
+    use Phalcon\Mvc\View,
+        Phalcon\Mvc\View\Engine\Volt;
+
+    //Register Volt as a service
     $di->set('voltService', function($view, $di) {
 
-        $volt = new \Phalcon\Mvc\View\Engine\Volt($view, $di);
+        $volt = new Volt($view, $di);
 
         $volt->setOptions(array(
             "compiledPath" => "../app/compiled-templates/",
@@ -1003,10 +1107,10 @@ Volt можно настроить так, чтобы изменить его п
         return $volt;
     });
 
-    // Регистрация Volt в качестве шаблонизатора
+    //Register Volt as template engine
     $di->set('view', function() {
 
-        $view = new \Phalcon\Mvc\View();
+        $view = new View();
 
         $view->setViewsDir('../app/views/');
 
@@ -1318,7 +1422,7 @@ Volt extensions must be in registered in the compiler making them available in c
     $compiler->compile('layouts/main.volt');
 
     // Запрос собранных шаблонов (по желанию)
-    require $compiler->getCompiledPath();
+    require $compiler->getCompiledTemplatePath();
 
 Внешние ресурсы
 ---------------

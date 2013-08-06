@@ -10,3 +10,4 @@ _templates
 .idea/
 .DS_Store
 .settings
+/nbproject/

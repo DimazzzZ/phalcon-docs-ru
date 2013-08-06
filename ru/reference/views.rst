@@ -2,9 +2,7 @@
 ===================================
 Представления (views) — это пользовательский интерфейс вашего приложения. Чаще всего это HTML-файлы со вставками PHP-кода, который выполняет только задачи, связанные с выводом данных. Представления управляют работой по передаче данных в браузер или другой инструмент, использующийся для выполнения запросов к вашему приложению.
 
-The :doc:`Phalcon\\Mvc\\View <../api/Phalcon_Mvc_View>` отвечает за управление слоем представления в вашем MVC-приложении.
-
-Компонент поддерживает иерархическую структуру файлов. Эта иерархия определяет местоположение как общих шаблонов, так и шаблонов контроллеров, расположенных в папках с соответствующими названиями.
+The :doc:`Phalcon\\Mvc\\View <../api/Phalcon_Mvc_View>` и :doc:`Phalcon\\Mvc\\View\\Simple <../api/Phalcon_Mvc_View_Simple>` отвечают за управление слоем представления в вашем MVC-приложении.
 
 Совместное использование Представлений и Контроллеров
 -----------------------------------------------------
@@ -46,8 +44,11 @@ Dispatcher будет искать "PostsController" и его действие 
 
 Метод setVar позволяет создавать переменные, необходимые для представления, которые могут быть использованы в шаблоне. Это и продемонстрировано выше, на примере передачи в шаблон параметра $postId.
 
+Hierarchical Rendering
+----------------------
+Компонент поддерживает иерархическую структуру файлов. Эта иерархия определяет местоположение как общих шаблонов, так и шаблонов контроллеров, расположенных в папках с соответствующими названиями.
 
-В качестве движка для шаблона :doc:`Phalcon\\Mvc\\View <../api/Phalcon_Mvc_View>` использует сам PHP, поэтому представления должны иметь расширение .phtml.
+В качестве движка по умолчанию компонент использует сам PHP, поэтому представления должны иметь расширение .phtml.
 Если в качестве папки с представлениями используется *app/views*, то компонент автоматически будет искать следующие 3 файла.
 
 +-------------------+-------------------------------+--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+
@@ -129,7 +130,7 @@ Dispatcher будет искать "PostsController" и его действие 
     </html>
 
 Использование Шаблонов
-----------------------
+^^^^^^^^^^^^^^^^^^^^^^
 Шаблоны — это представления, которые могут быть использованы для предоставления общего доступа к коду представлений. Они выступают в роли layouts для контроллеров, поэтому вам необходимо помещать их в папку для layouts.
 
 .. code-block:: php
@@ -239,70 +240,8 @@ Dispatcher будет искать "PostsController" и его действие 
         </body>
     </html>
 
-Использование частичных шаблонов (Partials)
--------------------------------------------
-Частичные шаблоны (Partial templates) — это ещё один способ дробления процесса отрисовки на простые и более управляемые части, которые впоследствии могут быть использованы в различных частях приложения. С помощью partial вы можете переместить код отрисовки какой-то конкретной части в отдельный, отвечающий за это, файл.
-
-Один из способов использования partials — это отнестись к ним, как к некоторому подобию подпрограммы. Иными словами — вынести детали реализации из представления, с целью сделать код более простым для понимания. Например, вы могли бы получить представление, выглядещее следующим образом:
-
-.. code-block:: html+php
-
-    <?php $this->partial("shared/ad_banner") ?>
-
-    <h1>Robots</h1>
-
-    <p>Check out our specials for robots:</p>
-    ...
-
-    <?php $this->partial("shared/footer") ?>
-
-Method partial() does accept a second parameter as an array of variables/parameters that only will exists in the scope of the partial:
-
-.. code-block:: html+php
-
-    <?php $this->partial("shared/ad_banner", array('id' => $site->id, 'size' => 'big')) ?>
-
-Передача значений переменных из контроллера в представление
------------------------------------------------------------
-:doc:`Phalcon\\Mvc\\View <../api/Phalcon_Mvc_View>` позволяет использовать в каждом контроллере переменную представления  ($this->view). Вы можете использовать этот объект, чтобы устанавливать значения переменных для представления непосредственно из действия контроллера, используя метод setVar().
-
-.. code-block:: php
-
-    <?php
-
-    class PostsController extends \Phalcon\Mvc\Controller
-    {
-
-        public function indexAction()
-        {
-
-        }
-
-        public function showAction()
-        {
-            // Передать все посты в представление
-            $this->view->setVar("posts", Posts::find());
-        }
-
-    }
-
-Переменная, название которой
-Первым параметром метода setVar() передаётся название переменной, которая будет создана и может быть использована в представлении. Эта переменная может быть любого типа: от простых строк или целых чисел до более сложных структур, таких, как массивы или коллекции.
-
-.. code-block:: html+php
-
-    <div class="post">
-    <?php
-
-      foreach ($posts as $post) {
-        echo "<h1>", $post->title, "</h1>";
-      }
-
-    ?>
-    </div>
-
 Управление уровнями отрисовки (Rendering Levels)
-------------------------------------------------
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 Как видно выше — :doc:`Phalcon\\Mvc\\View <../api/Phalcon_Mvc_View>` поддерживает иерархию представлений. У вас может возникнуть необходимость в управлении уровнями отрисовки, производимой компонентом представления. Этот функционал предоставляется методом Phalcon\Mvc\\View::setRenderLevel().
 
 Этот метод может быть вызван из контроллера или вышестоящего уровня представления с целью вмешательства в процесс отрисовки.
@@ -405,25 +344,6 @@ Method partial() does accept a second parameter as an array of variables/paramet
 
     }
 
-Использование моделей в слое представления
-------------------------------------------
-Модели приложения всегда доступны из слоя представления. Во время исполнения :doc:`Phalcon\\Loader <../api/Phalcon_Loader>` автоматически создаёт их копии:
-
-.. code-block:: html+php
-
-    <div class="categories">
-    <?php
-
-    foreach (Catergories::find("status = 1") as $category) {
-       echo "<span class='category'>", $category->name, "</span>";
-    }
-
-    ?>
-    </div>
-
-Хотя вы и можете вызывать в слое представления такие методы модели, как insert() или update(), это не рекомендуется, так как при этом невозможно передать выполнение другому контроллеру в случае возникновения ошибки или исключения.
-
-
 Переопределение Представлений (Picking Views)
 ---------------------------------------------
 Как уже упоминалось выше, когда :doc:`Phalcon\\Mvc\\View <../api/Phalcon_Mvc_View>` находится под управлением :doc:`Phalcon\\Mvc\\Application <../api/Phalcon_Mvc_Application>`, тогда отрисовываемым представлением будет какое-то из связанных с последними исполнявшимися контроллером и действием. Это можно переопределить, используя метод Phalcon\\Mvc\\View::pick():
@@ -437,11 +357,227 @@ Method partial() does accept a second parameter as an array of variables/paramet
 
         public function listAction()
         {
-            // Использовать в качестве представления для отрисовки "views-dir/products/search"
+            // Pick "views-dir/products/search" as view to render
             $this->view->pick("products/search");
+
+            // Pick "views-dir/products/list" as view to render
+            $this->view->pick(array('products'));
+
+            // Pick "views-dir/products/list" as view to render
+            $this->view->pick(array(1 => 'search'));
         }
 
     }
+
+Отключение представления
+------------------------
+Если в контроллере не производится никакого вывода, то для избежания ненужных обработок можно отключить компонент представления:
+
+
+.. code-block:: php
+
+    <?php
+
+    class UsersController extends \Phalcon\Mvc\Controller
+    {
+
+        public function closeSessionAction()
+        {
+            //Close session
+            //...
+
+            //An HTTP Redirect
+            $this->response->redirect('index/index');
+
+            //Disable the view to avoid rendering
+            $this->view->disable();
+        }
+
+    }
+
+You can return a 'response' object to avoid disable the view manually:
+
+.. code-block:: php
+
+    <?php
+
+    class UsersController extends \Phalcon\Mvc\Controller
+    {
+
+        public function closeSessionAction()
+        {
+            //Close session
+            //...
+
+            //An HTTP Redirect
+            return $this->response->redirect('index/index');
+        }
+
+    }
+
+Simple Rendering
+----------------
+:doc:`Phalcon\\Mvc\\View\\Simple <../api/Phalcon_Mvc_View_Simple>` is an alternative component to :doc:`Phalcon\\Mvc\\View <../api/Phalcon_Mvc_View>`.
+It keeps most of the philosophy of :doc:`Phalcon\\Mvc\\View <../api/Phalcon_Mvc_View>` but lacks of a hierarchy of files which is, in fact,
+the main feature of its counterpart.
+
+This component allows the developer to have control of when a view is rendered and its location.
+In addition, this component can leverage of view inheritance available in template engines such
+as :doc:`Volt <volt>` and others.
+
+The default component must be replaced in the service container:
+
+.. code-block:: php
+
+    <?php
+
+    $di->set('view', function() {
+
+        $view = new Phalcon\Mvc\View\Simple();
+
+        $view->setViewsDir('../app/views/');
+
+        return $view;
+
+    }, true);
+
+Automatic rendering must be disabled in :doc:`Phalcon\\Mvc\\Application <applications>` (if needed):
+
+.. code-block:: php
+
+    <?php
+
+    try {
+
+        $application = new Phalcon\Mvc\Application($di);
+
+        $application->useImplicitView(false);
+
+        echo $application->handle()->getContent();
+
+    } catch (\Exception $e) {
+        echo $e->getMessage();
+    }
+
+To render a view is necessary to call the render method explicitly indicating the relative path to the view you want to display:
+
+.. code-block:: php
+
+    <?php
+
+    class PostsController extends \Phalcon\Mvc\Controller
+    {
+
+        public function indexAction()
+        {
+            //Render 'views-dir/index.phtml'
+            echo $this->view->render('index');
+
+            //Render 'views-dir/posts/show.phtml'
+            echo $this->view->render('posts/show');
+
+            //Render 'views-dir/index.phtml' passing variables
+            echo $this->view->render('index', array('posts' => Posts::find()));
+
+            //Render 'views-dir/posts/show.phtml' passing variables
+            echo $this->view->render('posts/show', array('posts' => Posts::find()));
+        }
+
+    }
+
+Использование частитей шаблонов (Partials)
+------------------------------------------
+Частичные шаблоны (Partial templates) — это ещё один способ дробления процесса отрисовки на простые и более управляемые части, которые впоследствии могут быть использованы в различных частях приложения. С помощью partial вы можете переместить код отрисовки какой-то конкретной части в отдельный, отвечающий за это, файл.
+
+Один из способов использования partials — это отнестись к ним, как к некоторому подобию подпрограммы. Иными словами — вынести детали реализации из представления, с целью сделать код более простым для понимания. Например, вы могли бы получить представление, выглядещее следующим образом:
+
+.. code-block:: html+php
+
+    <div class="top"><?php $this->partial("shared/ad_banner") ?></div>
+
+    <div class="content">
+        <h1>Robots</h1>
+
+        <p>Check out our specials for robots:</p>
+        ...
+    </div>
+
+    <div class="footer"><?php $this->partial("shared/footer") ?></div>
+
+Method partial() does accept a second parameter as an array of variables/parameters that only will exists in the scope of the partial:
+
+.. code-block:: html+php
+
+    <?php $this->partial("shared/ad_banner", array('id' => $site->id, 'size' => 'big')) ?>
+
+Передача значений переменных из контроллера в представление
+-----------------------------------------------------------
+:doc:`Phalcon\\Mvc\\View <../api/Phalcon_Mvc_View>` позволяет использовать в каждом контроллере переменную представления  ($this->view). Вы можете использовать этот объект, чтобы устанавливать значения переменных для представления непосредственно из действия контроллера, используя метод setVar().
+
+.. code-block:: php
+
+    <?php
+
+.. code-block:: php
+
+    <?php
+
+    class PostsController extends \Phalcon\Mvc\Controller
+    {
+
+        public function indexAction()
+        {
+
+        }
+
+        public function showAction()
+        {
+            //Pass all the posts to the views
+            $this->view->setVar("posts", Posts::find());
+
+            //Using the magic setter
+            $this->view->posts = Posts::find();
+
+            //Passing more than one variable at the same time
+            $this->view->setVars(array(
+                'title' => $post->title,
+                'content' => $post->content
+            ));
+        }
+
+    }
+
+Первым параметром метода setVar() передаётся название переменной, которая будет создана и может быть использована в представлении. Эта переменная может быть любого типа: от простых строк или целых чисел до более сложных структур, таких, как массивы или коллекции.
+
+.. code-block:: html+php
+
+    <div class="post">
+    <?php
+
+      foreach ($posts as $post) {
+        echo "<h1>", $post->title, "</h1>";
+      }
+
+    ?>
+    </div>
+
+Использование моделей в слое представления
+------------------------------------------
+Модели приложения всегда доступны из слоя представления. Во время исполнения :doc:`Phalcon\\Loader <../api/Phalcon_Loader>` автоматически создаёт их копии:
+
+.. code-block:: html+php
+
+    <div class="categories">
+    <?php
+
+        foreach (Categories::find("status = 1") as $category) {
+           echo "<span class='category'>", $category->name, "</span>";
+        }
+
+    ?>
+    </div>
+
+Хотя вы и можете вызывать в слое представления такие методы модели, как insert() или update(), это не рекомендуется, так как при этом невозможно передать выполнение другому контроллеру в случае возникновения ошибки или исключения.
 
 Кэширование фрагментов Представления
 ------------------------------------
@@ -505,16 +641,19 @@ Method partial() does accept a second parameter as an array of variables/paramet
 
     <?php
 
+    use Phalcon\Cache\Frontend\Output as OutputFrontend,
+        Phalcon\Cache\Backend\Memcache as MemcacheBackend;
+
     // Назначение сервиса кэширования представлений
     $di->set('viewCache', function() {
 
         // Кэширование данных на сутки по умолчанию
-        $frontCache = new \Phalcon\Cache\Frontend\Output(array(
+        $frontCache = new OutputFrontend(array(
             "lifetime" => 86400
         ));
 
         // Настройки соединения с Memcached
-        $cache = new \Phalcon\Cache\Backend\Memcache($frontCache, array(
+        $cache = new MemcacheBackend($frontCache, array(
             "host" => "localhost",
             "port" => "11211"
         ));
@@ -523,7 +662,7 @@ Method partial() does accept a second parameter as an array of variables/paramet
     });
 
 .. highlights::
-    Интерфейс всегда должен быть Phalcon\\Cache\\Frontend\\Output, а сервис "viewCache" должен быть зарегистрирован как всегда открытый (not shared)
+    Интерфейс всегда должен быть Phalcon\\Cache\\Frontend\\Output, а сервис "viewCache" должен быть зарегистрирован как всегда открытый (not shared) в контейнере сервисов (DI)
 
 Использование кэширования представлений также бывает полезно, чтобы предотвратить действия контроллеров, направленные на получение данных, используемых для отображения в представлениях.
 
@@ -547,7 +686,7 @@ Method partial() does accept a second parameter as an array of variables/paramet
                     'order' => 'created_at DESC'
                 ));
 
-                $this->view->setVar('latest', $latest);
+                $this->view->latest = $latest;
             }
 
             // Включает кэширование с ключом "downloads"
@@ -559,25 +698,6 @@ Method partial() does accept a second parameter as an array of variables/paramet
     }
 
 Пример реализации кэширования фрагментов — `PHP alternative site`_.
-
-Отключение представления
-------------------------
-Если в контроллере не производится никакого вывода, то для избежания ненужных обработок можно отключить компонент представления:
-
-.. code-block:: php
-
-    <?php
-
-    class UsersController extends \Phalcon\Mvc\Controller
-    {
-
-        public function closeSessionAction()
-        {
-            // Отключение представления
-            $this->view->disable();
-        }
-
-    }
 
 Шаблонизаторы
 -------------
@@ -725,6 +845,10 @@ Method partial() does accept a second parameter as an array of variables/paramet
 ----------------------------------
 Все компоненты в Phalcon могут быть использованы по-отдельности благодаря их слабой связи друг с другом. Ниже приводится пример самостоятельного использования :doc:`Phalcon\\Mvc\\View <../api/Phalcon_Mvc_View>`:
 
+Hierarchical Rendering
+^^^^^^^^^^^^^^^^^^^^^^
+Using :doc:`Phalcon\\Mvc\\View <../api/Phalcon_Mvc_View>` in a stand-alone mode can be demonstrated below
+
 .. code-block:: php
 
     <?php
@@ -769,9 +893,31 @@ Method partial() does accept a second parameter as an array of variables/paramet
         }
     );
 
+Simple Rendering
+^^^^^^^^^^^^^^^^
+Using :doc:`Phalcon\\Mvc\\View\\Simple <../api/Phalcon_Mvc_View_Simple>` in a stand-alone mode can be demonstrated below:
+
+.. code-block:: php
+
+    <?php
+
+    $view = new \Phalcon\Mvc\View\Simple();
+
+    //A trailing directory separator is required
+    $view->setViewsDir("../app/views/");
+
+    // Render a view and return its contents as a string
+    echo $view->render("templates/welcomeMail");
+
+    // Render a view passing parameters
+    echo $view->render("templates/welcomeMail", array(
+        'email' => $email,
+        'content' => $content
+    ));
+
 События компонента представлений
 --------------------------------
-:doc:`Phalcon\\Mvc\\View <../api/Phalcon_Mvc_View>` может отправлять события :doc:`EventsManager <events>`, если последний представлен. Тип событий —  "view". Некоторые из них, возвращая булевое значение false могут остановить текущую операцию. Поддерживаются следующие события:
+:doc:`Phalcon\\Mvc\\View <../api/Phalcon_Mvc_View>` и :doc:`Phalcon\\Mvc\\View <../api/Phalcon_Mvc_View_Simple>` могут отправлять события :doc:`EventsManager <events>`, если последний представлен. Тип событий —  "view". Некоторые из них, возвращая булевое значение false могут остановить текущую операцию. Поддерживаются следующие события:
 
 +----------------------+------------------------------------------------------------+-------------------------------+
 | Названия события     | Условия срабатывания                                       | Могут ли остановить операцию? |

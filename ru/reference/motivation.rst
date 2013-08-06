@@ -21,6 +21,7 @@
 -------
 * Фреймворки стали обязательными для профессионального развития и работы с PHP
 * Фреймворки предлагают чёткую философию, лёгкую поддержку и написание кода, а саму работу делают увлекательной и приятной
+* We love PHP and we think it can be used to create larger and more ambitious projects
 
 Как работает PHP внутри?
 ------------------------
@@ -33,6 +34,7 @@
 --------------------------------------------
 * Много файлов с разными классами и функциями считываются при каждом обращении. Чтение файлов с диска пагубно влияет на производительность, особенно когда каталогов и файлов много
 * Современный фреймворки используют так называемую ленивую или отложенную загрузку (автозагрузку) для увеличения производительности (для сценария используются только необходимые файлы с кодом)
+* Some of these classes contain methods that aren't used in every request but they're loaded always consuming memory
 * Последовательная загрузка или интерпретация довольно сильно нагружает сервер и негативно влияет на производительность
 * Код фреймворка меняется не часто, но приложение должно его каждый раз загружать, проверять и интерпретировать, каждый раз, на каждый запрос
 
@@ -48,6 +50,22 @@
 * Низкоуровневая оптимизация позволяет минимизировать накладные расходы на реализацию в приложении паттерна MVC
 * Взаимодействие с базами данных реализовано на Си по технологии ORM и выдаёт максимальную производительность
 * Phalcon напрямую обращается к внутренним структурам PHP, что позволяет делать все операции максимально быстро
+
+Why do I need Phalcon?
+----------------------
+Each application requirements and tasks are different than another's. Some for instance are designed to do a set
+of tasks and generate content that rarely changes. These applications can be created with any programming language or
+framework. Using a front-end cache, usually makes such an application, no matter how poorly designed or slow it might be,
+perform very fast.
+
+Other applications generate content almost immediately that changes from request to request. In this case, PHP is used
+to address all requests and generate the content. These applications can be APIs, discussion forums with high traffic loads,
+blogs with a high number of comments and contributors, statistic applications, admin dashboards, enterprise resource
+planners (ERP), business-intelligence software dealing with real time data and more.
+
+An application will be as slow as its slowest component/process. Phalcon offers a very fast yet feature rich framework
+that allows developers to concentrate on making their applications/code faster. Following proper coding processes,
+Phalcon can deliver a lot more functionality/requests with less memory consumption and processing cycles.
 
 Заключение
 ----------

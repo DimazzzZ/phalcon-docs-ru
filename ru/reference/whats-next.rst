@@ -114,6 +114,8 @@ APC_ как и многие другие PHP акселераторы помог
 
     apc.enabled = On
 
+PHP 5.5 includes a built-in bytecode cache called ZendOptimizer+, this extension is also available for 5.3 and 5.4.
+
 Модуль Google Page Speed
 ------------------------
 mod_pagespeed_ увеличивает скорость вашего сайта и уменьшает время загрузки страницы. Это open-source модуль для HTTP сервера Apache, он использует

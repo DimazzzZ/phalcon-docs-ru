@@ -14,7 +14,7 @@ This component encapsulates all the complex operations behind instantiating ever
      class Application extends \Phalcon\Mvc\Application
      {
     
-    	/**
+    	/\**
     	 * Register the services here to make them general or register
     	 * in the ModuleDefinition to make them module-specific
     	 */
@@ -23,7 +23,7 @@ This component encapsulates all the complex operations behind instantiating ever
     
     	}
     
-    	/**
+    	/\**
     	 * This method registers all the modules in the application
     	 */
     	public function main()
@@ -55,7 +55,7 @@ public  **__construct** ([:doc:`Phalcon\\DI <Phalcon_DI>` $dependencyInjector])
 
 
 
-public  **useImplicitView** (*boolean* $implicitView)
+public :doc:`Phalcon\\Mvc\\Application <Phalcon_Mvc_Application>`  **useImplicitView** (*boolean* $implicitView)
 
 By default. The view is implicitly buffering all the output You can full disable the view component using this method
 
@@ -89,7 +89,7 @@ Return the modules registered in the application
 
 
 
-public  **setDefaultModule** (*string* $defaultModule)
+public :doc:`Phalcon\\Mvc\\Application <Phalcon_Mvc_Application>`  **setDefaultModule** (*string* $defaultModule)
 
 Sets the module name to be used if the router doesn't return a valid module
 

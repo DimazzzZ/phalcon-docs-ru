@@ -10,15 +10,6 @@
     Это руководство не отображает все возможности помощников представлений и их аргументов. Для получения полной актуальной информации
     ознакомьтесь с документацией по API :doc:`Phalcon\\Tag <../api/Phalcon_Tag>`.
 
-Использование алиасов
----------------------
-Вы можете использовать алиас для более короткого названия класса. В примере ниже вместо полного названия можно использовать Tag, являющегося
-лишь псевдонимом к оригинальному классу :doc:`Phalcon\\Tag <../api/Phalcon_Tag>`.
-
-.. code-block:: php
-
-    <?php use \Phalcon\Tag as Tag; ?>
-
 Типы документов
 ---------------
 Phalcon содержит помощника Phalcon\\Tag::setDoctype() для установки типа документа. Установка типа документа влияет на формирование компонентом
@@ -57,13 +48,13 @@ HTML разметки. Например, при указании любого т
 
 .. code-block:: php
 
-    <?php \Phalcon\Tag::setDoctype(\Phalcon\Tag::HTML401_STRICT); ?>
+    <?php $this->tag->setDoctype(\$this->tag->HTML401_STRICT); ?>
 
 Вывод типа документа:
 
 .. code-block:: html+php
 
-    <?= \Phalcon\Tag::getDoctype() ?>
+    <?= $this->tag->getDoctype() ?>
     <html>
     <!-- your HTML code -->
     </html>
@@ -95,13 +86,13 @@ HTML разметки. Например, при указании любого т
 .. code-block:: html+php
 
     <!-- для стандартных путей -->
-    <?= Tag::linkTo("products/search", "Search") ?>
+    <?= $this->tag->linkTo("products/search", "Search") ?>
 
     <!-- используя CSS -->
-    <?= Tag::linkTo(array('products/edit/10', 'Edit', 'class' => 'edit-btn')) ?>
+    <?= $this->tag->linkTo(array('products/edit/10', 'Edit', 'class' => 'edit-btn')) ?>
 
     <!-- для именованных маршрутов -->
-    <?= Tag::linkTo(array(array('for' => 'show-product', 'title' => 123, 'name' => 'carrots'), 'Show')) ?>
+    <?= $this->tag->linkTo(array(array('for' => 'show-product', 'title' => 123, 'name' => 'carrots'), 'Show')) ?>
 
 На самом деле, все такие ссылки формируются с использованием компонент :doc:`Phalcon\\Mvc\\Url <url>` (или другого используемого для "url" сервиса )
 
@@ -122,20 +113,18 @@ HTML разметки. Например, при указании любого т
 
 .. code-block:: html+php
 
-    <?php use \Phalcon\Tag as Tag; ?>
-
     <!-- Отправка формы методом POST -->
-    <?= Tag::form("products/search") ?>
+    <?= $this->tag->form("products/search") ?>
         <label for="q">Search:</label>
-        <?= Tag::textField("q") ?>
-        <?= Tag::submitButton("Search") ?>
+        <?= $this->tag->textField("q") ?>
+        <?= $this->tag->submitButton("Search") ?>
     </form>
 
     <!-- Использование специфичного для элемента FORM тега - метода отправки данных -->
-    <?= Tag::form(array("products/search", "method" => "get")); ?>
+    <?= $this->tag->form(array("products/search", "method" => "get")); ?>
         <label for="q">Search:</label>
-        <?= Tag::textField("q"); ?>
-        <?= Tag::submitButton("Search"); ?>
+        <?= $this->tag->textField("q"); ?>
+        <?= $this->tag->submitButton("Search"); ?>
     </form>
 
 Из кода выше сформируется такой HTML результат:
@@ -169,21 +158,21 @@ Phalcon предоставляет ряд помощников для созда
 
 .. code-block::  html+php
 
-    <?php echo Phalcon\Tag::textField("username") ?>
+    <?php echo $this->tag->textField("username") ?>
 
-    <?php echo Phalcon\Tag::textArea(array(
+    <?php echo $this->tag->textArea(array(
         "comment",
         "This is the content of the text-area",
         "cols" => "6",
         "rows" => 20
     )) ?>
 
-    <?php echo Phalcon\Tag::passwordField(array(
+    <?php echo $this->tag->passwordField(array(
         "password",
         "size" => 30
     )) ?>
 
-    <?php echo Phalcon\Tag::hiddenField(array(
+    <?php echo $this->tag->hiddenField(array(
         "parent_id",
         "value"=> "5"
     )) ?>
@@ -211,7 +200,7 @@ Phalcon предоставляет ряд помощников для созда
     <?php
 
     // Используем данные из resultset
-    echo Phalcon\Tag::select(
+    echo $this->tag->select(
         array(
             "productId",
             Products::find("type = 'vegetables'"),
@@ -220,7 +209,7 @@ Phalcon предоставляет ряд помощников для созда
     );
 
     // Используем данные из массива
-    echo Phalcon\Tag::selectStatic(
+    echo $this->tag->selectStatic(
         array(
             "status",
             array(
@@ -252,7 +241,7 @@ Phalcon предоставляет ряд помощников для созда
     <?php
 
     // Формирование выпадающего списка с пустым элементом
-    echo Phalcon\Tag::select(
+    echo $this->tag->select(
         array(
             "productId",
             Products::find("type = 'vegetables'"),
@@ -277,7 +266,7 @@ Phalcon предоставляет ряд помощников для созда
     <?php
 
     // Указание параметров пустого элемента
-    echo Phalcon\Tag::select(
+    echo $this->tag->select(
         array(
             'productId',
             Products::find("type = 'vegetables'"),
@@ -312,7 +301,7 @@ Phalcon предоставляет ряд помощников для созда
 
 .. code-block:: html+php
 
-    <?php \Phalcon\Tag::textField(
+    <?php \$this->tag->textField(
         array(
             "price",
             "size"        => 20,
@@ -336,6 +325,7 @@ Phalcon предоставляет ряд помощников для созда
 
 Установка значений помощников
 -----------------------------
+
 Из контроллера
 ^^^^^^^^^^^^^^
 Установка значений форм в контроллерах является хорошей практикой в парадигме MVC. Вы можете устанавливать значения в контроллерах
@@ -351,7 +341,7 @@ Phalcon предоставляет ряд помощников для созда
 
         public function indexAction()
         {
-            Phalcon\Tag::setDefault("color", "Blue");
+            $this->tag->setDefault("color", "Blue");
         }
 
     }
@@ -362,7 +352,7 @@ Phalcon предоставляет ряд помощников для созда
 
     <?php
 
-    echo \Phalcon\Tag::selectStatic(
+    echo \$this->tag->selectStatic(
         array(
             "color",
             array(
@@ -408,12 +398,12 @@ Phalcon предоставляет ряд помощников для созда
 
         public function initialize()
         {
-            Phalcon\Tag::setTitle(" Суперсайт");
+            $this->tag->setTitle(" Суперсайт");
         }
 
         public function indexAction()
         {
-            Phalcon\Tag::prependTitle("Главная страница - ");
+            $this->tag->prependTitle("Главная страница - ");
         }
 
     }
@@ -422,7 +412,7 @@ Phalcon предоставляет ряд помощников для созда
 
     <html>
         <head>
-            <?php echo \Phalcon\Tag::getTitle(); ?>
+            <?php echo \$this->tag->getTitle(); ?>
         </head>
         <body>
 
@@ -454,10 +444,10 @@ Phalcon предоставляет ряд помощников для созда
     <?php
 
     // Сформируется <img src="/your-app/img/hello.gif">
-    echo \Phalcon\Tag::image("img/hello.gif");
+    echo \$this->tag->image("img/hello.gif");
 
     // Сформируется <img alt="alternative text" src="/your-app/img/hello.gif">
-    echo \Phalcon\Tag::image(
+    echo \$this->tag->image(
         array(
            "img/hello.gif",
            "alt" => "alternative text"
@@ -481,10 +471,10 @@ Phalcon предоставляет ряд помощников для созда
     <?php
 
     // Сформируется <link rel="stylesheet" href="http://fonts.googleapis.com/css?family=Rosario" type="text/css">
-    echo \Phalcon\Tag::stylesheetLink("http://fonts.googleapis.com/css?family=Rosario", false);
+    echo \$this->tag->stylesheetLink("http://fonts.googleapis.com/css?family=Rosario", false);
 
     // Сформируется <link rel="stylesheet" href="/your-app/css/styles.css" type="text/css">
-    echo \Phalcon\Tag::stylesheetLink("css/styles.css");
+    echo \$this->tag->stylesheetLink("css/styles.css");
 
 Аналогично в Volt:
 
@@ -503,10 +493,10 @@ Javascript
     <?php
 
     // Сформируется <script src="http://localhost/javascript/jquery.min.js" type="text/javascript"></script>
-    echo \Phalcon\Tag::javascriptInclude("http://localhost/javascript/jquery.min.js", false);
+    echo \$this->tag->javascriptInclude("http://localhost/javascript/jquery.min.js", false);
 
     // Сформируется <script src="/your-app/javascript/jquery.min.js" type="text/javascript"></script>
-    echo \Phalcon\Tag::javascriptInclude("javascript/jquery.min.js");
+    echo \$this->tag->javascriptInclude("javascript/jquery.min.js");
 
 То же самое в Volt:
 
@@ -530,9 +520,9 @@ Javascript
     // <canvas id="canvas1" width="300" class="cnvclass">
     // This is my canvas
     // </canvas>
-    echo \Phalcon\Tag::tagHtml("canvas", array("id" => "canvas1", "width" => "300", "class" => "cnvclass", false, true, true));
+    echo \$this->tag->tagHtml("canvas", array("id" => "canvas1", "width" => "300", "class" => "cnvclass", false, true, true));
     echo "This is my canvas";
-    echo \Phalcon\Tag::tagHtmlClose("canvas");
+    echo \$this->tag->tagHtmlClose("canvas");
 
 Синтаксис Volt:
 
@@ -545,6 +535,48 @@ Javascript
     {{ tag_html("canvas", ["id":"canvas1", width":"300", "class":"cnvclass"], false, true, true) }}
     This is my canvas
     {{ tag_html_close("canvas") }}
+
+Tag Service
+-----------
+:doc:`Phalcon\\Tag <../api/Phalcon_Tag>` is available via the 'tag' service, this means you can access it from any part
+of the application where the services container is located:
+
+.. code-block:: php
+
+    <?php echo $this->tag->linkTo('pages/about', 'About') ?>
+
+You can easily add new helpers to a custom component replacing the service 'tag' in the services container:
+
+.. code-block:: php
+
+    <?php
+
+    class MyTags extends \Phalcon\Tag
+    {
+        //...
+
+        //Create a new helper
+        static public function myAmazingHelper($parameters)
+        {
+            //...
+        }
+
+        //Override an existing method
+        static public function textField($parameters)
+        {
+            //...
+        }
+    }
+
+Then change the definition of the service 'tag':
+
+.. code-block:: php
+
+    <?php
+
+    $di['tag'] = function() {
+        return new MyTags();
+    };
 
 Создание собственных помощников
 -------------------------------
@@ -559,11 +591,11 @@ Javascript
     {
 
         /**
-        * Соаздёт виджет вывода тега HTML5 audio
-        *
-        * @param array
-        * @return string
-        */
+         * Соаздёт виджет вывода тега HTML5 audio
+         *
+         * @param array
+         * @return string
+         */
         static public function audioField($parameters)
         {
 
@@ -587,7 +619,7 @@ Javascript
             }
 
             // Определение значения элемента
-            // \Phalcon\Tag::setDefault() позволяет установить значение элемента
+            // \$this->tag->setDefault() позволяет установить значение элемента
             if (isset($parameters["value"])) {
                 $value = $parameters["value"];
                 unset($parameters["value"]);

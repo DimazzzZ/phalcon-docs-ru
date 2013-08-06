@@ -1,5 +1,6 @@
 Отладка приложений
 ==================
+
 .. figure:: ../_static/img/xdebug-1.jpg
     :align: center
 
@@ -21,9 +22,9 @@ PHP предлагает набор инструментов для отладк
 
     try {
 
-        //... какой-то код
+        //... какой-то код phalcon/php
 
-    } catch(\Phalcon\Exception $e) {
+    } catch(\Exception $e) {
 
     }
 
@@ -69,7 +70,7 @@ PHP класса `Exception class`_ и используется, чтобы по
 
         //... код приложения ...
 
-    } catch(\Phalcon\Exception $e) {
+    } catch(\Exception $e) {
         echo get_class($e), ": ", $e->getMessage(), "\n";
         echo " File=", $e->getFile(), "\n";
         echo " Line=", $e->getLine(), "\n";
@@ -106,7 +107,29 @@ PHP класса `Exception class`_ и используется, чтобы по
 Как вы можете увидеть из вывода исключения все методы прозрачны и можно полностью отследить работу приложения, а так же параметры,
 которые передавались в методы. Метод `Exception::getTrace`_ предоставляет дополнительную информацию, если необходимо.
 
-Если установить утилиту '`Pretty Exceptions`_' то исключения буду выводится в удобном формате.
+Debug component
+---------------
+Phalcon provides a debug component that allows the developer to easily find errors produced in an application
+created with the framework.
+
+The following screencast explains how it works:
+
+.. raw:: html
+
+    <div align="center">
+        <iframe src="http://player.vimeo.com/video/68893840" width="500" height="313" frameborder="0" webkitAllowFullScreen mozallowfullscreen allowFullScreen></iframe>
+    </div>
+
+To enable it, add the following to your bootstrap:
+
+.. code-block:: php
+
+    <?php
+
+    $debug = new \Phalcon\Debug();
+    $debug->listen();
+
+Any Try/Catch blocks must be removed or disabled to make this component work properly.
 
 Рефлексия (Reflection)
 ----------------------
@@ -181,7 +204,20 @@ PHP класса `Exception class`_ и используется, чтобы по
 XDebug_ великолепный инструмент для отладки PHP приложений. Он так же является дополнением, написанным на языке C, и вы можете использовать
 его вместе с Phalcon без дополнительной конфигурации или побочных эффектов.
 
-После установки xdebug вы можете использовать его API для получения детальной информации об исключениях и сообщениях.
+The following screencast shows a Xdebug session with Phalcon:
+
+.. raw:: html
+
+    <div align="center">
+        <iframe src="http://player.vimeo.com/video/69867342" width="500" height="313" frameborder="0" webkitAllowFullScreen mozallowfullscreen allowFullScreen></iframe>
+    </div>
+
+Once you have xdebug installed, you can use its API to get a more detailed information about exceptions and messages.
+
+.. highlights::
+
+    We highly recommend use at least XDebug 2.2.3 for a better compatibility with Phalcon
+
 Слудующий пример использует xdebug_print_function_stack_ для остановки выполнения программы и вывода стека вызовов:
 
 .. code-block:: php

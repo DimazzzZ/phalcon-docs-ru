@@ -28,7 +28,7 @@
     }
 
 Пример выше демонстрирует реализацию модели "Robots". Обратите внимание, что класс Robots наследуется от :doc:`Phalcon\\Mvc\\Model <../api/Phalcon_Mvc_Model>`.
-Данный компонент предоставляет большой набор функционала для модели, которая наследует его, включая основные операции CRUD (Create, Read, Update, Destroy),
+Данный компонент предоставляет большой набор функционала для модели, которая наследует его, включая основные операции CRUD (Create, Read, Update, Delete),
 валидацию данных, а также поддержку усложненного поиска и возможность связывать несколько моделей друг с другом.
 
 .. highlights::
@@ -88,9 +88,82 @@ created you can 'onConstruct':
 
     }
 
+Public properties vs. Setters/Getters
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+Models can be implemented with properties of public scope, meaning that each property can be read/updated
+from any part of the code that has instantiated that model class without any restrictions:
+
+.. code-block:: php
+
+    <?php
+
+    class Robots extends \Phalcon\Mvc\Model
+    {
+        public $id;
+
+        public $name;
+
+        public $price;
+    }
+
+By using getters and setters you can control which properties are visible publicly perform various transformations
+to the data (which would be impossible otherwise) and also add validation rules to the data stored in the object:
+
+.. code-block:: php
+
+    <?php
+
+    class Robots extends \Phalcon\Mvc\Model
+    {
+        protected $id;
+
+        protected $name;
+
+        protected $price;
+
+        public function getId()
+        {
+            return $this->id;
+        }
+
+        public function setName($name)
+        {
+            //The name is too short?
+            if (strlen($name) < 10) {
+                throw new \InvalidArgumentException('The name is too short');
+            }
+            $this->name = $name;
+        }
+
+        public function getName()
+        {
+            return $this->name;
+        }
+
+        public function setPrice($price)
+        {
+            //Negative prices aren't allowed
+            if ($price < 0) {
+                throw new \InvalidArgumentException('Price can\'t be negative');
+            }
+            $this->price = $price;
+        }
+
+        public function getPrice()
+        {
+            //Convert the value to double before be used
+            return (double) $this->price;
+        }
+    }
+
+Public properties provide less complexity in development. However getters/setters can heavily increase the testability,
+extensibility and maintainability of applications. Developers can decide which strategy is more appropriate for the
+application they are creating. The ORM is compatible with both schemes of defining properties.
+
 Модели в Пространствах Имен
 ---------------------------
-Пространства имен могут быть использованы во избежание конфликтов, связанных с именами классов. В этих случаях, необходимо указывать имя соответствующей таблицы базы данных используя метод getSource:
+Пространства имен могут быть использованы во избежание конфликтов, связанных с именами классов. В этих случаях, необходимо указывать имя соответствующей
+таблицы базы данных используя метод getSource:
 
 .. code-block:: php
 
@@ -100,11 +173,6 @@ created you can 'onConstruct':
 
     class Robots extends \Phalcon\Mvc\Model
     {
-
-        public function getSource()
-        {
-            return "robots";
-        }
 
     }
 
@@ -435,9 +503,9 @@ created you can 'onConstruct':
 
 Привязка параметров доступна для всех запросов метода, таких как find() и findFirst(), а так же для методов count(), sum(), average() и т.д.
 
-Initializing fetched records
-----------------------------
-M ay be the case that after obtaining a record of the database is necessary to initialise the data before
+Initializing/Preparing fetched records
+--------------------------------------
+May be the case that after obtaining a record from the database is necessary to initialise the data before
 being used by the rest of the application. You can implement the method 'afterFetch' in a model, this event
 will be executed just after create the instance and assign the data to it:
 
@@ -447,6 +515,12 @@ will be executed just after create the instance and assign the data to it:
 
     class Robots extends Phalcon\Mvc\Model
     {
+
+        public $id;
+
+        public $name;
+
+        public $status;
 
         public function beforeSave()
         {
@@ -459,6 +533,28 @@ will be executed just after create the instance and assign the data to it:
             //Convert the string to an array
             $this->status = explode(',', $this->status);
         }
+    }
+
+If you use getters/setters instead of/or together with public properties, you can initialize the field once it is
+accessed:
+
+.. code-block:: php
+
+    <?php
+
+    class Robots extends Phalcon\Mvc\Model
+    {
+        public $id;
+
+        public $name;
+
+        public $status;
+
+        public function getStatus()
+        {
+            return explode(',', $this->status)
+        }
+
     }
 
 Отношения между моделями
@@ -2633,7 +2729,7 @@ time you use the table. This could be done caching the meta-data using any of th
 +---------+-----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+-------------------------------------------------------------------------------------------+
 | Apc     | This adapter uses the `Alternative PHP Cache (APC)`_ to store the table meta-data. You can specify the lifetime of the meta-data with options. This is the most recommended way to store meta-data when the application is in production stage.                                                                                               | :doc:`Phalcon\\Mvc\\Model\\MetaData\\Apc <../api/Phalcon_Mvc_Model_MetaData_Apc>`         |
 +---------+-----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+-------------------------------------------------------------------------------------------+
-| XCache  | This adapter uses `XCache`_ to store the table meta-data. You can specify the lifetime of the meta-data with options. This is the most recommended way to store meta-data when the application is in production stage.                                                                                                                        | :doc:`Phalcon\\Mvc\\Model\\MetaData\\XCache <../api/Phalcon_Mvc_Model_MetaData_XCache>`   |
+| XCache  | This adapter uses `XCache`_ to store the table meta-data. You can specify the lifetime of the meta-data with options. This is the most recommended way to store meta-data when the application is in production stage.                                                                                                                        | :doc:`Phalcon\\Mvc\\Model\\MetaData\\Xcache <../api/Phalcon_Mvc_Model_MetaData_Xcache>`   |
 +---------+-----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+-------------------------------------------------------------------------------------------+
 | Files   | This adapter uses plain files to store meta-data. By using this adapter the disk-reading is increased but the database access is reduced                                                                                                                                                                                                      | :doc:`Phalcon\\Mvc\\Model\\MetaData\\Files <../api/Phalcon_Mvc_Model_MetaData_Files>`     |
 +---------+-----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+-------------------------------------------------------------------------------------------+
@@ -3136,7 +3232,7 @@ You may be required to access the application services within a model, the follo
 
             //Show validation messages
             foreach ($this->getMesages() as $message) {
-                $flash->error((string) $message);
+                $flash->error($message);
             }
         }
 

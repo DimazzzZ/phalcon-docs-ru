@@ -35,7 +35,6 @@ MVC Приложения
     use Phalcon\Loader,
         Phalcon\DI\FactoryDefault,
         Phalcon\Mvc\Application,
-        Phalcon\Exception,
         Phalcon\Mvc\View;
 
     $loader = new Loader();
@@ -59,9 +58,10 @@ MVC Приложения
     try {
 
         $application = new Application($di);
+
         echo $application->handle()->getContent();
 
-    } catch (Exception $e) {
+    } catch (\Exception $e) {
         echo $e->getMessage();
     }
 
@@ -75,8 +75,7 @@ MVC Приложения
         Phalcon\Mvc\View,
         Phalcon\DI\FactoryDefault,
         Phalcon\Mvc\Dispatcher,
-        Phalcon\Mvc\Application,
-        Phalcon\Exception;
+        Phalcon\Mvc\Application;
 
     $loader = new Loader();
 
@@ -109,7 +108,7 @@ MVC Приложения
         $application = new Application($di);
         echo $application->handle()->getContent();
 
-    } catch(Exception $e){
+    } catch(\Exception $e){
         echo $e->getMessage();
     }
 
@@ -203,8 +202,7 @@ MVC Приложения
 
     use Phalcon\Mvc\Router,
         Phalcon\Mvc\Application,
-        Phalcon\DI\FactoryDefault,
-        Phalcon\Exception;
+        Phalcon\DI\FactoryDefault;
 
     $di = new FactoryDefault();
 
@@ -215,34 +213,24 @@ MVC Приложения
 
         $router->setDefaultModule("frontend");
 
-        $router->add(
-            "/login",
-            array(
-                'module'     => 'backend',
-                'controller' => 'login',
-                'action'     => 'index',
-            )
-        );
+        $router->add("/login", array(
+            'module'     => 'backend',
+            'controller' => 'login',
+            'action'     => 'index',
+        ));
 
-        $router->add(
-            "/admin/products/:action",
-            array(
-                'module'     => 'backend',
-                'controller' => 'products',
-                'action'     => 1,
-            )
-        );
+        $router->add("/admin/products/:action", array(
+            'module'     => 'backend',
+            'controller' => 'products',
+            'action'     => 1,
+        ));
 
-        $router->add(
-            "/products/:action",
-            array(
-                'controller' => 'products',
-                'action'     => 1,
-            )
-        );
+        $router->add("/products/:action", array(
+            'controller' => 'products',
+            'action'     => 1,
+        ));
 
         return $router;
-
     });
 
     try {
@@ -267,7 +255,7 @@ MVC Приложения
         // Обработка запроса
         echo $application->handle()->getContent();
 
-    } catch(Exception $e){
+    } catch(\Exception $e){
         echo $e->getMessage();
     }
 
@@ -329,8 +317,8 @@ MVC Приложения
 
         echo $application->handle()->getContent();
 
-    } catch (\Phalcon\Exception $e) {
-        echo "PhalconException: ", $e->getMessage();
+    } catch (\Exception $e) {
+        echo "Exception: ", $e->getMessage();
     }
 
 Ядро выполняет основную работу по запуску контроллера, при вызыве handle():
@@ -341,13 +329,15 @@ MVC Приложения
 
     echo $application->handle()->getContent();
 
+Manual bootstraping
+-------------------
 Если вы не хотите использовать :doc:`Phalcon\\Mvc\\Application <../api/Phalcon_Mvc_Application>`, код выше можно изменить вот так:
 
 .. code-block:: php
 
     <?php
 
-    // Запускаем  сервис из контернейра сервисов
+    // Получаем  сервис из контернейра сервисов
     $router = $di['router'];
 
     $router->handle();
@@ -387,6 +377,84 @@ MVC Приложения
 
     // Выводим ответ
     echo $response->getContent();
+
+The following replacement of :doc:`Phalcon\\Mvc\\Application <../api/Phalcon_Mvc_Application>` lacks of a view component making
+it suitable for Rest APIs:
+
+.. code-block:: php
+
+    <?php
+
+    // Get the 'router' service
+    $router = $di['router'];
+
+    $router->handle();
+
+    $dispatcher = $di['dispatcher'];
+
+    // Pass the processed router parameters to the dispatcher
+    $dispatcher->setControllerName($router->getControllerName());
+    $dispatcher->setActionName($router->getActionName());
+    $dispatcher->setParams($router->getParams());
+
+    // Dispatch the request
+    $dispatcher->dispatch();
+
+    //Get the returned value by the lastest executed action
+    $response = $dispatcher->getReturnedValue();
+
+    //Check if the action returned is a 'response' object
+    if ($response instanceof Phalcon\Http\ResponseInterface) {
+
+        //Send the request
+        $response->send();
+    }
+
+Yet another alternative that catch exceptions produced in the dispatcher forwarding to other actions consequently:
+
+.. code-block:: php
+
+    <?php
+
+    // Get the 'router' service
+    $router = $di['router'];
+
+    $router->handle();
+
+    $dispatcher = $di['dispatcher'];
+
+    // Pass the processed router parameters to the dispatcher
+    $dispatcher->setControllerName($router->getControllerName());
+    $dispatcher->setActionName($router->getActionName());
+    $dispatcher->setParams($router->getParams());
+
+    try {
+
+        // Dispatch the request
+        $dispatcher->dispatch();
+
+    } catch (Exception $e) {
+
+        //An exception has ocurred, dispatch some controller/action aimed for that
+
+        // Pass the processed router parameters to the dispatcher
+        $dispatcher->setControllerName('errors');
+        $dispatcher->setActionName('action503');
+
+        // Dispatch the request
+        $dispatcher->dispatch();
+
+    }
+
+    //Get the returned value by the lastest executed action
+    $response = $dispatcher->getReturnedValue();
+
+    //Check if the action returned is a 'response' object
+    if ($response instanceof Phalcon\Http\ResponseInterface) {
+
+        //Send the request
+        $response->send();
+    }
 
 Несмотря на то, что этот код более многословен чем код при использовании :doc:`Phalcon\\Mvc\\Application <../api/Phalcon_Mvc_Application>`,
 он предоставляет альтернативу для запуска вашего приложения. В зависимости от своих потребностей, вы, возможно, захотите иметь полный контроль

@@ -3,7 +3,7 @@ Class **Phalcon\\Config\\Adapter\\Ini**
 
 *extends* :doc:`Phalcon\\Config <Phalcon_Config>`
 
-*implements* ArrayAccess
+*implements* Countable, ArrayAccess
 
 Reads ini files and converts them to Phalcon\\Config objects.  Given the next configuration file:  
 
@@ -136,9 +136,29 @@ Converts recursively the object to an array
 
 
 
+public  **count** () inherited from Phalcon\\Config
+
+...
+
+
 public static :doc:`Phalcon\\Config <Phalcon_Config>`  **__set_state** (*array* $data) inherited from Phalcon\\Config
 
 Restores the state of a Phalcon\\Config object
 
+
+
+public  **__get** (*unknown* $index) inherited from Phalcon\\Config
+
+...
+
+
+public  **__set** (*unknown* $index, *unknown* $value) inherited from Phalcon\\Config
+
+...
+
+
+public  **__isset** (*unknown* $index) inherited from Phalcon\\Config
+
+...
 
 

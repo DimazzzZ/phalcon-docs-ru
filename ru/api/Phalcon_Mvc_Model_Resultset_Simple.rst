@@ -5,7 +5,7 @@ Class **Phalcon\\Mvc\\Model\\Resultset\\Simple**
 
 *implements* Serializable, ArrayAccess, Countable, SeekableIterator, Traversable, Iterator, :doc:`Phalcon\\Mvc\\Model\\ResultsetInterface <Phalcon_Mvc_Model_ResultsetInterface>`
 
-Simple resultsets only contains a complete objects This class builds every complete object as it is required
+Simple resultsets only contains complete objects. This class builds every complete object as it is required
 
 
 Constants
@@ -32,13 +32,13 @@ Phalcon\\Mvc\\Model\\Resultset\\Simple constructor
 
 public *boolean*  **valid** ()
 
-Check whether internal resource has rows to fetch
+Check whether the internal resource has rows to fetch
 
 
 
 public *array*  **toArray** ([*boolean* $renameColumns])
 
-Returns a complete resultset as an array, if the resultset has a big number of rows it could consume more memory than currently it does. Export the resultset to an array couldn't be faster with a large number of records
+Returns a complete resultset as an array, if the resultset has a big number of rows it could consume more memory than it currently does. Exporting the resultset to an array couldn't be faster with a large number of records
 
 
 
@@ -50,7 +50,7 @@ Serializing a resultset will dump all related rows into a big array
 
 public  **unserialize** (*string* $data)
 
-Unserializing a resultset will allow to only works on the rows present in the saved state
+Unserializing a resultset only works on the rows present in the saved state
 
 
 
@@ -98,13 +98,13 @@ Gets row in a specific position of the resultset
 
 public  **offsetSet** (*int* $index, :doc:`Phalcon\\Mvc\\ModelInterface <Phalcon_Mvc_ModelInterface>` $value) inherited from Phalcon\\Mvc\\Model\\Resultset
 
-Resulsets cannot be changed. It has only been implemented to meet the definition of the ArrayAccess interface
+Resultsets cannot be changed. It has only been implemented to meet the definition of the ArrayAccess interface
 
 
 
 public  **offsetUnset** (*int* $offset) inherited from Phalcon\\Mvc\\Model\\Resultset
 
-Resulsets cannot be changed. It has only been implemented to meet the definition of the ArrayAccess interface
+Resultsets cannot be changed. It has only been implemented to meet the definition of the ArrayAccess interface
 
 
 

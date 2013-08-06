@@ -400,7 +400,7 @@ Events are triggered using the type "micro". The following events are supported:
     $app = new Micro();
 
     // Привязываем менеджер событий к приложению
-    $app->setEventsManager($eventsManager);
+    $app->setEventsManager($eventManager);
 
 Промежуточные события
 ---------------------
