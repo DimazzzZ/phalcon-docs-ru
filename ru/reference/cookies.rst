@@ -65,5 +65,11 @@
         return $crypt;
     });
 
+.. highlights::
+
+    Send cookies data without encryption to clients including complex objects structures, resultsets,
+    service information, etc. could expose internal application details that could be used by an attacker
+    to attack the application. If you do not want to use encryption, we highly recommend you only send very
+    basic cookie data like numbers or small string literals.
 
 .. _Куки: http://ru.wikipedia.org/wiki/HTTP_cookie
