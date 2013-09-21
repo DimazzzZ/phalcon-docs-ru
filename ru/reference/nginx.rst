@@ -157,11 +157,7 @@ Nginx_ это свободный, с открытым исходным кодо�
         try_files $uri $uri/ @rewrite;
 
         location @rewrite {
-<<<<<<< HEAD
-            rewrite ^/(.*)$ /index.php?_url=$1;
-=======
             rewrite ^/(.*)$ /index.php?_url=/$1;
->>>>>>> original/master
         }
 
         location ~ \.php {

@@ -1,4 +1,3 @@
-<<<<<<< HEAD
 Инструменты разработчика Phalcon Developer Tools в Linux
 ========================================================
 Этот шаг поможет вам установить Phalcon Developer Tools в Linux.
