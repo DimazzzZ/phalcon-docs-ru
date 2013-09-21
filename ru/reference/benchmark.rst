@@ -19,7 +19,7 @@
 * Операционная система: Mac OS X Lion 10.7.4
 * Веб сервер: Apache httpd 2.2.22
 * PHP: 5.3.15
-* Процессов: 2.04 Ghz Intel Core i5
+* Процессор: 2.04 Ghz Intel Core i5
 * Оперативная память: 4GB 1333 MHz DDR3
 * Жесткий диск: 500GB SATA Disk
 
@@ -48,26 +48,25 @@
     Обновление Mar-20-2012: Тесты переделаны с учетом apc.stat установленного в ВЫКЛ. Расширение информации
 
 .. versionchanged:: 1.1
-        Обновление May-13-2012: Шаблонизация в Symfony была переделана с Twig на прямое использование PHP. Параметры конфигурации Yii были изменены в соответсвии с рекомндациями.
+    Обновление May-13-2012: Шаблонизация в Symfony была переделана с Twig на прямое использование PHP. Параметры конфигурации Yii были изменены в соответсвии с рекомндациями.
 
 .. versionchanged:: 1.2
-        Обновление May-20-2012: Для сравнения добавлен фреймворк Fuel.
+    Обновление May-20-2012: Для сравнения добавлен фреймворк Fuel.
 
 .. versionchanged:: 1.3
-        Обновление Jun-4-2012: Для сравнения добавлен фреймворк Cake. Но это не отображено на графике, потому как требует 30 секунд для запуска 10 из 1000.
+    Обновление Jun-4-2012: Для сравнения добавлен фреймворк Cake. Но это не отображено на графике, потому как требует 30 секунд для запуска 10 из 1000.
 
 .. versionchanged:: 1.4
-        Обновление Ago-27-2012: PHP обновлён до to 5.3.15, APC обновлён до 3.1.11, Yii обновлён до 1.1.12, Phalcon обновлён до 0.5.0, Добавлен Laravel, операционная система обновлена до Mac OS X Lion. Обновлено железо.
+    Обновление Ago-27-2012: PHP обновлён до to 5.3.15, APC обновлён до 3.1.11, Yii обновлён до 1.1.12, Phalcon обновлён до 0.5.0, Добавлен Laravel, операционная система обновлена до Mac OS X Lion. Обновлено железо.
 
 Внешние источники
 -----------------
 * `For Impatient Web Users, an Eye Blink Is Just Too Long to Wait <http://www.nytimes.com/2012/03/01/technology/impatient-web-users-flee-slow-loading-sites.html?pagewanted=all&_r=0>`_
 * `Millionaires performance cases: Impact of performance <https://github.com/zenorocha/browser-diet/wiki/Impact-of-performance>`_
 * `How fast are we going now? <http://www.stevesouders.com/blog/2013/05/09/how-fast-are-we-going-now/>`_
-* `Speed, performance and human perception` <http://chimera.labs.oreilly.com/books/1230000000545/ch10.html#SPEED_PERFORMANCE_HUMAN_PERCEPTION>`_
-
+* `Speed, performance and human perception <http://chimera.labs.oreilly.com/books/1230000000545/ch10.html#SPEED_PERFORMANCE_HUMAN_PERCEPTION>`_
 
 .. _стали: http://googlewebmastercentral.blogspot.com/2010/04/using-site-speed-in-web-search-ranking.html
-.. _напишите нам: http://phalcon.uservoice.com/
+.. _напишите нам: https://github.com/phalcon/framework-bench
 .. _исходники тестов на Github: https://github.com/phalcon/framework-bench
 .. _APC: http://php.net/manual/en/book.apc.php

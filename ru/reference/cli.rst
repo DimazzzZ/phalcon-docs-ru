@@ -94,8 +94,9 @@ This piece of code can be run using:
 
     This is the default task and the default action
 
-Задачи
-------
+
+Tasks
+-----
 Tasks work similar to controllers. Any CLI application needs at least a mainTask and a mainAction and every task needs
 to have a mainAction which will run if no action is given explicitly.
 
@@ -113,6 +114,7 @@ Below is an example of the app/tasks/MainTask.php file
         }
 
     }
+
 
 Processing action parameters
 ----------------------------
@@ -150,7 +152,7 @@ If you run the the application with the following parameters and action:
 
 
 Running tasks in a chain
----------
+------------------------
 It's also possible to run tasks in a chain if it's required. To accomplish this you must add the console itself
 to the DI:
 
@@ -186,3 +188,4 @@ Then you can use the console inside of any task. Below is an example of a modifi
     }
 
 However, it's a better idea to extend \\Phalcon\\CLI\\Task and implement this kind of logic there.
+

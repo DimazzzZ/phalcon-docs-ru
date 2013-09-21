@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 Работа с пространством имён
 ===========================
 `Пространства имён`_ могут быть использованы для исключения пересечений названий классов; это означает, что если в вашем приложении два контроллера с одинаковыми именами,
@@ -9,6 +10,19 @@
 с пространством имен необходимо выполнить одно или все из следующих задач:
 
 Использовать автозагрузку с учетом пространства имен, например как в Phalcon\\Loader:
+=======
+Working with Namespaces
+=======================
+Namespaces_ can be used to avoid class name collisions; this means that if you have two controllers in an application with the same name,
+a namespace can be used to differentiate them. Namespaces are also useful for creating bundles or modules.
+
+Setting up the framework
+------------------------
+Using namespaces has some implications when loading the appropriate controller. To adjust the framework behavior to namespaces is necessary
+to perform one or all of the following tasks:
+
+Use an autoload strategy that takes into account the namespaces, for example with Phalcon\\Loader:
+>>>>>>> original/master
 
 .. code-block:: php
 
@@ -100,7 +114,11 @@ Take the following into consideration when using models in namespaces:
 
     namespace Store\Models;
 
+<<<<<<< HEAD
     class Robots extends Phalcon\Mvc\Model
+=======
+    class Robots extends \Phalcon\Mvc\Model
+>>>>>>> original/master
     {
 
     }
@@ -129,4 +147,8 @@ In PHQL you must write the statements including namespaces:
 
     $phql = 'SELECT r.* FROM Store\Models\Robots r JOIN Store\Models\Parts p';
 
+<<<<<<< HEAD
 .. _Пространства имён: http://php.net/manual/en/language.namespaces.php
+=======
+.. _Namespaces: http://php.net/manual/en/language.namespaces.php
+>>>>>>> original/master

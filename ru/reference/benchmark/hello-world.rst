@@ -34,7 +34,6 @@
 * CakePHP_ (2.1.3)
 * Laravel_ 3.2.5
 * CodeIgniter_ (2.1.0)
-* Nette_ (2.0.4)
 
 Результаты
 ----------
@@ -431,59 +430,8 @@ Laravel версии 3.2.5
       99%     48
      100%     93 (longest request)
 
-Nette версии 2.0.4
-^^^^^^^^^^^^^^^^^^
-.. code-block:: php
-
-    # ab -n 2000 -c 10 http://localhost/bench/helloworld/nette/www/index.php
-
-    This is ApacheBench, Version 2.3 <$Revision: 655654 $>
-    Copyright 1996 Adam Twiss, Zeus Technology Ltd, http://www.zeustech.net/
-    Licensed to The Apache Software Foundation, http://www.apache.org/
-
-    Benchmarking localhost (be patient)
-
-
-    Server Software:        Apache/2.2.22
-    Server Hostname:        localhost
-    Server Port:            80
-
-    Document Path:          /bench/helloworld/nette/www/index.php
-    Document Length:        24963 bytes
-
-    Concurrency Level:      10
-    Time taken for tests:   7.750 seconds
-    Complete requests:      2000
-    Failed requests:        200
-       (Connect: 0, Receive: 0, Length: 200, Exceptions: 0)
-    Write errors:           0
-    Total transferred:      50370200 bytes
-    HTML transferred:       49926200 bytes
-    Requests per second:    258.07 [#/sec] (mean)
-    Time per request:       38.749 [ms] (mean)
-    Time per request:       3.875 [ms] (mean, across all concurrent requests)
-    Transfer rate:          6347.24 [Kbytes/sec] received
-
-    Connection Times (ms)
-                  min  mean[+/-sd] median   max
-    Connect:        0   38  13.1     34     115
-    Processing:     0    1   4.7      0      99
-    Waiting:        0    0   4.5      0      98
-    Total:         15   39  13.2     34     116
-
-    Percentage of the requests served within a certain time (ms)
-      50%     34
-      66%     38
-      75%     46
-      80%     50
-      90%     58
-      95%     64
-      98%     75
-      99%     82
-     100%    116 (longest request)
-
 Phalcon версии 0.8.0
-^^^^^^^^^^^^^^^^^^^^
+^^^^^^^^^^^^^^^^^^^^^
 .. code-block:: php
 
     # ab -n 2000 -c 10 http://localhost/bench/helloworld/phalcon/index.php?_url=/say/hello
@@ -535,7 +483,6 @@ Phalcon версии 0.8.0
 ^^^^^^^
 Первый график показывает, сколько запросов в секунду смог обработать каждый фреймворк. Второй график показывает среднее время выполнения всех запросов.
 
-
 .. raw:: html
 
     <script type="text/javascript" src="https://www.google.com/jsapi"></script>
@@ -546,10 +493,9 @@ Phalcon версии 0.8.0
         function drawChart() {
 
             var data = new google.visualization.DataTable();
-            data.addColumn('string', 'Framework');
-            data.addColumn('number', 'Requests per second');
+            data.addColumn('string', 'Фреймворк');
+            data.addColumn('number', 'Запросов в секунду');
             data.addRows([
-                ['Nette', 258.07],
                 ['Zend', 354.55],
                 ['Laravel', 489.03],
                 ['Symfony', 541.01],
@@ -579,7 +525,6 @@ Phalcon версии 0.8.0
             data.addColumn('string', 'Фреймворк');
             data.addColumn('number', 'Время на запрос');
             data.addRows([
-                ['Nette', 3.875],
                 ['Zend', 2.820],
                 ['Laravel', 2.045],
                 ['Symfony', 1.848],
@@ -603,7 +548,6 @@ Phalcon версии 0.8.0
             data.addColumn('string', 'Фреймворк');
             data.addColumn('number', 'Использовано памяти (MB)');
             data.addRows([
-                ['Nette', 3.5],
                 ['Zend', 1.75],
                 ['Symfony', 1.5],
                 ['Yii', 1.5],
@@ -634,7 +578,6 @@ Phalcon версии 0.8.0
                 ['Yii', 27],
                 ['CodeIgniter', 23],
                 ['Symfony', 18],
-                ['Nette', 7],
                 ['Phalcon', 4]
             ]);
 
@@ -656,7 +599,6 @@ Phalcon версии 0.8.0
         <div id="mpr_div" style="width: 600px; height: 400px; position: relative; "><iframe name="Drawing_Frame_77939" id="Drawing_Frame_77939" width="600" height="400" frameborder="0" scrolling="no" marginheight="0" marginwidth="0"></iframe><div></div></div>
     </div>
 
-
 Заключение
 ----------
 Уникальная структура Phalcon предоставляет исключительную производительность и превосходит все используемые в этом тесте фреймворки.
@@ -671,5 +613,4 @@ Phalcon версии 0.8.0
 .. _CakePHP: http://cakephp.org/
 .. _Laravel: http://www.laravel.com/
 .. _Zend Framework: http://framework.zend.com
-.. _Nette: http://nette.org/
 

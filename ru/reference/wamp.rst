@@ -9,12 +9,12 @@ WAMP существует в 32 и 64 битных версиях. В разде
 После скачивания библиотеки Phalcon у вас будет zip файл, примерно такой как показано ниже:
 
 .. figure:: ../_static/img/xampp-1.png
-        :align: center
+    :align: center
 
-Распакцуйте архив и получите файл библиотеки Phalcon DLL:
+Распакуйте архив и получите файл библиотеки Phalcon DLL:
 
 .. figure:: ../_static/img/xampp-2.png
-        :align: center
+    :align: center
 
 Скопируйте файл php_phalcon.dll в каталог PHP расширений. Если вы установили WAMP в каталог c:\\wamp, то расширения будут в c:\\wamp\\bin\\php\\php5.3.10\\ext
 

@@ -1,5 +1,9 @@
 Установка
+<<<<<<< HEAD
 =========
+=======
+============
+>>>>>>> original/master
 Расширения для PHP устанавливаются несколько иначе чем обычные библиотеки или php-фреймворки. Вы можете скачать готовый бинарный
 файл для своей системы, или собрать его их исходников самостоятельно.
 
@@ -53,7 +57,7 @@ Linux/Solaris/Mac
 
     #Suse
     sudo yast -i gcc make autoconf2.13
-    sudo yast -i php5-devel php5-mysql
+    sudo yast -i php5-devel php5-pear php5-mysql
 
     #CentOS/RedHat
     sudo yum install gcc make

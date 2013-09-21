@@ -6,8 +6,8 @@ in the framework. It consists of an independent high-level abstraction layer for
 This component allows for a lower level database manipulation than using traditional models.
 
 .. highlights::
-   This guide is not intended to be a complete documentation of available methods and their arguments. Please visit the :doc:`API <../api/index>`
-   for a complete reference.
+    This guide is not intended to be a complete documentation of available methods and their arguments. Please visit the :doc:`API <../api/index>`
+    for a complete reference.
 
 Database Adapters
 -----------------
@@ -522,11 +522,11 @@ Using high-level abstraction components such as :doc:`Phalcon\\Db <../api/Phalco
 
     use Phalcon\Logger,
         Phalcon\Events\Manager as EventsManager,
-        Phalcon\Logger\Adapter\File as Logger;
+        Phalcon\Logger\Adapter\File as FileLogger;
 
     $eventsManager = new EventsManager();
 
-    $logger = new Logger("app/logs/db.log");
+    $logger = new FileLogger("app/logs/db.log");
 
     //Listen all the database events
     $eventsManager->attach('db', function($event, $connection) use ($logger) {
