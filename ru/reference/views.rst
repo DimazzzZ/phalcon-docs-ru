@@ -841,7 +841,7 @@ Dispatcher будет искать "PostsController" и его метод "showA
 
 Иерархическая отрисовка
 ^^^^^^^^^^^^^^^^^^^^^^^
- Использование :doc:`Phalcon\\Mvc\\View <../api/Phalcon_Mvc_View>` в качестве самостоятельного компонента:
+Использование :doc:`Phalcon\\Mvc\\View <../api/Phalcon_Mvc_View>` в качестве самостоятельного компонента:
 
 .. code-block:: php
 
