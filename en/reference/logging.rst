@@ -7,17 +7,17 @@ Adapters
 This component makes use of adapters to store the logged messages. The use of adapters allows for a common interface for logging
 while switching backends if necessary. The adapters supported are:
 
-+---------+---------------------------+---------------------------------------------------------------------------------+
-| Adapter | Description               | API                                                                             |
-+=========+===========================+=================================================================================+
-| File    | Logs to a plain text file | :doc:`Phalcon\\Logger\\Adapter\\File <../api/Phalcon_Logger_Adapter_File>`      |
-+---------+---------------------------+---------------------------------------------------------------------------------+
-| Stream  | Logs to a PHP Streams     | :doc:`Phalcon\\Logger\\Adapter\\Stream <../api/Phalcon_Logger_Adapter_Stream>`  |
-+---------+---------------------------+---------------------------------------------------------------------------------+
-| Syslog  | Logs to the system logger | :doc:`Phalcon\\Logger\\Adapter\\Syslog <../api/Phalcon_Logger_Adapter_Syslog>`  |
-+---------+---------------------------+---------------------------------------------------------------------------------+
++---------+---------------------------+----------------------------------------------------------------------------------+
+| Adapter | Description               | API                                                                              |
++=========+===========================+==================================================================================+
+| File    | Logs to a plain text file | :doc:`Phalcon\\Logger\\Adapter\\File <../api/Phalcon_Logger_Adapter_File>`       |
++---------+---------------------------+----------------------------------------------------------------------------------+
+| Stream  | Logs to a PHP Streams     | :doc:`Phalcon\\Logger\\Adapter\\Stream <../api/Phalcon_Logger_Adapter_Stream>`   |
++---------+---------------------------+----------------------------------------------------------------------------------+
+| Syslog  | Logs to the system logger | :doc:`Phalcon\\Logger\\Adapter\\Syslog <../api/Phalcon_Logger_Adapter_Syslog>`   |
++---------+---------------------------+----------------------------------------------------------------------------------+
 | Firephp | Logs to the FirePHP       | :doc:`Phalcon\\Logger\\Adapter\\FirePHP <../api/Phalcon_Logger_Adapter_Firephp>` |
-+---------+---------------------------+---------------------------------------------------------------------------------+
++---------+---------------------------+----------------------------------------------------------------------------------+
 
 Creating a Log
 --------------
@@ -185,22 +185,6 @@ This logger sends messages to the system logger. The syslog behavior may vary fr
 .. code-block:: php
 
     <?php
-
-    use Phalcon\Logger\Adapter\Firephp as Firephp;
-
-    $logger = new Firephp("");
- 	$logger->log("This is a message");
- 	$logger->log("This is an error", \Phalcon\Logger::ERROR);
- 	$logger->error("This is another error");
-    
-FirePHP Logger
-^^^^^^^^^^^^^
-This logger sends messages to the FirePHP.
-
-.. code-block:: php
-
-    <?php
-
     use Phalcon\Logger\Adapter\Syslog as SyslogAdapter;
 
     // Basic Usage
@@ -211,6 +195,22 @@ This logger sends messages to the FirePHP.
         'option' => LOG_NDELAY,
         'facility' => LOG_MAIL
     ));    
+    
+    
+FirePHP Logger
+^^^^^^^^^^^^^^
+This logger sends messages to the FirePHP.
+
+.. code-block:: php
+
+    <?php
+
+    use Phalcon\Logger\Adapter\Firephp as Firephp;
+
+    $logger = new Firephp("");
+ 	$logger->log("This is a message");
+ 	$logger->log("This is an error", \Phalcon\Logger::ERROR);
+ 	$logger->error("This is another error");
 
 Implementing your own adapters
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
