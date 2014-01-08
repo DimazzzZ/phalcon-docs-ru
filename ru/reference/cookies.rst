@@ -17,7 +17,7 @@
     {
         public function loginAction()
         {
-            // Проверяем была ли установлен Кука ранее
+            // Проверяем была ли установлена Кука ранее
             if ($this->cookies->has('remember-me')) {
 
                 // Извлекаем Куку
@@ -49,7 +49,7 @@
 
     $di->set('cookies', function() {
         $cookies = new Phalcon\Http\Response\Cookies();
-        $cookies->setEncryption(false);
+        $cookies->useEncryption(false);
         return $cookies;
     });
 
