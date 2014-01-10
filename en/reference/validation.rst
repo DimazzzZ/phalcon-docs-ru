@@ -86,7 +86,7 @@ Phalcon exposes a set of built-in validators for this component:
 +--------------+------------------------------------------------------------------------------------------------------------------------------------------------------------------+-------------------------------------------------------------------+
 | Name         | Explanation                                                                                                                                                      | Example                                                           |
 +==============+==================================================================================================================================================================+===================================================================+
-| PresenceOf   | Validates that a field's value is not null or empty string.                                                                                                       | :doc:`Example <../api/Phalcon_Validation_Validator_PresenceOf>`   |
+| PresenceOf   | Validates that a field's value is not null or empty string.                                                                                                      | :doc:`Example <../api/Phalcon_Validation_Validator_PresenceOf>`   |
 +--------------+------------------------------------------------------------------------------------------------------------------------------------------------------------------+-------------------------------------------------------------------+
 | Identical    | Validates that a field's value is the same as a specified value                                                                                                  | :doc:`Example <../api/Phalcon_Validation_Validator_Identical>`    |
 +--------------+------------------------------------------------------------------------------------------------------------------------------------------------------------------+-------------------------------------------------------------------+
@@ -102,10 +102,10 @@ Phalcon exposes a set of built-in validators for this component:
 +--------------+------------------------------------------------------------------------------------------------------------------------------------------------------------------+-------------------------------------------------------------------+
 | Between      | Validates that a value is between two values                                                                                                                     | :doc:`Example <../api/Phalcon_Validation_Validator_Between>`      |
 +--------------+------------------------------------------------------------------------------------------------------------------------------------------------------------------+-------------------------------------------------------------------+
-| Confirmation | Validates that a value is the same as another present in the data                                                                                               | :doc:`Example <../api/Phalcon_Validation_Validator_Confirmation>` |
+| Confirmation | Validates that a value is the same as another present in the data                                                                                                | :doc:`Example <../api/Phalcon_Validation_Validator_Confirmation>` |
 +--------------+------------------------------------------------------------------------------------------------------------------------------------------------------------------+-------------------------------------------------------------------+
 
-The following example explains how to create additional validators for this component:
+Additional validators can be created by the developer. The following example explains how to create a validator for this component:
 
 .. code-block:: php
 
@@ -302,7 +302,7 @@ cancelled:
     }
 
 Cancelling Validations
----------------------
+----------------------
 By default all validators assigned to a field are tested regardless if one of them have failed or not. You can change
 this behavior by telling the validation component which validator may stop the validation:
 
