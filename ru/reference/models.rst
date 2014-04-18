@@ -1,4 +1,4 @@
-Работа с Моделями
+Работа с моделями
 =================
 Модель представляет собой информацию (данные) приложения и правила для манипуляции этими данными. Модели в основном используются для управления правилами
 взаимодействия с соответствующими таблицами базы данных. В большинстве случаев, каждая таблица в вашей базе данных соответствует одной модели в вашем приложении.
@@ -10,10 +10,10 @@
 
 .. highlights::
 
-    Модели предназначены для работы с базой данных на высшем уровне абстракции. Если вы испытваете потребность в работе с базой данных на низшем уровне, обратитесь к документации
+    Модели предназначены для работы с базой данных на высшем уровне абстракции. Если вы испытываете потребность в работе с базой данных на низшем уровне, обратитесь к документации
     компонента :doc:`Phalcon\\Db <../api/Phalcon_Db>`.
 
-Создание Модели
+Создание модели
 ---------------
 Модель это класс, который расширяет :doc:`Phalcon\\Mvc\\Model <../api/Phalcon_Mvc_Model>`. Файл с моделью должен быть помещен в директорию models.
 Файл должен содержать только один класс; его имя должно быть записано в CamelCase стиле.
@@ -54,7 +54,7 @@
     }
 
 Теперь модель Robots маппирует (использует) таблицу "the_robots". Метод initialize() помогает в создании модели с пользовательским поведением, т.е. использовании другой таблицы.
-Метод initialize() вызывает лишь однажды во время запроса.
+Метод initialize() вызывается лишь однажды во время запроса.
 
 .. code-block:: php
 
@@ -70,9 +70,8 @@
 
     }
 
-The initialize() method is only called once during the request, it's intended to perform initializations that apply for
-all instances of the model created within the application. If you want to perform initialization tasks for every instance
-created you can 'onConstruct':
+Метод initialize() вызывается один раз при обработке запроса к приложению и предназначен для инициализации экземпляров модели в приложении.
+Если вам необходимо произвести некоторые настройки экземпляра объекта после того, как он создан, вы можете использовать метод 'onConstruct':
 
 .. code-block:: php
 
@@ -88,10 +87,9 @@ created you can 'onConstruct':
 
     }
 
-Public properties vs. Setters/Getters
-^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
-Models can be implemented with properties of public scope, meaning that each property can be read/updated
-from any part of the code that has instantiated that model class without any restrictions:
+Публичные свойства, геттеры (getters) и сеттеры (setters)
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+Модели могут быть реализованы с помощью свойств с общим (public) доступом, при этом свойства модели доступны для чтения/изменения из любой части кода без ограничений:
 
 .. code-block:: php
 
@@ -106,8 +104,7 @@ from any part of the code that has instantiated that model class without any res
         public $price;
     }
 
-By using getters and setters you can control which properties are visible publicly perform various transformations
-to the data (which would be impossible otherwise) and also add validation rules to the data stored in the object:
+При использовании геттеров и сеттеров вы можете полностью контролировать видимость свойств, их обработку и, например, применять различную валидацию при сохранении объекта:
 
 .. code-block:: php
 
@@ -128,9 +125,9 @@ to the data (which would be impossible otherwise) and also add validation rules 
 
         public function setName($name)
         {
-            //The name is too short?
+            // Имя слишком короткое?
             if (strlen($name) < 10) {
-                throw new \InvalidArgumentException('The name is too short');
+                throw new \InvalidArgumentException('Имя слишком короткое');
             }
             $this->name = $name;
         }
@@ -142,28 +139,77 @@ to the data (which would be impossible otherwise) and also add validation rules 
 
         public function setPrice($price)
         {
-            //Negative prices aren't allowed
+            // Отрицательные цены недопустимы
             if ($price < 0) {
-                throw new \InvalidArgumentException('Price can\'t be negative');
+                throw new \InvalidArgumentException('Цена не может быть отрицательной');
             }
             $this->price = $price;
         }
 
         public function getPrice()
         {
-            //Convert the value to double before be used
+            // Преобразование значения в число двойной точности перед его использованием
             return (double) $this->price;
         }
     }
 
-Public properties provide less complexity in development. However getters/setters can heavily increase the testability,
-extensibility and maintainability of applications. Developers can decide which strategy is more appropriate for the
-application they are creating. The ORM is compatible with both schemes of defining properties.
+Публичные свойства облегчают написание кода. Однако применение геттеров и сеттеров делает ваш код тестируемым, расширяемым и удобным в сопровождении. Разработчик вправе сам определить способ описания модели. ORM совместим с обоими способами.
 
-Модели в Пространствах Имен
+.. highlights::
+Прим. переводчика :
+    В то же время, использование getters/setters позволяет использовать некоторые преимущества такого способа.
+    Например, если модель имеет связь один-ко-многим с другой моделью, при запросе связанной модели будет произведено N+1 запросов к базе данных. Напротив, при использовании getters/setters модель сделает только 2 запроса.
+
+.. code-block:: php
+
+    <?php
+
+    class Robots extends \Phalcon\Mvc\Model
+    {
+
+        protected $id;
+
+        protected $name;
+
+        public function getId()
+        {
+            return $this->id;
+        }
+
+        public function setName($name)
+        {
+            if (strlen($name) < 10) {
+                throw new \InvalidArgumentException('Имя слишком короткое');
+            }
+            $this->name = $name;
+        }
+
+        public function getName()
+        {
+            return $this->name;
+        }
+
+        public function initialize()
+        {
+            $this->hasMany("id", "RobotsParts", "robots_id");
+        }
+
+        /**
+         * Возвращает "robots parts" одним запросом
+         *
+         * @return \RobotsParts[]
+         */
+        public function getRobotsParts($parameters=null)
+        {
+            return $this->getRelated('RobotsParts', $parameters);
+        }
+
+    }
+
+
+Модели в пространствах имен
 ---------------------------
-Пространства имен могут быть использованы во избежание конфликтов, связанных с именами классов. В этих случаях, необходимо указывать имя соответствующей
-таблицы базы данных используя метод getSource:
+Пространства имен могут быть использованы во избежание конфликтов, связанных с именами классов. В этом случае имя таблицы, из которой модель получает данные, соответствует имени класса ('Robots'):
 
 .. code-block:: php
 
@@ -176,9 +222,9 @@ application they are creating. The ORM is compatible with both schemes of defini
 
     }
 
-Понимание Записей В Объектах
-----------------------------
-Каждый экземпляр объекта модели представляет собой строку таблицы базы данных. Вы можете легко получить доступ к любой записи, считывая свойство объекта.
+Объекты
+-------
+Каждый экземпляр объекта модели представляет собой строку таблицы базы данных. Вы можете легко получить доступ к данным записи, считывая их как свойства объекта.
 К примеру, для таблицы "robots" с записями:
 
 .. code-block:: bash
@@ -199,13 +245,13 @@ application they are creating. The ORM is compatible with both schemes of defini
 
     <?php
 
-    // Find record with id = 3
+    // Найти запись с id = 3
     $robot = Robots::findFirst(3);
 
-    // Печатать "Terminator"
+    // Выведет "Terminator"
     echo $robot->name;
 
-Как только запись будет зарезервирована в памяти, мы можете производить изменения ее данных, а затем сохранить изменения.
+Как только запись будет записана в память, вы сможете изменять ее данные, а затем сохранять их.
 
 .. code-block:: php
 
@@ -215,7 +261,7 @@ application they are creating. The ORM is compatible with both schemes of defini
     $robot->name = "RoboCop";
     $robot->save();
 
-Как вы можете видеть, нет никакой необходимости в использовании необработанных SQL запросов. :doc:`Phalcon\\Mvc\\Model <../api/Phalcon_Mvc_Model>`
+Как вы можете видеть, нет никакой необходимости в использовании необработанных SQL-запросов. :doc:`Phalcon\\Mvc\\Model <../api/Phalcon_Mvc_Model>`
 предоставляет высший уровень абстракции базы данных для веб-приложений.
 
 Поиск записей
@@ -226,15 +272,15 @@ application they are creating. The ORM is compatible with both schemes of defini
 
     <?php
 
-    // How many robots are there?
+    // Сколько роботов есть?
     $robots = Robots::find();
     echo "There are ", count($robots), "\n";
 
-    // How many mechanical robots are there?
+    // Сколько существует механических роботов?
     $robots = Robots::find("type = 'mechanical'");
     echo "There are ", count($robots), "\n";
 
-    // Get and print virtual robots ordered by name
+    // Получить и распечатать виртуальных роботов упорядоченных по имени
     $robots = Robots::find(array(
         "type = 'virtual'",
         "order" => "name"
@@ -243,7 +289,7 @@ application they are creating. The ORM is compatible with both schemes of defini
         echo $robot->name, "\n";
     }
 
-    // Get first 100 virtual robots ordered by name
+    // Получить первые 100 виртуальных роботов упорядоченных по имени
     $robots = Robots::find(array(
         "type = 'virtual'",
         "order" => "name",
@@ -259,15 +305,15 @@ application they are creating. The ORM is compatible with both schemes of defini
 
     <?php
 
-    // What's the first robot in robots table?
+    // Первый робот в таблице роботов
     $robot = Robots::findFirst();
     echo "The robot name is ", $robot->name, "\n";
 
-    // What's the first mechanical robot in robots table?
+    // Первый  механический робот в таблице роботов
     $robot = Robots::findFirst("type = 'mechanical'");
     echo "The first mechanical robot name is ", $robot->name, "\n";
 
-    // Get first virtual robot ordered by name
+    // Первый  виртуальный робот  упорядоченный по имени в таблице роботов
     $robot = Robots::findFirst(array("type = 'virtual'", "order" => "name"));
     echo "The first virtual robot name is ", $robot->name, "\n";
 
@@ -311,9 +357,9 @@ application they are creating. The ORM is compatible with both schemes of defini
 +-------------+----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+-------------------------------------------------------------------------+
 | shared_lock | С этой опцией, :doc:`Phalcon\\Mvc\\Model <../api/Phalcon_Mvc_Model>` читает последние доступные данные, устанавливает общие блокировки на каждую прочтенную запись                                             | "shared_lock" => true                                                   |
 +-------------+----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+-------------------------------------------------------------------------+
-| cache       | Кэширует результаты, уменьшая нагрузку на реляционну систему.                                                                                                                                                  | "cache" => array("lifetime" => 3600, "key" => "my-find-key")            |
+| cache       | Кэширует результаты, уменьшая нагрузку на реляционную систему.                                                                                                                                                  | "cache" => array("lifetime" => 3600, "key" => "my-find-key")            |
 +-------------+----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+-------------------------------------------------------------------------+
-| hydration   | Sets the hydration strategy to represent each returned record in the result                                                                                                                                    | "hydration" => Resultset::HYDRATE_OBJECTS                               |
+| hydration   | Устанавливает режим гидратации для представления каждой записи в результате                                                                                                                                   | "hydration" => Resultset::HYDRATE_OBJECTS                               |
 +-------------+----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+-------------------------------------------------------------------------+
 
 Существует еще один вариант записи запросов поиска, в объектно-ориентированном стиле:
@@ -329,32 +375,64 @@ application they are creating. The ORM is compatible with both schemes of defini
         ->order("name")
         ->execute();
 
-Статический метод query() возвращает :doc:`Phalcon\\Mvc\\Model\\Criteria <../api/Phalcon_Mvc_Model_Criteria>` объект, который нормально работает с автокомплитом среды разработки.
+Статический метод query() возвращает объект :doc:`Phalcon\\Mvc\\Model\\Criteria <../api/Phalcon_Mvc_Model_Criteria>`, который нормально работает с автодополнением в средах разработки (IDE).
 
-Все запросы внутри обрабатываются как :doc:`PHQL <phql>` запросы. PHQL это высокоуровневый, объектно-ориентированный, SQL подобный язык.
+Все запросы внутри обрабатываются как запросы :doc:`PHQL <phql>`. PHQL - это высокоуровневый, объектно-ориентированный, SQL-подобный язык.
 Этот язык предоставит вам больше возможностей для выполнения запросов, таких как объединение с другими моделями, определение группировок, добавление агрегации и т.д.
+
+Существует также метод findFirstBy<имя-свойства>(). Этот метод расширяет метод 'findFirst()' упомянутый ранее.
+Он позволит вам быстро получить значение из таблицы используя имя свойства, а так же набор параметров для поиска. Например, у нас
+есть рассмотренная ранее модель 'Robots':
+
+.. code-block:: php
+
+    <?php
+
+    class Robots extends \Phalcon\Mvc\Model
+    {
+        public $id;
+
+        public $name;
+
+        public $price;
+    }
+
+Модель содержит три свойства: $id, $name и $price. Допустим мы хотим получить первую найденную запись с именем 'Terminator'. Этот запрос можно написать так:
+
+.. code-block:: php
+
+    <?php
+
+    $name = "Terminator";
+    $robot = Robots::findFirstByName($name);
+
+    if($robot){
+        $this->flash->success("Первый робот с именем " . $name . " стоит " . $robot->price ".");
+    }else{
+        $this->flash->error("В нашей таблице нет робота с именем " . $name ".");
+    }
 
 Возвращение результатов моделью
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 В то время как findFirst() возвращает непосредственно экземпляр вызванного класса (когда это возвращаемые данные), метод find() возвращает
 :doc:`Phalcon\\Mvc\\Model\\Resultset\\Simple <../api/Phalcon_Mvc_Model_Resultset_Simple>`. Этот объект включает в себя весь функционал такой как, обходы, поиск определенных записей, подсчет и прочее.
 
-Эти объекты являются более мощными, чем стандартные массивы. Одна из важнейших особенностей :doc:`Phalcon\\Mvc\\Model\\Resultset <../api/Phalcon_Mvc_Model_Resultset>`
-является то, что в любой момент времени, в памяти, есть только одна запись. Это очень помогает в управлении памятью особенно при работе с большими объемами данных.
+Эти объекты являются более мощными, чем стандартные массивы. Одной из важнейших особенностей :doc:`Phalcon\\Mvc\\Model\\Resultset <../api/Phalcon_Mvc_Model_Resultset>`
+является то, что в любой момент времени в памяти есть только одна запись. Это очень помогает в управлении памятью, особенно при работе с большими объемами данных.
 
 .. code-block:: php
 
     <?php
 
-    // Get all robots
+    // Получить всех роботов
     $robots = Robots::find();
 
-    // Traversing with a foreach
+    // Обход в foreach
     foreach ($robots as $robot) {
         echo $robot->name, "\n";
     }
 
-    // Traversing with a while
+    // Обход в while
     $robots->rewind();
     while ($robots->valid()) {
         $robot = $robots->current();
@@ -362,28 +440,28 @@ application they are creating. The ORM is compatible with both schemes of defini
         $robots->next();
     }
 
-    // Count the resultset
+    // Посчитать количество роботов
     echo count($robots);
 
-    // Alternative way to count the resultset
+    // Альтернативный способ посчитать количество записей
     echo $robots->count();
 
-    // Move the internal cursor to the third robot
+    // Перемещение внутреннего курсора к третьему роботу
     $robots->seek(2);
     $robot = $robots->current()
 
-    // Access a robot by its position in the resultset
+    // Получить доступ к роботу по его позиции в наборе результатов
     $robot = $robots[5];
 
-    // Check if there is a record in certain position
+    // Проверим, существует ли такая позиция в наборе результатов
     if (isset($robots[3]) {
        $robot = $robots[3];
     }
 
-    // Get the first record in the resultset
+    // Получить первую запись в наборе результатов
     $robot = $robots->getFirst();
 
-    // Get the last record
+    // Получить последнюю запись
     $robot = $robots->getLast();
 
 Набор результатов в Phalcon эмулирует перемещение курсора, вы можете получить любую строку указав её позицию или найти внутренний указатель для определенной позиции.
@@ -392,7 +470,7 @@ application they are creating. The ORM is compatible with both schemes of defini
 Аналогично, если набор результатов вызывается несколько раз, запрос должен быть выполнен такое же количество раз.
 
 Хранение больших результатов запроса в памяти может потребовать много ресурсов, из-за этого наборы результатов получаются
-из базы данных блоками по 32 строк снижая потребность в повторном выполнении запроса в ряде случаев экономя память.
+из базы данных блоками по 32 строки снижая потребность в повторном выполнении запроса в ряде случаев экономя память.
 
 Обратите внимание, что наборы результатов могут быть сериализованы и хранится в кэше бэкэнда. :doc:`Phalcon\\Cache <cache>` может помочь с этой задачей.
 Тем не менее, сериализация данных вызывает :doc:`Phalcon\\Mvc\\Model <../api/Phalcon_Mvc_Model>` для получения всех данных из базы данных в массив,
@@ -402,16 +480,16 @@ application they are creating. The ORM is compatible with both schemes of defini
 
     <?php
 
-    // Query all records from model parts
+    // Запрос всех записей из модели Parts
     $parts = Parts::find();
 
-    // Store the resultset into a file
+    // Сериализуем  результат и сохраняем в файл
     file_put_contents("cache.txt", serialize($parts));
 
-    // Get parts from file
+    // Достаём Parts из файла
     $parts = unserialize(file_get_contents("cache.txt"));
 
-    // Traverse the parts
+    // Обходим parts в foreach
     foreach ($parts as $part) {
        echo $part->id;
     }
@@ -425,22 +503,22 @@ application they are creating. The ORM is compatible with both schemes of defini
 
     <?php
 
-    // Query robots binding parameters with string placeholders
+    // Запрос роботов с  связывающими параметрами с строковыми заполнителями
     $conditions = "name = :name: AND type = :type:";
 
-    //Parameters whose keys are the same as placeholders
+    //Параметры с ключом, названия которого идентично заполнителю
     $parameters = array(
         "name" => "Robotina",
         "type" => "maid"
     );
 
-    //Perform the query
+    //Выполнение запроса
     $robots = Robots::find(array(
         $conditions,
         "bind" => $parameters
     ));
 
-    // Query robots binding parameters with integer placeholders
+    // Запрос роботов с  связывающими параметрами с числовыми заполнителями
     $conditions = "name = ?1 AND type = ?2";
     $parameters = array(1 => "Robotina", 2 => "maid");
     $robots     = Robots::find(array(
@@ -448,16 +526,16 @@ application they are creating. The ORM is compatible with both schemes of defini
         "bind" => $parameters
     ));
 
-    // Query robots binding parameters with both string and integer placeholders
+    // Запрос роботов с  связывающими параметрами с строковыми и числовыми заполнителями
     $conditions = "name = :name: AND type = ?1";
 
-    //Parameters whose keys are the same as placeholders
+    //Параметры с ключом, номер или название которого идентично заполнителям
     $parameters = array(
         "name" => "Robotina",
         1 => "maid"
     );
 
-    //Perform the query
+    //Выполнение запроса
     $robots = Robots::find(array(
         $conditions,
         "bind" => $parameters
@@ -466,7 +544,7 @@ application they are creating. The ORM is compatible with both schemes of defini
 При использовании цифровых указателей, необходимо определить их как целые числа, то есть 1 или 2. В этом случае "1" или "2" считаются строками,
 поэтому указатель не может быть успешно заменен. Строки автоматически изолируются используя PDO_.
 Эта функция принимает во внимание кодировку соединения с базой данных, поэтому её рекомендуется определять в параметрах соединения или в конфигурации базы данных,
-неправильная кодировка будет приводить к некорректным хранении и извлечении данных.
+неправильная кодировка будет приводить к некорректному хранению и извлеченюи данных.
 Кроме того, вы можете установить параметр "bindTypes", что позволит определить, каким образом параметры должны быть связаны в соответствии с его типом данных:
 
 .. code-block:: php
@@ -475,19 +553,19 @@ application they are creating. The ORM is compatible with both schemes of defini
 
     use \Phalcon\Db\Column;
 
-    //Bind parameters
+    //Привязка параметров
     $parameters = array(
         "name" => "Robotina",
         "year" => 2008
     );
 
-    //Casting Types
+    //Привязка типов параметров
     $types = array(
         "name" => Column::BIND_PARAM_STR,
         "year" => Column::BIND_PARAM_INT
     );
 
-    // Query robots binding parameters with string placeholders
+    // Запрос роботов с  связывающими параметрами и типами строковых заполнителей
     $robots = Robots::find(array(
         "name = :name: AND year = :year:",
         "bind" => $parameters,
@@ -496,18 +574,14 @@ application they are creating. The ORM is compatible with both schemes of defini
 
 .. highlights::
 
-    Since the default bind-type is \\Phalcon\\Db\\Column::BIND_PARAM_STR, there is no need to specify the
-    "bindTypes" parameter if all of the columns are of that type.
-
-Поскольку по умолчанию связывание типа это \\Phalcon\\Db\\Column::BIND_TYPE_STR, нет необходимости указывать "bindTypes" параметр, если все столбцы этого типа.
+    Поскольку тип-связывания по умолчанию \\Phalcon\\Db\\Column::BIND_PARAM_STR, нет необходимости указывать параметр "bindTypes", если все столбцы этого типа.
 
 Привязка параметров доступна для всех запросов метода, таких как find() и findFirst(), а так же для методов count(), sum(), average() и т.д.
 
-Initializing/Preparing fetched records
+Инициализация/Изменение полученных записей
 --------------------------------------
-May be the case that after obtaining a record from the database is necessary to initialise the data before
-being used by the rest of the application. You can implement the method 'afterFetch' in a model, this event
-will be executed just after create the instance and assign the data to it:
+
+Может быть так, что вам необходимо произвести некоторые манипуляции с полученными записями. Для этого вы можете реализовать метод 'afterFetch' в модели. Этот метод выполняется каждый раз, когда экземпляр модели получает записи.
 
 .. code-block:: php
 
@@ -535,8 +609,7 @@ will be executed just after create the instance and assign the data to it:
         }
     }
 
-If you use getters/setters instead of/or together with public properties, you can initialize the field once it is
-accessed:
+Независимо от того, используете вы getters/setters или публичные свойства, вы можете реализовать обработку поля при получении доступа к последнему:
 
 .. code-block:: php
 
@@ -552,7 +625,7 @@ accessed:
 
         public function getStatus()
         {
-            return explode(',', $this->status)
+            return explode(',', $this->status);
         }
 
     }
@@ -560,7 +633,7 @@ accessed:
 Отношения между моделями
 ------------------------
 Существует четыре типа отношений: один-к-одному, один-ко-многим, многие-к-одному и многие-ко-многим.
-Отношения могут быть однонаправленным или двунаправленным, и каждое может быть простым (один модель к одной) или более сложные (комбинация моделей).
+Отношения могут быть однонаправленными или двунаправленными, и каждое может быть простым (один модель к одной) или более сложные (комбинация моделей).
 Модель менеджер управляет ограничением внешних ключей для этих отношений, их определение помогает ссылочной целостности,
 а также обеспечивает легкий и быстрый доступ к соответствующей записи в модели.
 Благодаря реализации отношений, легко получить доступ к данным в связных моделях для любой выбранной записи(-ей).
@@ -622,12 +695,12 @@ accessed:
 * Модель "Robots" имеет несколько "RobotsParts".
 * Модель "Parts" имеет несколько "RobotsParts".
 * Модель "RobotsParts" принадлежит обоим "Robots" и "Parts" моделям как многие-к-одному.
-* The model "Robots" has a relation many-to-many to "Parts" through "RobotsParts"
+* Модель "Robots" имеет отношение многие-ко-многим к "Parts" через "RobotsParts"
 
 Посмотрим EER схему, чтобы лучше понять отношения:
 
 .. figure:: ../_static/img/eer-1.png
-    :align: center
+:align: center
 
 Модели с их отношениями могут быть реализованы следующим образом:
 
@@ -687,7 +760,7 @@ accessed:
 
     }
 
-Many to many relationships require 3 models and define the attributes involved in the relationship:
+Отношение "многие-ко-многим" требуют 3 модели и определение атрибутов, участвующих в отношениях:
 
 .. code-block:: php
 
@@ -737,7 +810,7 @@ Phalcon использует магические методы __set/__get/__cal
     <?php
 
     $robot = Robots::findFirst();
-    $robotsParts = $robot->robotsParts; // all the related records in RobotsParts
+    $robotsParts = $robot->robotsParts; // все связанные записи с RobotsParts
 
 Кроме того, вы можете использовать магию получателя:
 
@@ -746,8 +819,8 @@ Phalcon использует магические методы __set/__get/__cal
     <?php
 
     $robot = Robots::findFirst();
-    $robotsParts = $robot->getRobotsParts(); // all the related records in RobotsParts
-    $robotsParts = $robot->getRobotsParts(array('limit' => 5)); // passing parameters
+    $robotsParts = $robot->getRobotsParts(); // все связанные записи с RobotsParts
+    $robotsParts = $robot->getRobotsParts(array('limit' => 5)); // передача параметров
 
 Если вызываемый метод "get" префикс :doc:`Phalcon\\Mvc\\Model <../api/Phalcon_Mvc_Model>` вернет findFirst()/find().
 В следующем примере сравниваются получение соответствующих результатов с использованием магических методов и без:
@@ -758,14 +831,14 @@ Phalcon использует магические методы __set/__get/__cal
 
     $robot = Robots::findFirst(2);
 
-    // Robots model has a 1-n (hasMany)
-    // relationship to RobotsParts then
+    // Модель Robots имеет отношение один-ко-многим 1-n (hasMany)
+    // Отношение к RobotsParts
     $robotsParts = $robot->robotsParts;
 
-    // Only parts that match conditions
+    // Только которые соответствуют условию
     $robotsParts = $robot->getRobotsParts("created_at = '2012-03-15'");
 
-    // Or using bound parameters
+    // Или используя связанные параметры
     $robotsParts = $robot->getRobotsParts(array(
         "created_at = :date:",
         "bind" => array("date" => "2012-03-15")
@@ -773,8 +846,8 @@ Phalcon использует магические методы __set/__get/__cal
 
     $robotPart = RobotsParts::findFirst(1);
 
-    // RobotsParts model has a n-1 (belongsTo)
-    // relationship to RobotsParts then
+    // Модель RobotsParts имеет отношение многие-к-одному n-1 (belongsTo)
+    // Отношение к Robots
     $robot = $robotPart->robots;
 
 Получение связанных записей вручную:
@@ -785,19 +858,19 @@ Phalcon использует магические методы __set/__get/__cal
 
     $robot = Robots::findFirst(2);
 
-    // Robots model has a 1-n (hasMany)
-    // relationship to RobotsParts, then
+    // Модель Robots имеет отношение один-ко-многим 1-n (hasMany)
+    // Отношение к  RobotsParts
     $robotsParts = RobotsParts::find("robots_id = '" . $robot->id . "'");
 
-    // Only parts that match conditions
+    // Только которые соответствуют условиям
     $robotsParts = RobotsParts::find(
         "robots_id = '" . $robot->id . "' AND created_at = '2012-03-15'"
     );
 
     $robotPart = RobotsParts::findFirst(1);
 
-    // RobotsParts model has a n-1 (belongsTo)
-    // relationship to RobotsParts then
+    // Модель RobotsParts имеет отношение многие-к-одному n-1 (belongsTo)
+    // Отношениеo к RobotsParts
     $robot = Robots::findFirst("id = '" . $robotPart->robots_id . "'");
 
 
@@ -845,7 +918,7 @@ Phalcon использует магические методы __set/__get/__cal
 Оба "robots_id" и "similar_robots_id" имеют отношение к модели Robots:
 
 .. figure:: ../_static/img/eer-2.png
-   :align: center
+:align: center
 
 Модель, которая отображает эту таблицу и ее отношения выглядит так:
 
@@ -872,13 +945,13 @@ Phalcon использует магические методы __set/__get/__cal
 
     $robotsSimilar = RobotsSimilar::findFirst();
 
-    //Returns the related record based on the column (robots_id)
-    //Also as is a belongsTo it's only returning one record
-    //but the name 'getRobots' seems to imply that return more than one
+    //Возвращает связанную запись на основе столбца (robots_id) 
+    //Потому как имеет отношение belongsTo , это только возвращение одной записи 
+    // но 'getRobots', кажется, подразумевает, что вернётся больше, чем одина запись
     $robot = $robotsSimilar->getRobots();
 
-    //but, how to get the related record based on the column (similar_robots_id)
-    //if both relationships have the same name?
+    //но, как получить соответствующую запись на основании столбца (similar_robots_id)
+    //если оба отношения имеют одно и то же имя?
 
 Алиасы позволяют переименовать оба отношения для решения этих проблем:
 
@@ -909,11 +982,11 @@ Phalcon использует магические методы __set/__get/__cal
 
     $robotsSimilar = RobotsSimilar::findFirst();
 
-    //Returns the related record based on the column (robots_id)
+    //Возвращает связанную запись на основе столбца (robots_id)
     $robot = $robotsSimilar->getRobot();
     $robot = $robotsSimilar->robot;
 
-    //Returns the related record based on the column (similar_robots_id)
+    //Возвращает связанную запись основанную на колонке (similar_robots_id)
     $similarRobot = $robotsSimilar->getSimilarRobot();
     $similarRobot = $robotsSimilar->similarRobot;
 
@@ -938,7 +1011,7 @@ Phalcon использует магические методы __set/__get/__cal
         }
 
         /**
-         * Return the related "robots parts"
+         * Вернуться соответствующий "robots parts"
          *
          * @return \RobotsParts[]
          */
@@ -976,7 +1049,7 @@ Phalcon использует магические методы __set/__get/__cal
 
             $this->belongsTo("parts_id", "Parts", "id", array(
                 "foreignKey" => array(
-                    "message" => "The part_id does not exist on the Parts model"
+                    "message" => "part_id не существует в модели Parts"
                 )
             ));
         }
@@ -996,17 +1069,16 @@ Phalcon использует магические методы __set/__get/__cal
         {
             $this->hasMany("id", "RobotsParts", "parts_id", array(
                 "foreignKey" => array(
-                    "message" => "The part cannot be deleted because other robots are using it"
+                    "message" => "id не может быть удален, потому что используется в RobotsParts"
                 )
             ));
         }
 
     }
 
-Cascade/Restrict actions
-^^^^^^^^^^^^^^^^^^^^^^^^
-Relationships that act as virtual foreign keys by default restrict the creation/update/deletion of records
-to maintain the integrity of data:
+Cascade/Ограничить действия
+^^^^^^^^^^^^^^^^^^^^^^^^^^^
+Отношения, которые действуют в качестве виртуальных внешних ключей по умолчанию ограничивают создание/обновление/удаление записей для поддержания целостности данных:
 
 .. code-block:: php
 
@@ -1014,7 +1086,7 @@ to maintain the integrity of data:
 
     namespace Store\Models;
 
-    use Phalcon\Mvc\Model
+    use Phalcon\Mvc\Model,
         Phalcon\Mvc\Model\Relation;
 
     class Robots extends Model
@@ -1026,7 +1098,7 @@ to maintain the integrity of data:
 
         public function initialize()
         {
-            $this->hasMany('id', 'Store\\Models\Parts', 'robots_id', array(
+            $this->hasMany('id', 'Store\Models\Parts', 'robots_id', array(
                 'foreignKey' => array(
                     'action' => Relation::ACTION_CASCADE
                 )
@@ -1035,7 +1107,7 @@ to maintain the integrity of data:
 
     }
 
-The above code set up to delete all the referenced records (parts) if the master record (robot) is deleted.
+Приведенный выше код, удалит все относящиеся записи (parts), если основная запись (robot) удаляется.
 
 Использование Расчетов
 ----------------------
@@ -1048,28 +1120,28 @@ The above code set up to delete all the referenced records (parts) if the master
 
     <?php
 
-    // How many employees are?
+    // Сколько сотрудников работает?
     $rowcount = Employees::count();
 
-    // How many different areas are assigned to employees?
+    // Сколько уникальных сфер деятельности рабочих?
     $rowcount = Employees::count(array("distinct" => "area"));
 
-    // How many employees are in the Testing area?
+    // Сколько сотрудников работает в сфере тестирования?
     $rowcount = Employees::count("area = 'Testing'");
 
-    // Count employees grouping results by their area
+    // Количество сотрудников сгруппированных по сфере деятельности
     $group = Employees::count(array("group" => "area"));
     foreach ($group as $row) {
-       echo "There are ", $row->rowcount, " in ", $row->area;
+       echo  $row->rowcount , " cотрудников в ", $row->area;
     }
 
-    // Count employees grouping by their area and ordering the result by count
+    // Количество сотрудников сгруппированных по сфере деятельности упорядочено по их количеству
     $group = Employees::count(array(
         "group" => "area",
         "order" => "rowcount"
     ));
 
-    // Avoid SQL injections using bound parameters
+    // Избегайте SQL инъекции, используя связанные параметры
     $group = Employees::count(array(
         "type > ?0"
         "bind" => array($type)
@@ -1081,33 +1153,32 @@ The above code set up to delete all the referenced records (parts) if the master
 
     <?php
 
-    // How much are the salaries of all employees?
+    // Какая заработная плата всех сотрудников?
     $total = Employees::sum(array("column" => "salary"));
 
-    // How much are the salaries of all employees in the Sales area?
+    // Какая заработная плата всех сотруднииков в сфере продаж?
     $total = Employees::sum(array(
         "column"     => "salary",
         "conditions" => "area = 'Sales'"
     ));
 
-    // Generate a grouping of the salaries of each area
+    // Генерирует суммарную заработную плату каждой области
     $group = Employees::sum(array(
         "column" => "salary",
         "group"  => "area"
     ));
     foreach ($group as $row) {
-       echo "The sum of salaries of the ", $row->area, " is ", $row->sumatory;
+       echo "Сумма заработной платы ", $row->area, " составляет ", $row->sumatory;
     }
 
-    // Generate a grouping of the salaries of each area ordering
-    // salaries from higher to lower
+    // Групирует зарплаты каждой сферы деятельности и упорядочивает их от большего к меньшему
     $group = Employees::sum(array(
         "column" => "salary",
         "group"  => "area",
         "order"  => "sumatory DESC"
     ));
 
-    // Avoid SQL injections using bound parameters
+    // Избегайте SQL инъекции, используя связанные параметры
     $group = Employees::sum(array(
         "conditions" => "area > ?0"
         "bind" => array($area)
@@ -1119,16 +1190,16 @@ The above code set up to delete all the referenced records (parts) if the master
 
     <?php
 
-    // What is the average salary for all employees?
+    // Какая средняя зарплата среди всех сотрудников?
     $average = Employees::average(array("column" => "salary"));
 
-    // What is the average salary for the Sales's area employees?
+    // Какая средняя зарплата среди сотрудников сферы продаж?
     $average = Employees::average(array(
         "column" => "salary",
         "conditions" => "area = 'Sales'"
     ));
 
-    // Avoid SQL injections using bound parameters
+    // Избегайте SQL инъекции, используя связанные параметры
     $average = Employees::average(array(
         "column" => "age"
         "conditions" => "area > ?0"
@@ -1141,36 +1212,33 @@ The above code set up to delete all the referenced records (parts) if the master
 
     <?php
 
-    // What is the oldest age of all employees?
+    // Какой максимальный возраст среди всех сотрудников?
     $age = Employees::maximum(array("column" => "age"));
 
-    // What is the oldest of employees from the Sales area?
+    // Какой максимальный возраст среди сотрудников сферы продаж?
     $age = Employees::maximum(array(
         "column" => "age",
         "conditions" => "area = 'Sales'"
     ));
 
-    // What is the lowest salary of all employees?
+    // Какая минимальная зарплата среди сотрудников?
     $salary = Employees::minimum(array("column" => "salary"));
 
-Hydration ModesHydration Modes
-------------------------------
-As mentioned above, resultsets are collections of complete objects, this means that every returned result is an object
-representing a row in the database. These objects can be modified and saved again to persistence:
+Режимы гидратации
+-----------------
+Как упоминалось выше, результирующие данные являются наборами комплексных объектов, это означает, что каждый возвращенный результат является объектом, представляющим собой строку в базе данных. Эти объекты могут быть изменены и сохранены снова : 
 
 .. code-block:: php
 
     <?php
 
-    // Manipulating a resultset of complete objects
+    // Изменение и сохранение полученных обектов модели роботов
     foreach (Robots::find() as $robot) {
         $robot->year = 2000;
         $robot->save();
     }
 
-Sometimes records are obtained only to be presented to a user in read-only mode, in these cases it may be useful
-to change the way in which records are represented to facilitate their handling. The strategy used to represent objects
-returned in a resultset is called 'hydration mode':
+Иногда записи могут быть представлены пользователю в режиме только для чтения, это может быть полезно, чтобы изменить способ, в котором записи представлены для облегчения их обработки. Способ, используемый для представления объектов, возвращаемых в наборе результатов называется ' режим гидратации ':
 
 .. code-block:: php
 
@@ -1180,28 +1248,28 @@ returned in a resultset is called 'hydration mode':
 
     $robots = Robots::find();
 
-    //Return every robot as an array
+    //Вернёт каждого робота в виде массива
     $robots->setHydrateMode(Resultset::HYDRATE_ARRAYS);
 
     foreach ($robots as $robot) {
         echo $robot['year'], PHP_EOL;
     }
 
-    //Return every robot as an stdClass
+    //Вернёт каждого робота в stdClass
     $robots->setHydrateMode(Resultset::HYDRATE_OBJECTS);
 
     foreach ($robots as $robot) {
         echo $robot->year, PHP_EOL;
     }
 
-    //Return every robot as a Robots instance
+    //Вернёт каждого робота как экземпляр объекта Robots
     $robots->setHydrateMode(Resultset::HYDRATE_RECORDS);
 
     foreach ($robots as $robot) {
         echo $robot->year, PHP_EOL;
     }
 
-Hydration mode can also be passed as a parameter of 'find':
+Режим гидратации также может быть передан в качестве параметра в 'find':
 
 .. code-block:: php
 
@@ -1217,14 +1285,13 @@ Hydration mode can also be passed as a parameter of 'find':
         echo $robot['year'], PHP_EOL;
     }
 
-Creating Updating/Records
--------------------------
-The method Phalcon\\Mvc\\Model::save() allows you to create/update records according to whether they already exist in the table
-associated with a model. The save method is called internally by the create and update methods of :doc:`Phalcon\\Mvc\\Model <../api/Phalcon_Mvc_Model>`.
-For this to work as expected it is necessary to have properly defined a primary key in the entity to determine whether a record
-should be updated or created.
+Создани/Обновление записей
+--------------------------
+Метод Phalcon\\Mvc\\Model::save() позволяет создавать/обновлять записи в зависимости от того, существуют ли они уже в таблице, связанной с моделью.
+Метод save вызывает методы  create и update родительского класса :doc:`Phalcon\\Mvc\\Model <../api/Phalcon_Mvc_Model>`.
+Чтобы это работало, как и ожидалось, необходимо определить первичный ключ в таблице, чтобы определялось, запись должна быть создана или обновлена.
 
-Also the method executes associated validators, virtual foreign keys and events that are defined in the model:
+Также метод выполняет связанные валидаторы, виртуальные внешние ключи и события, которые определены в модели:
 
 .. code-block:: php
 
@@ -1235,17 +1302,16 @@ Also the method executes associated validators, virtual foreign keys and events 
     $robot->name = "Astro Boy";
     $robot->year = 1952;
     if ($robot->save() == false) {
-        echo "Umh, We can't store robots right now: \n";
+        echo "Мы не можем сохранить робота прямо сейчас: \n";
         foreach ($robot->getMessages() as $message) {
             echo $message, "\n";
         }
     } else {
-        echo "Great, a new robot was saved successfully!";
+        echo "Отлично, новый робот был успешно сохранен!";
     }
 
-An array could be passed to "save" to avoid assign every column manually. Phalcon\\Mvc\\Model will check if there are setters implemented for
-the columns passed in the array giving priority to them instead of assign directly the values of the attributes:
-
+В метод “save” может быть передан массив , чтобы избежать назначения каждому столбцу вручную.
+Phalcon\\Mvc\\Model будет проверять, есть ли сеттеры, реализованные для столбцов, для значений переданных в массиве, отдавая приоритет им вместо назначения значений непосредственно свойствам:
 .. code-block:: php
 
     <?php
@@ -1257,8 +1323,7 @@ the columns passed in the array giving priority to them instead of assign direct
         "year" => 1952
     ));
 
-Values assigned directly or via the array of attributes are escaped/sanitized according to the related attribute data type. So you can pass
-an insecure array without worrying about possible SQL injections:
+Значения назначеные непосредственно через атрибуты или через массив  экранируются /проверяется в соответствии с типом данных атрибута. Таким образом, вы можете передать ненадежный массив, не беспокоясь о возможных SQL инъекциях :
 
 .. code-block:: php
 
@@ -1269,12 +1334,11 @@ an insecure array without worrying about possible SQL injections:
 
 .. highlights::
 
-    Without precautions mass assignment could allow attackers to set any database column’s value. Only use this feature
-    if you want that a user can insert/update every column in the model, even if those fields are not in the submitted
-    form.
+    Без мер предосторожности к переданным данным от пользователей позволяет злоумышленнику установить значение любого столбца 
+    базы данных. Используйте эту функцию, если вы хотите, чтобы пользователь мог добалять/обновлять каждый столбец в модели,
+    даже если этих полей нет в отправленной форме.
 
-You can set an additional parameter in 'save' to set a whitelist of fields that only must taken into account when doing
-the mass assignment:
+Вы можете передать дополнительный параметр в метод 'save', чтобы установить список полей, которые должены быть  прининяты во внимание при выполнении переданных пользователем значний:
 
 .. code-block:: php
 
@@ -1283,8 +1347,8 @@ the mass assignment:
     $robot = new Robots();
     $robot->save($_POST, array('name', 'type'));
 
-Create/Update with Confidence
-^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+Создание/Обновление с уверенностью
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 When an application has a lot of competition, we could be expecting create a record but it is actually updated. This
 could happen if we use Phalcon\\Mvc\\Model::save() to persist the records in the database. If we want to be absolutely
 sure that a record is created or updated, we can change the save() call with create() or update():
