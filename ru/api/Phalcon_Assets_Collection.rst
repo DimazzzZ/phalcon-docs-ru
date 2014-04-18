@@ -7,7 +7,7 @@ Represents a collection of resources
 
 
 Methods
----------
+-------
 
 public :doc:`Phalcon\\Assets\\Collection <Phalcon_Assets_Collection>`  **add** (:doc:`Phalcon\\Assets\\Resource <Phalcon_Assets_Resource>` $resource)
 
@@ -174,6 +174,18 @@ Returns if all the filtered resources must be joined
 public *string*  **getRealTargetPath** ([*string* $basePath])
 
 Returns the complete location where the joined/filtered collection must be written
+
+
+
+public :doc:`Phalcon\\Assets\\Collection <Phalcon_Assets_Collection>`  **setTargetLocal** (*boolean* $targetLocal)
+
+Sets the target local
+
+
+
+public *boolean*  **getTargetLocal** ()
+
+Returns the target local
 
 
 

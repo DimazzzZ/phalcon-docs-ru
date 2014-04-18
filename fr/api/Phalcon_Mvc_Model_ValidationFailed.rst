@@ -1,13 +1,13 @@
 Class **Phalcon\\Mvc\\Model\\ValidationFailed**
 ===============================================
 
-*extends* :doc:`Phalcon\\Mvc\\Model\\Exception <Phalcon_Mvc_Model_Exception>`
+*extends* class :doc:`Phalcon\\Mvc\\Model\\Exception <Phalcon_Mvc_Model_Exception>`
 
 This exception is generated when a model fails to save a record Phalcon\\Mvc\\Model must be set up to have this behavior
 
 
 Methods
----------
+-------
 
 public  **__construct** (:doc:`Phalcon\\Mvc\\Model <Phalcon_Mvc_Model>` $model, *Phalcon\\Mvc\\Model\\Message[]* $validationMessages)
 

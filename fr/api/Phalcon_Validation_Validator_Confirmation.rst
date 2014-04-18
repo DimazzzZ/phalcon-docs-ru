@@ -1,7 +1,7 @@
 Class **Phalcon\\Validation\\Validator\\Confirmation**
 ======================================================
 
-*extends* :doc:`Phalcon\\Validation\\Validator <Phalcon_Validation_Validator>`
+*extends* abstract class :doc:`Phalcon\\Validation\\Validator <Phalcon_Validation_Validator>`
 
 *implements* :doc:`Phalcon\\Validation\\ValidatorInterface <Phalcon_Validation_ValidatorInterface>`
 
@@ -21,7 +21,7 @@ Checks that two values have the same value
 
 
 Methods
----------
+-------
 
 public *boolean*  **validate** (:doc:`Phalcon\\Validation <Phalcon_Validation>` $validator, *string* $attribute)
 

@@ -5,13 +5,16 @@ Phalcon\\Mvc\\Model\\BehaviorInterface initializer
 
 
 Methods
----------
+-------
+<<<<<<< HEAD
+=======
 
 abstract public  **__construct** ([*array* $options])
 
 Phalcon\\Mvc\\Model\\Behavior
 
 
+>>>>>>> master
 
 abstract public  **notify** (*string* $type, :doc:`Phalcon\\Mvc\\ModelInterface <Phalcon_Mvc_ModelInterface>` $model)
 

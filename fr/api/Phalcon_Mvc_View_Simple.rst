@@ -1,7 +1,7 @@
 Class **Phalcon\\Mvc\\View\\Simple**
 ====================================
 
-*extends* :doc:`Phalcon\\DI\\Injectable <Phalcon_DI_Injectable>`
+*extends* abstract class :doc:`Phalcon\\DI\\Injectable <Phalcon_DI_Injectable>`
 
 *implements* :doc:`Phalcon\\Events\\EventsAwareInterface <Phalcon_Events_EventsAwareInterface>`, :doc:`Phalcon\\DI\\InjectionAwareInterface <Phalcon_DI_InjectionAwareInterface>`
 
@@ -17,7 +17,7 @@ This component allows to render views without hicherquical levels
 
 
 Methods
----------
+-------
 
 public  **__construct** ([*array* $options])
 
@@ -51,6 +51,12 @@ Register templating engines
       ".mhtml" => "MyCustomEngine"
     ));
 
+
+
+
+public  **getRegisteredEngines** ()
+
+Returns the registered templating engines
 
 
 

@@ -1,7 +1,7 @@
 Class **Phalcon\\Annotations\\Adapter\\Xcache**
 ===============================================
 
-*extends* :doc:`Phalcon\\Annotations\\Adapter <Phalcon_Annotations_Adapter>`
+*extends* abstract class :doc:`Phalcon\\Annotations\\Adapter <Phalcon_Annotations_Adapter>`
 
 *implements* :doc:`Phalcon\\Annotations\\AdapterInterface <Phalcon_Annotations_AdapterInterface>`
 
@@ -16,7 +16,7 @@ Stores the parsed annotations to XCache. This adapter is suitable for production
 
 
 Methods
----------
+-------
 
 public :doc:`Phalcon\\Annotations\\Reflection <Phalcon_Annotations_Reflection>`  **read** (*string* $key)
 

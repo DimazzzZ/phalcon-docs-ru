@@ -20,8 +20,25 @@ Provides encryption facilities to phalcon applications
 
 
 
-Methods
+Constants
 ---------
+
+*integer* **PADDING_DEFAULT**
+
+*integer* **PADDING_ANSI_X_923**
+
+*integer* **PADDING_PKCS7**
+
+*integer* **PADDING_ISO_10126**
+
+*integer* **PADDING_ISO_IEC_7816_4**
+
+*integer* **PADDING_ZERO**
+
+*integer* **PADDING_SPACE**
+
+Methods
+-------
 
 public *Phalcon\\Encrypt*  **setCipher** (*string* $cipher)
 
@@ -59,6 +76,18 @@ Returns the encryption key
 
 
 
+public :doc:`Phalcon\\CryptInterface <Phalcon_CryptInterface>`  **setPadding** (*unknown* $scheme)
+
+
+
+
+
+public *int*  **getPadding** ()
+
+Returns the padding scheme
+
+
+
 public *string*  **encrypt** (*string* $text, [*string* $key])
 
 Encrypts a text 
@@ -85,13 +114,13 @@ Decrypts an encrypted text
 
 
 
-public *string*  **encryptBase64** (*string* $text, [*string* $key])
+public *string*  **encryptBase64** (*string* $text, [*string* $key], [*unknown* $safe])
 
 Encrypts a text returning the result as a base64 string
 
 
 
-public *string*  **decryptBase64** (*string* $text, [*string* $key])
+public *string*  **decryptBase64** (*string* $text, [*string* $key], [*unknown* $safe])
 
 Decrypt a text that is coded as a base64 string
 

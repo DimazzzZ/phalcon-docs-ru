@@ -1,7 +1,7 @@
 Class **Phalcon\\Validation\\Validator\\Between**
 =================================================
 
-*extends* :doc:`Phalcon\\Validation\\Validator <Phalcon_Validation_Validator>`
+*extends* abstract class :doc:`Phalcon\\Validation\\Validator <Phalcon_Validation_Validator>`
 
 *implements* :doc:`Phalcon\\Validation\\ValidatorInterface <Phalcon_Validation_ValidatorInterface>`
 
@@ -22,7 +22,7 @@ Validates that a value is between a range of two values
 
 
 Methods
----------
+-------
 
 public *boolean*  **validate** (:doc:`Phalcon\\Validation <Phalcon_Validation>` $validator, *string* $attribute)
 

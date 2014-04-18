@@ -18,7 +18,7 @@ Constants
 *integer* **RANDOM_NOZERO**
 
 Methods
----------
+-------
 
 public static *string*  **camelize** (*string* $str)
 
@@ -41,7 +41,7 @@ Uncamelize strings which are camelized
 
     <?php
 
-    echo Phalcon\Text::camelize('CocoBongo'); //coco_bongo
+    echo Phalcon\Text::uncamelize('CocoBongo'); //coco_bongo
 
 
 

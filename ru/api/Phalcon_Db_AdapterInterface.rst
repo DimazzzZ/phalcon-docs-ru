@@ -5,13 +5,16 @@ Phalcon\\Db\\AdapterInterface initializer
 
 
 Methods
----------
+-------
+<<<<<<< HEAD
+=======
 
 abstract public  **__construct** (*array* $descriptor)
 
 Constructor for Phalcon\\Db\\Adapter
 
 
+>>>>>>> master
 
 abstract public *array*  **fetchOne** (*string* $sqlQuery, [*int* $fetchMode], [*int* $placeholders])
 

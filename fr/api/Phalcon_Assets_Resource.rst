@@ -12,7 +12,7 @@ Represents an asset resource
 
 
 Methods
----------
+-------
 
 public  **__construct** (*string* $type, *string* $path, [*boolean* $local], [*boolean* $filter], [*array* $attributes])
 
@@ -119,6 +119,12 @@ Returns the resource's target path
 public *string*  **getContent** ([*string* $basePath])
 
 Returns the content of the resource as an string Optionally a base path where the resource is located can be set
+
+
+
+public *string*  **getRealTargetUri** ()
+
+Returns the real target uri for the generated HTML
 
 
 

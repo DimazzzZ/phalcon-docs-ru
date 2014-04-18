@@ -1,13 +1,13 @@
 Class **Phalcon\\Assets\\Resource\\Js**
 =======================================
 
-*extends* :doc:`Phalcon\\Assets\\Resource <Phalcon_Assets_Resource>`
+*extends* class :doc:`Phalcon\\Assets\\Resource <Phalcon_Assets_Resource>`
 
 Represents Javascript resources
 
 
 Methods
----------
+-------
 
 public  **__construct** (*string* $path, [*boolean* $local], [*boolean* $filter], [*array* $attributes])
 
@@ -114,6 +114,12 @@ Returns the resource's target path
 public *string*  **getContent** ([*string* $basePath]) inherited from Phalcon\\Assets\\Resource
 
 Returns the content of the resource as an string Optionally a base path where the resource is located can be set
+
+
+
+public *string*  **getRealTargetUri** () inherited from Phalcon\\Assets\\Resource
+
+Returns the real target uri for the generated HTML
 
 
 

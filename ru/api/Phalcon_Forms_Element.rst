@@ -1,11 +1,16 @@
 Abstract class **Phalcon\\Forms\\Element**
 ==========================================
+<<<<<<< HEAD
+
+*implements* :doc:`Phalcon\\Forms\\ElementInterface <Phalcon_Forms_ElementInterface>`
+=======
+>>>>>>> master
 
 This is a base class for form elements
 
 
 Methods
----------
+-------
 
 public  **__construct** (*string* $name, [*array* $attributes])
 
@@ -139,7 +144,7 @@ Returns the element's label
 
 
 
-public *string*  **label** ()
+public *string*  **label** (*unknown* $attributes)
 
 Generate the HTML to label the element
 
@@ -195,7 +200,13 @@ Clears every element in the form to its default value
 
 public *string*  **__toString** ()
 
-Magic method __toString renders the widget without atttributes
+Magic method __toString renders the widget without attributes
+
+
+
+abstract public *string*  **render** ([*array* $attributes]) inherited from Phalcon\\Forms\\ElementInterface
+
+Renders the element widget
 
 
 

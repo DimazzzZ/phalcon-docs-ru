@@ -9,7 +9,7 @@ Formats messages so that they can be sent to FirePHP
 
 
 Methods
----------
+-------
 
 public *string*  **getTypeString** (*integer* $type)
 
@@ -27,9 +27,29 @@ public  **setShowBacktrace** ([*unknown* $show])
 ...
 
 
+<<<<<<< HEAD
+public  **enableLabels** ([*unknown* $enable])
+
+...
+
+
+public  **labelsEnabled** ()
+
+...
+
+
+public *string*  **format** (*string* $message, *int* $type, *int* $timestamp, *unknown* $context)
+=======
 public *string*  **format** (*string* $message, *int* $type, *int* $timestamp)
+>>>>>>> master
 
 Applies a format to a message before sending it to the log
+
+
+
+protected  **interpolate** (*string* $message, *array* $context) inherited from Phalcon\\Logger\\Formatter
+
+Interpolates context values into the message placeholders
 
 
 

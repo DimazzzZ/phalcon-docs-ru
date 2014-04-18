@@ -5,13 +5,16 @@ Phalcon\\Session\\AdapterInterface initializer
 
 
 Methods
----------
+-------
+<<<<<<< HEAD
+=======
 
 abstract public  **__construct** ([*array* $options])
 
 Phalcon\\Session construtor
 
 
+>>>>>>> master
 
 abstract public  **start** ()
 
@@ -67,7 +70,7 @@ Check whether the session has been started
 
 
 
-abstract public *boolean*  **destroy** ()
+abstract public *boolean*  **destroy** ([*unknown* $session_id])
 
 Destroys the active session
 

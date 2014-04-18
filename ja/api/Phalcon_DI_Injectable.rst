@@ -7,7 +7,7 @@ This class allows to access services in the services container by just only acce
 
 
 Methods
----------
+-------
 
 public  **setDI** (:doc:`Phalcon\\DiInterface <Phalcon_DiInterface>` $dependencyInjector)
 
@@ -33,7 +33,7 @@ Returns the internal event manager
 
 
 
-public  **__get** (*string* $propertyName)
+public  **__get** (*unknown* $property)
 
 Magic method __get
 

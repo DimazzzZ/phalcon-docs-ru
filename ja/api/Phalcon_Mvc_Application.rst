@@ -47,7 +47,7 @@ This component encapsulates all the complex operations behind instantiating ever
 
 
 Methods
----------
+-------
 
 public  **__construct** ([:doc:`Phalcon\\DI <Phalcon_DI>` $dependencyInjector])
 
@@ -131,7 +131,7 @@ Returns the internal event manager
 
 
 
-public  **__get** (*string* $propertyName) inherited from Phalcon\\DI\\Injectable
+public  **__get** (*unknown* $property) inherited from Phalcon\\DI\\Injectable
 
 Magic method __get
 

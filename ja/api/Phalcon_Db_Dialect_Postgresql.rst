@@ -5,11 +5,11 @@ Class **Phalcon\\Db\\Dialect\\Postgresql**
 
 *implements* :doc:`Phalcon\\Db\\DialectInterface <Phalcon_Db_DialectInterface>`
 
-Generates database specific SQL for the PostgreSQL RBDM
+Generates database specific SQL for the PostgreSQL RBDMS
 
 
 Methods
----------
+-------
 
 public *string*  **getColumnDefinition** (:doc:`Phalcon\\Db\\ColumnInterface <Phalcon_Db_ColumnInterface>` $column)
 
@@ -83,7 +83,7 @@ Generates SQL to create a table in PostgreSQL
 
 
 
-public *boolean*  **dropTable** (*string* $tableName, *string* $schemaName, [*boolean* $ifExists])
+public *boolean*  **dropTable** (*string* $tableName, *string* $schemaName)
 
 Generates SQL to drop a table
 

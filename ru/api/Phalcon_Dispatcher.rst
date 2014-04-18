@@ -22,7 +22,7 @@ Constants
 *integer* **EXCEPTION_ACTION_NOT_FOUND**
 
 Methods
----------
+-------
 
 public  **__construct** ()
 
@@ -132,7 +132,7 @@ Set a param by its name or numeric index
 
 
 
-public *mixed*  **getParam** (*mixed* $param, [*string|array* $filters], [*mixed* $defaultValue])
+public *mixed*  **getParam** (*mixed* $param, [*string|array* $filters])
 
 Gets a param by its name or numeric index
 

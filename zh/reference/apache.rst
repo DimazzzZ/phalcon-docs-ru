@@ -1,8 +1,8 @@
-Apache Installation Notes
+Apache 安装说明（Apache Installation Notes）
 =========================
 Apache_ is a popular and well known web server available on many platforms.
 
-Configuring Apache for Phalcon
+Apache 下配置 Phalcon（Configuring Apache for Phalcon）
 ------------------------------
 The following are potential configurations you can use to setup Apache with Phalcon. These notes are primarily
 focused on the configuration of the mod-rewrite module allowing to use friendly urls and the
@@ -21,11 +21,11 @@ focused on the configuration of the mod-rewrite module allowing to use friendly 
         js/
         index.php
 
-Directory under the main Document Root
+在主文档根目录下（Directory under the main Document Root）
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 This being the most common case, the application is installed in any directory under the document root.
-In this case, we use .htaccess 2 files, the first one to hide the application code and forward all requests
-to the application document root (public/).
+In this case, we use two .htaccess files, the first one to hide the application code forwarding all requests
+to the application's document root (public/).
 
 .. code-block:: apacheconf
 
@@ -71,9 +71,9 @@ If you do not want to use .htaccess files you can move these configurations to t
 
     </IfModule>
 
-Virtual Hosts
+虚拟主机（Virtual Hosts）
 ^^^^^^^^^^^^^
-And this second configuration allow you to install a Phalcon application in a virtual host:
+And this second configuration allows you to install a Phalcon application in a virtual host:
 
 .. code-block:: apacheconf
 
@@ -92,6 +92,5 @@ And this second configuration allow you to install a Phalcon application in a vi
         </Directory>
 
     </VirtualHost>
-
 
 .. _Apache: http://httpd.apache.org/

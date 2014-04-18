@@ -32,7 +32,7 @@ Allows to cache output fragments, PHP data or raw data to a memcache backend  Th
 
 
 Methods
----------
+-------
 
 public  **__construct** (:doc:`Phalcon\\Cache\\FrontendInterface <Phalcon_Cache_FrontendInterface>` $frontend, [*array* $options])
 
@@ -73,6 +73,24 @@ Query the existing cached keys
 public *boolean*  **exists** ([*string* $keyName], [*long* $lifetime])
 
 Checks if cache exists and it hasn't expired
+
+
+
+public *mixed*  **increment** ([*unknown* $key_name], [*long* $value])
+
+Atomic increment of a given key, by number $value
+
+
+
+public *mixed*  **decrement** ([*unknown* $key_name], [*long* $value])
+
+Atomic decrement of a given key, by number $value
+
+
+
+public *boolean*  **flush** ()
+
+Immediately invalidates all existing items.
 
 
 

@@ -34,9 +34,9 @@ Phalcon拡張モジュールは下記のように出力の一部に現れるで�
 
 ファイル構造
 ^^^^^^^^^^^^^^
-Phalcon does not impose a particular file structure for application development. Due to the fact that it is loosely coupled, you can implement Phalcon powered applications with a file structure you are most comfortable using.
+Phalconはアプリケーション開発において特定のファイル構造を強制しません。Phalconは疎結合になっているため、あなたのやりやすいファイル構造でアプリケーションを実装することができます。
 
-For the purposes of this tutorial and as a starting point, we suggest the following structure:
+このチュートリアルの出発点として、次のような構造にしてみましょう。
 
 .. code-block:: php
 
@@ -50,13 +50,13 @@ For the purposes of this tutorial and as a starting point, we suggest the follow
         img/
         js/
 
-Note that you don't need any "library" directory related to Phalcon. The framework is available in memory, ready for you to use.
+Phalconに関連した "library" ディレクトリを必要としないことに注意してください。フレームワークはメモリ内で利用可能となっています。
 
 Beautiful URLs
 ^^^^^^^^^^^^^^
-We'll use pretty (friendly) URLs for this tutorial. Friendly URLs are better for SEO as well as being easy for users to remember. Phalcon supports rewrite modules provided by the most popular web servers. Making your application's URLs friendly is not a requirement and you can just as easily develop without them.
+このチュートリアルでは、きれいな、使いやすいURLを使用します。使いやすいURLはSEOに良いだけでなく、ユーザーが覚えやすいという利点もあります。Phalconは一般的なWEBサーバーにより提供されるrewriteモジュールをサポートしています。ただし、あなたのアプリケーションを使いやすいURLにすることは必須条件ではありません。それなしでも同様に開発することができます。
 
-In this example we'll use the rewrite module for Apache. Let's create a couple of rewrite rules in the /tutorial/.htaccess file:
+この例では、Apacheの rewriteモジュールを使用します。/tutorial/.htaccess というファイルに、rewrite ルールを記述してみましょう。
 
 .. code-block:: apacheconf
 
@@ -67,9 +67,9 @@ In this example we'll use the rewrite module for Apache. Let's create a couple o
         RewriteRule  (.*) public/$1 [L]
     </IfModule>
 
-All requests to the project will be rewritten to the public/ directory making it the document root. This step ensures that the internal project folders remain hidden from public viewing and thus eliminates security threats of this kind.
+プロジェクトへの全てのリクエストは ドキュメントルートに指定した public/ ディレクトリにリライトされます。これにより、プロジェクトの内部フォルダを閲覧されることを防ぎ、セキュリティの脅威を排除することが保証されます。
 
-The second set of rules will check if the requested file exists and, if it does, it doesn't have to be rewritten by the web server module:
+第二のルールは、リクエストされたファイルが存在するかチェックし、ファイルが存在した場合はWebサーバーモジュールによるリライトは行われません。
 
 .. code-block:: apacheconf
 
@@ -83,9 +83,9 @@ The second set of rules will check if the requested file exists and, if it does,
 
 Bootstrap
 ^^^^^^^^^
-The first file you need to create is the bootstrap file. This file is very important; since it serves as the base of your application, giving you control of all aspects of it. In this file you can implement initialization of components as well as application behavior.
+あなたが最初に作成する必要のあるファイルは bootstrap ファイルです。このファイルはとても重要であり、アプリケーションのベースとなり、すべての側面をコントロールすることを可能にします。このファイルでは、コンポーネントの初期化だけでなく、アプリケーションの振る舞いを実装することができます。
 
-The tutorial/public/index.php file should look like:
+tutorial/public/index.php は次のようになります。
 
 .. code-block:: php
 
@@ -128,9 +128,9 @@ The tutorial/public/index.php file should look like:
 
 オートローダ
 ^^^^^^^^^^^
-The first part that we find in the bootstrap is registering an autoloader. This will be used to load classes as controllers and models in the application. For example we may register one or more directories of controllers increasing the flexibility of the application. In our example we have used the component Phalcon\\Loader.
+bootstrapの最初の部分では、オートローダを登録しています。これは、アプリケーション内のコントローラやモデルなどのクラスをロードするために使用されます。例えば、アプリケーションの柔軟性を増加させる、コントローラの1つまたは複数のディレクトリを登録することができます。この例では、Phalcon\\ Loaderコンポーネントを使用しています。
 
-With it, we can load classes using various strategies but for this example we have chosen to locate classes based on predefined directories:
+これにより、様々な方法でクラスをロードすることができますが、この例ではあらかじめ定義されたディレクトリに基づいてクラスを検索することを選択しました。 
 
 .. code-block:: php
 
@@ -146,9 +146,9 @@ With it, we can load classes using various strategies but for this example we ha
 
 依存性の管理
 ^^^^^^^^^^^^^^^^^^^^^
-A very important concept that must be understood when working with Phalcon is its :doc:`dependency injection container <di>`. It may sound complex but is actually very simple and practical.
+Phalconで開発する際に、理解するべき非常に重要なコンセプトは :doc:`dependency injection container <di>` です。それは複雑に聞こえますが、実際にはシンプルで実用的なものです。
 
-A service container is a bag where we globally store the services that our application will use to function. Each time the framework requires a component, it will ask the container using an agreed upon name for the service. Since Phalcon is a highly decoupled framework, Phalcon\\DI acts as glue facilitating the integration of the different components achieving their work together in a transparent manner.
+サービスコンテナは、アプリケーションが機能するために使用するサービスをグローバルに保存する入れ物です。フレームワークはコンポーネントを必要とするたびに、サービスに決められた名称でコンテナに問い合わせます。Phalconはとても疎結合なフレームワークです。Phalcon\\ DI は接着剤として機能し、透過的にさまざまなコンポーネントを統合し、協調して動作できるように機能します。
 
 .. code-block:: php
 
@@ -157,11 +157,11 @@ A service container is a bag where we globally store the services that our appli
     //Create a DI
     $di = new Phalcon\DI\FactoryDefault();
 
-:doc:`Phalcon\\DI\\FactoryDefault <../api/Phalcon\_DI_FactoryDefault>` is a variant of Phalcon\\DI. To make things easier, it has registered most of the components that come with Phalcon. Thus we should not register them one by one. Later there will be no problem in replacing a factory service.
+:doc:`Phalcon\\DI\\FactoryDefault <../api/Phalcon\_DI_FactoryDefault>` は Phalcon\\DI の異形です。 それには、処理をシンプルにするため、Phalconに付属しているコンポーネントのほとんどが登録されています。 したがって、それらをひとつひとつ登録するべきではありません。あとで生成するサービスを変更しても問題ありません。
 
-In the next part, we register the "view" service indicating the directory where the framework will find the views files. As the views do not correspond to classes, they cannot be charged with an autoloader.
+次のパートでは、フレームワークがviewファイルを探すディレクトリを示す "view" サービスを登録します。 viewファイルはクラスでないため、オートローダで補完されません。
 
-Services can be registered in several ways, but for our tutorial we'll use an `anonymous function`_:
+サービスを登録する方法はいくつかありますが、このチュートリアルでは、無名関数 ( `anonymous function`_ ) を使用します。
 
 .. code-block:: php
 
@@ -174,7 +174,7 @@ Services can be registered in several ways, but for our tutorial we'll use an `a
         return $view;
     });
     
-Next we register a base URI so that all URIs generated by Phalcon include the "tutorial" folder we setup earlier. This will become important later on in this tutorial when we use the class :doc:`\Phalcon\\Tag <../api/Phalcon_Tag>` to generate a hyperlink. 
+次に、Phalconにより生成されるすべてのURI に "/tutorial/" が含まれるように、base URIを登録します。 これは、このチュートリアルで、ハイパーリンクを生成するために、 :doc:`\Phalcon\\Tag <../api/Phalcon_Tag>` を使用する際に重要になってきます。
 
 .. code-block:: php
 
@@ -187,7 +187,7 @@ Next we register a base URI so that all URIs generated by Phalcon include the "t
         return $url;
     });   
 
-In the last part of this file, we find :doc:`Phalcon\\Mvc\\Application <../api/Phalcon_Mvc_Application>`. Its purpose is to initialize the request environment, route the incoming request, and then dispatch any discovered actions; it aggregates any responses and returns them when the process is complete.
+このファイルの最後のパートで、:doc:`Phalcon\\Mvc\\Application <../api/Phalcon_Mvc_Application>` を見つけるでしょう。この目的は、リクエスト環境を初期化し、リクエストのルートを決め、発見したアクションを起動することであり、処理が完了した際にレスポンスを集約し、返却することです。
 
 .. code-block:: php
 
@@ -197,11 +197,11 @@ In the last part of this file, we find :doc:`Phalcon\\Mvc\\Application <../api/P
 
     echo $application->handle()->getContent();
 
-As you can see, the bootstrap file is very short and we do not need to include any additional files. We have set ourselves a flexible MVC application in less than 30 lines of code.
+ご覧のように、bootstrap ファイルはとても短く、追加のファイルを読み込む必要はありません。柔軟なMVCアプリケーションの設定が、30行足らずのコードで行えるのです。
 
 コントローラの作成
 ^^^^^^^^^^^^^^^^^^^^^
-By default Phalcon will look for a controller named "Index". It is the starting point when no controller or action has been passed in the request. The index controller (app/controllers/IndexController.php) looks like:
+デフォルトでは、Phalcon は、"Index" という名称のコントローラを探します。これは、リクエストでいずれのコントローラ、アクションも渡されていない場合の出発点となります。index コントローラ (app/controllers/IndexController.php) は、次のようになります。
 
 .. code-block:: php
 
@@ -217,12 +217,12 @@ By default Phalcon will look for a controller named "Index". It is the starting 
 
     }
 
-The controller classes must have the suffix "Controller" and controller actions must have the suffix "Action". If you access the application from your browser, you should see something like this:
+コントローラクラスには、"Controller" という接尾語をつける必要があり、コントローラアクションには、"Action" という接尾語をつける必要があります。あなたがブラウザからアプリケーションにアクセスしたならば、次のように見えるでしょう。
 
 .. figure:: ../_static/img/tutorial-1.png
     :align: center
 
-Congratulations, you're flying with Phalcon!
+おめでとうございます。あなたはPhalconで飛び立つことができました！
 
 Viewへのアウトプットの送信
 ^^^^^^^^^^^^^^^^^^^^^^^^
@@ -305,7 +305,7 @@ The empty index action gives the clean pass to a view with the form definition (
      </p>
 
      <p>
-        <label for="name">E-Mail</label>
+        <label for="email">E-Mail</label>
         <?php echo Tag::textField("email") ?>
      </p>
 
@@ -481,7 +481,7 @@ Additional validation happens automatically on fields that are defined as not nu
 .. figure:: ../_static/img/tutorial-4.png
     :align: center
 
-結論
+まとめ
 ----------
 This is a very simple tutorial and as you can see, it's easy to start building an application using Phalcon.
 The fact that Phalcon is an extension on your web server has not interfered with the ease of development or

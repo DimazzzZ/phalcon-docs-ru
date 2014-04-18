@@ -5,13 +5,16 @@ Phalcon\\Db\\ColumnInterface initializer
 
 
 Methods
----------
+-------
+<<<<<<< HEAD
+=======
 
 abstract public  **__construct** (*string* $columnName, *array* $definition)
 
 Phalcon\\Db\\ColumnInterface constructor
 
 
+>>>>>>> master
 
 abstract public *string*  **getSchemaName** ()
 
@@ -88,12 +91,6 @@ Check whether field absolute to position in table
 abstract public *int*  **getBindType** ()
 
 Returns the type of bind handling
-
-
-
-abstract public static *\Phalcon\Db\ColumnInterface*  **__set_state** (*array* $data)
-
-Restores the internal state of a Phalcon\\Db\\Column object
 
 
 

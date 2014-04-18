@@ -5,7 +5,7 @@ Manages collections of CSS/Javascript assets
 
 
 Methods
----------
+-------
 
 public  **__construct** ([*array* $options])
 
@@ -129,7 +129,7 @@ Creates/Returns a collection of resources
 
 
 
-public  **output** (:doc:`Phalcon\\Assets\\Collection <Phalcon_Assets_Collection>` $collection, *callback* $callback)
+public  **output** (:doc:`Phalcon\\Assets\\Collection <Phalcon_Assets_Collection>` $collection, *callback* $callback, [*string* $type])
 
 Traverses a collection calling the callback to generate its HTML
 
